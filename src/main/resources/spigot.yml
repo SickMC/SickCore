@@ -1,0 +1,12 @@
+name: SickCore
+main: me.anton.sickcore.bootstrap.BukkitBootstrap;
+version: '${project.version}'
+author: Anton x 4NI0N
+description: Core for SickNetwork
+api-version: 1.18
+
+softdepends:
+  - SimpleCloud-Plugin
+  - SimpleCloud-Permission
+  - NickAPI
+  - HeadDatabase

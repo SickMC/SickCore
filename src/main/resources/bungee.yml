@@ -1,0 +1,9 @@
+name: SickCore
+version: '${project.version}'
+author: Anton x 4NI0N
+main: me.anton.sickcore.bootstrap.BungeeBootstrap
+description: Core for SickNetwork
+
+softdepends:
+  - SimpleCloud-Plugin
+  - SimpleCloud-Permission
