@@ -1,7 +1,6 @@
 package me.anton.sickcore.core;
 
 import lombok.Getter;
-import me.anton.sickcore.api.database.DatabaseConfig;
 import me.anton.sickcore.api.database.DatabaseModel;
 import me.anton.sickcore.api.database.MongoConnection;
 
@@ -15,7 +14,7 @@ public abstract class Core {
 
     public Core(){
         instance = this;
-        mongoConnection = new MongoConnection(new DatabaseConfig("localhost", 27017, "sickapi", "sickapi", "sickmc", "sickapi"));
+        mongoConnection = new MongoConnection();
         this.playerModel = new DatabaseModel("sickplayer");
     }
 

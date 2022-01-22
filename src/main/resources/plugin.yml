@@ -1,6 +1,6 @@
 name: SickCore
-main: me.anton.sickcore.bootstrap.BukkitBootstrap;
 version: '${project.version}'
+main: me.anton.sickcore.bootstrap.BukkitBootstrap
 author: Anton x 4NI0N
 description: Core for SickNetwork
 api-version: 1.18

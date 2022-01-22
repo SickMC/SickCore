@@ -6,7 +6,6 @@ import me.anton.sickcore.api.player.apiPlayer.enums.Language;
 import me.anton.sickcore.api.player.apiPlayer.enums.RankBridge;
 import me.anton.sickcore.api.player.bukkitPlayer.messages.CommandMessages;
 import me.anton.sickcore.games.defaults.all.vanish.VanishAction;
-import me.anton.sickcore.api.service.defaults.bukkitDefault.enums.TablistFormat;
 import me.anton.sickcore.api.utils.minecraft.bukkit.player.TitleBuilder;
 import me.anton.sickcore.api.utils.minecraft.bukkit.player.sound.SoundBuilder;
 import me.anton.sickcore.api.utils.minecraft.player.uniqueid.UUIDFetcher;
@@ -187,8 +186,7 @@ public class BukkitPlayer implements IBukkitPlayer{
 
     @Override
     public void unVanish(JavaPlugin plugin) {
-        if (player.cloud().cloudAPI().getConnectedServer().isLobby()){VanishAction.unVanish(plugin, bukkitPlayer, TablistFormat.LOBBY);return;}
-        VanishAction.unVanish(plugin, bukkitPlayer, TablistFormat.SURVIVAL);
+        VanishAction.unVanish(plugin, bukkitPlayer);
     }
 
     @Override
