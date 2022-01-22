@@ -20,5 +20,6 @@ public interface IGame {
     public default BukkitCore getCore(){
         return Core.getInstance().bukkit();
     }
+    public String getName();
 
 }

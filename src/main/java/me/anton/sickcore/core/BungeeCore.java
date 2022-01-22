@@ -33,6 +33,8 @@ public class BungeeCore extends Core{
 
     public void onLoad(){
         register();
+
+        moduleHandler.loadModules();
     }
 
     public void onUnLoad(){

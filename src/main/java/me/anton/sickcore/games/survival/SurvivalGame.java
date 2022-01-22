@@ -54,4 +54,9 @@ public class SurvivalGame implements IGame {
     public BukkitCore getCore() {
         return IGame.super.getCore();
     }
+
+    @Override
+    public String getName() {
+        return "Survival";
+    }
 }

@@ -1,6 +1,7 @@
 package me.anton.sickcore.core.game;
 
-import me.anton.sickcore.core.Core;
+import eu.thesimplecloud.api.CloudAPI;
+import me.anton.sickcore.api.utils.common.system.Logger;
 import me.anton.sickcore.games.lobby.LobbyGame;
 import me.anton.sickcore.games.survival.SurvivalGame;
 
@@ -11,10 +12,14 @@ public class GameHandler {
 
     private List<IGame> loadedGames = new ArrayList<>();
 
-    public void loadGame(){
-        if (Core.getInstance().bukkit().getPlugin().getServer().getName().startsWith("Lobby-")){loadedGames.add(new LobbyGame()); new LobbyGame().load();}
-        if (Core.getInstance().bukkit().getPlugin().getServer().getName().startsWith("Survival-")){loadedGames.add(new SurvivalGame()); new SurvivalGame().load();}
+    public void loadGame(IGame game){
+        Logger.info(game.getName() + " started!");
+        loadedGames.add(game); game.load();
+    }
 
+    public void loadGames(){
+        if (CloudAPI.getInstance().getThisSidesName().startsWith("Lobby-"))loadGame(new LobbyGame());
+        if (CloudAPI.getInstance().getThisSidesName().startsWith("Survival-"))loadGame(new SurvivalGame());
     }
 
     public void unloadGame(){

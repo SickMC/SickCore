@@ -53,7 +53,7 @@ public class BukkitCore extends Core {
     }
 
     public void onLoad(){
-        handler.loadGame();
+        handler.loadGames();
         register();
     }
 

@@ -3,7 +3,6 @@ package me.anton.sickcore.api.player.apiPlayer;
 import eu.thesimplecloud.module.permission.PermissionPool;
 import eu.thesimplecloud.module.permission.player.IPermissionPlayer;
 import me.anton.sickcore.api.database.DatabaseModel;
-import me.anton.sickcore.api.database.Finder;
 import me.anton.sickcore.api.player.apiPlayer.enums.Language;
 import me.anton.sickcore.api.player.apiPlayer.enums.Rank;
 import me.anton.sickcore.api.player.apiPlayer.enums.RankBridge;
@@ -31,16 +30,16 @@ public class APIPlayer implements IAPIPlayer {
     public APIPlayer(@NotNull UUID uuid){
         this.uuid = uuid;
         this.model = Core.getInstance().getPlayerModel();
-        this.document = model.getDocument(Finder.stringFinder("uuid", uuid.toString()));
-        if (!model.documentExists(Finder.stringFinder("uuid", uuid.toString())))createAPIPlayer();
+        this.document = model.getDocument("uuid", uuid.toString());
+        if (!model.documentExists("uuid", uuid.toString()))createAPIPlayer();
         if(!document.getString("name").equals(UUIDFetcher.fetchName(uuid))){document.replace("name",UUIDFetcher.fetchName(uuid)); update();}
     }
 
     public APIPlayer(@NotNull String discordID){
-        this.model = new DatabaseModel("sickplayer");
-        this.document = model.getDocument(Finder.stringFinder("discordid", discordID));
-        if (!model.documentExists(Finder.stringFinder("discordid", discordID)))return;
-        this.uuid = UUID.fromString(model.getString("uuid", Finder.stringFinder("discordid", discordID)));
+        this.model = Core.getInstance().getPlayerModel();
+        this.document = model.getDocument("discordid", discordID);
+        if (!model.documentExists("discordid", discordID))return;
+        this.uuid = UUID.fromString(model.getString("uuid", "discordid", discordID));
     }
 
     private void createAPIPlayer() {
@@ -238,7 +237,7 @@ public class APIPlayer implements IAPIPlayer {
     }
 
     private void update(){
-        model.updateDocument(Finder.stringFinder("uuid", uuid.toString()), document);
+        model.updateDocument("uuid", uuid.toString(), document);
     }
 
 }

@@ -36,4 +36,9 @@ public class LobbyGame implements IGame {
     public void registerCloudListener(IListener listener) {
         IGame.super.registerCloudListener(listener);
     }
+
+    @Override
+    public String getName() {
+        return "Lobby";
+    }
 }
