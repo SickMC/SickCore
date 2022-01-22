@@ -14,7 +14,8 @@ public class GameHandler {
 
     public void loadGame(IGame game){
         Logger.info(game.getName() + " started!");
-        loadedGames.add(game); game.load();
+        loadedGames.add(game);
+        game.load();
     }
 
     public void loadGames(){

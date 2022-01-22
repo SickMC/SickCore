@@ -15,12 +15,6 @@ import org.bukkit.plugin.java.JavaPlugin;
 @CommandAlias("autonick|an|nicksystem")
 public class AutoNickCommand extends BaseCommand {
 
-    JavaPlugin plugin;
-
-    public AutoNickCommand(JavaPlugin plugin){
-        this.plugin = plugin;
-    }
-
     @Default
     @Description("Opens the nicksystem inventory")
     public void onTrigger(CommandSender sender){
@@ -32,7 +26,7 @@ public class AutoNickCommand extends BaseCommand {
         IBukkitPlayer bukkitPlayer = new BukkitPlayer(((Player) sender).getUniqueId());
         if (!bukkitPlayer.api().isTeam() || bukkitPlayer.api().getRank() == Rank.MVP){bukkitPlayer.sendMessage("§4Available with MVP or higher!", "§4Verfügbar mit MVP oder höher!");return;}
 
-        AutoNickInventory.openAutoNickInventory(bukkitPlayer, plugin);
+        AutoNickInventory.openAutoNickInventory(bukkitPlayer);
     }
 
 }

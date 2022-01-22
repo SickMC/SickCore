@@ -1,7 +1,7 @@
 package me.anton.sickcore.games.lobby;
 
 import eu.thesimplecloud.api.eventapi.IListener;
-import me.anton.sickcore.api.handler.listeners.bukkit.BukkitListenerProvider;
+import me.anton.sickcore.api.handler.listeners.bukkit.BukkitHandler;
 import me.anton.sickcore.games.lobby.appereance.LobbyChat;
 import me.anton.sickcore.core.game.IGame;
 import me.anton.sickcore.games.lobby.appereance.LobbyTablist;
@@ -13,7 +13,7 @@ public class LobbyGame implements IGame {
 
     @Override
     public void load() {
-        register();
+        registerListener();
     }
 
     @Override
@@ -22,18 +22,15 @@ public class LobbyGame implements IGame {
     }
 
     @Override
-    public void register() {
-        getProvider().register(new LobbyChat());
-        getProvider().register(new LobbyTablist());
-        getProvider().register(new Events());
-        getProvider().register(new ProfileItem());
-        getProvider().register(new ModiNPCHandler());
+    public void registerListener() {
+        registerListener(new LobbyChat(), new LobbyTablist(), new Events(), new ProfileItem(), new ModiNPCHandler());
         registerCloudListener(new LobbyTablistCloudProvider());
     }
 
+
     @Override
-    public BukkitListenerProvider getProvider() {
-        return IGame.super.getProvider();
+    public void registerListener(BukkitHandler... handler) {
+        IGame.super.registerListener(handler);
     }
 
     @Override

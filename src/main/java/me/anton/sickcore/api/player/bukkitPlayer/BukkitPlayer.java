@@ -117,7 +117,7 @@ public class BukkitPlayer implements IBukkitPlayer{
     }
 
     @Override
-comp    public void sendTitle(TitleBuilder EnTitleBuilder, TitleBuilder deTitleBuilder) {
+    public void sendTitle(TitleBuilder EnTitleBuilder, TitleBuilder deTitleBuilder) {
         if (player.getLanguage().equals(Language.DEUTSCH))
             deTitleBuilder.sendTitle(bukkitPlayer);
         else if (player.getLanguage().equals(Language.ENGLISCH))

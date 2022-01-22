@@ -142,15 +142,15 @@ public class BukkitCore extends Core {
 
         manager.registerCommand(new LagCommand(), true);
         manager.registerCommand(new NickCommand(), false);
-        manager.registerCommand(new AutoNickCommand(plugin), false);
+        manager.registerCommand(new AutoNickCommand(), false);
         manager.registerCommand(new UnnickCommand(), false);
         manager.registerCommand(new NickListCommand(), false);
 
         //Vanish
-        manager.registerCommand(new VanishCommand(plugin), false);
-        provider.register(new VanishAction(plugin));
-        manager.registerCommand(new UnVanishCommand(plugin), false);
-        manager.registerCommand(new VanishListCommand(plugin), false);
+        manager.registerCommand(new VanishCommand(), false);
+        provider.register(new VanishAction());
+        manager.registerCommand(new UnVanishCommand(), false);
+        manager.registerCommand(new VanishListCommand(), false);
     }
 
     public List<IBukkitPlayer> getOnlineBukkitPlayers(){

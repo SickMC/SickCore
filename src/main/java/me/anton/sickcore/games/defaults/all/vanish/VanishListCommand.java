@@ -13,11 +13,6 @@ import org.bukkit.plugin.java.JavaPlugin;
 
 @CommandAlias("vanishlist|vl")
 public class VanishListCommand extends BaseCommand {
-
-    JavaPlugin plugin;
-
-    public VanishListCommand(JavaPlugin plugin){this.plugin = plugin;}
-
     @Default
     @Description("Opens the vanishlist gui")
     public void onCommand(CommandSender sender){
@@ -31,7 +26,7 @@ public class VanishListCommand extends BaseCommand {
 
         if (VanishListInventory.vanishlist.isEmpty()){new BukkitPlayer(sender).sendMessage("§7No player is vanished!", "§7Es ist gerade kein Player gevanished!"); return;}
 
-        VanishListInventory.openInventory(new BukkitPlayer(sender), plugin);
+        VanishListInventory.openInventory(new BukkitPlayer(sender));
     }
 
 }

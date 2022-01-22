@@ -14,12 +14,6 @@ import org.bukkit.plugin.java.JavaPlugin;
 @CommandAlias("vanish")
 public class VanishCommand extends BaseCommand {
 
-    private JavaPlugin plugin;
-
-    public VanishCommand(JavaPlugin plugin){
-        this.plugin = plugin;
-    }
-
     @Default
     @Description("Vanishs a player")
     public void onVanish(CommandSender sender){
@@ -33,7 +27,7 @@ public class VanishCommand extends BaseCommand {
         if (!player.api().isTeam()){player.message().noTeam();return;}
         if (VanishListInventory.vanishlist.contains(player.getPlayer())){player.sendMessage("§4You are already vanished!","Du bist bereits gevanished!");return;}
 
-        player.vanish(plugin);
+        player.vanish();
         player.sendMessage("§7You are now vanished!", "§7Du bist nun vanished!");
     }
 

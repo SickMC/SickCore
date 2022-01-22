@@ -13,6 +13,7 @@ public class PlayerItemInteractEventHandler extends BukkitEventProvider<PlayerIn
 
     @EventHandler
     public void handleEvent(PlayerInteractEvent event) {
+        if (event.getItem() == null)return;
         IBukkitPlayer bukkitPlayer = new BukkitPlayer(event.getPlayer().getUniqueId());
 
         ItemStack item = event.getItem();

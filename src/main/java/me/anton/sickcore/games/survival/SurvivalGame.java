@@ -1,6 +1,7 @@
 package me.anton.sickcore.games.survival;
 
 import eu.thesimplecloud.api.eventapi.IListener;
+import me.anton.sickcore.api.handler.listeners.bukkit.BukkitHandler;
 import me.anton.sickcore.api.handler.listeners.bukkit.BukkitListenerProvider;
 import me.anton.sickcore.core.BukkitCore;
 import me.anton.sickcore.core.game.IGame;
@@ -13,11 +14,14 @@ import me.anton.sickcore.games.defaults.survival.StartingEquip;
 import me.anton.sickcore.games.survival.appereance.SurvivalChat;
 import me.anton.sickcore.games.survival.appereance.SurvivalTablist;
 import me.anton.sickcore.games.survival.appereance.SurvivalTablistCloudProvider;
+import me.anton.sickcore.games.survival.spawn.Elytra;
+import me.anton.sickcore.games.survival.spawn.Protection;
+import me.anton.sickcore.games.survival.spawn.Teleport;
 
 public class SurvivalGame implements IGame {
     @Override
     public void load() {
-        register();
+        registerListener();
 
     }
 
@@ -27,12 +31,8 @@ public class SurvivalGame implements IGame {
     }
 
     @Override
-    public void register() {
-        getProvider().register(new SurvivalChat());
-        getProvider().register(new SurvivalTablist());
-        getProvider().register(new MobDrops());
-        getProvider().register(new SkullDrops());
-        getProvider().register(new StartingEquip());
+    public void registerListener() {
+        registerListener(new SurvivalChat(), new SurvivalTablist(), new MobDrops(), new SkullDrops(), new StartingEquip(), new Teleport(), new Protection(), new Elytra());
 
         registerCloudListener(new SurvivalTablistCloudProvider());
         getCore().getManager().registerCommand(new EnderchestSee());
@@ -40,9 +40,10 @@ public class SurvivalGame implements IGame {
         getCore().getManager().registerCommand(new SharePos());
     }
 
+
     @Override
-    public BukkitListenerProvider getProvider() {
-        return IGame.super.getProvider();
+    public void registerListener(BukkitHandler... handler) {
+        IGame.super.registerListener(handler);
     }
 
     @Override

@@ -23,6 +23,10 @@ public class VanishAction extends BukkitHandler {
         });
     }
 
+    public VanishAction(){
+
+    }
+
     @Override
     public void onPlayerJoin(PlayerJoinEvent rawEvent, IBukkitPlayer bukkitPlayer) {
         for (Player player : VanishListInventory.vanishlist) {
