@@ -2,6 +2,7 @@ package me.anton.sickcore.api.database;
 
 import lombok.Data;
 
+
 @Data
 public class DatabaseConfig {
 
