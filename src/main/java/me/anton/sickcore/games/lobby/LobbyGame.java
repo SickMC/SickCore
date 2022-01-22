@@ -6,6 +6,8 @@ import me.anton.sickcore.games.lobby.appereance.LobbyChat;
 import me.anton.sickcore.core.game.IGame;
 import me.anton.sickcore.games.lobby.appereance.LobbyTablist;
 import me.anton.sickcore.games.lobby.appereance.LobbyTablistCloudProvider;
+import me.anton.sickcore.games.lobby.modi.ModiNPCHandler;
+import me.anton.sickcore.games.lobby.utility.profile.ProfileItem;
 
 public class LobbyGame implements IGame {
 
@@ -23,7 +25,9 @@ public class LobbyGame implements IGame {
     public void register() {
         getProvider().register(new LobbyChat());
         getProvider().register(new LobbyTablist());
-
+        getProvider().register(new Events());
+        getProvider().register(new ProfileItem());
+        getProvider().register(new ModiNPCHandler());
         registerCloudListener(new LobbyTablistCloudProvider());
     }
 

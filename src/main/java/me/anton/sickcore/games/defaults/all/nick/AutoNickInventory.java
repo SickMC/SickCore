@@ -7,6 +7,7 @@ import me.anton.sickcore.api.utils.minecraft.bukkit.inventory.InventoryUsage;
 import me.anton.sickcore.api.utils.minecraft.bukkit.inventory.defaults.RankInventory;
 import me.anton.sickcore.api.utils.minecraft.bukkit.item.ItemBuilder;
 import me.anton.sickcore.api.utils.minecraft.bukkit.player.sound.DefaultSounds;
+import me.anton.sickcore.core.Core;
 import net.kyori.adventure.text.Component;
 import net.wesjd.anvilgui.AnvilGUI;
 import org.bukkit.Material;
@@ -22,7 +23,7 @@ import java.util.List;
 
 public class AutoNickInventory {
 
-    public static void openAutoNickInventory(IBukkitPlayer player, JavaPlugin plugin){
+    public static void openAutoNickInventory(IBukkitPlayer player){
         InventoryBuilder autoNickInventory = new InventoryBuilder(player.api(), player.api().languageString("§6AutoNick" , "§6AutoNick"), 27, InventoryUsage.UTILITY);
 
         //Nickname
@@ -44,7 +45,7 @@ public class AutoNickInventory {
                         return AnvilGUI.Response.close();
                     })
                     .text("Nickname")
-                    .plugin(plugin)
+                    .plugin(Core.getInstance().bukkit().getPlugin())
                     .title(player.api().languageString("§6Set your nickname", "§6Setze deinen Nickname"))
                     .open(player.getPlayer());
         });
@@ -78,7 +79,7 @@ public class AutoNickInventory {
                         return AnvilGUI.Response.close();
                     })
                     .text("Nickskin")
-                    .plugin(plugin)
+                    .plugin(Core.getInstance().bukkit().getPlugin())
                     .title(player.api().languageString("§6Set your nickskin", "§6Setze deinen Nickskin"))
                     .open(player.getPlayer());
         });
@@ -86,8 +87,8 @@ public class AutoNickInventory {
         //NickRank
         autoNickInventory.setItem(new ItemBuilder(Material.DIAMOND_HORSE_ARMOR).addItemFlags(ItemFlag.HIDE_ATTRIBUTES).setName(player.api().languageString("§6NickRank", "§6NickRank")).setLore("§7NickRank: " + player.api().getNickRank().getPrefix()).setLore(player.api().languageString("§7Click to pick your nickrank", "§7Klicke um deinen Nickrank auszuwählen")).build(), 12, event -> {
             player.getPlayer().closeInventory();
-            if (player.api().isAdmin()) RankInventory.openNickAdminRankInv(player.api(), "§6AutoNick - NickRank", plugin);
-            if (!player.api().isAdmin())RankInventory.openNickRankInv(player.api() ,"§6AutoNick - NickRank" , plugin);
+            if (player.api().isAdmin()) RankInventory.openNickAdminRankInv(player.api(), "§6AutoNick - NickRank");
+            if (!player.api().isAdmin())RankInventory.openNickRankInv(player.api() ,"§6AutoNick - NickRank");
         });
 
         //AutoNick
@@ -98,14 +99,14 @@ public class AutoNickInventory {
             autoNickInventory.setItem(hasAutonick, 13, event -> {
                 player.api().setAutoNick(false);
                 player.getPlayer().closeInventory();
-                openAutoNickInventory(player, plugin);
+                openAutoNickInventory(player);
                 player.playSound(DefaultSounds.levelUP);
             });
         }else {
             autoNickInventory.setItem(hasNoAutonick, 13, event -> {
                 player.api().setAutoNick(true);
                 player.getPlayer().closeInventory();
-                openAutoNickInventory(player, plugin);
+                openAutoNickInventory(player);
                 player.playSound(DefaultSounds.levelUP);
             });
         }

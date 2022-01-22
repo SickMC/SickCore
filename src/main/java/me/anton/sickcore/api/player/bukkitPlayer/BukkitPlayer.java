@@ -117,51 +117,51 @@ public class BukkitPlayer implements IBukkitPlayer{
     }
 
     @Override
-    public void sendTitle(TitleBuilder EnTitleBuilder, TitleBuilder deTitleBuilder, JavaPlugin plugin) {
+comp    public void sendTitle(TitleBuilder EnTitleBuilder, TitleBuilder deTitleBuilder) {
         if (player.getLanguage().equals(Language.DEUTSCH))
-            deTitleBuilder.sendTitle(bukkitPlayer, plugin);
+            deTitleBuilder.sendTitle(bukkitPlayer);
         else if (player.getLanguage().equals(Language.ENGLISCH))
-            EnTitleBuilder.sendTitle(bukkitPlayer, plugin);
+            EnTitleBuilder.sendTitle(bukkitPlayer);
     }
 
     @Override
-    public void sendTitle(String title, String deTitle, String subTitle, String deSubTitle, int fadeIn, int stay, int fadeOut, JavaPlugin plugin) {
+    public void sendTitle(String title, String deTitle, String subTitle, String deSubTitle, int fadeIn, int stay, int fadeOut) {
         if (player.getLanguage().equals(Language.DEUTSCH))
-            new TitleBuilder(deTitle, deSubTitle, fadeIn, stay, fadeOut).sendTitle(bukkitPlayer, plugin);
+            new TitleBuilder(deTitle, deSubTitle, fadeIn, stay, fadeOut).sendTitle(bukkitPlayer);
         else if (player.getLanguage().equals(Language.ENGLISCH))
-            new TitleBuilder(title, subTitle, fadeIn, stay, fadeOut).sendTitle(bukkitPlayer, plugin);
+            new TitleBuilder(title, subTitle, fadeIn, stay, fadeOut).sendTitle(bukkitPlayer);
     }
 
     @Override
-    public void sendAnimatedTitle(String title, String deTitle, String subTitle, String deSubTitle, int fadeIn, int stay, int fadeOut, JavaPlugin plugin) {
+    public void sendAnimatedTitle(String title, String deTitle, String subTitle, String deSubTitle, int fadeIn, int stay, int fadeOut) {
         if (player.getLanguage().equals(Language.DEUTSCH))
-            new TitleBuilder(deTitle, deSubTitle, fadeIn, stay, fadeOut).sendAnimatedTitle(bukkitPlayer, plugin);
+            new TitleBuilder(deTitle, deSubTitle, fadeIn, stay, fadeOut).sendAnimatedTitle(bukkitPlayer);
         else if (player.getLanguage().equals(Language.ENGLISCH))
-            new TitleBuilder(title, subTitle, fadeIn, stay, fadeOut).sendAnimatedTitle(bukkitPlayer, plugin);
+            new TitleBuilder(title, subTitle, fadeIn, stay, fadeOut).sendAnimatedTitle(bukkitPlayer);
     }
 
     @Override
-    public void sendCustomAnimatedTitle(String title, String deTitle, String subTitle, String deSubTitle, int fadeIn, int stay, int fadeOut, int speed, SoundBuilder finishSound, JavaPlugin plugin) {
+    public void sendCustomAnimatedTitle(String title, String deTitle, String subTitle, String deSubTitle, int fadeIn, int stay, int fadeOut, int speed, SoundBuilder finishSound) {
         if (player.getLanguage().equals(Language.DEUTSCH))
-            new TitleBuilder(deTitle, deSubTitle, fadeIn, stay, fadeOut).sendCustomAnimatedTitle(bukkitPlayer, speed, finishSound, plugin);
+            new TitleBuilder(deTitle, deSubTitle, fadeIn, stay, fadeOut).sendCustomAnimatedTitle(bukkitPlayer, speed, finishSound);
         else if (player.getLanguage().equals(Language.ENGLISCH))
-            new TitleBuilder(title, subTitle, fadeIn, stay, fadeOut).sendCustomAnimatedTitle(bukkitPlayer, speed, finishSound, plugin);
+            new TitleBuilder(title, subTitle, fadeIn, stay, fadeOut).sendCustomAnimatedTitle(bukkitPlayer, speed, finishSound);
     }
 
     @Override
-    public void sendAnimatedTitle(TitleBuilder EnTitleBuilder, TitleBuilder deTitleBuilder, JavaPlugin plugin) {
+    public void sendAnimatedTitle(TitleBuilder EnTitleBuilder, TitleBuilder deTitleBuilder) {
         if (player.getLanguage().equals(Language.DEUTSCH))
-            deTitleBuilder.sendAnimatedTitle(bukkitPlayer, plugin);
+            deTitleBuilder.sendAnimatedTitle(bukkitPlayer);
         else if (player.getLanguage().equals(Language.ENGLISCH))
-            EnTitleBuilder.sendAnimatedTitle(bukkitPlayer, plugin);
+            EnTitleBuilder.sendAnimatedTitle(bukkitPlayer);
     }
 
     @Override
-    public void sendCustomAnimatedTitle(TitleBuilder EnTitleBuilder, TitleBuilder deTitleBuilder, int speed, SoundBuilder finishSound, JavaPlugin plugin) {
+    public void sendCustomAnimatedTitle(TitleBuilder EnTitleBuilder, TitleBuilder deTitleBuilder, int speed, SoundBuilder finishSound) {
         if (player.getLanguage().equals(Language.DEUTSCH))
-            deTitleBuilder.sendCustomAnimatedTitle(bukkitPlayer, speed, finishSound, plugin);
+            deTitleBuilder.sendCustomAnimatedTitle(bukkitPlayer, speed, finishSound);
         else if (player.getLanguage().equals(Language.ENGLISCH))
-            EnTitleBuilder.sendCustomAnimatedTitle(bukkitPlayer, speed, finishSound, plugin);
+            EnTitleBuilder.sendCustomAnimatedTitle(bukkitPlayer, speed, finishSound);
     }
 
     @Override
@@ -180,13 +180,13 @@ public class BukkitPlayer implements IBukkitPlayer{
     }
 
     @Override
-    public void vanish(JavaPlugin plugin) {
-        new VanishAction(bukkitPlayer, plugin);
+    public void vanish() {
+        new VanishAction(bukkitPlayer);
     }
 
     @Override
-    public void unVanish(JavaPlugin plugin) {
-        VanishAction.unVanish(plugin, bukkitPlayer);
+    public void unVanish() {
+        VanishAction.unVanish(bukkitPlayer);
     }
 
     @Override

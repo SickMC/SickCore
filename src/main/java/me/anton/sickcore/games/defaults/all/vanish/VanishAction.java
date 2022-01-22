@@ -14,24 +14,19 @@ public class VanishAction extends BukkitHandler {
 
     JavaPlugin plugin;
 
-    public VanishAction(Player player, JavaPlugin plugin){
+    public VanishAction(Player player){
         if (VanishListInventory.vanishlist.contains(player))return;
-        Bukkit.getOnlinePlayers().forEach(handlers ->{
-            IBukkitPlayer bukkitPlayer = new BukkitPlayer(handlers);
-            if (bukkitPlayer.api().isAdmin())return;
-            handlers.hidePlayer(plugin, player);
+        Core.getInstance().bukkit().getOnlineBukkitPlayers().forEach(handler -> {
+            if (handler.api().isAdmin())return;
+            handler.getPlayer().hidePlayer(plugin, player);
             VanishListInventory.vanishlist.add(player);
         });
-    }
-
-    public VanishAction(JavaPlugin plugin){
-        this.plugin = plugin;
     }
 
     @Override
     public void onPlayerJoin(PlayerJoinEvent rawEvent, IBukkitPlayer bukkitPlayer) {
         for (Player player : VanishListInventory.vanishlist) {
-            new VanishAction(player, plugin);
+            new VanishAction(player);
         }
     }
 
@@ -41,9 +36,9 @@ public class VanishAction extends BukkitHandler {
         if (VanishListInventory.vanishlist.contains(bukkitPlayer.getPlayer()))VanishListInventory.vanishlist.remove(bukkitPlayer.getPlayer());
     }
 
-    public static void unVanish(JavaPlugin plugin, Player player){
+    public static void unVanish(Player player){
         Bukkit.getOnlinePlayers().forEach(handlers ->{
-            handlers.showPlayer(plugin, player);
+            handlers.showPlayer(Core.getInstance().bukkit().getPlugin(), player);
             if (Core.getInstance().bukkit().getPlugin().getServer().getName().startsWith("Lobby-"))player.setGlowing(true);
             VanishListInventory.vanishlist.remove(player);
         });

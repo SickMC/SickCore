@@ -35,17 +35,17 @@ public interface IBukkitPlayer {
 
     public Player getPlayer();
 
-    public void sendTitle(TitleBuilder EnTitleBuilder, TitleBuilder deTitleBuilder, JavaPlugin plugin);
+    public void sendTitle(TitleBuilder EnTitleBuilder, TitleBuilder deTitleBuilder);
 
-    public void sendTitle(String title, String deTitle, String subTitle, String deSubTitle, int fadeIn, int stay, int fadeOut, JavaPlugin plugin);
+    public void sendTitle(String title, String deTitle, String subTitle, String deSubTitle, int fadeIn, int stay, int fadeOut);
 
-    public void sendAnimatedTitle(String title, String deTitle, String subTitle, String deSubTitle, int fadeIn, int stay, int fadeOut, JavaPlugin plugin);
+    public void sendAnimatedTitle(String title, String deTitle, String subTitle, String deSubTitle, int fadeIn, int stay, int fadeOut);
 
-    public void sendCustomAnimatedTitle(String title, String deTitle, String subTitle, String deSubTitle, int fadeIn, int stay, int fadeOut, int speed, SoundBuilder finishSound, JavaPlugin plugin);
+    public void sendCustomAnimatedTitle(String title, String deTitle, String subTitle, String deSubTitle, int fadeIn, int stay, int fadeOut, int speed, SoundBuilder finishSound);
 
-    public void sendAnimatedTitle(TitleBuilder EnTitleBuilder, TitleBuilder deTitleBuilder, JavaPlugin plugin);
+    public void sendAnimatedTitle(TitleBuilder EnTitleBuilder, TitleBuilder deTitleBuilde);
 
-    public void sendCustomAnimatedTitle(TitleBuilder EnTitleBuilder, TitleBuilder deTitleBuilder, int speed, SoundBuilder finishSound, JavaPlugin plugin);
+    public void sendCustomAnimatedTitle(TitleBuilder EnTitleBuilder, TitleBuilder deTitleBuilder, int speed, SoundBuilder finishSound);
 
     public void stopAllTitles();
 
@@ -53,9 +53,9 @@ public interface IBukkitPlayer {
 
     public void playSound(SoundBuilder sound);
 
-    public void vanish(JavaPlugin plugin);
+    public void vanish();
 
-    public void unVanish(JavaPlugin plugin);
+    public void unVanish();
 
     public Material getRankWoolItem();
 

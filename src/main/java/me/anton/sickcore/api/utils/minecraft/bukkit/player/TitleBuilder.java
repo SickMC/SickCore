@@ -1,6 +1,7 @@
 package me.anton.sickcore.api.utils.minecraft.bukkit.player;
 
 import me.anton.sickcore.api.utils.minecraft.bukkit.player.sound.SoundBuilder;
+import me.anton.sickcore.core.Core;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.title.Title;
 import org.bukkit.Bukkit;
@@ -29,21 +30,21 @@ public class TitleBuilder {
         this.stay = stay;
     }
 
-    public void sendTitle(Player player, JavaPlugin plugin){
+    public void sendTitle(Player player){
         Title titlebuilder = Title.title(Component.text(title), Component.text(subtitle)
                 , Title.Times.of(Duration.ofSeconds(fadeIn), Duration.ofSeconds(stay), Duration.ofSeconds(fadeOut)));
 
         player.showTitle(titlebuilder);
     }
 
-    public void sendAnimatedTitle(Player player, JavaPlugin plugin){
+    public void sendAnimatedTitle(Player player){
         String[] args = title.split("");
         String[] subArgs = subtitle.split("");
         int length = args.length;
         int subLength = subArgs.length;
         AtomicInteger count = new AtomicInteger(0);
         this.current = "";
-        taskID = Bukkit.getScheduler().runTaskTimerAsynchronously(plugin, () -> {
+        taskID = Bukkit.getScheduler().runTaskTimerAsynchronously(Core.getInstance().bukkit().getPlugin(), () -> {
             if (count.get() == length){
                 Title titlebuilder = Title.title(Component.text(title), Component.text(subtitle)
                         , Title.Times.of(Duration.ofSeconds(fadeIn), Duration.ofSeconds(stay), Duration.ofSeconds(fadeOut)));
@@ -64,14 +65,14 @@ public class TitleBuilder {
         },0,2).getTaskId();
     }
 
-    public void sendCustomAnimatedTitle(Player player, int speed, SoundBuilder finishSound, JavaPlugin plugin){
+    public void sendCustomAnimatedTitle(Player player, int speed, SoundBuilder finishSound){
         String[] args = title.split("");
         String[] subArgs = subtitle.split("");
         int length = args.length;
         int subLength = subArgs.length;
         AtomicInteger count = new AtomicInteger(0);
         this.current = "";
-        int taskID = Bukkit.getScheduler().runTaskTimerAsynchronously(plugin, () -> {
+        int taskID = Bukkit.getScheduler().runTaskTimerAsynchronously(Core.getInstance().bukkit().getPlugin(), () -> {
             if (count.get() == length){
                 Title titlebuilder = Title.title(Component.text(title), Component.text(subtitle)
                         , Title.Times.of(Duration.ofSeconds(fadeIn), Duration.ofSeconds(stay), Duration.ofSeconds(fadeOut)));
