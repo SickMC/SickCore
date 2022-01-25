@@ -1,6 +1,7 @@
 package me.anton.sickcore.core;
 
 import co.aikar.commands.BungeeCommandManager;
+import eu.thesimplecloud.api.CloudAPI;
 import lombok.Getter;
 import me.anton.sickcore.api.handler.listeners.bungee.BungeeEventProvider;
 import me.anton.sickcore.api.handler.listeners.bungee.BungeeListenerProvider;
@@ -21,11 +22,14 @@ public class BungeeCore extends Core{
     private final BungeeCommandManager manager;
     private final BungeeListenerProvider provider;
     private final ModuleHandler moduleHandler;
+    private boolean isMainProxy;
 
     public BungeeCore(Plugin plugin){
         instance = this;
         this.plugin = plugin;
         this.manager = new BungeeCommandManager(plugin);
+        manager.enableUnstableAPI("brigadier");
+        manager.enableUnstableAPI("help");
         this.provider = new BungeeListenerProvider();
         moduleHandler = new ModuleHandler();
         moduleHandler.loadModules();
@@ -33,6 +37,7 @@ public class BungeeCore extends Core{
 
     public void onLoad(){
         register();
+        isMainProxy = CloudAPI.getInstance().getThisSidesName().equals("Waterfall-1");
 
         moduleHandler.loadModules();
     }

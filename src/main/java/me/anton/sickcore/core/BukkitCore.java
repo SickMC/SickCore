@@ -48,6 +48,8 @@ public class BukkitCore extends Core {
         this.onlineBukkitPlayers = new ArrayList<>();
         this.onlineAPIPlayers = new ArrayList<>();
         this.manager = new PaperCommandManager(plugin);
+        manager.enableUnstableAPI("brigadier");
+        manager.enableUnstableAPI("help");
         this.provider = new BukkitListenerProvider();
         this.handler = new GameHandler();
     }

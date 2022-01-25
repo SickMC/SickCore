@@ -33,28 +33,28 @@ public class DatabaseModel {
     }
 
     public String getString(String required, String key, String value){
-        return collection.find(Filters.eq(key, value)).first().getString(key);
+        return collection.find(Filters.eq(key, value)).first().getString(required);
     }
     public String getString(String key, Document finder){
         return collection.find(finder).first().getString(key);
     }
 
     public int getInteger(String required, String key, String value){
-        return collection.find(Filters.eq(key, value)).first().getInteger(key);
+        return collection.find(Filters.eq(key, value)).first().getInteger(required);
     }
     public int getInteger(String key, Document finder){
         return collection.find(finder).first().getInteger(key);
     }
 
     public double getDouble(String required, String key, String value){
-        return collection.find(Filters.eq(key, value)).first().getDouble(key);
+        return collection.find(Filters.eq(key, value)).first().getDouble(required);
     }
     public double getDouble(String key, Document finder){
         return collection.find(finder).first().getDouble(key);
     }
 
     public Date getDate(String required, String key, String value){
-        return collection.find(Filters.eq(key, value)).first().getDate(key);
+        return collection.find(Filters.eq(key, value)).first().getDate(required);
     }
 
     public Date getDate(String key, Document finder){
@@ -66,11 +66,11 @@ public class DatabaseModel {
     }
 
     public boolean getBoolean(String required, String key, String value){
-        return collection.find(Filters.eq(key, value)).first().getBoolean(key);
+        return collection.find(Filters.eq(key, value)).first().getBoolean(required);
     }
 
     public long getLong(String required, String key, String value){
-        return collection.find(Filters.eq(key, value)).first().getLong(key);
+        return collection.find(Filters.eq(key, value)).first().getLong(required);
     }
 
     public long getLong(String key, Document finder){
@@ -89,7 +89,7 @@ public class DatabaseModel {
         return collection.find(Filters.eq(key, value)).first();
     }
 
-    public Document getDocumentByString(String key, String value){
-        return collection.find(Filters.eq(key, value)).first();
+    public void deleteDocument(String key, String value){
+        collection.deleteOne(Filters.eq(key, value));
     }
 }
