@@ -2,19 +2,17 @@ package me.anton.sickcore.modules.discord.modules.rules;
 
 import me.anton.sickcore.api.utils.discord.DiscordIds;
 import me.anton.sickcore.modules.discord.DiscordModule;
-import net.dv8tion.jda.api.EmbedBuilder;
-
-import java.awt.*;
-import java.util.concurrent.TimeUnit;
-
+import net.dv8tion.jda.api.entities.Emoji;
+import net.dv8tion.jda.api.entities.MessageEmbed;
+import net.dv8tion.jda.api.interactions.components.Button;
 public class RuleMessage {
 
-    public RuleMessage(){
-        if (!DiscordModule.getInstance().getMainGuild().getTextChannelById(DiscordIds.rulesChannel).hasLatestMessage())return;
-        EmbedBuilder discord = new EmbedBuilder()
-                .setTitle("**Discord Regeln**")
-                .setColor(Color.ORANGE)
-                .setDescription("**Verhalten**\n" +
+    DiscordModule module = DiscordModule.getInstance();
+
+    public RuleMessage() {
+        MessageEmbed discord = new me.anton.sickcore.modules.discord.handlers.messages.EmbedBuilder()
+                .setTitle("Discord Regeln")
+                .setTitle("**Verhalten**\n" +
                         "Textchats:\n" +
                         "- Bitte nur auf Deutsch oder Englisch schreiben!\n" +
                         "- Spam ist zu unterlassen\n" +
@@ -39,13 +37,11 @@ public class RuleMessage {
                         "\n" +
                         "Nickname\n" +
                         "- Nicknames dürfen keine beleidigenden oder andere verbotenen oder geschützte Namen oder Namensteile enthalten.\n" +
-                        "- Der Nickname darf nicht aus Sonderzeichen bestehen.")
-                .setFooter("SickMC • Requested by SickMC", DiscordModule.getInstance().getJda().getSelfUser().getEffectiveAvatarUrl());
+                        "- Der Nickname darf nicht aus Sonderzeichen bestehen.").build();
 
-        EmbedBuilder server = new EmbedBuilder()
-                .setTitle("**Server Regeln**")
-                .setColor(Color.ORANGE)
-                .setDescription("**Allgemein**\n" +
+        MessageEmbed server = new me.anton.sickcore.modules.discord.handlers.messages.EmbedBuilder()
+                .setTitle("Server Regeln")
+                .setContent("**Allgemein**\n" +
                         "- es gelten dieselben Regeln wie in den Discord-Regeln:\n" +
                         "- keine Beleidigungen, rassistische Aussagen, usw.\n" +
                         "- Hacking/Cheating ist strengstens untersagt und wird mit einem Bann bestraft\n" +
@@ -53,11 +49,12 @@ public class RuleMessage {
                         "**Survival**\n" +
                         "- Griefen ist verboten und wird mit einem Warn bestraft\n" +
                         "- Farmen dürfen nur unter Einverständnis der Besitzer benutzt werden - dieses Vergehen wird mit einem Bann bestraft\n" +
-                        "- drei Warns führen zu einem permanenten Bann vom Survival-Server")
-                .setFooter("SickMC • Requested by SickMC", DiscordModule.getInstance().getJda().getSelfUser().getEffectiveAvatarUrl());
+                        "- drei Warns führen zu einem permanenten Bann vom Survival-Server").build();
 
-        DiscordModule.getInstance().getMainGuild().getTextChannelById(DiscordIds.rulesChannel).sendMessageEmbeds(discord.build(), server.build()).queue();
-        DiscordModule.getInstance().getMainGuild().getTextChannelById(DiscordIds.rulesChannel).addReactionById(DiscordModule.getInstance().getMainGuild().getTextChannelById(DiscordIds.rulesChannel).getLatestMessageId(), "U+2705").queueAfter(5, TimeUnit.SECONDS);
+        module.getMainGuild().getTextChannelById(DiscordIds.rulesChannel).getHistoryFromBeginning(1).queue(history -> {
+            if (history.isEmpty())
+                module.getMainGuild().getTextChannelById(DiscordIds.rulesChannel).sendMessageEmbeds(discord, server).setActionRow(Button.success("rule_accept", Emoji.fromUnicode("U+2705"))).queue();
+        });
+
     }
-
 }

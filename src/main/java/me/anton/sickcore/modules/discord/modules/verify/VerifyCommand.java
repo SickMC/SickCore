@@ -37,12 +37,7 @@ public class VerifyCommand extends SlashCommand {
 
     @Override
     public boolean isEphemeral() {
-        return true;
-    }
-
-    @Override
-    public List<String> initAliases() {
-        return new ArrayList<>();
+        return false;
     }
 
     @Override
@@ -64,7 +59,7 @@ public class VerifyCommand extends SlashCommand {
 
         int verifyID = (int) event.getOption("code").getAsLong();
 
-        if (DiscordAPIPlayerAdapter.isVerified(user)){hook.sendMessageEmbeds(getAlreadyVerified(user)).setEphemeral(true).queue();return;}
+        if (DiscordAPIPlayerAdapter.isVerified(user)){hook.sendMessageEmbeds(getAlreadyVerified(user)).setEphemeral(false).queue();return;}
 
         if (!verifyModule.getVerifyList().containsValue(verifyID)){hook.sendMessageEmbeds(getWrongCodeEmbed(user)).setEphemeral(true).queue();return;}
 
@@ -75,21 +70,25 @@ public class VerifyCommand extends SlashCommand {
         verifyModule.getVerifyListReturn().remove(verifyID, player);
         verifyModule.getVerifyList().remove(player, verifyID);
 
-        event.replyEmbeds(getVerified(user)).setEphemeral(true).queue();
+        sendLog(user, player);
         player.sendMessage("§7Your account is now linked with §6" + event.getMember().getUser().getAsTag() + "§7!", "§7Dein Account ist nun mit §6" + event.getMember().getUser().getAsTag() + "§7 verbunden!");
-        MessageEmbed embed = new EmbedBuilder()
-                .setTimestamp(Instant.now())
-                .setTitle("**Verified | SickMC**")
-                .setDescription(event.getUser().getAsMention() + " is now verified with mc: " + player.api().getName())
-                .setFooter(DiscordMessages.getFooter(event.getUser()), DiscordMessages.getAvatarURL(event.getUser()))
-                .setColor(Color.ORANGE).build();
-        event.getGuild().getTextChannelById(DiscordIds.discordLogChannel).sendMessageEmbeds(embed).queue();
+        hook.sendMessageEmbeds(getVerified(user)).queue();
+        hook.deleteOriginal().queue();
     }
 
     private void verify(IBungeePlayer player, String userID){
         IAPIPlayer iapiPlayer = player.api();
         iapiPlayer.setDiscordID(userID);
         new RankUpdate(userID);
+    }
+    private void sendLog(User user, IBungeePlayer player){
+        MessageEmbed embed = new EmbedBuilder()
+                .setTimestamp(Instant.now())
+                .setTitle("**Verified | SickMC**")
+                .setDescription(user.getAsMention() + " is now verified with mc: " + player.api().getName())
+                .setFooter(DiscordMessages.getFooter(user), DiscordMessages.getAvatarURL(user))
+                .setColor(Color.ORANGE).build();
+        DiscordModule.getInstance().getMainGuild().getTextChannelById(DiscordIds.discordLogChannel).sendMessageEmbeds(embed).queue();
     }
 
     private MessageEmbed getWrongCodeEmbed(User user){

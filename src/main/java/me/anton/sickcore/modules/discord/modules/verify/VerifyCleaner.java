@@ -12,6 +12,7 @@ public class VerifyCleaner extends ListenerAdapter {
     @Override
     public void onMessageReceived(@NotNull MessageReceivedEvent event) {
         if (!event.getTextChannel().getId().equals(DiscordIds.verifychannel))return;
-        event.getMessage().delete().queueAfter(10, TimeUnit.SECONDS);
+        if (event.getMember().getUser().isBot()){event.getMessage().delete().queueAfter(5, TimeUnit.SECONDS);return;}
+        event.getMessage().delete().queue();
     }
 }

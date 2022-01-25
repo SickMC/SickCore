@@ -2,8 +2,6 @@ package me.anton.sickcore.modules.discord.modules.discordlog;
 
 import me.anton.sickcore.api.utils.discord.DiscordIds;
 import me.anton.sickcore.modules.discord.DiscordModule;
-import me.anton.sickcore.modules.discord.handlers.messages.DiscordMessages;
-import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.audit.ActionType;
 import net.dv8tion.jda.api.audit.AuditLogEntry;
 import net.dv8tion.jda.api.entities.Guild;
@@ -21,8 +19,6 @@ import net.dv8tion.jda.api.events.guild.voice.GuildVoiceMoveEvent;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
 import org.jetbrains.annotations.NotNull;
 
-import java.awt.*;
-import java.time.Instant;
 import java.util.stream.Collectors;
 
 public class LogListener extends ListenerAdapter {
@@ -32,79 +28,59 @@ public class LogListener extends ListenerAdapter {
 
     @Override
     public void onGuildMemberJoin(@NotNull GuildMemberJoinEvent event) {
-        MessageEmbed embed = new EmbedBuilder()
-                .setTimestamp(Instant.now())
-                .setTitle("**Join | SickMC**")
-                .setDescription(event.getMember().getAsMention() + " joined the server!")
-                .setFooter(DiscordMessages.getFooter(event.getUser()), DiscordMessages.getAvatarURL(event.getUser()))
-                .setColor(Color.ORANGE).build();
-        textChannel.sendMessageEmbeds(embed).queue();
+        MessageEmbed builder = new me.anton.sickcore.modules.discord.handlers.messages.EmbedBuilder()
+                .setTitle("Join")
+                .setContent(event.getMember().getAsMention() + " joined the server!").build();
+        textChannel.sendMessageEmbeds(builder).queue();
     }
 
     @Override
     public void onGuildInviteCreate(@NotNull GuildInviteCreateEvent event) {
-        MessageEmbed embed = new EmbedBuilder()
-                .setTimestamp(Instant.now())
-                .setTitle("**InviteCreate | SickMC**")
-                .setDescription(event.getInvite().getInviter().getAsMention() + " created the invite: " + event.getInvite().getUrl())
-                .setFooter(DiscordMessages.getFooter(event.getInvite().getInviter()), DiscordMessages.getAvatarURL(event.getInvite().getInviter()))
-                .setColor(Color.ORANGE).build();
-        textChannel.sendMessageEmbeds(embed).queue();
+        MessageEmbed builder = new me.anton.sickcore.modules.discord.handlers.messages.EmbedBuilder()
+                .setTitle("InviteCreate")
+                .setContent(event.getInvite().getInviter().getAsMention() + " created the invite: " + event.getInvite().getUrl()).build();
+        textChannel.sendMessageEmbeds(builder).queue();
     }
 
     @Override
     public void onGuildInviteDelete(@NotNull GuildInviteDeleteEvent event) {
-        MessageEmbed embed = new EmbedBuilder()
-                .setTimestamp(Instant.now())
-                .setTitle("**InviteDelete | SickMC**")
-                .setDescription("The invite " + event.getUrl() + " was deleted!")
-                .setColor(Color.ORANGE).build();
-        textChannel.sendMessageEmbeds(embed).queue();
+        MessageEmbed builder = new me.anton.sickcore.modules.discord.handlers.messages.EmbedBuilder()
+                .setTitle("InviteDelete")
+                .setContent("The invite " + event.getUrl() + " was deleted!").build();
+        textChannel.sendMessageEmbeds(builder).queue();
     }
 
     @Override
     public void onGuildMemberRoleAdd(@NotNull GuildMemberRoleAddEvent event) {
-        MessageEmbed embed = new EmbedBuilder()
-                .setTimestamp(Instant.now())
-                .setTitle("**RoleAdd | SickMC**")
-                .setDescription(event.getMember().getAsMention() + " got the role " + event.getRoles().parallelStream().map(role -> role.getAsMention()).collect(Collectors.joining(", "))  + "!" +
-                        "\nHe/She has now the roles: " + event.getMember().getRoles().parallelStream().map(role -> role.getAsMention()).collect(Collectors.joining(", ")))
-                .setFooter(DiscordMessages.getFooter(event.getUser()), DiscordMessages.getAvatarURL(event.getUser()))
-                .setColor(Color.ORANGE).build();
+        MessageEmbed embed = new me.anton.sickcore.modules.discord.handlers.messages.EmbedBuilder()
+                .setTitle("RoleAdd")
+                .setContent(event.getMember().getAsMention() + " got the role " + event.getRoles().parallelStream().map(role -> role.getAsMention()).collect(Collectors.joining(", "))  + "!" +
+                        "\nHe/She has now the roles: " + event.getMember().getRoles().parallelStream().map(role -> role.getAsMention()).collect(Collectors.joining(", "))).build();
         textChannel.sendMessageEmbeds(embed).queue();
     }
 
     @Override
     public void onGuildMemberRoleRemove(@NotNull GuildMemberRoleRemoveEvent event) {
-        MessageEmbed embed = new EmbedBuilder()
-                .setTimestamp(Instant.now())
-                .setTitle("**RoleRemove | SickMC**")
-                .setDescription(event.getMember().getAsMention() + " lost the role " + event.getRoles().parallelStream().map(role -> role.getAsMention()).collect(Collectors.joining(", "))  + "!" +
-                        "\nHe/She has now the roles: " + event.getMember().getRoles().parallelStream().map(role -> role.getAsMention()).collect(Collectors.joining(", ")))
-                .setFooter(DiscordMessages.getFooter(event.getUser()), DiscordMessages.getAvatarURL(event.getUser()))
-                .setColor(Color.ORANGE).build();
+        MessageEmbed embed = new me.anton.sickcore.modules.discord.handlers.messages.EmbedBuilder()
+                .setTitle("RoleRemove")
+                .setContent(event.getMember().getAsMention() + " lost the role " + event.getRoles().parallelStream().map(role -> role.getAsMention()).collect(Collectors.joining(", "))  + "!" +
+                        "\nHe/She has now the roles: " + event.getMember().getRoles().parallelStream().map(role -> role.getAsMention()).collect(Collectors.joining(", "))).build();
         textChannel.sendMessageEmbeds(embed).queue();
     }
 
     @Override
     public void onGuildMemberUpdateAvatar(@NotNull GuildMemberUpdateAvatarEvent event) {
-        MessageEmbed embed = new EmbedBuilder()
-                .setTimestamp(Instant.now())
-                .setTitle("**AvatarUpdate | SickMC**")
-                .setDescription(event.getMember().getAsMention() + "'s nickname changed from: \n__" + event.getOldAvatarUrl() + "__ to: __" + event.getNewAvatarUrl() + "__")
-                .setFooter(DiscordMessages.getFooter(event.getUser()), DiscordMessages.getAvatarURL(event.getUser()))
-                .setColor(Color.ORANGE).build();
+        MessageEmbed embed = new me.anton.sickcore.modules.discord.handlers.messages.EmbedBuilder()
+                .setTitle("AvatarUpdate")
+                .setContent(event.getMember().getAsMention() + "'s avatar changed from: \n" + event.getOldAvatarUrl() + " to: " + event.getNewAvatarUrl()).build();
         textChannel.sendMessageEmbeds(embed).queue();
     }
 
     @Override
     public void onGuildMemberUpdateNickname(@NotNull GuildMemberUpdateNicknameEvent event) {
-        MessageEmbed embed = new EmbedBuilder()
-                .setTimestamp(Instant.now())
-                .setTitle("**NicknameChange | SickMC**")
-                .setDescription(event.getMember().getAsMention() + "'s nickname changed from: \n__" + event.getOldNickname() + "__ to: " + event.getNewNickname() + "__")
-                .setFooter(DiscordMessages.getFooter(event.getUser()), DiscordMessages.getAvatarURL(event.getUser()))
-                .setColor(Color.ORANGE).build();
+        MessageEmbed embed = new me.anton.sickcore.modules.discord.handlers.messages.EmbedBuilder()
+                .setTitle("NicknameChange")
+                .setContent(event.getMember().getAsMention() + "'s nickname changed from: \n__" + event.getOldNickname() + "__ to: " + event.getNewNickname() + "__").build();
         textChannel.sendMessageEmbeds(embed).queue();
     }
 
@@ -116,12 +92,9 @@ public class LogListener extends ListenerAdapter {
                 .queue(list ->{
                     if (list.isEmpty())return;
                     AuditLogEntry entry = list.get(0);
-                    MessageEmbed embed = new EmbedBuilder()
-                            .setTimestamp(Instant.now())
-                            .setTitle("**Voice Kick | SickMC**")
-                            .setDescription(event.getMember().getAsMention() + " was kicked by: " + entry.getUser().getAsMention() + "\n from channel: " + event.getOldValue().getAsMention())
-                            .setFooter(DiscordMessages.getFooter(event.getMember().getUser()), DiscordMessages.getAvatarURL(event.getMember().getUser()))
-                            .setColor(Color.ORANGE).build();
+                    MessageEmbed embed = new me.anton.sickcore.modules.discord.handlers.messages.EmbedBuilder()
+                            .setTitle("Voice Kick")
+                            .setContent(event.getMember().getAsMention() + " was kicked by: " + entry.getUser().getAsMention() + "\n from channel: " + event.getOldValue().getAsMention()).build();
                     textChannel.sendMessageEmbeds(embed).queue();
                 });
     }
@@ -134,12 +107,10 @@ public class LogListener extends ListenerAdapter {
                 .queue(list ->{
                     if (list.isEmpty())return;
                     AuditLogEntry entry = list.get(0);
-                    MessageEmbed embed = new EmbedBuilder()
-                            .setTimestamp(Instant.now())
-                            .setTitle("**Voice Move | SickMC**")
-                            .setDescription(event.getMember().getAsMention() + " was moved by: " + entry.getUser().getAsMention() + "\n from " + event.getOldValue().getAsMention() + " to " + event.getNewValue().getAsMention())
-                            .setFooter(DiscordMessages.getFooter(event.getMember().getUser()), DiscordMessages.getAvatarURL(event.getMember().getUser()))
-                            .setColor(Color.ORANGE).build();
+                    MessageEmbed embed = new me.anton.sickcore.modules.discord.handlers.messages.EmbedBuilder()
+                            .setTitle("Voice Move")
+                            .setContent(event.getMember().getAsMention() + " was moved by: " + entry.getUser().getAsMention() + "\n from " + event.getOldValue().getAsMention() + " to " + event.getNewValue().getAsMention()).build();
+
                     textChannel.sendMessageEmbeds(embed).queue();
                 });
     }
@@ -152,12 +123,10 @@ public class LogListener extends ListenerAdapter {
                 .queue(list ->{
                     if (list.isEmpty())return;
                     AuditLogEntry entry = list.get(0);
-                    MessageEmbed embed = new EmbedBuilder()
-                            .setTimestamp(Instant.now())
-                            .setTitle("**Ban | SickMC**")
-                            .setDescription(event.getUser().getAsTag() + " was banned by: " + entry.getUser().getAsMention() + " with the reason: " + entry.getReason())
-                            .setFooter(DiscordMessages.getFooter(event.getUser()), DiscordMessages.getAvatarURL(event.getUser()))
-                            .setColor(Color.ORANGE).build();
+                    MessageEmbed embed = new me.anton.sickcore.modules.discord.handlers.messages.EmbedBuilder()
+                            .setTitle("Ban")
+                            .setContent(event.getUser().getAsTag() + " was banned by: " + entry.getUser().getAsMention() + " with the reason: " + entry.getReason()).build();
+
                     textChannel.sendMessageEmbeds(embed).queue();
                 });
     }
@@ -170,12 +139,10 @@ public class LogListener extends ListenerAdapter {
                 .queue(list ->{
                     if (list.isEmpty())return;
                     AuditLogEntry entry = list.get(0);
-                    MessageEmbed embed = new EmbedBuilder()
-                            .setTimestamp(Instant.now())
-                            .setTitle("**Unban | SickMC**")
-                            .setDescription(event.getUser().getAsTag() + " was unbanned by: " + entry.getUser().getAsMention())
-                            .setFooter(DiscordMessages.getFooter(event.getUser()), DiscordMessages.getAvatarURL(event.getUser()))
-                            .setColor(Color.ORANGE).build();
+                    MessageEmbed embed = new me.anton.sickcore.modules.discord.handlers.messages.EmbedBuilder()
+                            .setTitle("Unban")
+                            .setContent(event.getUser().getAsTag() + " was unbanned by: " + entry.getUser().getAsMention()).build();
+
                     textChannel.sendMessageEmbeds(embed).queue();
                 });
     }
@@ -188,12 +155,10 @@ public class LogListener extends ListenerAdapter {
                 .queue(list ->{
                     if (list.isEmpty())return;
                     AuditLogEntry entry = list.get(0);
-                    MessageEmbed embed = new EmbedBuilder()
-                            .setTimestamp(Instant.now())
-                            .setTitle("**Kick | SickMC**")
-                            .setDescription(event.getUser().getAsTag() + " was kicked by: " + entry.getUser().getAsMention() + " with the reason: "+ entry.getReason())
-                            .setFooter(DiscordMessages.getFooter(event.getUser()), DiscordMessages.getAvatarURL(event.getUser()))
-                            .setColor(Color.ORANGE).build();
+                    MessageEmbed embed = new me.anton.sickcore.modules.discord.handlers.messages.EmbedBuilder()
+                            .setTitle("Kick")
+                            .setContent(event.getUser().getAsTag() + " was kicked by: " + entry.getUser().getAsMention() + " with the reason: "+ entry.getReason()).build();
+
                     textChannel.sendMessageEmbeds(embed).queue();
                 });
     }

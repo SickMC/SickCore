@@ -17,18 +17,18 @@ public class EmbedBuilder {
     private Member member = null;
     private Color color = null;
 
-    public EmbedBuilder(EmbedType type, IDiscordPlayer player){
-        this.type = type;
+    public EmbedBuilder(IDiscordPlayer player){
+        this.type = EmbedType.UTILITY;
         this.builder = new net.dv8tion.jda.api.EmbedBuilder();
         this.player = player;
         this.member = player.member();
     }
 
-    public EmbedBuilder(EmbedType type, Member member){
+    public EmbedBuilder(Member member){
         this.player = new DiscordPlayer(member);
-        this.type = type;
         this.member = member;
         this.builder = new net.dv8tion.jda.api.EmbedBuilder();
+        this.type = EmbedType.UTILITY;
     }
 
     public EmbedBuilder(){

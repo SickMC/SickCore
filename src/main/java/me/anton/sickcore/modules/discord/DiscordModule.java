@@ -1,8 +1,9 @@
 package me.anton.sickcore.modules.discord;
 
 import lombok.Getter;
+import me.anton.sickcore.api.database.DatabaseModel;
 import me.anton.sickcore.api.utils.common.system.Logger;
-import me.anton.sickcore.modules.discord.handlers.utils.Secrets;
+import me.anton.sickcore.core.Core;
 import me.anton.sickcore.core.module.IModule;
 import me.anton.sickcore.modules.discord.handlers.command.SlashCommandBuilder;
 import me.anton.sickcore.modules.discord.modules.DiscordModuleHandler;
@@ -22,6 +23,7 @@ public class DiscordModule implements IModule {
     private DiscordModuleHandler moduleHandler;
     @Getter
     public static DiscordModule instance;
+    private DatabaseModel model;
 
     private JDA jda;
     private JDABuilder builder;
@@ -31,14 +33,17 @@ public class DiscordModule implements IModule {
 
     @Override
     public void load() {
+        if (!Core.getInstance().bungee().isMainProxy())return;
         instance = this;
         this.commandBuilder = new SlashCommandBuilder();
         moduleHandler = new DiscordModuleHandler();
+        model = new DatabaseModel("discordutil");
         register();
     }
 
     @Override
     public void unload() {
+        if (!Core.getInstance().bungee().isMainProxy())return;
         shutdown();
     }
 
@@ -60,7 +65,7 @@ public class DiscordModule implements IModule {
         );
 
         Logger.info("Starting Discordbot...");
-        JDABuilder jdaBuilder = JDABuilder.createDefault(Secrets.token, intents);
+        JDABuilder jdaBuilder = JDABuilder.createDefault(getDocString("token"), intents);
         jdaBuilder.setActivity(Activity.playing("on play.sickmc.net"));
         jdaBuilder.setAutoReconnect(true);
         jdaBuilder.setStatus(OnlineStatus.ONLINE);
@@ -74,7 +79,7 @@ public class DiscordModule implements IModule {
                 guild.loadMembers().get();
             }
             this.jda.addEventListener(this.commandBuilder);
-            this.mainGuild = jda.getGuildById("908087446229643314");
+            this.mainGuild = jda.getGuildById(getDocString("mainguildID"));
             this.moduleHandler.loadModules();
         } catch (Exception e) {
             e.printStackTrace();
@@ -91,4 +96,7 @@ public class DiscordModule implements IModule {
         moduleHandler.unLoadModules();
     }
 
+    public String getDocString(String key){
+        return model.getString(key, "bot", "sickmc");
+    }
 }

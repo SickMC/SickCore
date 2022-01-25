@@ -31,23 +31,17 @@ public class DiscordLogModule implements IDiscordModule {
 
     public void loadEmbed(){
         TextChannel textChannel = DiscordModule.getInstance().getJda().getTextChannelById(DiscordIds.discordLogChannel);
-        MessageEmbed embed = new EmbedBuilder()
-                .setTimestamp(Instant.now())
+        me.anton.sickcore.modules.discord.handlers.messages.EmbedBuilder embed = new me.anton.sickcore.modules.discord.handlers.messages.EmbedBuilder()
                 .setTitle("**Load | SickMC**")
-                .setDescription("Proxy loaded!")
-                .setFooter(DiscordMessages.getFooter(DiscordModule.getInstance().getJda().getSelfUser()), DiscordMessages.getAvatarURL(DiscordModule.getInstance().getJda().getSelfUser()))
-                .setColor(Color.ORANGE).build();
-        textChannel.sendMessageEmbeds(embed).queue();
+                .setContent("Proxy loaded!");
+        textChannel.sendMessageEmbeds(embed.build()).queue();
     }
 
     public void unloadEmbed(){
         TextChannel textChannel = DiscordModule.getInstance().getJda().getTextChannelById(DiscordIds.discordLogChannel);
-        MessageEmbed embed = new EmbedBuilder()
-                .setTimestamp(Instant.now())
+        me.anton.sickcore.modules.discord.handlers.messages.EmbedBuilder embed = new me.anton.sickcore.modules.discord.handlers.messages.EmbedBuilder()
                 .setTitle("**Unload | SickMC**")
-                .setDescription("Proxy unloaded!")
-                .setFooter(DiscordMessages.getFooter(DiscordModule.getInstance().getJda().getSelfUser()), DiscordMessages.getAvatarURL(DiscordModule.getInstance().getJda().getSelfUser()))
-                .setColor(Color.ORANGE).build();
-        textChannel.sendMessageEmbeds(embed).queue();
+                .setContent("Proxy unloaded!");
+        textChannel.sendMessageEmbeds(embed.build()).queue();
     }
 }
