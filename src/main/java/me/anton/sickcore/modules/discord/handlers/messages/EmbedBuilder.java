@@ -16,6 +16,7 @@ public class EmbedBuilder {
     private IDiscordPlayer player = null;
     private Member member = null;
     private Color color = null;
+    private boolean timeStamp = true;
 
     public EmbedBuilder(IDiscordPlayer player){
         this.type = EmbedType.UTILITY;
@@ -61,6 +62,11 @@ public class EmbedBuilder {
         return this;
     }
 
+    public EmbedBuilder withoutTimeStamp(){
+        this.timeStamp = false;
+        return this;
+    }
+
     public net.dv8tion.jda.api.EmbedBuilder getBuilder(){
         return builder;
     }
@@ -72,7 +78,7 @@ public class EmbedBuilder {
             }
             case LOG -> {
                 builder.setFooter("SickMC • Requested by " + DiscordModule.getInstance().getJda().getSelfUser().getName(), DiscordModule.getInstance().getJda().getSelfUser().getEffectiveAvatarUrl());
-                builder.setTimestamp(Instant.now());
+                if (timeStamp)builder.setTimestamp(Instant.now());
             }
         }
         if (!(color == null))builder.setColor(color);

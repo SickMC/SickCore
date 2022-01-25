@@ -18,10 +18,10 @@ import java.awt.*;
 public class DiscordMessages {
 
     public static MessageEmbed getNoPermission(Member member){
-        me.anton.sickcore.modules.discord.handlers.messages.EmbedBuilder en = new me.anton.sickcore.modules.discord.handlers.messages.EmbedBuilder(EmbedType.UTILITY, member)
+        me.anton.sickcore.modules.discord.handlers.messages.EmbedBuilder en = new me.anton.sickcore.modules.discord.handlers.messages.EmbedBuilder(member)
                 .setTitle("**No Permission**")
                 .setContent("You don't have the permission to do this!");
-        me.anton.sickcore.modules.discord.handlers.messages.EmbedBuilder de = new me.anton.sickcore.modules.discord.handlers.messages.EmbedBuilder(EmbedType.UTILITY, member)
+        me.anton.sickcore.modules.discord.handlers.messages.EmbedBuilder de = new me.anton.sickcore.modules.discord.handlers.messages.EmbedBuilder(member)
                 .setTitle("**Keine Rechte**")
                 .setContent("Du hast keine Rechte dafür!");
 
@@ -30,11 +30,11 @@ public class DiscordMessages {
     }
 
     public static MessageEmbed getNotVerified(Member member){
-        me.anton.sickcore.modules.discord.handlers.messages.EmbedBuilder en = new me.anton.sickcore.modules.discord.handlers.messages.EmbedBuilder(EmbedType.UTILITY, member)
+        me.anton.sickcore.modules.discord.handlers.messages.EmbedBuilder en = new me.anton.sickcore.modules.discord.handlers.messages.EmbedBuilder(member)
                 .setTitle("**Not Verified**")
                 .setContent("You are not verified!\nYou can verify your account in "
                         + DiscordModule.getInstance().getMainGuild().getTextChannelById(DiscordIds.verifychannel).getAsMention() + "!");
-        me.anton.sickcore.modules.discord.handlers.messages.EmbedBuilder de = new me.anton.sickcore.modules.discord.handlers.messages.EmbedBuilder(EmbedType.UTILITY, member)
+        me.anton.sickcore.modules.discord.handlers.messages.EmbedBuilder de = new me.anton.sickcore.modules.discord.handlers.messages.EmbedBuilder(member)
                 .setTitle("**Nicht verifiziert**")
                 .setContent("Du bist nicht verifiziert!\nDu kannst deinen Account in "
                         + DiscordModule.getInstance().getMainGuild().getTextChannelById(DiscordIds.verifychannel).getAsMention() + " verifizeren!");

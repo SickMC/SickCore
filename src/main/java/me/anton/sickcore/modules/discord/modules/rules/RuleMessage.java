@@ -12,6 +12,7 @@ public class RuleMessage {
     public RuleMessage() {
         MessageEmbed discord = new me.anton.sickcore.modules.discord.handlers.messages.EmbedBuilder()
                 .setTitle("Discord Regeln")
+                .withoutTimeStamp()
                 .setTitle("**Verhalten**\n" +
                         "Textchats:\n" +
                         "- Bitte nur auf Deutsch oder Englisch schreiben!\n" +
@@ -49,7 +50,7 @@ public class RuleMessage {
                         "**Survival**\n" +
                         "- Griefen ist verboten und wird mit einem Warn bestraft\n" +
                         "- Farmen dürfen nur unter Einverständnis der Besitzer benutzt werden - dieses Vergehen wird mit einem Bann bestraft\n" +
-                        "- drei Warns führen zu einem permanenten Bann vom Survival-Server").build();
+                        "- drei Warns führen zu einem permanenten Bann vom Survival-Server").withoutTimeStamp().build();
 
         module.getMainGuild().getTextChannelById(DiscordIds.rulesChannel).getHistoryFromBeginning(1).queue(history -> {
             if (history.isEmpty())
