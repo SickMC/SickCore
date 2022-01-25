@@ -41,14 +41,14 @@ public class DiscordLogModule implements IDiscordModule {
 
     public void loadEmbed(){
         me.anton.sickcore.modules.discord.handlers.messages.EmbedBuilder embed = new me.anton.sickcore.modules.discord.handlers.messages.EmbedBuilder()
-                .setTitle("**Load | SickMC**")
+                .setTitle("Loas")
                 .setContent("Proxy loaded!");
         log(embed.build());
     }
 
     public void unloadEmbed(){
         me.anton.sickcore.modules.discord.handlers.messages.EmbedBuilder embed = new me.anton.sickcore.modules.discord.handlers.messages.EmbedBuilder()
-                .setTitle("**Unload | SickMC**")
+                .setTitle("Unload")
                 .setContent("Proxy unloaded!");
         log(embed.build());
     }

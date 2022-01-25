@@ -13,6 +13,7 @@ public class DiscordPlayer implements IDiscordPlayer{
 
     private IAPIPlayer player;
     private Member member;
+
     public DiscordPlayer(IAPIPlayer player){
         if (!player.isVerified())return;
         this.player = player;
@@ -20,9 +21,8 @@ public class DiscordPlayer implements IDiscordPlayer{
     }
 
     public DiscordPlayer(Member member) {
-        if (!DiscordAPIPlayerAdapter.isVerified(member))return;
-        this.player = new APIPlayer(member.getId());
         this.member = member;
+        this.player = new APIPlayer(member.getId());
     }
 
     @Override
@@ -39,6 +39,7 @@ public class DiscordPlayer implements IDiscordPlayer{
 
     @Override
     public IAPIPlayer api() {
+        if (!DiscordAPIPlayerAdapter.isVerified(member))return null;
         return player;
     }
 

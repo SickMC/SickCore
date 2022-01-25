@@ -38,12 +38,12 @@ public class EmbedBuilder {
     }
 
     public EmbedBuilder setContent(String content){
-        builder.setDescription("**" + content + " | SickMC**");
+        builder.setDescription(content);
         return this;
     }
 
     public EmbedBuilder setTitle(String title){
-        builder.setTitle(title);
+        builder.setTitle("**" + title + " | SickMC**");
         return this;
     }
 

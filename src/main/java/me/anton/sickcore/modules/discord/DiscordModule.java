@@ -65,7 +65,7 @@ public class DiscordModule implements IModule {
         );
 
         Logger.info("Starting Discordbot...");
-        JDABuilder jdaBuilder = JDABuilder.createDefault(getDocString("token"), intents);
+        JDABuilder jdaBuilder = JDABuilder.createDefault("OTE3MDQ0NzU4OTY1MjY0Mzk0.Yay-fA.gFnpoVaqRA0ppiBCLxtEV4JGg4U"/* getDocString("token")*/, intents);
         jdaBuilder.setActivity(Activity.playing("on play.sickmc.net"));
         jdaBuilder.setAutoReconnect(true);
         jdaBuilder.setStatus(OnlineStatus.ONLINE);

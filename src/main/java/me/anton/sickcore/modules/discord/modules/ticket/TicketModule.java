@@ -16,8 +16,8 @@ public class TicketModule implements IDiscordModule {
     @Override
     public void load() {
         instance = this;
-        model = new DatabaseModel("ticket");
         this.module = DiscordModule.getInstance();
+        register();
     }
 
     @Override
@@ -27,7 +27,8 @@ public class TicketModule implements IDiscordModule {
 
     @Override
     public void register() {
-        new TicketMessage();
+        this.model = new DatabaseModel("ticket");
+        //new TicketMessage();
         module.getJda().addEventListener(new TicketListener());
     }
 

@@ -10,10 +10,14 @@ public class RuleMessage {
     DiscordModule module = DiscordModule.getInstance();
 
     public RuleMessage() {
+        module.getMainGuild().getTextChannelById(DiscordIds.rulesChannel).getHistoryFromBeginning(1).queue(history -> {
+            if (!history.isEmpty())return;
+        });
+
         MessageEmbed discord = new me.anton.sickcore.modules.discord.handlers.messages.EmbedBuilder()
                 .setTitle("Discord Regeln")
                 .withoutTimeStamp()
-                .setTitle("**Verhalten**\n" +
+                .setContent("**Verhalten**\n" +
                         "Textchats:\n" +
                         "- Bitte nur auf Deutsch oder Englisch schreiben!\n" +
                         "- Spam ist zu unterlassen\n" +
@@ -42,6 +46,7 @@ public class RuleMessage {
 
         MessageEmbed server = new me.anton.sickcore.modules.discord.handlers.messages.EmbedBuilder()
                 .setTitle("Server Regeln")
+                .withoutTimeStamp()
                 .setContent("**Allgemein**\n" +
                         "- es gelten dieselben Regeln wie in den Discord-Regeln:\n" +
                         "- keine Beleidigungen, rassistische Aussagen, usw.\n" +
@@ -52,10 +57,7 @@ public class RuleMessage {
                         "- Farmen dürfen nur unter Einverständnis der Besitzer benutzt werden - dieses Vergehen wird mit einem Bann bestraft\n" +
                         "- drei Warns führen zu einem permanenten Bann vom Survival-Server").withoutTimeStamp().build();
 
-        module.getMainGuild().getTextChannelById(DiscordIds.rulesChannel).getHistoryFromBeginning(1).queue(history -> {
-            if (history.isEmpty())
-                module.getMainGuild().getTextChannelById(DiscordIds.rulesChannel).sendMessageEmbeds(discord, server).setActionRow(Button.success("rule_accept", Emoji.fromUnicode("U+2705"))).queue();
-        });
 
+        module.getMainGuild().getTextChannelById(DiscordIds.rulesChannel).sendMessageEmbeds(discord, server).setActionRow(Button.success("rule_accept", Emoji.fromUnicode("U+2705"))).queue();
     }
 }
