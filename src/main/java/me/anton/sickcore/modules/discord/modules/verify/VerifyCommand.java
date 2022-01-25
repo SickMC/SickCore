@@ -5,6 +5,7 @@ import me.anton.sickcore.api.player.apiPlayer.IAPIPlayer;
 import me.anton.sickcore.api.player.apiPlayer.enums.Language;
 import me.anton.sickcore.api.player.apiPlayer.provider.DiscordAPIPlayerAdapter;
 import me.anton.sickcore.api.player.bungeePlayer.IBungeePlayer;
+import me.anton.sickcore.api.player.discordPlayer.DiscordPlayer;
 import me.anton.sickcore.api.utils.discord.DiscordIds;
 import me.anton.sickcore.modules.discord.DiscordModule;
 import me.anton.sickcore.modules.discord.handlers.command.SlashCommand;
@@ -82,57 +83,44 @@ public class VerifyCommand extends SlashCommand {
         new RankUpdate(userID);
     }
     private void sendLog(User user, IBungeePlayer player){
-        MessageEmbed embed = new EmbedBuilder()
-                .setTimestamp(Instant.now())
-                .setTitle("**Verified | SickMC**")
-                .setDescription(user.getAsMention() + " is now verified with mc: " + player.api().getName())
-                .setFooter(DiscordMessages.getFooter(user), DiscordMessages.getAvatarURL(user))
-                .setColor(Color.ORANGE).build();
+        MessageEmbed embed = new me.anton.sickcore.modules.discord.handlers.messages.EmbedBuilder()
+                .setTitle("Verified")
+                .setContent(user.getAsMention() + " is now verified with mc: " + player.api().getName()).build();
+
         DiscordModule.getInstance().getMainGuild().getTextChannelById(DiscordIds.discordLogChannel).sendMessageEmbeds(embed).queue();
     }
 
     private MessageEmbed getWrongCodeEmbed(User user){
-        EmbedBuilder builder = new EmbedBuilder()
-                .setTitle("**Ungültiger Code**")
-                .setDescription("Dieser Code konnte nicht gefunden werden!")
-                .setColor(Color.ORANGE)
-                .setFooter(DiscordMessages.getFooter(user));
+        MessageEmbed embed = new me.anton.sickcore.modules.discord.handlers.messages.EmbedBuilder(DiscordModule.getInstance().getMainGuild().getMember(user))
+                .setTitle("Ungültiger Code")
+                .setContent("Dieser Code konnte nicht gefunden werden!").build();
 
-        return builder.build();
+        return embed;
     }
 
     private MessageEmbed getAlreadyVerified(User user){
-        EmbedBuilder en = new EmbedBuilder()
-                .setTitle("**Already verified**")
-                .setDescription("You are already verified!")
-                .setColor(Color.ORANGE)
-                .setFooter(DiscordMessages.getFooter(user));
+        MessageEmbed en = new me.anton.sickcore.modules.discord.handlers.messages.EmbedBuilder(DiscordModule.getInstance().getMainGuild().getMember(user))
+                .setTitle("Already verified")
+                .setContent("You are already verified!").build();
 
-        EmbedBuilder de = new EmbedBuilder()
-                .setTitle("**Bereits verifiziert**")
-                .setDescription("Du bist bereits verifiziert!")
-                .setColor(Color.ORANGE)
-                .setFooter(DiscordMessages.getFooter(user));
+        MessageEmbed de = new me.anton.sickcore.modules.discord.handlers.messages.EmbedBuilder(DiscordModule.getInstance().getMainGuild().getMember(user))
+                .setTitle("Bereits verifiziert")
+                .setContent("Du bist bereits verifiziert!").build();
 
-        if (new APIPlayer(user.getId()).getLanguage() == Language.ENGLISCH)return en.build();
-        else return de.build();
+        return new DiscordPlayer(DiscordModule.getInstance().getMainGuild().getMember(user)).getEmbed(en,de);
     }
 
     private MessageEmbed getVerified(User user){
-        EmbedBuilder en = new EmbedBuilder()
-                .setTitle("**Verified**")
-                .setDescription("You are now verified!")
-                .setColor(Color.ORANGE)
-                .setFooter(DiscordMessages.getFooter(user));
+        MessageEmbed en = new me.anton.sickcore.modules.discord.handlers.messages.EmbedBuilder(DiscordModule.getInstance().getMainGuild().getMember(user))
+                .setTitle("Verified")
+                .setContent("You are now verified!").build();
 
-        EmbedBuilder de = new EmbedBuilder()
-                .setTitle("**Verifiziert**")
-                .setDescription("Du bist nun verifiziert!")
-                .setColor(Color.ORANGE)
-                .setFooter(DiscordMessages.getFooter(user));
+        MessageEmbed de = new me.anton.sickcore.modules.discord.handlers.messages.EmbedBuilder(DiscordModule.getInstance().getMainGuild().getMember(user))
+                .setTitle("Verifiziert")
+                .setContent("Du bist nun verifiziert!").build();
 
-        if (new APIPlayer(user.getId()).getLanguage() == Language.ENGLISCH)return en.build();
-        else return de.build();
+
+        return new DiscordPlayer(DiscordModule.getInstance().getMainGuild().getMember(user)).getEmbed(en,de);
     }
 
 }
