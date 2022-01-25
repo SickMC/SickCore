@@ -1,5 +1,6 @@
 package me.anton.sickcore.modules.discord.modules.discordlog;
 
+import lombok.Getter;
 import me.anton.sickcore.api.utils.discord.DiscordIds;
 import me.anton.sickcore.modules.discord.DiscordModule;
 import me.anton.sickcore.modules.discord.handlers.messages.DiscordMessages;
@@ -12,6 +13,10 @@ import java.awt.*;
 import java.time.Instant;
 
 public class DiscordLogModule implements IDiscordModule {
+
+    @Getter
+    private static DiscordLogModule instance;
+
     @Override
     public void load() {
         register();
@@ -29,19 +34,22 @@ public class DiscordLogModule implements IDiscordModule {
         DiscordModule.getInstance().getJda().addEventListener(new LogListener());
     }
 
-    public void loadEmbed(){
+    public void log(MessageEmbed embed){
         TextChannel textChannel = DiscordModule.getInstance().getJda().getTextChannelById(DiscordIds.discordLogChannel);
+        textChannel.sendMessageEmbeds(embed).queue();
+    }
+
+    public void loadEmbed(){
         me.anton.sickcore.modules.discord.handlers.messages.EmbedBuilder embed = new me.anton.sickcore.modules.discord.handlers.messages.EmbedBuilder()
                 .setTitle("**Load | SickMC**")
                 .setContent("Proxy loaded!");
-        textChannel.sendMessageEmbeds(embed.build()).queue();
+        log(embed.build());
     }
 
     public void unloadEmbed(){
-        TextChannel textChannel = DiscordModule.getInstance().getJda().getTextChannelById(DiscordIds.discordLogChannel);
         me.anton.sickcore.modules.discord.handlers.messages.EmbedBuilder embed = new me.anton.sickcore.modules.discord.handlers.messages.EmbedBuilder()
                 .setTitle("**Unload | SickMC**")
                 .setContent("Proxy unloaded!");
-        textChannel.sendMessageEmbeds(embed.build()).queue();
+        log(embed.build());
     }
 }

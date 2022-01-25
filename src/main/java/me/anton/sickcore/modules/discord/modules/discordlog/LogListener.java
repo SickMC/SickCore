@@ -23,15 +23,15 @@ import java.util.stream.Collectors;
 
 public class LogListener extends ListenerAdapter {
 
-    Guild guild = DiscordModule.getInstance().getMainGuild();
-    TextChannel textChannel = guild.getTextChannelById(DiscordIds.discordLogChannel);
+    private Guild guild = DiscordModule.getInstance().getMainGuild();
+    DiscordLogModule module = DiscordLogModule.getInstance();
 
     @Override
     public void onGuildMemberJoin(@NotNull GuildMemberJoinEvent event) {
         MessageEmbed builder = new me.anton.sickcore.modules.discord.handlers.messages.EmbedBuilder()
                 .setTitle("Join")
                 .setContent(event.getMember().getAsMention() + " joined the server!").build();
-        textChannel.sendMessageEmbeds(builder).queue();
+        module.log(builder);
     }
 
     @Override
@@ -39,7 +39,7 @@ public class LogListener extends ListenerAdapter {
         MessageEmbed builder = new me.anton.sickcore.modules.discord.handlers.messages.EmbedBuilder()
                 .setTitle("InviteCreate")
                 .setContent(event.getInvite().getInviter().getAsMention() + " created the invite: " + event.getInvite().getUrl()).build();
-        textChannel.sendMessageEmbeds(builder).queue();
+        module.log(builder);
     }
 
     @Override
@@ -47,7 +47,7 @@ public class LogListener extends ListenerAdapter {
         MessageEmbed builder = new me.anton.sickcore.modules.discord.handlers.messages.EmbedBuilder()
                 .setTitle("InviteDelete")
                 .setContent("The invite " + event.getUrl() + " was deleted!").build();
-        textChannel.sendMessageEmbeds(builder).queue();
+        module.log(builder);
     }
 
     @Override
@@ -56,7 +56,7 @@ public class LogListener extends ListenerAdapter {
                 .setTitle("RoleAdd")
                 .setContent(event.getMember().getAsMention() + " got the role " + event.getRoles().parallelStream().map(role -> role.getAsMention()).collect(Collectors.joining(", "))  + "!" +
                         "\nHe/She has now the roles: " + event.getMember().getRoles().parallelStream().map(role -> role.getAsMention()).collect(Collectors.joining(", "))).build();
-        textChannel.sendMessageEmbeds(embed).queue();
+        module.log(embed);
     }
 
     @Override
@@ -65,7 +65,7 @@ public class LogListener extends ListenerAdapter {
                 .setTitle("RoleRemove")
                 .setContent(event.getMember().getAsMention() + " lost the role " + event.getRoles().parallelStream().map(role -> role.getAsMention()).collect(Collectors.joining(", "))  + "!" +
                         "\nHe/She has now the roles: " + event.getMember().getRoles().parallelStream().map(role -> role.getAsMention()).collect(Collectors.joining(", "))).build();
-        textChannel.sendMessageEmbeds(embed).queue();
+        module.log(embed);
     }
 
     @Override
@@ -73,7 +73,7 @@ public class LogListener extends ListenerAdapter {
         MessageEmbed embed = new me.anton.sickcore.modules.discord.handlers.messages.EmbedBuilder()
                 .setTitle("AvatarUpdate")
                 .setContent(event.getMember().getAsMention() + "'s avatar changed from: \n" + event.getOldAvatarUrl() + " to: " + event.getNewAvatarUrl()).build();
-        textChannel.sendMessageEmbeds(embed).queue();
+        module.log(embed);
     }
 
     @Override
@@ -81,7 +81,7 @@ public class LogListener extends ListenerAdapter {
         MessageEmbed embed = new me.anton.sickcore.modules.discord.handlers.messages.EmbedBuilder()
                 .setTitle("NicknameChange")
                 .setContent(event.getMember().getAsMention() + "'s nickname changed from: \n__" + event.getOldNickname() + "__ to: " + event.getNewNickname() + "__").build();
-        textChannel.sendMessageEmbeds(embed).queue();
+        module.log(embed);
     }
 
     @Override
@@ -95,7 +95,7 @@ public class LogListener extends ListenerAdapter {
                     MessageEmbed embed = new me.anton.sickcore.modules.discord.handlers.messages.EmbedBuilder()
                             .setTitle("Voice Kick")
                             .setContent(event.getMember().getAsMention() + " was kicked by: " + entry.getUser().getAsMention() + "\n from channel: " + event.getOldValue().getAsMention()).build();
-                    textChannel.sendMessageEmbeds(embed).queue();
+                    module.log(embed);
                 });
     }
 
@@ -111,7 +111,7 @@ public class LogListener extends ListenerAdapter {
                             .setTitle("Voice Move")
                             .setContent(event.getMember().getAsMention() + " was moved by: " + entry.getUser().getAsMention() + "\n from " + event.getOldValue().getAsMention() + " to " + event.getNewValue().getAsMention()).build();
 
-                    textChannel.sendMessageEmbeds(embed).queue();
+                    module.log(embed);
                 });
     }
 
@@ -127,7 +127,7 @@ public class LogListener extends ListenerAdapter {
                             .setTitle("Ban")
                             .setContent(event.getUser().getAsTag() + " was banned by: " + entry.getUser().getAsMention() + " with the reason: " + entry.getReason()).build();
 
-                    textChannel.sendMessageEmbeds(embed).queue();
+                    module.log(embed);
                 });
     }
 
@@ -143,7 +143,7 @@ public class LogListener extends ListenerAdapter {
                             .setTitle("Unban")
                             .setContent(event.getUser().getAsTag() + " was unbanned by: " + entry.getUser().getAsMention()).build();
 
-                    textChannel.sendMessageEmbeds(embed).queue();
+                    module.log(embed);
                 });
     }
 
@@ -159,7 +159,7 @@ public class LogListener extends ListenerAdapter {
                             .setTitle("Kick")
                             .setContent(event.getUser().getAsTag() + " was kicked by: " + entry.getUser().getAsMention() + " with the reason: "+ entry.getReason()).build();
 
-                    textChannel.sendMessageEmbeds(embed).queue();
+                    module.log(embed);
                 });
     }
 
