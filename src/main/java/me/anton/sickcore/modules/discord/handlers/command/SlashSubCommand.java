@@ -19,9 +19,6 @@ public abstract class SlashSubCommand {
     private boolean subCommandDataCached = false;
     private final List<SubcommandData> cachedSubCommandData = new ArrayList<>();
 
-    private boolean aliasesCached = false;
-    private final List<String> aliases = new ArrayList<>();
-
     private boolean subOptionsDataCached = false;
     private final List<OptionData> cachedSubOptionData = new ArrayList<>();
 
@@ -31,13 +28,6 @@ public abstract class SlashSubCommand {
 
     public abstract boolean isEphemeral();
 
-    public abstract List<String> initAliases();
-    public List<String> getAliases(){
-        if(this.aliasesCached) return this.aliases;
-        this.aliases.addAll(initAliases());
-        this.aliasesCached = true;
-        return this.aliases;
-    }
 
     public abstract List<OptionData> initSubOptionData();
     public List<OptionData> getSubOptionData(){
@@ -50,9 +40,6 @@ public abstract class SlashSubCommand {
     public List<SubcommandData> initSubCommandData(){
         List<SubcommandData> data = new ArrayList<>();
         data.add(new SubcommandData(getName(), getDescription()).addOptions(getSubOptionData()));
-        for (String alias : getAliases()) {
-            data.add(new SubcommandData(alias, getDescription()).addOptions(getSubOptionData()));
-        }
         return data;
     }
     public List<SubcommandData> getOptionData(){
@@ -72,22 +59,4 @@ public abstract class SlashSubCommand {
         return this.mainCommand.getApiPlayer(user);
     }
 
-    public boolean hasPermission(User user, String permission){
-        return this.mainCommand.hasPermission(user, permission);
-    }
-
-    public void sendNoVerifyMessage(SlashCommandEvent event){
-        this.mainCommand.sendNoVerifyMessage(event);
-    }
-
-    public void sendNoPermissions(SlashCommandEvent event) { this.mainCommand.sendNoPermissions(event); }
-
-    public boolean permissionCheck(User user, SlashCommandEvent hook){
-        if(!this.mainCommand.permissionCheck(user, hook)) return false;
-        boolean state = hasPermission(user, getPermission());
-        if(!state){
-            sendNoPermissions(hook);
-        }
-        return state;
-    }
 }

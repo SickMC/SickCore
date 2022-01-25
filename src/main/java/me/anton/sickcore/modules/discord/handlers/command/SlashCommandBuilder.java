@@ -12,11 +12,9 @@ import java.util.concurrent.atomic.AtomicBoolean;
 public class SlashCommandBuilder extends ListenerAdapter {
 
     private HashMap<String, SlashCommand> commands = new HashMap<>();
-    private HashMap<String, SlashCommand> aliases = new HashMap<>();
 
     public void registerCommand(SlashCommand command){
         commands.put(command.getName(), command);
-        command.getAliases().forEach(s -> aliases.put(s, command));
 
         CommandCreateAction action = DiscordModule.getInstance().getJda()
                 .upsertCommand(command.getName(), command.getDescription());
@@ -33,15 +31,6 @@ public class SlashCommandBuilder extends ListenerAdapter {
         commands.forEach((name, command) -> {
             if(called.get()) return;
             if(event.getName().equalsIgnoreCase(name)){
-                event.deferReply().complete();
-                command.preExecute(event.getUser(), event.getHook(), event);
-                called.set(true);
-            }
-        });
-        if(called.get()) return;
-        aliases.forEach((alias, command) -> {
-            if(called.get()) return;
-            if(event.getName().equalsIgnoreCase(alias)){
                 event.deferReply().complete();
                 command.preExecute(event.getUser(), event.getHook(), event);
                 called.set(true);
