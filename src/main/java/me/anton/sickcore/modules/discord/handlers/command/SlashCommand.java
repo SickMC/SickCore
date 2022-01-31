@@ -3,8 +3,11 @@ import lombok.Data;
 import me.anton.sickcore.api.player.apiPlayer.APIPlayer;
 import me.anton.sickcore.api.player.apiPlayer.IAPIPlayer;
 import me.anton.sickcore.api.player.apiPlayer.provider.DiscordAPIPlayerAdapter;
+import me.anton.sickcore.api.player.discordPlayer.DiscordPlayer;
+import me.anton.sickcore.api.utils.discord.DiscordIds;
 import me.anton.sickcore.modules.discord.DiscordModule;
 import me.anton.sickcore.modules.discord.handlers.messages.DiscordMessages;
+import me.anton.sickcore.modules.discord.handlers.messages.EmbedBuilder;
 import net.dv8tion.jda.api.entities.*;
 import net.dv8tion.jda.api.events.interaction.SlashCommandEvent;
 import net.dv8tion.jda.api.interactions.InteractionHook;
@@ -25,13 +28,9 @@ public abstract class SlashCommand {
 
     public abstract String getName();
 
+    public abstract boolean isStaff();
+
     public abstract String getDescription();
-
-    public abstract boolean isEphemeral();
-
-    public String getPermission(){
-        return "";
-    }
 
     public abstract List<OptionData> initOptionData();
     public List<OptionData> getOptionData(){
@@ -61,7 +60,7 @@ public abstract class SlashCommand {
     public void preExecute(User user, InteractionHook hook, SlashCommandEvent event){
         String subCommandName = event.getSubcommandName();
         if(subCommandName == null){
-            hook.setEphemeral(isEphemeral());
+            if (isStaff() && !staffCheck(user, hook))return;
             execute(user, hook, event);
             return;
         }
@@ -69,11 +68,28 @@ public abstract class SlashCommand {
         for (SlashSubCommand subCommand : getSlashSubCommands()) {
             if(called) continue;
             if(subCommand.getName().equalsIgnoreCase(subCommandName)){
-                hook.setEphemeral(subCommand.isEphemeral());
+                if (subCommand.isStaff() && !subCommand.staffCheck(user, hook))return;
                 subCommand.execute(user, hook, event);
                 called = true;
             }
         }
+    }
+
+    public boolean isStaffChannel(SlashCommandEvent event){
+        return event.getTextChannel().getId().equals(DiscordIds.staffCommandsChannel);
+    }
+
+    private boolean staffCheck(User user, InteractionHook hook){
+        if (!DiscordAPIPlayerAdapter.isVerified(user)) {
+            hook.sendMessageEmbeds(DiscordMessages.getNotVerified(getMember(user))).setEphemeral(true).queue();
+            return false;
+        }
+        boolean state = new APIPlayer(user.getId()).isTeam();
+        if(!state){
+            hook.sendMessageEmbeds(DiscordMessages.getNoStaff(getMember(user))).setEphemeral(true).queue();
+        }
+
+        return state;
     }
 
     public IAPIPlayer getApiPlayer(User user){
@@ -81,6 +97,8 @@ public abstract class SlashCommand {
         else return null;
     }
 
-
+    public Member getMember(User user){
+        return DiscordModule.getInstance().getMainGuild().getMember(user);
+    }
 
 }

@@ -1,7 +1,10 @@
 package me.anton.sickcore.modules.discord.handlers.command;
 
 import lombok.Data;
+import me.anton.sickcore.api.player.apiPlayer.APIPlayer;
 import me.anton.sickcore.api.player.apiPlayer.IAPIPlayer;
+import me.anton.sickcore.api.player.apiPlayer.provider.DiscordAPIPlayerAdapter;
+import me.anton.sickcore.modules.discord.handlers.messages.DiscordMessages;
 import net.dv8tion.jda.api.entities.User;
 import net.dv8tion.jda.api.events.interaction.SlashCommandEvent;
 import net.dv8tion.jda.api.interactions.InteractionHook;
@@ -22,11 +25,11 @@ public abstract class SlashSubCommand {
     private boolean subOptionsDataCached = false;
     private final List<OptionData> cachedSubOptionData = new ArrayList<>();
 
+    public abstract boolean isStaff();
+
     public abstract String getName();
 
     public abstract String getDescription();
-
-    public abstract boolean isEphemeral();
 
 
     public abstract List<OptionData> initSubOptionData();
@@ -49,8 +52,14 @@ public abstract class SlashSubCommand {
         return this.cachedSubCommandData;
     }
 
-    public String getPermission(){
-        return mainCommand.getPermission();
+    public boolean staffCheck(User user, InteractionHook hook){
+        if (!DiscordAPIPlayerAdapter.isVerified(user))return false;
+        boolean state = new APIPlayer(user.getId()).isTeam();
+        if(!state){
+            hook.sendMessageEmbeds(DiscordMessages.getNoStaff(mainCommand.getMember(user))).setEphemeral(false).queue();
+        }
+
+        return state;
     }
 
     public abstract void execute(User user, InteractionHook hook, SlashCommandEvent event);

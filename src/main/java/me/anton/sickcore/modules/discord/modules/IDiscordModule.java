@@ -4,7 +4,9 @@ import me.anton.sickcore.modules.discord.DiscordModule;
 
 public interface IDiscordModule {
 
-    public void load();
+    public default void load(){
+        register();
+    };
     public void unload();
     public void register();
     public default DiscordModule getModule(){

@@ -16,8 +16,8 @@ public class RankUpdate {
             Role player = module.getMainGuild().getRoleById(DiscordIds.player);
 
             switch (new APIPlayer(userID).getRank()){
-                case DEV -> {
-                    module.getMainGuild().modifyMemberRoles(member, player, module.getMainGuild().getRoleById(DiscordIds.dev)).queue();
+                case DEV, CONTENT, BUILDER -> {
+                    module.getMainGuild().modifyMemberRoles(member, player, module.getMainGuild().getRoleById(DiscordIds.staff)).queue();
                     break;
                 }
                 case ADMIN -> {
@@ -26,14 +26,6 @@ public class RankUpdate {
                 }
                 case MODERATOR -> {
                     module.getMainGuild().modifyMemberRoles(member, player, module.getMainGuild().getRoleById(DiscordIds.mod)).queue();
-                    break;
-                }
-                case BUILDER -> {
-                    module.getMainGuild().modifyMemberRoles(member, player, module.getMainGuild().getRoleById(DiscordIds.builder)).queue();
-                    break;
-                }
-                case CONTENT -> {
-                    module.getMainGuild().modifyMemberRoles(member, player, module.getMainGuild().getRoleById(DiscordIds.content)).queue();
                     break;
                 }
                 case PLAYER -> {
@@ -59,8 +51,8 @@ public class RankUpdate {
             Role player = module.getMainGuild().getRoleById(DiscordIds.player);
 
             switch (bungeePlayer.api().getRank()){
-                case DEV -> {
-                    module.getMainGuild().modifyMemberRoles(member, player, module.getMainGuild().getRoleById(DiscordIds.dev)).queue();
+                case DEV, BUILDER, CONTENT -> {
+                    module.getMainGuild().modifyMemberRoles(member, player, module.getMainGuild().getRoleById(DiscordIds.staff)).queue();
                     break;
                 }
                 case ADMIN -> {
@@ -69,14 +61,6 @@ public class RankUpdate {
                 }
                 case MODERATOR -> {
                     module.getMainGuild().modifyMemberRoles(member, player, module.getMainGuild().getRoleById(DiscordIds.mod)).queue();
-                    break;
-                }
-                case BUILDER -> {
-                    module.getMainGuild().modifyMemberRoles(member, player, module.getMainGuild().getRoleById(DiscordIds.builder)).queue();
-                    break;
-                }
-                case CONTENT -> {
-                    module.getMainGuild().modifyMemberRoles(member, player, module.getMainGuild().getRoleById(DiscordIds.content)).queue();
                     break;
                 }
                 case PLAYER -> {

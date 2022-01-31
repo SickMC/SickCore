@@ -5,6 +5,7 @@ import me.anton.sickcore.api.player.discordPlayer.IDiscordPlayer;
 import me.anton.sickcore.modules.discord.DiscordModule;
 import net.dv8tion.jda.api.entities.Member;
 import net.dv8tion.jda.api.entities.MessageEmbed;
+import net.dv8tion.jda.api.entities.User;
 
 import java.awt.*;
 import java.time.Instant;
@@ -17,6 +18,14 @@ public class EmbedBuilder {
     private Member member = null;
     private Color color = null;
     private boolean timeStamp = true;
+
+
+    public EmbedBuilder(User user){
+        this.type = EmbedType.UTILITY;
+        this.builder = new net.dv8tion.jda.api.EmbedBuilder();
+        this.player = new DiscordPlayer(DiscordModule.getInstance().getMainGuild().getMember(user));
+        this.member = DiscordModule.getInstance().getMainGuild().getMember(user);
+    }
 
     public EmbedBuilder(IDiscordPlayer player){
         this.type = EmbedType.UTILITY;
@@ -53,6 +62,7 @@ public class EmbedBuilder {
     }
 
     public EmbedBuilder addField(MessageEmbed.Field field){
+        if (field == null){builder.addBlankField(true);return this;}
         builder.addField(field);
         return this;
     }

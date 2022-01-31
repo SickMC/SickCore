@@ -1,13 +1,17 @@
 package me.anton.sickcore.modules.discord;
 
 import lombok.Getter;
-import me.anton.sickcore.api.database.DatabaseModel;
 import me.anton.sickcore.api.utils.common.FileUtils;
 import me.anton.sickcore.api.utils.common.system.Logger;
 import me.anton.sickcore.core.Core;
 import me.anton.sickcore.core.module.IModule;
+import me.anton.sickcore.modules.discord.handlers.command.SelectionMenuListener;
 import me.anton.sickcore.modules.discord.handlers.command.SlashCommandBuilder;
 import me.anton.sickcore.modules.discord.modules.DiscordModuleHandler;
+import me.anton.sickcore.modules.discord.modules.staffcommands.ClearCommand;
+import me.anton.sickcore.modules.discord.modules.staffcommands.PingCommand;
+import me.anton.sickcore.modules.discord.modules.staffcommands.cloud.CloudCommand;
+import me.anton.sickcore.modules.discord.modules.verify.VerifyCommand;
 import net.dv8tion.jda.api.JDA;
 import net.dv8tion.jda.api.JDABuilder;
 import net.dv8tion.jda.api.OnlineStatus;
@@ -52,6 +56,8 @@ public class DiscordModule implements IModule {
     @Override
     public void register() {
         start();
+        Arrays.asList(new CloudCommand(), new ClearCommand(), new PingCommand(), new VerifyCommand()).forEach(command -> this.commandBuilder.registerCommand(command));
+        getJda().addEventListener(new SelectionMenuListener());
     }
 
     public void start(){
@@ -100,5 +106,9 @@ public class DiscordModule implements IModule {
 
     public Object readFromConfig(String key){
         return model.get(key);
+    }
+
+    public Document getCommands(){
+        return FileUtils.getSubDocument("registeredCommands", model);
     }
 }

@@ -3,5 +3,11 @@
   "mainguildID" : "908087446229643314",
   "ticketCategory" : "908460345323032606",
   "ticketArchiveCategory" : "908460402067783691",
-  "ticketChannel" : "908093243177197618"
+  "ticketChannel" : "908093243177197618",
+  "registeredCommands" : {
+    "clear" : "937742552482840646",
+    "ping" : "917062993492213791",
+    "verify" : "919231624632213555",
+    "cloud": "937778996463157328"
+  }
 }

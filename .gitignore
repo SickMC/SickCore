@@ -5,6 +5,8 @@
 *.ipr
 *.iws
 src/main/resources/json/mongo.json
+src/main/resources/json/discord.json
+
 
 # IntelliJ
 out/

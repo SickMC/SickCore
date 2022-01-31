@@ -1,11 +1,15 @@
 package me.anton.sickcore.modules.discord.handlers.command;
 
+import me.anton.sickcore.api.utils.common.FileUtils;
+import me.anton.sickcore.api.utils.common.system.Logger;
 import me.anton.sickcore.modules.discord.DiscordModule;
 import net.dv8tion.jda.api.events.interaction.SlashCommandEvent;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
 import net.dv8tion.jda.api.requests.restaction.CommandCreateAction;
+import net.dv8tion.jda.api.requests.restaction.CommandEditAction;
 import org.jetbrains.annotations.NotNull;
 
+import java.io.File;
 import java.util.HashMap;
 import java.util.concurrent.atomic.AtomicBoolean;
 
@@ -15,13 +19,34 @@ public class SlashCommandBuilder extends ListenerAdapter {
 
     public void registerCommand(SlashCommand command){
         commands.put(command.getName(), command);
-
-        CommandCreateAction action = DiscordModule.getInstance().getJda()
-                .upsertCommand(command.getName(), command.getDescription());
-        if(command.getSlashSubCommands().isEmpty()){
-            action.addOptions(command.getOptionData());
+        if(DiscordModule.getInstance().getCommands().containsKey(command.getName())){
+            CommandEditAction action =
+                    DiscordModule.getInstance().getJda()
+                            .editCommandById(DiscordModule.getInstance().getCommands().getString(command.getName()))
+                            .setDescription(command.getDescription());
+            if(command.getSlashSubCommands().isEmpty()){
+                action
+                        .clearOptions()
+                        .addOptions(command.getOptionData());
+            }else {
+                action
+                        .addSubcommands(command.getSlashSubCommandData());
+            }
+            action.queue();
         }else {
-            action.addSubcommands(command.getSlashSubCommandData());
+            CommandCreateAction action = DiscordModule.getInstance().getJda()
+                    .upsertCommand(command.getName(), command.getDescription());
+            if(command.getSlashSubCommands().isEmpty()){
+                action
+                        .addOptions(command.getOptionData());
+            }else {
+                action
+                        .addSubcommands(command.getSlashSubCommandData());
+            }
+
+            action.queue(regCommand -> {
+                Logger.info(regCommand.getName() + ": " + regCommand.getId());
+            });
         }
     }
 

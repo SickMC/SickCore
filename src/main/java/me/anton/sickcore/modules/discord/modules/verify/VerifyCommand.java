@@ -1,8 +1,6 @@
 package me.anton.sickcore.modules.discord.modules.verify;
 
-import me.anton.sickcore.api.player.apiPlayer.APIPlayer;
 import me.anton.sickcore.api.player.apiPlayer.IAPIPlayer;
-import me.anton.sickcore.api.player.apiPlayer.enums.Language;
 import me.anton.sickcore.api.player.apiPlayer.provider.DiscordAPIPlayerAdapter;
 import me.anton.sickcore.api.player.bungeePlayer.IBungeePlayer;
 import me.anton.sickcore.api.player.discordPlayer.DiscordPlayer;
@@ -10,9 +8,7 @@ import me.anton.sickcore.api.utils.discord.DiscordIds;
 import me.anton.sickcore.modules.discord.DiscordModule;
 import me.anton.sickcore.modules.discord.handlers.command.SlashCommand;
 import me.anton.sickcore.modules.discord.handlers.command.SlashSubCommand;
-import me.anton.sickcore.modules.discord.handlers.messages.DiscordMessages;
 import me.anton.sickcore.modules.discord.modules.ranks.RankUpdate;
-import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.entities.MessageEmbed;
 import net.dv8tion.jda.api.entities.User;
 import net.dv8tion.jda.api.events.interaction.SlashCommandEvent;
@@ -20,8 +16,6 @@ import net.dv8tion.jda.api.interactions.InteractionHook;
 import net.dv8tion.jda.api.interactions.commands.OptionType;
 import net.dv8tion.jda.api.interactions.commands.build.OptionData;
 
-import java.awt.*;
-import java.time.Instant;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -37,7 +31,7 @@ public class VerifyCommand extends SlashCommand {
     }
 
     @Override
-    public boolean isEphemeral() {
+    public boolean isStaff() {
         return false;
     }
 

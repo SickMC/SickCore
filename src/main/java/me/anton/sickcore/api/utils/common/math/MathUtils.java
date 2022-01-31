@@ -6,4 +6,7 @@ public class MathUtils {
         return Math.round( d * 100 ) / 100.0;
     }
 
+    public static double roundToHalf(double d) {
+        return Math.round(d * 2) / 2.0;
+    }
 }

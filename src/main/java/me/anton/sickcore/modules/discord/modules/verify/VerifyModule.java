@@ -32,7 +32,6 @@ public class VerifyModule implements IDiscordModule {
     @Override
     public void register() {
         BungeeCore.getInstance().getManager().registerCommand(new MCDiscordCommand());
-        DiscordModule.getInstance().getCommandBuilder().registerCommand(new VerifyCommand());
         DiscordModule.getInstance().getJda().addEventListener(new VerifyCleaner());
     }
 }

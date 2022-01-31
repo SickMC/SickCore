@@ -4,6 +4,7 @@ import lombok.SneakyThrows;
 import org.bson.Document;
 
 import java.io.*;
+import java.util.Map;
 
 public class FileUtils {
 
@@ -18,6 +19,10 @@ public class FileUtils {
             builder.append(line).append("\n");
         }
         return Document.parse(builder.toString());
+    }
+
+    public static Document getSubDocument(String key, Document document){
+        return document.get(key, Document.class);
     }
 
 }
