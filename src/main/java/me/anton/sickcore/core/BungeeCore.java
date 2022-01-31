@@ -37,7 +37,7 @@ public class BungeeCore extends Core{
 
     public void onLoad(){
         register();
-        isMainProxy = CloudAPI.getInstance().getThisSidesName().equals("Waterfall-1");
+        isMainProxy = CloudAPI.getInstance().getThisSidesName().equals("Proxy-1");
 
         moduleHandler.loadModules();
     }

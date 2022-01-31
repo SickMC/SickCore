@@ -39,7 +39,7 @@ public class APIPlayer implements IAPIPlayer {
         this.model = Core.getInstance().getPlayerModel();
         this.document = model.getDocument("discordid", discordID);
         if (!model.documentExists("discordid", discordID))return;
-        this.uuid = UUID.fromString(model.getString("uuid", "discordid", discordID));
+        this.uuid = UUID.fromString((String) model.get("uuid", "discordid", discordID));
     }
 
     private void createAPIPlayer() {

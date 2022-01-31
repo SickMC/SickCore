@@ -14,7 +14,7 @@ import java.util.UUID;
 @Getter
 public class DatabaseModel {
 
-    private MongoCollection<Document> collection;
+    private final MongoCollection<Document> collection;
 
     public DatabaseModel(String name){
         MongoDatabase database = Core.getInstance().getMongoConnection().getDatabase();
@@ -32,49 +32,16 @@ public class DatabaseModel {
         collection.replaceOne(Filters.eq(key, value), document);
     }
 
-    public String getString(String required, String key, String value){
-        return collection.find(Filters.eq(key, value)).first().getString(required);
-    }
-    public String getString(String key, Document finder){
-        return collection.find(finder).first().getString(key);
+    public Object get(String required, String key, String value){
+        return collection.find(Filters.eq(key, value)).first().get(required);
     }
 
-    public int getInteger(String required, String key, String value){
-        return collection.find(Filters.eq(key, value)).first().getInteger(required);
-    }
-    public int getInteger(String key, Document finder){
-        return collection.find(finder).first().getInteger(key);
+    public Object get(String required, Finder finder){
+        return collection.find(finder.bson()).first().get(required);
     }
 
-    public double getDouble(String required, String key, String value){
-        return collection.find(Filters.eq(key, value)).first().getDouble(required);
-    }
-    public double getDouble(String key, Document finder){
-        return collection.find(finder).first().getDouble(key);
-    }
-
-    public Date getDate(String required, String key, String value){
-        return collection.find(Filters.eq(key, value)).first().getDate(required);
-    }
-
-    public Date getDate(String key, Document finder){
-        return collection.find(finder).first().getDate(key);
-    }
-
-    public boolean getBoolean(String key, Document finder){
-        return collection.find(finder).first().getBoolean(key);
-    }
-
-    public boolean getBoolean(String required, String key, String value){
-        return collection.find(Filters.eq(key, value)).first().getBoolean(required);
-    }
-
-    public long getLong(String required, String key, String value){
-        return collection.find(Filters.eq(key, value)).first().getLong(required);
-    }
-
-    public long getLong(String key, Document finder){
-        return collection.find(finder).first().getLong(key);
+    public Object get(String required, Document finder){
+        return collection.find(finder).first().get(required);
     }
 
     public boolean documentExists(Document document){

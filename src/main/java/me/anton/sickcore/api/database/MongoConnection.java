@@ -6,6 +6,8 @@ import com.mongodb.client.MongoClient;
 import com.mongodb.client.MongoClients;
 import com.mongodb.client.MongoDatabase;
 import lombok.Getter;
+import me.anton.sickcore.api.utils.common.FileUtils;
+import org.bson.Document;
 
 import java.util.logging.Logger;
 
@@ -17,8 +19,18 @@ public final class MongoConnection {
     public MongoConnection() {
         Logger mongoLogger = Logger.getLogger("org.mongodb.driver");
         mongoLogger.setLevel(java.util.logging.Level.SEVERE);
-        MongoClient client = MongoClients.create("mongodb://localhost:27017");
-        this.database = client.getDatabase("sickmc");
+        String uri = "mongodb://" + getOutput("username") + ":" + getOutput("password") + "@" + getOutput("address") + ":" + getOutput("port") + "/?authSource=" + getOutput("database");
+        ConnectionString connectionString = new ConnectionString(uri);
+        MongoClientSettings settings = MongoClientSettings.builder()
+                .applyConnectionString(connectionString)
+                .build();
+        MongoClient mongoClient = MongoClients.create(settings);
+        this.database = mongoClient.getDatabase((String) getOutput("database"));
+    }
+
+    private Object getOutput(String key){
+        Document object = FileUtils.getAsDocument("mongo");
+        return object.get(key);
     }
 
 }
