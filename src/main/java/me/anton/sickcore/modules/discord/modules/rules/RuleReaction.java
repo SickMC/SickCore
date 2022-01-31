@@ -15,12 +15,13 @@ public class RuleReaction extends ListenerAdapter {
         Role player = DiscordModule.getInstance().getMainGuild().getRoleById(DiscordIds.player);
         if (event.getMember().getRoles().contains(player)) {
             event.getMember().getRoles().forEach(role -> {
-                event.deferEdit().queue();
                 DiscordModule.getInstance().getMainGuild().removeRoleFromMember(event.getMember(), role).queue();
+                event.reply("Rules unaccepted!").setEphemeral(true).queue();
             });
             return;
         }
         event.getGuild().addRoleToMember(event.getMember(), player).queue();
-        event.deferEdit().queue();
+        event.reply("Rules accepted!").setEphemeral(true).queue();
+        return;
     }
 }

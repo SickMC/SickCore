@@ -29,6 +29,7 @@ public class DiscordLogModule implements IDiscordModule {
 
     @Override
     public void register() {
+        instance = this;
         loadEmbed();
 
         DiscordModule.getInstance().getJda().addEventListener(new LogListener());

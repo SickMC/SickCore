@@ -4,6 +4,7 @@
 *.iml
 *.ipr
 *.iws
+src/main/resources/json/mongo.json
 
 # IntelliJ
 out/

@@ -38,14 +38,14 @@ public class TicketModule implements IDiscordModule {
     }
 
     public String getTicketCategoryID(){
-        return getModule().getDocString("ticketCategory");
+        return (String) getModule().readFromConfig("ticketCategory");
     }
 
     public String getTicketArchiveCategoryID(){
-        return getModule().getDocString("ticketArchiveCategory");
+        return (String) getModule().readFromConfig("ticketArchiveCategory");
     }
 
     public String getTicketChannel(){
-        return getModule().getDocString("ticketChannel");
+        return (String) getModule().readFromConfig("ticketChannel");
     }
 }

@@ -32,10 +32,11 @@ public class Ticket {
         this.ticket = module.getModel().getDocument("playerID", player.user().getId());
         this.player = player;
         this.assigned = !ticket.getString("assignedID").equals("0");
+        this.ticketChannel = dModule.getMainGuild().getTextChannelById(ticket.getString("channelID"));
     }
 
     public void open(){
-        this.ticketChannel = dModule.getMainGuild().getCategoryById(module.getTicketCategoryID()).createTextChannel("ticket-" + player.member().getEffectiveName()).complete();
+        this.ticketChannel = dModule.getMainGuild().getCategoryById(module.getTicketCategoryID()).createTextChannel("ticket-" + player.user().getName()).complete();
         ticket.put("channelID", ticketChannel.getId());
         module.getModel().updateDocument("playerID", player.user().getId(), ticket);
         ticketChannel.putPermissionOverride(player.member()).setAllow(Permission.VIEW_CHANNEL).queue();
@@ -48,7 +49,7 @@ public class Ticket {
         if (assigned)return;
         this.assignedPlayer = teamler;
         assigned = true;
-        ticket.put("channelID", teamler.user().getId());
+        ticket.put("assignedID", teamler.user().getId());
         module.getModel().updateDocument("playerID", player.user().getId(), ticket);
         ticketChannel.putPermissionOverride(dModule.getJda().getRoleById(DiscordIds.mod)).setDeny(Permission.VIEW_CHANNEL).queue();
         ticketChannel.putPermissionOverride(assignedPlayer.member()).setAllow(Permission.VIEW_CHANNEL).queue();
@@ -60,7 +61,7 @@ public class Ticket {
         ticketChannel.putPermissionOverride(player.member()).setDeny(Permission.VIEW_CHANNEL).queue();
         ticketChannel.putPermissionOverride(dModule.getJda().getRoleById(DiscordIds.mod)).setDeny(Permission.VIEW_CHANNEL).queue();
         ticketChannel.getManager().setParent(dModule.getMainGuild().getCategoryById(module.getTicketArchiveCategoryID())).queue();
-        module.getModule().getModel().deleteDocument("playerID", player.user().getId());
+        module.getModel().deleteDocument("playerID", player.user().getId());
     }
 
 }
