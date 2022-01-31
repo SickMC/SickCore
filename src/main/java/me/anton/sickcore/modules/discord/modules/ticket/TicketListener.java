@@ -1,5 +1,6 @@
 package me.anton.sickcore.modules.discord.modules.ticket;
 
+import me.anton.sickcore.api.player.apiPlayer.provider.DiscordAPIPlayerAdapter;
 import me.anton.sickcore.api.player.discordPlayer.DiscordPlayer;
 import me.anton.sickcore.api.player.discordPlayer.IDiscordPlayer;
 import me.anton.sickcore.modules.discord.DiscordModule;
@@ -22,7 +23,7 @@ public class TicketListener extends ListenerAdapter {
                     DiscordLogModule.getInstance().log(new EmbedBuilder(event.getMember()).setTitle("Ticket").setContent(event.getMember().getAsMention() + " hat versucht ein Ticket zu öffnen.\nEr hatte aber schon eins geöffnet!").build());
                     return;
                 }
-                Ticket ticket = new Ticket(new DiscordPlayer(event.getMember()));
+                Ticket ticket = new Ticket(event.getMember());
                 ticket.open();
                 DiscordLogModule.getInstance().log(new EmbedBuilder(event.getMember()).setTitle("Ticket").setContent("Der Spieler " + event.getMember().getAsMention() + " hat das Ticket " + ticket.getTicketChannel().getAsMention() + " erstellt!").build());
                 break;
@@ -35,7 +36,7 @@ public class TicketListener extends ListenerAdapter {
                     return;
                 }
 
-                ticket.assign(new DiscordPlayer(event.getMember()));
+                ticket.assign(event.getMember());
                 DiscordLogModule.getInstance().log(new EmbedBuilder(event.getMember()).setTitle("Ticket").setContent("Das Ticket " + event.getTextChannel().getAsMention() + " wurde von " + event.getMember().getAsMention() + " übernommen!").build());
                 break;
             }

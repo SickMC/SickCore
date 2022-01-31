@@ -11,18 +11,12 @@ import net.dv8tion.jda.api.entities.User;
 
 public class DiscordPlayer implements IDiscordPlayer{
 
-    private IAPIPlayer player;
-    private Member member;
-
-    public DiscordPlayer(IAPIPlayer player){
-        if (!player.isVerified())return;
-        this.player = player;
-        this.member = DiscordModule.getInstance().getMainGuild().getMemberById(player.getDiscordID());
-    }
+    private final IAPIPlayer player;
+    private final Member member;
 
     public DiscordPlayer(Member member) {
         this.member = member;
-        this.player = new APIPlayer(member.getId());
+        this.player = new APIPlayer(member.getUser().getId());
     }
 
     @Override

@@ -56,6 +56,10 @@ public class DatabaseModel {
         return collection.find(Filters.eq(key, value)).first();
     }
 
+    public Document getDocument(Finder finder){
+        return collection.find(finder.bson()).first();
+    }
+
     public void deleteDocument(String key, String value){
         collection.deleteOne(Filters.eq(key, value));
     }
