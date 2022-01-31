@@ -1,6 +1,7 @@
 package me.anton.sickcore.modules.discord.modules.managers;
 
 import me.anton.sickcore.api.utils.discord.DiscordIds;
+import net.dv8tion.jda.api.entities.Emote;
 import net.dv8tion.jda.api.entities.MessageEmbed;
 import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
@@ -13,6 +14,8 @@ public class SuggestionManager extends ListenerAdapter {
     public void onMessageReceived(@NotNull MessageReceivedEvent event) {
         if (!event.getTextChannel().getId().equals(DiscordIds.suggestionchannel))return;
         if (event.getMember().getUser().isBot())return;
+        event.getMessage().addReaction("\uD83D\uDC4D").queue();
+        event.getMessage().addReaction("\uD83D\uDC4E").queue();
 
         MessageEmbed embed = new me.anton.sickcore.modules.discord.handlers.messages.EmbedBuilder(event.getMember())
                 .setTitle("SUGGESTION")
