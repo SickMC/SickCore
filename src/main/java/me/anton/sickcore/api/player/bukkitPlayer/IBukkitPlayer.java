@@ -37,12 +37,6 @@ public interface IBukkitPlayer {
 
     public void sendTitle(TitleBuilder EnTitleBuilder, TitleBuilder deTitleBuilder);
 
-    public void sendTitle(String title, String deTitle, String subTitle, String deSubTitle, int fadeIn, int stay, int fadeOut);
-
-    public void sendAnimatedTitle(String title, String deTitle, String subTitle, String deSubTitle, int fadeIn, int stay, int fadeOut);
-
-    public void sendCustomAnimatedTitle(String title, String deTitle, String subTitle, String deSubTitle, int fadeIn, int stay, int fadeOut, int speed, SoundBuilder finishSound);
-
     public void sendAnimatedTitle(TitleBuilder EnTitleBuilder, TitleBuilder deTitleBuilde);
 
     public void sendCustomAnimatedTitle(TitleBuilder EnTitleBuilder, TitleBuilder deTitleBuilder, int speed, SoundBuilder finishSound);
@@ -56,9 +50,5 @@ public interface IBukkitPlayer {
     public void vanish();
 
     public void unVanish();
-
-    public Material getRankWoolItem();
-
-    public ChatColor getChatColorByWool(Material wool);
 
 }

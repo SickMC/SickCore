@@ -50,7 +50,7 @@ public interface IAPIPlayer {
 
     public ChatColor getRankColor();
 
-    public void setRankColor(ChatColor rankColor);
+    public void setRankColor(ChatColor color);
 
     public boolean hasRankColor();
 
@@ -75,4 +75,8 @@ public interface IAPIPlayer {
     public boolean isTeam();
 
     public boolean isAdmin();
+
+    public boolean isHigher(Rank rank);
+
+    public boolean isLower(Rank rank);
 }

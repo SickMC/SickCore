@@ -5,13 +5,13 @@ import eu.thesimplecloud.module.permission.player.IPermissionPlayer;
 import me.anton.sickcore.api.database.DatabaseModel;
 import me.anton.sickcore.api.player.apiPlayer.enums.Language;
 import me.anton.sickcore.api.player.apiPlayer.enums.Rank;
-import me.anton.sickcore.api.player.apiPlayer.enums.RankBridge;
 import me.anton.sickcore.api.player.bukkitPlayer.BukkitPlayer;
 import me.anton.sickcore.api.player.bukkitPlayer.IBukkitPlayer;
 import me.anton.sickcore.api.player.bungeePlayer.BungeePlayer;
 import me.anton.sickcore.api.player.bungeePlayer.IBungeePlayer;
 import me.anton.sickcore.api.player.cloudPlayer.CloudAPIPlayer;
 import me.anton.sickcore.api.player.cloudPlayer.ICloudAPIPlayer;
+import me.anton.sickcore.api.utils.common.ColorUtils;
 import me.anton.sickcore.api.utils.common.string.EnumUtils;
 import me.anton.sickcore.api.utils.minecraft.player.uniqueid.UUIDFetcher;
 import me.anton.sickcore.core.Core;
@@ -19,6 +19,8 @@ import org.bson.Document;
 import org.bukkit.ChatColor;
 import org.jetbrains.annotations.NotNull;
 
+import java.awt.*;
+import java.util.Locale;
 import java.util.UUID;
 
 public class APIPlayer implements IAPIPlayer {
@@ -163,8 +165,8 @@ public class APIPlayer implements IAPIPlayer {
     }
 
     @Override
-    public void setRankColor(ChatColor rankColor) {
-        document.replace("rankcolor", rankColor.name().toLowerCase());
+    public void setRankColor(ChatColor color) {
+        document.replace("rankcolor", color.name().toLowerCase());
         update();
     }
 
@@ -180,7 +182,7 @@ public class APIPlayer implements IAPIPlayer {
 
     @Override
     public ChatColor getDefaultRankColor() {
-        return RankBridge.getColor(getRank());
+        return getRank().getColor();
     }
 
     @Override
@@ -200,9 +202,8 @@ public class APIPlayer implements IAPIPlayer {
 
     @Override
     public String getDisplayName() {
-        String s = null;
-        if (hasRankColor()) return getRank().getFullPrefix() + getRankColor() + getName() + "§r §r";
-        return getRank().getFullPrefix() + getDefaultRankColor() + getName() + "§r §r";
+        if (hasRankColor()) return getRank().getPrefix() + getRankColor() + getName() + "§r §r";
+        return getRank().getPrefix() + getDefaultRankColor() + getName() + "§r §r";
     }
 
     @Override
@@ -234,6 +235,16 @@ public class APIPlayer implements IAPIPlayer {
     @Override
     public boolean isAdmin() {
         return getRank() == Rank.ADMIN;
+    }
+
+    @Override
+    public boolean isHigher(Rank rank) {
+        return getRank().getPriority() >= rank.getPriority();
+    }
+
+    @Override
+    public boolean isLower(Rank rank) {
+        return getRank().getPriority() <= rank.getPriority();
     }
 
     private void update(){

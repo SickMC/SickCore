@@ -1,23 +1,28 @@
 package me.anton.sickcore.api.player.apiPlayer.enums;
 
-import me.anton.sickcore.api.utils.common.string.EnumUtils;
-import me.anton.sickcore.api.utils.common.string.StringUtils;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import org.bukkit.ChatColor;
 
+@Getter
+@AllArgsConstructor
 public enum Rank {
 
-    ADMIN, DEV, MODERATOR, BUILDER, CONTENT, MVP, VIP, PLAYER;
+    ADMIN(001, "Admin", ChatColor.DARK_RED),
+    MODERATOR(002, "Mod", ChatColor.DARK_GREEN),
+    DEV(003, "Dev", ChatColor.DARK_AQUA),
+    BUILDER(004, "Builder", ChatColor.DARK_AQUA),
+    CONTENT(005, "Content", ChatColor.DARK_AQUA),
+    MVP(006, "MVP", ChatColor.AQUA),
+    VIP(007, "VIP", ChatColor.LIGHT_PURPLE),
+    PLAYER(010, "Player", ChatColor.GRAY);
 
-
+    private final double priority;
+    private final String rawPrefix;
+    private final ChatColor color;
 
     public String getPrefix(){
-        return StringUtils.capitalize(EnumUtils.toName(this));
-    }
-
-    public String getFullPrefix(){
-        String prefix = RankBridge.getColor(this) + getPrefix() + "§8 × §r";
-        if (this == MVP)prefix = RankBridge.getColor(this) + getPrefix().toUpperCase() + "§8 × §r";
-        if (this == VIP)prefix = RankBridge.getColor(this) + getPrefix().toUpperCase() + "§8 × §r";
-        return prefix;
+        return getColor() + getRawPrefix() + "§8 × §r";
     }
 
 
