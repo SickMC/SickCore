@@ -30,6 +30,14 @@ public class TitleBuilder {
         this.stay = stay;
     }
 
+    public TitleBuilder(String title, String subtitle, int stay){
+        this.title = title;
+        this.subtitle = subtitle;
+        this.fadeIn = 1;
+        this.stay = stay;
+        this.fadeOut = 1;
+    }
+
     public void sendTitle(Player player){
         Title titlebuilder = Title.title(Component.text(title), Component.text(subtitle)
                 , Title.Times.of(Duration.ofSeconds(fadeIn), Duration.ofSeconds(stay), Duration.ofSeconds(fadeOut)));
