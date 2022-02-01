@@ -5,6 +5,7 @@ import lombok.Getter;
 import me.anton.sickcore.api.handler.listeners.bungee.BungeeListenerProvider;
 import me.anton.sickcore.core.Core;
 import me.anton.sickcore.core.module.IModule;
+import me.anton.sickcore.modules.basic.buildserver.BuildServerCommand;
 import me.anton.sickcore.modules.basic.lobby.LobbyCommand;
 import me.anton.sickcore.modules.basic.lobby.LobbyCommandAd;
 import me.anton.sickcore.modules.basic.playtime.PlaytimeCommand;
@@ -32,6 +33,8 @@ public class BasicModule implements IModule {
     public void register() {
         manager.registerCommand(new LobbyCommand());
         provider.register(new LobbyCommandAd());
+
+        manager.registerCommand(new BuildServerCommand());
 
         manager.registerCommand(new PlaytimeCommand());
     }

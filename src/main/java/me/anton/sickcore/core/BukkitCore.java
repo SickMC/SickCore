@@ -12,6 +12,7 @@ import me.anton.sickcore.api.handler.listeners.bukkit.events.world.ChunkLoadEven
 import me.anton.sickcore.api.handler.listeners.bukkit.events.world.WeatherChangeEventHandler;
 import me.anton.sickcore.api.player.apiPlayer.IAPIPlayer;
 import me.anton.sickcore.api.player.bukkitPlayer.IBukkitPlayer;
+import me.anton.sickcore.core.game.IGame;
 import me.anton.sickcore.games.defaults.all.HeadDBAPI;
 import me.anton.sickcore.games.defaults.all.LagCommand;
 import me.anton.sickcore.games.defaults.all.nick.AutoNickCommand;
@@ -57,6 +58,10 @@ public class BukkitCore extends Core {
     public void onLoad(){
         handler.loadGames();
         register();
+    }
+
+    public IGame getCurrentGame(){
+        return GameHandler.getCurrent();
     }
 
     public void onUnLoad(){
