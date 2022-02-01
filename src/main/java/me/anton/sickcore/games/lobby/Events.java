@@ -4,6 +4,7 @@ import lombok.Getter;
 import me.anton.sickcore.api.handler.listeners.bukkit.BukkitHandler;
 import me.anton.sickcore.api.player.apiPlayer.enums.Rank;
 import me.anton.sickcore.api.player.bukkitPlayer.IBukkitPlayer;
+import me.anton.sickcore.api.utils.minecraft.bukkit.player.TitleBuilder;
 import me.anton.sickcore.games.lobby.utility.LobbyItems;
 import org.bukkit.Bukkit;
 import org.bukkit.GameMode;
@@ -40,6 +41,7 @@ public class Events extends BukkitHandler {
         LobbyItems.addLobbyItems(bukkitPlayer);
         List<Rank> glowingRanks = Arrays.asList(Rank.ADMIN, Rank.BUILDER, Rank.CONTENT, Rank.MODERATOR);
         if (glowingRanks.contains(bukkitPlayer.api().getRank()) && !bukkitPlayer.isNicked())player.setGlowing(true);
+        bukkitPlayer.sendAnimatedTitle(new TitleBuilder("Lobby", "", 5), new TitleBuilder("Lobby", "", 5));
     }
 
     @Override

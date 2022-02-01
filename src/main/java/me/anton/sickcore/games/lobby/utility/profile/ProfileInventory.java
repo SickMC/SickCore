@@ -8,9 +8,9 @@ import me.anton.sickcore.api.utils.minecraft.bukkit.inventory.InventoryBuilder;
 import me.anton.sickcore.api.utils.minecraft.bukkit.inventory.InventoryUsage;
 import me.anton.sickcore.api.utils.minecraft.bukkit.item.ItemBuilder;
 import me.anton.sickcore.api.utils.minecraft.bukkit.player.sound.DefaultSounds;
+import me.anton.sickcore.core.BukkitCore;
 import me.anton.sickcore.games.defaults.all.HeadDBAPI;
 import me.anton.sickcore.games.defaults.all.nick.AutoNickInventory;
-import me.anton.sickcore.games.lobby.appereance.LobbyTablist;
 import me.arcaniax.hdb.api.HeadDatabaseAPI;
 import org.bukkit.ChatColor;
 import org.bukkit.Color;
@@ -69,7 +69,7 @@ public class ProfileInventory{
         builder.setItem(new ItemBuilder(Material.CLOCK).setName(iapiPlayer.languageString("§6Reset Rankcolor", "§6Setze Rankcolor zurück")).setLore(iapiPlayer.languageString("§7Click to reset your rankcolor to default!","§7Klicke um deine Rankcolor zum Standard zurückzusetzen!")).build(), 13, event -> {
             iapiPlayer.setRankColor(iapiPlayer.getDefaultRankColor());
             DefaultSounds.levelUP.play(player);
-            LobbyTablist.setPlayerTeams();
+            BukkitCore.getInstance().getCurrentGame().getTablistBuilder().assignTeams();
             openProfileInventory(player);
         });
 
@@ -77,89 +77,89 @@ public class ProfileInventory{
         String deClick = "§7Klicke um diese Farbe zu wählen!";
         String lanClick = iapiPlayer.languageString(enClick, deClick);
 
-        builder.setItem(new ItemBuilder(Material.GREEN_WOOL).setName(iapiPlayer.languageString("§6Dark Green", "§6Dunkelgrün")).setLore(lanClick).build(), 28, event -> {
+        builder.setItem(new ItemBuilder(Material.GREEN_DYE).setName(iapiPlayer.languageString("§6Dark Green", "§6Dunkelgrün")).setLore(lanClick).build(), 28, event -> {
             iapiPlayer.setRankColor(ChatColor.DARK_GREEN);
             DefaultSounds.levelUP.play(player);
             openProfileInventory(player);
-            LobbyTablist.setPlayerTeams();
+            BukkitCore.getInstance().getCurrentGame().getTablistBuilder().assignTeams();
         });
-        builder.setItem(new ItemBuilder(Material.BLACK_WOOL).setName(iapiPlayer.languageString("§6Black", "§6Schwarz")).setLore(lanClick).build(), 29, event -> {
+        builder.setItem(new ItemBuilder(Material.BLACK_DYE).setName(iapiPlayer.languageString("§6Black", "§6Schwarz")).setLore(lanClick).build(), 29, event -> {
             iapiPlayer.setRankColor(ChatColor.BLACK);
             DefaultSounds.levelUP.play(player);
             openProfileInventory(player);
-            LobbyTablist.setPlayerTeams();
+            BukkitCore.getInstance().getCurrentGame().getTablistBuilder().assignTeams();
         });
-        builder.setItem(new ItemBuilder(Material.LIGHT_BLUE_WOOL).setName(iapiPlayer.languageString("§6Blue", "§6Blue")).setLore(lanClick).build(), 30, event -> {
+        builder.setItem(new ItemBuilder(Material.LIGHT_BLUE_DYE).setName(iapiPlayer.languageString("§6Blue", "§6Blue")).setLore(lanClick).build(), 30, event -> {
             iapiPlayer.setRankColor(ChatColor.BLUE);
             DefaultSounds.levelUP.play(player);
             openProfileInventory(player);
-            LobbyTablist.setPlayerTeams();
+            BukkitCore.getInstance().getCurrentGame().getTablistBuilder().assignTeams();
         });
-        builder.setItem(new ItemBuilder(Material.WHITE_WOOL).setName(iapiPlayer.languageString("§6White", "§6Weiß")).setLore(lanClick).build(), 31, event -> {
+        builder.setItem(new ItemBuilder(Material.WHITE_DYE).setName(iapiPlayer.languageString("§6White", "§6Weiß")).setLore(lanClick).build(), 31, event -> {
             iapiPlayer.setRankColor(ChatColor.WHITE);
             DefaultSounds.levelUP.play(player);
             openProfileInventory(player);
-            LobbyTablist.setPlayerTeams();
+            BukkitCore.getInstance().getCurrentGame().getTablistBuilder().assignTeams();
         });
-        builder.setItem(new ItemBuilder(Material.PURPLE_WOOL).setName(iapiPlayer.languageString("§6Purple", "§6Lila")).setLore(lanClick).build(), 32, event -> {
+        builder.setItem(new ItemBuilder(Material.PURPLE_DYE).setName(iapiPlayer.languageString("§6Purple", "§6Lila")).setLore(lanClick).build(), 32, event -> {
             iapiPlayer.setRankColor(ChatColor.DARK_PURPLE);
             DefaultSounds.levelUP.play(player);
             openProfileInventory(player);
-            LobbyTablist.setPlayerTeams();
+            BukkitCore.getInstance().getCurrentGame().getTablistBuilder().assignTeams();
         });
-        builder.setItem(new ItemBuilder(Material.LIME_WOOL).setName(iapiPlayer.languageString("§6Light Green", "§6Hellgrün")).setLore(lanClick).build(), 33, event -> {
+        builder.setItem(new ItemBuilder(Material.LIME_DYE).setName(iapiPlayer.languageString("§6Light Green", "§6Hellgrün")).setLore(lanClick).build(), 33, event -> {
             iapiPlayer.setRankColor(ChatColor.GREEN);
             DefaultSounds.levelUP.play(player);
             openProfileInventory(player);
-            LobbyTablist.setPlayerTeams();
+            BukkitCore.getInstance().getCurrentGame().getTablistBuilder().assignTeams();
         });
-        builder.setItem(new ItemBuilder(Material.PINK_WOOL).setName(iapiPlayer.languageString("§6Pink", "§6Pink")).setLore(lanClick).build(), 34, event -> {
+        builder.setItem(new ItemBuilder(Material.PINK_DYE).setName(iapiPlayer.languageString("§6Pink", "§6Pink")).setLore(lanClick).build(), 34, event -> {
             iapiPlayer.setRankColor(ChatColor.LIGHT_PURPLE);
             DefaultSounds.levelUP.play(player);
             openProfileInventory(player);
-            LobbyTablist.setPlayerTeams();
+            BukkitCore.getInstance().getCurrentGame().getTablistBuilder().assignTeams();
         });
-        builder.setItem(new ItemBuilder(Material.ORANGE_WOOL).setName(iapiPlayer.languageString("§6Gold", "§6Gold")).setLore(lanClick).build(), 37, event -> {
+        builder.setItem(new ItemBuilder(Material.ORANGE_DYE).setName(iapiPlayer.languageString("§6Gold", "§6Gold")).setLore(lanClick).build(), 37, event -> {
             iapiPlayer.setRankColor(ChatColor.GOLD);
             DefaultSounds.levelUP.play(player);
             openProfileInventory(player);
-            LobbyTablist.setPlayerTeams();
+            BukkitCore.getInstance().getCurrentGame().getTablistBuilder().assignTeams();
         });
-        builder.setItem(new ItemBuilder(Material.YELLOW_WOOL).setName(iapiPlayer.languageString("§6Yellow", "§6Gelb")).setLore(lanClick).build(), 38, event -> {
+        builder.setItem(new ItemBuilder(Material.YELLOW_DYE).setName(iapiPlayer.languageString("§6Yellow", "§6Gelb")).setLore(lanClick).build(), 38, event -> {
             iapiPlayer.setRankColor(ChatColor.YELLOW);
             DefaultSounds.levelUP.play(player);
             openProfileInventory(player);
-            LobbyTablist.setPlayerTeams();
+            BukkitCore.getInstance().getCurrentGame().getTablistBuilder().assignTeams();
         });
-        builder.setItem(new ItemBuilder(Material.CYAN_WOOL).setName(iapiPlayer.languageString("§6Cyan", "§6Türkis")).setLore(lanClick).build(), 39, event -> {
+        builder.setItem(new ItemBuilder(Material.CYAN_DYE).setName(iapiPlayer.languageString("§6Cyan", "§6Türkis")).setLore(lanClick).build(), 39, event -> {
             iapiPlayer.setRankColor(ChatColor.DARK_AQUA);
             DefaultSounds.levelUP.play(player);
             openProfileInventory(player);
-            LobbyTablist.setPlayerTeams();
+            BukkitCore.getInstance().getCurrentGame().getTablistBuilder().assignTeams();
         });
-        builder.setItem(new ItemBuilder(Material.LIGHT_GRAY_WOOL).setName(iapiPlayer.languageString("§6Gray", "§6Grau")).setLore(lanClick).build(), 40, event -> {
+        builder.setItem(new ItemBuilder(Material.LIGHT_GRAY_DYE).setName(iapiPlayer.languageString("§6Gray", "§6Grau")).setLore(lanClick).build(), 40, event -> {
             iapiPlayer.setRankColor(ChatColor.GRAY);
             DefaultSounds.levelUP.play(player);
             openProfileInventory(player);
-            LobbyTablist.setPlayerTeams();
+            BukkitCore.getInstance().getCurrentGame().getTablistBuilder().assignTeams();
         });
-        builder.setItem(new ItemBuilder(Material.GRAY_WOOL).setName(iapiPlayer.languageString("§6Dark Gray", "§6Dunkelgrau")).setLore(lanClick).build(), 41, event -> {
+        builder.setItem(new ItemBuilder(Material.GRAY_DYE).setName(iapiPlayer.languageString("§6Dark Gray", "§6Dunkelgrau")).setLore(lanClick).build(), 41, event -> {
             iapiPlayer.setRankColor(ChatColor.DARK_GRAY);
             DefaultSounds.levelUP.play(player);
             openProfileInventory(player);
-            LobbyTablist.setPlayerTeams();
+            BukkitCore.getInstance().getCurrentGame().getTablistBuilder().assignTeams();
         });
-        builder.setItem(new ItemBuilder(Material.BLUE_WOOL).setName(iapiPlayer.languageString("§6Dark Blue", "§6Dunkelblau")).setLore(lanClick).build(), 42, event -> {
+        builder.setItem(new ItemBuilder(Material.BLUE_DYE).setName(iapiPlayer.languageString("§6Dark Blue", "§6Dunkelblau")).setLore(lanClick).build(), 42, event -> {
             iapiPlayer.setRankColor(ChatColor.DARK_BLUE);
             DefaultSounds.levelUP.play(player);
             openProfileInventory(player);
-            LobbyTablist.setPlayerTeams();
+            BukkitCore.getInstance().getCurrentGame().getTablistBuilder().assignTeams();
         });
-        builder.setItem(new ItemBuilder(Material.RED_WOOL).setName(iapiPlayer.languageString("§6Red", "§6Rot")).setLore(lanClick).build(), 43, event -> {
+        builder.setItem(new ItemBuilder(Material.RED_DYE).setName(iapiPlayer.languageString("§6Red", "§6Rot")).setLore(lanClick).build(), 43, event -> {
             iapiPlayer.setRankColor(ChatColor.RED);
             DefaultSounds.levelUP.play(player);
             openProfileInventory(player);
-            LobbyTablist.setPlayerTeams();
+            BukkitCore.getInstance().getCurrentGame().getTablistBuilder().assignTeams();
         });
 
         builder.fillEmpty();
