@@ -17,6 +17,8 @@ import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.entities.MessageEmbed;
 import net.dv8tion.jda.api.entities.TextChannel;
 import net.md_5.bungee.api.CommandSender;
+import net.md_5.bungee.api.chat.*;
+import net.md_5.bungee.api.chat.TextComponent;
 import net.md_5.bungee.api.connection.ProxiedPlayer;
 
 import java.awt.*;
@@ -43,7 +45,15 @@ public class MCDiscordCommand extends BaseCommand {
         VerifyModule.getVerifyModule().getVerifyList().put(player, verifyCode);
         VerifyModule.getVerifyModule().getVerifyListReturn().put(verifyCode, player);
 
-        player.sendMessage("§7Your verify code is §6" + verifyCode + "§7!", "§7Dein Verifikationscode ist §6" + verifyCode + "§7!");
+        BaseComponent en = new TextComponent("§7Your verify code is §6" + verifyCode + "§7!");
+        en.setClickEvent(new ClickEvent(ClickEvent.Action.COPY_TO_CLIPBOARD, String.valueOf(verifyCode)));
+        en.setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, new ComponentBuilder("Click to copy the code!").create()));
+
+        BaseComponent de = new TextComponent("§7Dein Verifikationscode ist §6" + verifyCode + "§7!");
+        en.setClickEvent(new ClickEvent(ClickEvent.Action.COPY_TO_CLIPBOARD, String.valueOf(verifyCode)));
+        en.setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, new ComponentBuilder("Klicke um den Code zu kopieren!").create()));
+
+        player.sendMessage(en, de);
         MessageEmbed embed = new EmbedBuilder()
                 .setTimestamp(Instant.now())
                 .setTitle("**Verify | SickMC**")

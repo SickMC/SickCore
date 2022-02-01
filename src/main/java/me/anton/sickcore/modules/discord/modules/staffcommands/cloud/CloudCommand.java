@@ -39,8 +39,7 @@ public class CloudCommand extends SlashCommand {
         List<SlashSubCommand> subCommands = Arrays.asList(
                 new CloudListCommand(this),
                 new CloudStopCommand(this),
-                new CloudStartCommand(this),
-                new CloudInfoCommand(this)
+                new CloudStartCommand(this)
         );
         return subCommands;
     }

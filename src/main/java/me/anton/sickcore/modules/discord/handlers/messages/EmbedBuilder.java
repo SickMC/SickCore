@@ -3,6 +3,7 @@ package me.anton.sickcore.modules.discord.handlers.messages;
 import me.anton.sickcore.api.player.discordPlayer.DiscordPlayer;
 import me.anton.sickcore.api.player.discordPlayer.IDiscordPlayer;
 import me.anton.sickcore.modules.discord.DiscordModule;
+import net.dv8tion.jda.api.entities.IMentionable;
 import net.dv8tion.jda.api.entities.Member;
 import net.dv8tion.jda.api.entities.MessageEmbed;
 import net.dv8tion.jda.api.entities.User;
@@ -48,6 +49,11 @@ public class EmbedBuilder {
 
     public EmbedBuilder setContent(String content){
         builder.setDescription(content);
+        return this;
+    }
+
+    public EmbedBuilder mention(IMentionable mentionable){
+        builder.appendDescription("\n\n" + mentionable.getAsMention());
         return this;
     }
 

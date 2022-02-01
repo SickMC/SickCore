@@ -8,6 +8,7 @@ import me.anton.sickcore.core.module.IModule;
 import me.anton.sickcore.modules.discord.handlers.command.SelectionMenuListener;
 import me.anton.sickcore.modules.discord.handlers.command.SlashCommandBuilder;
 import me.anton.sickcore.modules.discord.modules.DiscordModuleHandler;
+import me.anton.sickcore.modules.discord.modules.staffcommands.AnnounceCommand;
 import me.anton.sickcore.modules.discord.modules.staffcommands.ClearCommand;
 import me.anton.sickcore.modules.discord.modules.staffcommands.PingCommand;
 import me.anton.sickcore.modules.discord.modules.staffcommands.cloud.CloudCommand;
@@ -56,7 +57,7 @@ public class DiscordModule implements IModule {
     @Override
     public void register() {
         start();
-        Arrays.asList(new CloudCommand(), new ClearCommand(), new PingCommand(), new VerifyCommand()).forEach(command -> this.commandBuilder.registerCommand(command));
+        Arrays.asList(new CloudCommand(), new ClearCommand(), new PingCommand(), new VerifyCommand(), new AnnounceCommand()).forEach(command -> this.commandBuilder.registerCommand(command));
         getJda().addEventListener(new SelectionMenuListener());
     }
 

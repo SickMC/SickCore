@@ -68,7 +68,6 @@ public class VerifyCommand extends SlashCommand {
         sendLog(user, player);
         player.sendMessage("§7Your account is now linked with §6" + event.getMember().getUser().getAsTag() + "§7!", "§7Dein Account ist nun mit §6" + event.getMember().getUser().getAsTag() + "§7 verbunden!");
         hook.sendMessageEmbeds(getVerified(user)).queue();
-        hook.deleteOriginal().queue();
     }
 
     private void verify(IBungeePlayer player, String userID){
