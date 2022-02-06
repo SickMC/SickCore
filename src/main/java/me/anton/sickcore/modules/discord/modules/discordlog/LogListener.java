@@ -1,10 +1,10 @@
 package me.anton.sickcore.modules.discord.modules.discordlog;
 
 import me.anton.sickcore.modules.discord.DiscordModule;
-import me.anton.sickcore.modules.discord.handlers.messages.EmbedBuilder;
 import net.dv8tion.jda.api.audit.ActionType;
 import net.dv8tion.jda.api.audit.AuditLogEntry;
 import net.dv8tion.jda.api.entities.Guild;
+import net.dv8tion.jda.api.entities.Message;
 import net.dv8tion.jda.api.entities.MessageEmbed;
 import net.dv8tion.jda.api.events.guild.GuildBanEvent;
 import net.dv8tion.jda.api.events.guild.GuildUnbanEvent;
@@ -16,17 +16,26 @@ import net.dv8tion.jda.api.events.guild.member.update.GuildMemberUpdateNicknameE
 import net.dv8tion.jda.api.events.guild.voice.GuildVoiceLeaveEvent;
 import net.dv8tion.jda.api.events.guild.voice.GuildVoiceMoveEvent;
 import net.dv8tion.jda.api.events.message.MessageDeleteEvent;
+import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
 import net.dv8tion.jda.api.events.message.MessageUpdateEvent;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
 import org.jetbrains.annotations.NotNull;
 
-import java.util.concurrent.atomic.AtomicReference;
+import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 import java.util.stream.Collectors;
 
 public class LogListener extends ListenerAdapter {
 
     private Guild guild = DiscordModule.getInstance().getMainGuild();
     DiscordLogModule module = DiscordLogModule.getInstance();
+
+    public final Map<Long, Message> cache = new ConcurrentHashMap<>();
+
+    @Override
+    public void onMessageReceived(@NotNull MessageReceivedEvent event) {
+        cache.put(event.getMessageIdLong(), event.getMessage());
+    }
 
     @Override
     public void onGuildMemberJoin(@NotNull GuildMemberJoinEvent event) {
@@ -164,4 +173,30 @@ public class LogListener extends ListenerAdapter {
                     module.log(embed);
                 });
     }
+
+    @Override
+    public void onMessageDelete(@NotNull MessageDeleteEvent event) {
+        guild.retrieveAuditLogs()
+                .type(ActionType.MESSAGE_DELETE)
+                .limit(1)
+                .queue(list ->{
+                    if (list.isEmpty())return;
+                    AuditLogEntry entry = list.get(0);
+                    MessageEmbed embed = new me.anton.sickcore.modules.discord.handlers.messages.EmbedBuilder()
+                            .setTitle("Message Delete")
+                            .setContent("A message of " + cache.get(event.getMessageIdLong()).getAuthor().getAsMention() + " was deleted by: " + entry.getUser().getAsMention() + "\n\n**Content:** \n```" + cache.get(event.getMessageIdLong()).getContentRaw() + "```").build();
+
+                    module.log(embed);
+                });
+    }
+
+    @Override
+    public void onMessageUpdate(@NotNull MessageUpdateEvent event) {
+        MessageEmbed embed = new me.anton.sickcore.modules.discord.handlers.messages.EmbedBuilder()
+                .setTitle("Message Update")
+                .setContent("A message of " + event.getAuthor().getAsMention() + " was edited!\n\n**Old Content:** \n```" + cache.get(event.getMessageIdLong()).getContentRaw() + "```\n **New Content:** \n```" + event.getMessage().getContentRaw() + "```").build();
+
+        module.log(embed);
+    }
+
 }
