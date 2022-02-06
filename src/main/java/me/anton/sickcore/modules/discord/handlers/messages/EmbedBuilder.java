@@ -20,7 +20,6 @@ public class EmbedBuilder {
     private Color color = null;
     private boolean timeStamp = true;
 
-
     public EmbedBuilder(User user){
         this.type = EmbedType.UTILITY;
         this.builder = new net.dv8tion.jda.api.EmbedBuilder();
