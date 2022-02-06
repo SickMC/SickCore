@@ -17,7 +17,6 @@ public class ManageModule implements IDiscordModule {
     public void register(){
         //Discord
         DiscordModule module = DiscordModule.getInstance();
-        module.getJda().addEventListener(new BugManager());
         module.getJda().addEventListener(new SuggestionManager());
     }
 

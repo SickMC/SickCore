@@ -7,14 +7,13 @@ import me.anton.sickcore.api.handler.listeners.bukkit.events.entity.*;
 import me.anton.sickcore.api.handler.listeners.bukkit.events.other.HeadDataBaseLoadEventHandler;
 import me.anton.sickcore.api.handler.listeners.bukkit.events.player.*;
 import me.anton.sickcore.api.handler.listeners.bukkit.events.vehicle.*;
-import me.anton.sickcore.api.handler.listeners.bukkit.events.world.BlockMoveEventHandler;
-import me.anton.sickcore.api.handler.listeners.bukkit.events.world.ChunkLoadEventHandler;
-import me.anton.sickcore.api.handler.listeners.bukkit.events.world.WeatherChangeEventHandler;
+import me.anton.sickcore.api.handler.listeners.bukkit.events.world.*;
 import me.anton.sickcore.api.player.apiPlayer.IAPIPlayer;
 import me.anton.sickcore.api.player.bukkitPlayer.IBukkitPlayer;
-import me.anton.sickcore.core.game.IGame;
 import me.anton.sickcore.games.defaults.all.HeadDBAPI;
+import me.anton.sickcore.games.defaults.all.InvSee;
 import me.anton.sickcore.games.defaults.all.LagCommand;
+import me.anton.sickcore.games.defaults.all.appereance.UnknownCommandProvider;
 import me.anton.sickcore.games.defaults.all.nick.AutoNickCommand;
 import me.anton.sickcore.games.defaults.all.nick.NickCommand;
 import me.anton.sickcore.games.defaults.all.nick.NickListCommand;
@@ -56,12 +55,8 @@ public class BukkitCore extends Core {
     }
 
     public void onLoad(){
-        handler.loadGames();
         register();
-    }
-
-    public IGame getCurrentGame(){
-        return GameHandler.getCurrent();
+        handler.loadGames();
     }
 
     public void onUnLoad(){
@@ -111,6 +106,7 @@ public class BukkitCore extends Core {
                 new PlayerAdvancementDoneEventHandler(),
                 new PlayerInventoryMoveItemEventHandler(),
                 new PlayerLevelChangeEventHandler(),
+                new PlayerUnknownCommandEvent(),
 
                 //Entity
                 new EntityPickUpItemEventHandler(),
@@ -138,6 +134,9 @@ public class BukkitCore extends Core {
                 new PlayerInventoryDragEventHandler(),
                 new ChunkLoadEventHandler(),
                 new EntityChangeBlockEventHandler(),
+                new ItemSpawnEventHandler(),
+                new HangingBreakEventHandler(),
+                new HangingPlaceEventHandler(),
 
                 //other
                 new HeadDataBaseLoadEventHandler()
@@ -152,6 +151,9 @@ public class BukkitCore extends Core {
         manager.registerCommand(new AutoNickCommand(), false);
         manager.registerCommand(new UnnickCommand(), false);
         manager.registerCommand(new NickListCommand(), false);
+        manager.registerCommand(new InvSee(), false);
+
+        provider.register(new UnknownCommandProvider());
 
         //Vanish
         manager.registerCommand(new VanishCommand(), false);

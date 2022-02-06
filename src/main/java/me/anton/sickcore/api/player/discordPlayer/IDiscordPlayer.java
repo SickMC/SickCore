@@ -1,6 +1,7 @@
 package me.anton.sickcore.api.player.discordPlayer;
 
 import me.anton.sickcore.api.player.apiPlayer.IAPIPlayer;
+import me.anton.sickcore.modules.discord.modules.leveling.DiscordLevel;
 import net.dv8tion.jda.api.entities.Member;
 import net.dv8tion.jda.api.entities.MessageEmbed;
 import net.dv8tion.jda.api.entities.User;
@@ -16,5 +17,9 @@ public interface IDiscordPlayer {
     public User user();
 
     public Member member();
+
+    public DiscordLevel getLevel();
+
+    public int getPoints();
 
 }

@@ -1,5 +1,6 @@
 package me.anton.sickcore.modules.discord.modules.staffcommands;
 
+import me.anton.sickcore.api.player.discordPlayer.IDiscordPlayer;
 import me.anton.sickcore.api.utils.discord.DiscordIds;
 import me.anton.sickcore.modules.discord.DiscordModule;
 import me.anton.sickcore.modules.discord.handlers.command.SlashCommand;
@@ -47,7 +48,7 @@ public class AnnounceCommand extends SlashCommand {
     }
 
     @Override
-    public void execute(User user, InteractionHook hook, SlashCommandEvent event) {
+    public void execute(User user, IDiscordPlayer player, InteractionHook hook, SlashCommandEvent event) {
         DiscordModule module = StaffCommandModule.getInstance().getModule();
 
         String rawtitle = event.getOption("title").getAsString();
@@ -63,7 +64,7 @@ public class AnnounceCommand extends SlashCommand {
 
         if (mentionable != null)builder.mention(mentionable);
 
-        DiscordModule.getInstance().getMainGuild().getTextChannelById(DiscordIds.staffchat).sendMessageEmbeds(builder.build()).queue();
+        DiscordModule.getInstance().getMainGuild().getTextChannelById(DiscordIds.newsChannel).sendMessageEmbeds(builder.build()).queue();
         event.reply("Message send!").queue();
     }
 }

@@ -7,14 +7,17 @@ import eu.thesimplecloud.api.eventapi.IListener;
 import eu.thesimplecloud.module.permission.event.player.PermissionPlayerUpdatedEvent;
 import me.anton.sickcore.api.handler.listeners.bukkit.BukkitHandler;
 import me.anton.sickcore.api.player.bukkitPlayer.IBukkitPlayer;
-import me.anton.sickcore.core.BukkitCore;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
 import xyz.haoshoku.nick.events.NickFinishEvent;
 
 public class TablistBuilderProvider extends BukkitHandler implements IListener {
 
-    private final ITablistBuilder builder = BukkitCore.getInstance().getCurrentGame().getTablistBuilder();
+    TablistBuilder builder;
+
+    public TablistBuilderProvider(TablistBuilder builder){
+        this.builder = builder;
+    }
 
     @CloudEventHandler
     public void handle(PermissionPlayerUpdatedEvent rawEvent) {

@@ -42,7 +42,7 @@ public class DiscordLogModule implements IDiscordModule {
 
     public void loadEmbed(){
         me.anton.sickcore.modules.discord.handlers.messages.EmbedBuilder embed = new me.anton.sickcore.modules.discord.handlers.messages.EmbedBuilder()
-                .setTitle("Loas")
+                .setTitle("Load")
                 .setContent("Proxy loaded!");
         log(embed.build());
     }

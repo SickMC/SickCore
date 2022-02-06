@@ -4,6 +4,7 @@ import me.anton.sickcore.api.player.apiPlayer.APIPlayer;
 import me.anton.sickcore.api.player.apiPlayer.IAPIPlayer;
 import me.anton.sickcore.api.player.apiPlayer.provider.DiscordAPIPlayerAdapter;
 import me.anton.sickcore.api.player.discordPlayer.DiscordPlayer;
+import me.anton.sickcore.api.player.discordPlayer.IDiscordPlayer;
 import me.anton.sickcore.api.utils.discord.DiscordIds;
 import me.anton.sickcore.modules.discord.DiscordModule;
 import me.anton.sickcore.modules.discord.handlers.messages.DiscordMessages;
@@ -55,13 +56,13 @@ public abstract class SlashCommand {
         return data;
     }
 
-    public abstract void execute(User user, InteractionHook hook, SlashCommandEvent event);
+    public abstract void execute(User user, IDiscordPlayer player, InteractionHook hook, SlashCommandEvent event);
 
     public void preExecute(User user, InteractionHook hook, SlashCommandEvent event){
         String subCommandName = event.getSubcommandName();
         if(subCommandName == null){
             if (isStaff() && !staffCheck(user, hook))return;
-            execute(user, hook, event);
+            execute(user, new DiscordPlayer(getMember(user)),hook, event);
             return;
         }
         boolean called = false;
@@ -69,7 +70,7 @@ public abstract class SlashCommand {
             if(called) continue;
             if(subCommand.getName().equalsIgnoreCase(subCommandName)){
                 if (subCommand.isStaff() && !subCommand.staffCheck(user, hook))return;
-                subCommand.execute(user, hook, event);
+                subCommand.execute(user, new DiscordPlayer(getMember(user)), hook, event);
                 called = true;
             }
         }

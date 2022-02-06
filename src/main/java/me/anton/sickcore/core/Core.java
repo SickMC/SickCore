@@ -1,10 +1,9 @@
 package me.anton.sickcore.core;
 
+import eu.thesimplecloud.api.CloudAPI;
 import lombok.Getter;
 import me.anton.sickcore.api.database.DatabaseModel;
 import me.anton.sickcore.api.database.MongoConnection;
-import me.anton.sickcore.core.game.GameHandler;
-import me.anton.sickcore.core.game.IGame;
 
 @Getter
 public abstract class Core {
@@ -14,12 +13,18 @@ public abstract class Core {
     private final MongoConnection mongoConnection;
     private final DatabaseModel playerModel;
     private final DatabaseModel appereanceModel;
+    private final DatabaseModel languageModel;
 
     public Core(){
         instance = this;
         mongoConnection = new MongoConnection();
         this.playerModel = new DatabaseModel("sickplayer");
         this.appereanceModel = new DatabaseModel("appereance");
+        this.languageModel = new DatabaseModel("language");
+    }
+
+    public boolean isProxy(){
+        return CloudAPI.getInstance().getThisSidesName().startsWith("Proxy-");
     }
 
     public BukkitCore bukkit(){

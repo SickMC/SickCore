@@ -25,7 +25,7 @@ public class BuildChat extends BukkitHandler {
 
     @Override
     public void onPlayerQuit(PlayerQuitEvent rawEvent, IBukkitPlayer bukkitPlayer) {
-        rawEvent.quitMessage(Component.text("§4» §r" + bukkitPlayer.api().getDisplayName()));
+        rawEvent.quitMessage(Component.text("§4« §r" + bukkitPlayer.api().getDisplayName()));
     }
 
     @Override

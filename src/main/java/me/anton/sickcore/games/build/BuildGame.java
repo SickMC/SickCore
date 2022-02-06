@@ -4,14 +4,21 @@ import me.anton.sickcore.api.database.DatabaseModel;
 import me.anton.sickcore.api.handler.listeners.bukkit.BukkitHandler;
 import me.anton.sickcore.core.BukkitCore;
 import me.anton.sickcore.core.game.IGame;
-import me.anton.sickcore.games.defaults.all.appereance.ITablistBuilder;
+import me.anton.sickcore.games.build.appereance.BuildChat;
+import me.anton.sickcore.games.build.tools.BuildTools;
+import me.anton.sickcore.games.build.tools.invisitemframes.InvisFrameUpdate;
 import me.anton.sickcore.games.defaults.all.appereance.TablistBuilder;
 
 public class BuildGame extends IGame {
+
+    TablistBuilder builder;
+
     @Override
     public void load() {
+        builder = new TablistBuilder("Build", false);
+        registerListener(new BuildChat(), new InvisFrameUpdate());
 
-        getTablistBuilder();
+        BukkitCore.getInstance().getManager().registerCommand(new BuildTools(), true);
     }
 
     @Override
@@ -26,11 +33,6 @@ public class BuildGame extends IGame {
     @Override
     public BukkitCore getCore() {
         return super.getCore();
-    }
-
-    @Override
-    public ITablistBuilder getTablistBuilder() {
-        return new TablistBuilder("Build", false);
     }
 
     @Override

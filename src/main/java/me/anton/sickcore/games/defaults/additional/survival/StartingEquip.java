@@ -1,4 +1,4 @@
-package me.anton.sickcore.games.defaults.survival;
+package me.anton.sickcore.games.defaults.additional.survival;
 
 import me.anton.sickcore.api.handler.listeners.bukkit.BukkitHandler;
 import me.anton.sickcore.api.player.bukkitPlayer.IBukkitPlayer;

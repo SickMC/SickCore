@@ -9,11 +9,16 @@ import org.bukkit.World;
 import org.bukkit.advancement.Advancement;
 import org.bukkit.block.Block;
 import org.bukkit.entity.Entity;
+import org.bukkit.entity.Hanging;
+import org.bukkit.entity.Item;
 import org.bukkit.entity.Vehicle;
 import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.event.block.BlockFromToEvent;
 import org.bukkit.event.block.BlockPlaceEvent;
+import org.bukkit.event.command.UnknownCommandEvent;
 import org.bukkit.event.entity.*;
+import org.bukkit.event.hanging.HangingBreakEvent;
+import org.bukkit.event.hanging.HangingPlaceEvent;
 import org.bukkit.event.inventory.*;
 import org.bukkit.event.player.*;
 import org.bukkit.event.vehicle.VehicleDamageEvent;
@@ -157,5 +162,13 @@ public abstract class BukkitHandler {
     public void onItemInventoryMove(InventoryMoveItemEvent rawEvent, ItemStack itemStack){}
 
     public void onPlayerLevelChangeEvent(PlayerLevelChangeEvent rawEvent, int oldLevel, int newLevel, IBukkitPlayer player){}
+
+    public void onPlayerUnknownCommand(UnknownCommandEvent rawEvent, String command){}
+
+    public void onItemSpawn(ItemSpawnEvent rawEvent, Item item, World world){}
+
+    public void onHangingBreak(HangingBreakEvent rawEvent, Hanging hanging){}
+
+    public void onHangingPlace(HangingPlaceEvent rawEvent, Hanging hanging, IBukkitPlayer handler){}
 
 }

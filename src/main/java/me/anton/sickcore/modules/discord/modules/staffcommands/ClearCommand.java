@@ -1,6 +1,7 @@
 package me.anton.sickcore.modules.discord.modules.staffcommands;
 
 import me.anton.sickcore.api.player.apiPlayer.IAPIPlayer;
+import me.anton.sickcore.api.player.discordPlayer.IDiscordPlayer;
 import me.anton.sickcore.modules.discord.DiscordModule;
 import me.anton.sickcore.modules.discord.handlers.command.SlashCommand;
 import me.anton.sickcore.modules.discord.handlers.command.SlashSubCommand;
@@ -44,16 +45,16 @@ public class ClearCommand extends SlashCommand {
     }
 
     @Override
-    public void execute(User user, InteractionHook hook, SlashCommandEvent event) {
+    public void execute(User user, IDiscordPlayer player, InteractionHook hook, SlashCommandEvent event) {
         DiscordModule module = StaffCommandModule.getInstance().getModule();
 
         int amount = (int) event.getOption("amount").getAsDouble();
 
-        IAPIPlayer player = getApiPlayer(user);
+        IAPIPlayer apiPlayer = getApiPlayer(user);
 
-        if (!player.isVerified()) {event.replyEmbeds(DiscordMessages.getNotVerified(getMember(user))).setEphemeral(true).queue();return;}
+        if (!apiPlayer.isVerified()) {event.replyEmbeds(DiscordMessages.getNotVerified(getMember(user))).setEphemeral(true).queue();return;}
 
-        if (!player.isTeam()){event.replyEmbeds(new EmbedBuilder(getMember(user)).setContent("This is a staff command!").setTitle("No Staff").build()).setEphemeral(true).queue();return;}
+        if (!apiPlayer.isTeam()){event.replyEmbeds(new EmbedBuilder(getMember(user)).setContent("This is a staff command!").setTitle("No Staff").build()).setEphemeral(true).queue();return;}
 
         event.getTextChannel().getHistory().retrievePast(amount).queue(list ->{
             list.forEach(message -> message.delete().queue());

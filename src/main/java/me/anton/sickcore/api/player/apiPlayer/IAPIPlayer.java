@@ -1,8 +1,10 @@
 package me.anton.sickcore.api.player.apiPlayer;
 
 import eu.thesimplecloud.module.permission.player.IPermissionPlayer;
-import me.anton.sickcore.api.player.apiPlayer.enums.Language;
+import me.anton.sickcore.api.player.apiPlayer.language.Language;
 import me.anton.sickcore.api.player.apiPlayer.enums.Rank;
+import me.anton.sickcore.api.player.apiPlayer.language.LanguageObject;
+import me.anton.sickcore.api.player.apiPlayer.language.LanguagePath;
 import me.anton.sickcore.api.player.bukkitPlayer.IBukkitPlayer;
 import me.anton.sickcore.api.player.bungeePlayer.IBungeePlayer;
 import me.anton.sickcore.api.player.cloudPlayer.ICloudAPIPlayer;
@@ -62,7 +64,9 @@ public interface IAPIPlayer {
 
     public String getDisplayName();
 
-    public String languageString(String en, String de);
+    public LanguageObject languageString(LanguagePath path);
+
+    public Object languageObject(Object en, Object de);
 
     public IBukkitPlayer bukkit();
 

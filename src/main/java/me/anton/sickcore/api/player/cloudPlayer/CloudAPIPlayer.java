@@ -5,7 +5,7 @@ import eu.thesimplecloud.api.player.ICloudPlayer;
 import eu.thesimplecloud.api.player.text.CloudText;
 import me.anton.sickcore.api.player.apiPlayer.APIPlayer;
 import me.anton.sickcore.api.player.apiPlayer.IAPIPlayer;
-import me.anton.sickcore.api.player.apiPlayer.enums.Language;
+import me.anton.sickcore.api.player.apiPlayer.language.Language;
 
 import java.util.UUID;
 
@@ -32,17 +32,17 @@ public class CloudAPIPlayer implements ICloudAPIPlayer {
 
     @Override
     public void sendMessage(String en, String de) {
-        if (this.player.getLanguage().equals(Language.ENGLISCH))
+        if (this.player.getLanguage().equals(Language.ENGLISCHUK))
             cloudPlayer.sendMessage(en);
-        else if (this.player.getLanguage().equals(Language.DEUTSCH))
+        else if (this.player.getLanguage().equals(Language.DEUTSCHDE))
             cloudPlayer.sendMessage(de);
     }
 
     @Override
     public void sendMessage(CloudText en, CloudText de) {
-        if (this.player.getLanguage().equals(Language.ENGLISCH))
+        if (this.player.getLanguage().equals(Language.ENGLISCHUK))
             cloudPlayer.sendMessage(en);
-        else if (this.player.getLanguage().equals(Language.DEUTSCH))
+        else if (this.player.getLanguage().equals(Language.DEUTSCHDE))
             cloudPlayer.sendMessage(de);
     }
 

@@ -8,10 +8,12 @@ import me.anton.sickcore.api.handler.listeners.bungee.BungeeListenerProvider;
 import me.anton.sickcore.api.handler.listeners.bungee.events.player.*;
 import me.anton.sickcore.api.handler.listeners.bungee.events.service.ServerPingEventHandler;
 import me.anton.sickcore.core.module.ModuleHandler;
+import me.anton.sickcore.modules.service.AutoRestart;
 import net.md_5.bungee.api.plugin.Plugin;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 @Getter
 public class BungeeCore extends Core{
@@ -40,6 +42,7 @@ public class BungeeCore extends Core{
         isMainProxy = CloudAPI.getInstance().getThisSidesName().equals("Proxy-1");
 
         moduleHandler.loadModules();
+        restartScheduler();
     }
 
     public void onUnLoad(){
@@ -62,6 +65,10 @@ public class BungeeCore extends Core{
 
         );
         bungeeList.forEach(handler -> plugin.getProxy().getPluginManager().registerListener(plugin, handler));
+    }
+
+    private void restartScheduler(){
+        getPlugin().getProxy().getScheduler().schedule(getPlugin(), new AutoRestart(), 50,50, TimeUnit.SECONDS);
     }
 
 }

@@ -22,7 +22,7 @@ public class NickListInventory {
             if (!online.isNicked())return;
             nicklist.put(onlinePlayer, online.getName());
             ItemStack itemStack = SkullCreator.itemFromUuid(onlinePlayer.getUniqueId());
-            builder.addItem(new ItemBuilder(itemStack).setName("§6" + onlinePlayer.getName()).setLore("§7Nickname: §7" + online.getName(), player.api().languageString("§7Click to unnick the player", "§7Klicke um diesen Spieler zu unnicken")).build(), event -> {
+            builder.addItem(new ItemBuilder(itemStack).setName("§6" + onlinePlayer.getName()).setLore("§7Nickname: §7" + online.getName(), (String) player.api().languageObject("§7Click to unnick the player", "§7Klicke um diesen Spieler zu unnicken")).build(), event -> {
                 online.unnick();
                 openInventory(player);
             });

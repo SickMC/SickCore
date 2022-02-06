@@ -41,4 +41,11 @@ public class DiscordMessages {
         IDiscordPlayer player = new DiscordPlayer(member);
         return player.getEmbed(en.build(), de.build());
     }
+
+    public static MessageEmbed getOnlyBotChat(Member member){
+        EmbedBuilder embedBuilder = new EmbedBuilder(member)
+                .setTitle("Wrong channel")
+                .setContent("You can only use commands in " + DiscordModule.getInstance().getMainGuild().getTextChannelById(DiscordIds.botchatchannel).getAsMention() + "!");
+        return embedBuilder.build();
+    }
 }

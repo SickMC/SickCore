@@ -4,12 +4,14 @@ import co.aikar.commands.BaseCommand;
 import co.aikar.commands.annotation.CommandAlias;
 import co.aikar.commands.annotation.Default;
 import co.aikar.commands.annotation.Description;
+import me.anton.sickcore.api.player.apiPlayer.language.LanguagePath;
 import me.anton.sickcore.api.player.bukkitPlayer.BukkitPlayer;
 import me.anton.sickcore.api.player.bukkitPlayer.IBukkitPlayer;
 import me.anton.sickcore.api.utils.minecraft.messages.ConsoleMessages;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
+import org.yaml.snakeyaml.DumperOptions;
 
 @CommandAlias("vanishlist|vl")
 public class VanishListCommand extends BaseCommand {
@@ -22,9 +24,9 @@ public class VanishListCommand extends BaseCommand {
         }
         IBukkitPlayer player = new BukkitPlayer(sender);
 
-        if (!player.api().isTeam()){player.message().noTeam();return;}
+        if (!player.api().isTeam()){player.sendMessage(LanguagePath.NETWORK_COMMAND_NOSTAFF);return;}
 
-        if (VanishListInventory.vanishlist.isEmpty()){new BukkitPlayer(sender).sendMessage("§7No player is vanished!", "§7Es ist gerade kein Player gevanished!"); return;}
+        if (VanishListInventory.vanishlist.isEmpty()){player.getPlayer().sendMessage((String) player.api().languageObject("§7No player is vanished!", "§7Es ist gerade kein Player gevanished!")); return;}
 
         VanishListInventory.openInventory(new BukkitPlayer(sender));
     }

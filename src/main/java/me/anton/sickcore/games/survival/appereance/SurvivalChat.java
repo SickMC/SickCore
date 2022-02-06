@@ -23,7 +23,7 @@ public class SurvivalChat extends BukkitHandler {
         rawEvent.joinMessage(null);
         Bukkit.getOnlinePlayers().forEach(player -> {
             IAPIPlayer all = new APIPlayer(player.getUniqueId());
-            all.bukkit().sendMessage(all.bukkit().getNickedPrefix() + "§7joined the server!", all.bukkit().getNickedPrefix() + "§7hat den Server betreten!");
+            all.bukkit().getPlayer().sendMessage((String) all.languageObject(all.bukkit().getNickedDisplayName() + "§7joined the server!", all.bukkit().getNickedDisplayName() + "§7hat den Server betreten!"));
         });
     }
 
@@ -32,14 +32,14 @@ public class SurvivalChat extends BukkitHandler {
         rawEvent.quitMessage(null);
         Bukkit.getOnlinePlayers().forEach(player -> {
             IAPIPlayer all = new APIPlayer(player.getUniqueId());
-            all.bukkit().sendMessage(all.bukkit().getNickedPrefix() + "§7quit the server!", all.bukkit().getNickedPrefix() + "§7hat den Server verlassen!");
+            all.bukkit().getPlayer().sendMessage((String) all.languageObject(all.bukkit().getNickedDisplayName() + "§7quit the server!", all.bukkit().getNickedDisplayName() + "§7hat den Server verlassen!"));
         });
     }
 
     @Override
     public void onPlayerAsyncChat(AsyncChatEvent rawEvent, IBukkitPlayer bukkitPlayer) {
         rawEvent.getPlayer().getServer().getOnlinePlayers().forEach(player -> {
-            player.sendMessage(Component.text(bukkitPlayer.getNickedPrefix() + "§7» §7").append(rawEvent.message().color(TextColor.color(11184810))));
+            player.sendMessage(Component.text(bukkitPlayer.getNickedDisplayName() + "§7» §7").append(rawEvent.message().color(TextColor.color(11184810))));
         });
         rawEvent.setCancelled(true);
     }

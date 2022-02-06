@@ -1,5 +1,6 @@
 package me.anton.sickcore.modules.discord.modules.ticket;
 
+import me.anton.sickcore.api.database.Finder;
 import me.anton.sickcore.api.player.apiPlayer.provider.DiscordAPIPlayerAdapter;
 import me.anton.sickcore.api.player.discordPlayer.DiscordPlayer;
 import me.anton.sickcore.api.player.discordPlayer.IDiscordPlayer;
@@ -18,7 +19,7 @@ public class TicketListener extends ListenerAdapter {
     public void onButtonClick(@NotNull ButtonClickEvent event) {
         switch (event.getComponentId()) {
             case "ticket_create" -> {
-                if (ticketModule.getModel().documentExists("playerID", event.getMember().getUser().getId())) {
+                if (ticketModule.getModel().documentExists(Finder.stringFinder("playerID", event.getMember().getUser().getId()))) {
                     event.replyEmbeds(new EmbedBuilder(event.getMember()).setTitle("Ticket").setContent("Du hast bereits ein Ticket geöffnet!").build()).setEphemeral(true).queue();
                     DiscordLogModule.getInstance().log(new EmbedBuilder(event.getMember()).setTitle("Ticket").setContent(event.getMember().getAsMention() + " hat versucht ein Ticket zu öffnen.\nEr hatte aber schon eins geöffnet!").build());
                     return;

@@ -2,6 +2,7 @@ package me.anton.sickcore.modules.discord.modules.staffcommands.cloud;
 
 import eu.thesimplecloud.api.CloudAPI;
 import eu.thesimplecloud.api.service.ICloudService;
+import me.anton.sickcore.api.player.discordPlayer.IDiscordPlayer;
 import me.anton.sickcore.modules.discord.handlers.command.SelectionMenuHelper;
 import me.anton.sickcore.modules.discord.handlers.command.SlashCommand;
 import me.anton.sickcore.modules.discord.handlers.command.SlashSubCommand;
@@ -44,7 +45,7 @@ public class CloudStopCommand extends SlashSubCommand {
     }
 
     @Override
-    public void execute(User user, InteractionHook hook, SlashCommandEvent event) {
+    public void execute(User user, IDiscordPlayer player, InteractionHook hook, SlashCommandEvent event) {
         List<ICloudService> services = CloudAPI.getInstance().getCloudServiceManager().getAllCachedObjects();
 
         SelectionMenu.Builder builder = SelectionMenu.create("cloud:stop")

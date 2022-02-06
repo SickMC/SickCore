@@ -13,9 +13,7 @@ public class SuggestionManager extends ListenerAdapter {
     @Override
     public void onMessageReceived(@NotNull MessageReceivedEvent event) {
         if (!event.getTextChannel().getId().equals(DiscordIds.suggestionchannel))return;
-        if (event.getMember().getUser().isBot())return;
-        event.getMessage().addReaction("\uD83D\uDC4D").queue();
-        event.getMessage().addReaction("\uD83D\uDC4E").queue();
+        if (event.getAuthor().isBot())return;
 
         MessageEmbed embed = new me.anton.sickcore.modules.discord.handlers.messages.EmbedBuilder(event.getMember())
                 .setTitle("SUGGESTION")

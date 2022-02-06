@@ -1,21 +1,14 @@
 package me.anton.sickcore.api.player.bukkitPlayer;
 
 import me.anton.sickcore.api.player.apiPlayer.IAPIPlayer;
-import me.anton.sickcore.api.player.bukkitPlayer.messages.CommandMessages;
+import me.anton.sickcore.api.player.apiPlayer.language.LanguageObject;
+import me.anton.sickcore.api.player.apiPlayer.language.LanguagePath;
 import me.anton.sickcore.api.utils.minecraft.bukkit.player.TitleBuilder;
 import me.anton.sickcore.api.utils.minecraft.bukkit.player.sound.SoundBuilder;
-import net.kyori.adventure.text.Component;
-import org.bukkit.ChatColor;
-import org.bukkit.Material;
 import org.bukkit.Sound;
 import org.bukkit.entity.Player;
-import org.bukkit.plugin.java.JavaPlugin;
 
 public interface IBukkitPlayer {
-
-    public void sendMessage(String en, String de);
-
-    public void sendMessage(Component en, Component de);
 
     public void nick();
 
@@ -23,15 +16,17 @@ public interface IBukkitPlayer {
 
     public boolean isNicked();
 
+    public void sendMessage(LanguagePath path);
+
+    public void sendMessage(LanguageObject object);
+
     public String getName();
 
     public String getNickSkinName();
 
-    public String getNickedPrefix();
+    public String getNickedDisplayName();
 
     public IAPIPlayer api();
-
-    public CommandMessages message();
 
     public Player getPlayer();
 
@@ -50,5 +45,7 @@ public interface IBukkitPlayer {
     public void vanish();
 
     public void unVanish();
+
+    public void kick(String reasonen, String reasonde);
 
 }

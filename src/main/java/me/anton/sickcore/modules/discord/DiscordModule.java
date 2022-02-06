@@ -1,6 +1,7 @@
 package me.anton.sickcore.modules.discord;
 
 import lombok.Getter;
+import me.anton.sickcore.api.database.DatabaseModel;
 import me.anton.sickcore.api.utils.common.FileUtils;
 import me.anton.sickcore.api.utils.common.system.Logger;
 import me.anton.sickcore.core.Core;
@@ -8,6 +9,8 @@ import me.anton.sickcore.core.module.IModule;
 import me.anton.sickcore.modules.discord.handlers.command.SelectionMenuListener;
 import me.anton.sickcore.modules.discord.handlers.command.SlashCommandBuilder;
 import me.anton.sickcore.modules.discord.modules.DiscordModuleHandler;
+import me.anton.sickcore.modules.discord.modules.leveling.commands.LevelCommand;
+import me.anton.sickcore.modules.discord.modules.leveling.commands.TopCommand;
 import me.anton.sickcore.modules.discord.modules.staffcommands.AnnounceCommand;
 import me.anton.sickcore.modules.discord.modules.staffcommands.ClearCommand;
 import me.anton.sickcore.modules.discord.modules.staffcommands.PingCommand;
@@ -19,6 +22,7 @@ import net.dv8tion.jda.api.OnlineStatus;
 import net.dv8tion.jda.api.entities.Activity;
 import net.dv8tion.jda.api.entities.Guild;
 import net.dv8tion.jda.api.requests.GatewayIntent;
+import net.dv8tion.jda.api.utils.MemberCachePolicy;
 import org.bson.Document;
 
 import java.util.Arrays;
@@ -31,6 +35,7 @@ public class DiscordModule implements IModule {
     @Getter
     public static DiscordModule instance;
     private Document model;
+    private DatabaseModel gamePlayer;
 
     private JDA jda;
     private JDABuilder builder;
@@ -45,6 +50,7 @@ public class DiscordModule implements IModule {
         this.commandBuilder = new SlashCommandBuilder();
         moduleHandler = new DiscordModuleHandler();
         model = FileUtils.getAsDocument("discord");
+        this.gamePlayer = new DatabaseModel("discordPlayer");
         register();
     }
 
@@ -57,7 +63,7 @@ public class DiscordModule implements IModule {
     @Override
     public void register() {
         start();
-        Arrays.asList(new CloudCommand(), new ClearCommand(), new PingCommand(), new VerifyCommand(), new AnnounceCommand()).forEach(command -> this.commandBuilder.registerCommand(command));
+        Arrays.asList(new CloudCommand(), new ClearCommand(), new PingCommand(), new VerifyCommand(), new AnnounceCommand(), new LevelCommand(), new TopCommand()).forEach(command -> this.commandBuilder.registerCommand(command));
         getJda().addEventListener(new SelectionMenuListener());
     }
 
@@ -74,7 +80,7 @@ public class DiscordModule implements IModule {
         );
 
         Logger.info("Starting Discordbot...");
-        JDABuilder jdaBuilder = JDABuilder.createDefault((String) readFromConfig("token"), intents);
+        JDABuilder jdaBuilder = JDABuilder.createDefault((String) readFromConfig("token"), intents).setMemberCachePolicy(MemberCachePolicy.ALL);
         jdaBuilder.setActivity(Activity.playing("on play.sickmc.net"));
         jdaBuilder.setAutoReconnect(true);
         jdaBuilder.setStatus(OnlineStatus.ONLINE);
@@ -88,7 +94,7 @@ public class DiscordModule implements IModule {
                 guild.loadMembers().get();
             }
             this.jda.addEventListener(this.commandBuilder);
-            this.mainGuild = jda.getGuildById((String) readFromConfig("mainguildID"));
+            this.mainGuild = jda.getGuildById((String)readFromConfig("mainguildID"));
             this.moduleHandler.loadModules();
         } catch (Exception e) {
             e.printStackTrace();

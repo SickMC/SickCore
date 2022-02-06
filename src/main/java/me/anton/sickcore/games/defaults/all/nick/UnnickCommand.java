@@ -23,11 +23,11 @@ public class UnnickCommand extends BaseCommand {
         }
 
         IBukkitPlayer bukkitPlayer = new BukkitPlayer(((Player) sender).getUniqueId());
-        if (!bukkitPlayer.api().isTeam() || bukkitPlayer.api().getRank() == Rank.MVP){bukkitPlayer.sendMessage("§4Available with MVP or higher!", "§4Verfügbar mit MVP oder höher!");return;}
-        if (!bukkitPlayer.isNicked()){bukkitPlayer.sendMessage("§4You are already unnicked!", "§4Du bist bereits ungenickt!"); return;}
+        if (!bukkitPlayer.api().isTeam() || bukkitPlayer.api().getRank() == Rank.MVP){bukkitPlayer.getPlayer().sendMessage((String) bukkitPlayer.api().languageObject("§4Available with MVP or higher!", "§4Verfügbar mit MVP oder höher!"));return;}
+        if (!bukkitPlayer.isNicked()){bukkitPlayer.getPlayer().sendMessage((String) bukkitPlayer.api().languageObject("§4You are already unnicked!", "§4Du bist bereits ungenickt!")); return;}
 
         bukkitPlayer.unnick();
-        bukkitPlayer.sendMessage("§7You are now unnicked!", "§7Du bist nun nicht mehr genickt!");
+        bukkitPlayer.getPlayer().sendMessage((String) bukkitPlayer.api().languageObject("§7You are now unnicked!", "§7Du bist nun nicht mehr genickt!"));
     }
 
 }

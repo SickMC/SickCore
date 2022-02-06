@@ -3,8 +3,11 @@ package me.anton.sickcore.api.player.apiPlayer;
 import eu.thesimplecloud.module.permission.PermissionPool;
 import eu.thesimplecloud.module.permission.player.IPermissionPlayer;
 import me.anton.sickcore.api.database.DatabaseModel;
-import me.anton.sickcore.api.player.apiPlayer.enums.Language;
+import me.anton.sickcore.api.database.Finder;
+import me.anton.sickcore.api.player.apiPlayer.language.Language;
 import me.anton.sickcore.api.player.apiPlayer.enums.Rank;
+import me.anton.sickcore.api.player.apiPlayer.language.LanguageObject;
+import me.anton.sickcore.api.player.apiPlayer.language.LanguagePath;
 import me.anton.sickcore.api.player.bukkitPlayer.BukkitPlayer;
 import me.anton.sickcore.api.player.bukkitPlayer.IBukkitPlayer;
 import me.anton.sickcore.api.player.bungeePlayer.BungeePlayer;
@@ -19,8 +22,6 @@ import org.bson.Document;
 import org.bukkit.ChatColor;
 import org.jetbrains.annotations.NotNull;
 
-import java.awt.*;
-import java.util.Locale;
 import java.util.UUID;
 
 public class APIPlayer implements IAPIPlayer {
@@ -33,20 +34,21 @@ public class APIPlayer implements IAPIPlayer {
         this.uuid = uuid;
         this.model = Core.getInstance().getPlayerModel();
         this.document = model.getDocument("uuid", uuid.toString());
-        if (!model.documentExists("uuid", uuid.toString()))createAPIPlayer();
+        if (!model.documentExists(new Finder("uuid", uuid.toString())) && Core.getInstance().isProxy())createAPIPlayer();
         if(!document.getString("name").equals(UUIDFetcher.fetchName(uuid))){document.replace("name",UUIDFetcher.fetchName(uuid)); update();}
     }
 
     public APIPlayer(@NotNull String discordID){
         this.model = Core.getInstance().getPlayerModel();
         this.document = model.getDocument("discordid", discordID);
-        if (!model.documentExists("discordid", discordID))return;
+        if (!model.documentExists(Finder.stringFinder("discordid", discordID)))return;
         this.uuid = UUID.fromString((String) model.get("uuid", "discordid", discordID));
     }
 
     private void createAPIPlayer() {
+        if (!Core.getInstance().isProxy())return;
         model.createDocument(new Document("uuid", uuid.toString())
-                .append("language", "deutsch")
+                .append("language", "deutschde")
                 .append("coins", 0)
                 .append("nickname", UUIDFetcher.fetchName(uuid))
                 .append("nickrank", "Player")
@@ -182,7 +184,7 @@ public class APIPlayer implements IAPIPlayer {
 
     @Override
     public ChatColor getDefaultRankColor() {
-        return getRank().getColor();
+        return ColorUtils.toChatColor(getRank().getColor());
     }
 
     @Override
@@ -191,10 +193,15 @@ public class APIPlayer implements IAPIPlayer {
     }
 
     @Override
-    public String languageString(String en, String de) {
-        if (getLanguage().equals(Language.ENGLISCH))
+    public LanguageObject languageString(LanguagePath path) {
+        return new LanguageObject(this, path);
+    }
+
+    @Override
+    public Object languageObject(Object en, Object de) {
+        if (getLanguage().equals(Language.ENGLISCHUK))
             return en;
-        else if (getLanguage().equals(Language.DEUTSCH))
+        else if (getLanguage().equals(Language.DEUTSCHDE))
             return de;
         else
             return null;
@@ -202,8 +209,8 @@ public class APIPlayer implements IAPIPlayer {
 
     @Override
     public String getDisplayName() {
-        if (hasRankColor()) return getRank().getPrefix() + getRankColor() + getName() + "§r §r";
-        return getRank().getPrefix() + getDefaultRankColor() + getName() + "§r §r";
+        if (hasRankColor()) return "§" + ColorUtils.toChatColor(getRank().getColor()).getChar() + getRank().getName() +  "§8 × §r" + getRankColor() + getName() + "§r §r";
+        return "§" + ColorUtils.toChatColor(getRank().getColor()).getChar() + getRank().getName() +  "§8 × §r" + getDefaultRankColor() + getName() + "§r §r";
     }
 
     @Override
@@ -225,7 +232,6 @@ public class APIPlayer implements IAPIPlayer {
     public IPermissionPlayer perm() {
         return PermissionPool.getInstance().getPermissionPlayerManager().getPermissionPlayer(uuid).getBlocking();
     }
-
 
     @Override
     public boolean isTeam(){

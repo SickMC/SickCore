@@ -6,7 +6,6 @@ import me.anton.sickcore.api.handler.listeners.bukkit.BukkitHandler;
 import me.anton.sickcore.api.handler.listeners.cloud.CloudListenerProvider;
 import me.anton.sickcore.core.BukkitCore;
 import me.anton.sickcore.core.Core;
-import me.anton.sickcore.games.defaults.all.appereance.ITablistBuilder;
 
 public abstract class IGame {
 
@@ -27,6 +26,5 @@ public abstract class IGame {
     public DatabaseModel getModel(){
         return new DatabaseModel(getName());
     }
-    public ITablistBuilder getTablistBuilder(){return null;}
 
 }

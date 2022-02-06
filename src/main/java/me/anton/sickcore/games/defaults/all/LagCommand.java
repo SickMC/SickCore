@@ -6,6 +6,9 @@ import co.aikar.commands.annotation.*;
 import eu.thesimplecloud.api.CloudAPI;
 import me.anton.sickcore.api.player.apiPlayer.APIPlayer;
 import me.anton.sickcore.api.player.apiPlayer.IAPIPlayer;
+import me.anton.sickcore.api.player.apiPlayer.language.LanguageObject;
+import me.anton.sickcore.api.player.apiPlayer.language.LanguagePath;
+import me.anton.sickcore.api.utils.common.Replacable;
 import me.anton.sickcore.api.utils.common.math.MathUtils;
 import me.anton.sickcore.api.utils.minecraft.messages.ConsoleMessages;
 import org.bukkit.Bukkit;
@@ -17,7 +20,7 @@ public class LagCommand extends BaseCommand {
 
     @Default
     @Description("Gives information about the server")
-    public void onCommand(CommandSender sender,@Optional String[] args) {
+    public void onCommand(CommandSender sender) {
         if (!(sender instanceof Player)){
             ConsoleMessages.noPlayer(sender);
             return;
@@ -32,20 +35,10 @@ public class LagCommand extends BaseCommand {
 
         averageTPS = averageTPS/Bukkit.getOnlinePlayers().size();
 
-        iapiPlayer.bukkit().sendMessage("§7Timings of §6" + CloudAPI.getInstance().getThisSidesName() + "§7" +
-                "\n\n§7TPS: §6" + Math.round( Bukkit.getServer().getTPS()[0]) + "§7" +
-                "\n§7Your Ping: §6" + MathUtils.round(player.getPing()) + "§7" +
-                "\n§7Average Ping: §6"  + MathUtils.round(averageTPS), "§7Timings von §6" + CloudAPI.getInstance().getThisSidesName() + "§7\n" +
-                "\n\n§7TPS: §6" + MathUtils.round( Bukkit.getServer().getTPS()[0]) + "§7" +
-                "\n§7Dein Ping: §6" + Math.round(player.getPing()) + "§7\n" +
-                "\n§7Durchschnittlicher Ping: §6"  + MathUtils.round(averageTPS));
-
-    }
-
-    @HelpCommand
-    @CatchUnknown
-    public void onHelp(CommandHelp sender){
-        sender.showHelp();
+        iapiPlayer.bukkit().sendMessage(new LanguageObject(iapiPlayer ,LanguagePath.PAPER_COMMAND_LAGCOMMAND_TIMINGS)
+                .replace(new Replacable("%tps%",String.valueOf(Math.round( Bukkit.getServer().getTPS()[0]))),
+                        new Replacable("%yourPing%", String.valueOf(MathUtils.round(player.getPing()))),
+                        new Replacable("%averagePing%", String.valueOf(MathUtils.round(averageTPS)))));
     }
 
 }

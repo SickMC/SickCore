@@ -2,13 +2,15 @@ package me.anton.sickcore.api.player.bukkitPlayer;
 
 import me.anton.sickcore.api.player.apiPlayer.APIPlayer;
 import me.anton.sickcore.api.player.apiPlayer.IAPIPlayer;
-import me.anton.sickcore.api.player.apiPlayer.enums.Language;
-import me.anton.sickcore.api.player.bukkitPlayer.messages.CommandMessages;
+import me.anton.sickcore.api.player.apiPlayer.language.Language;
+import me.anton.sickcore.api.player.apiPlayer.language.LanguageObject;
+import me.anton.sickcore.api.player.apiPlayer.language.LanguagePath;
+import me.anton.sickcore.api.utils.common.ColorUtils;
 import me.anton.sickcore.games.defaults.all.vanish.VanishAction;
 import me.anton.sickcore.api.utils.minecraft.bukkit.player.TitleBuilder;
 import me.anton.sickcore.api.utils.minecraft.bukkit.player.sound.SoundBuilder;
 import me.anton.sickcore.api.utils.minecraft.player.uniqueid.UUIDFetcher;
-import net.kyori.adventure.text.Component;
+import me.anton.sickcore.modules.punishment.PunishmentMessages;
 import org.bukkit.Bukkit;
 import org.bukkit.Sound;
 import org.bukkit.command.CommandSender;
@@ -44,19 +46,13 @@ public class BukkitPlayer implements IBukkitPlayer{
     }
 
     @Override
-    public void sendMessage(String en, String de) {
-        if (player.getLanguage().equals(Language.ENGLISCH))
-            bukkitPlayer.sendMessage(Component.text(en));
-        else if (player.getLanguage().equals(Language.DEUTSCH))
-            bukkitPlayer.sendMessage(Component.text(de));
+    public void sendMessage(LanguagePath path) {
+        getPlayer().sendMessage(this.player.languageString(path).build());
     }
 
     @Override
-    public void sendMessage(Component en, Component de) {
-        if (player.getLanguage().equals(Language.ENGLISCH))
-            bukkitPlayer.sendMessage(en);
-        else if (player.getLanguage().equals(Language.DEUTSCH))
-            bukkitPlayer.sendMessage(de);
+    public void sendMessage(LanguageObject object){
+        getPlayer().sendMessage(object.build());
     }
 
     @Override
@@ -92,18 +88,13 @@ public class BukkitPlayer implements IBukkitPlayer{
     }
 
     @Override
-    public String getNickedPrefix() {
-        return player.getNickRank().getPrefix() + player.getNickRank().getColor() + getName();
+    public String getNickedDisplayName() {
+        return "§" + ColorUtils.toChatColor(player.getNickRank().getColor()) + "§8 × §r" + player.getNickRank().getColor() + getName();
     }
 
     @Override
     public IAPIPlayer api() {
         return player;
-    }
-
-    @Override
-    public CommandMessages message() {
-        return new CommandMessages(this);
     }
 
     @Override
@@ -113,25 +104,25 @@ public class BukkitPlayer implements IBukkitPlayer{
 
     @Override
     public void sendTitle(TitleBuilder EnTitleBuilder, TitleBuilder deTitleBuilder) {
-        if (player.getLanguage().equals(Language.DEUTSCH))
+        if (player.getLanguage().equals(Language.DEUTSCHDE))
             deTitleBuilder.sendTitle(bukkitPlayer);
-        else if (player.getLanguage().equals(Language.ENGLISCH))
+        else if (player.getLanguage().equals(Language.ENGLISCHUK))
             EnTitleBuilder.sendTitle(bukkitPlayer);
     }
 
     @Override
     public void sendAnimatedTitle(TitleBuilder EnTitleBuilder, TitleBuilder deTitleBuilder) {
-        if (player.getLanguage().equals(Language.DEUTSCH))
+        if (player.getLanguage().equals(Language.DEUTSCHDE))
             deTitleBuilder.sendAnimatedTitle(bukkitPlayer);
-        else if (player.getLanguage().equals(Language.ENGLISCH))
+        else if (player.getLanguage().equals(Language.ENGLISCHUK))
             EnTitleBuilder.sendAnimatedTitle(bukkitPlayer);
     }
 
     @Override
     public void sendCustomAnimatedTitle(TitleBuilder EnTitleBuilder, TitleBuilder deTitleBuilder, int speed, SoundBuilder finishSound) {
-        if (player.getLanguage().equals(Language.DEUTSCH))
+        if (player.getLanguage().equals(Language.DEUTSCHDE))
             deTitleBuilder.sendCustomAnimatedTitle(bukkitPlayer, speed, finishSound);
-        else if (player.getLanguage().equals(Language.ENGLISCH))
+        else if (player.getLanguage().equals(Language.ENGLISCHUK))
             EnTitleBuilder.sendCustomAnimatedTitle(bukkitPlayer, speed, finishSound);
     }
 
@@ -148,6 +139,11 @@ public class BukkitPlayer implements IBukkitPlayer{
     @Override
     public void playSound(SoundBuilder sound){
         sound.play(bukkitPlayer);
+    }
+
+    @Override
+    public void kick(String reasonen, String reasonde) {
+        getPlayer().kick(PunishmentMessages.paperKick(reasonen, reasonde, this));
     }
 
     @Override

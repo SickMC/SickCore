@@ -1,6 +1,7 @@
 package me.anton.sickcore.modules.basic.lobby;
 
 import me.anton.sickcore.api.handler.listeners.bungee.BungeeHandler;
+import me.anton.sickcore.api.player.apiPlayer.language.LanguagePath;
 import me.anton.sickcore.api.player.bungeePlayer.IBungeePlayer;
 import net.md_5.bungee.api.event.ChatEvent;
 
@@ -11,8 +12,8 @@ public class LobbyCommandAd extends BungeeHandler {
         if (!message.equalsIgnoreCase("7l") || !message.equalsIgnoreCase("7lobby") || !message.equalsIgnoreCase("7hub") || !message.equalsIgnoreCase("7leave"))return;
         rawEvent.setCancelled(true);
 
-        if (player.api().cloud().cloudAPI().getConnectedServer().isLobby())player.sendMessage("§4You are already on the lobby!", "§4Du bist bereits in der Lobby!");
+        if (player.api().cloud().cloudAPI().getConnectedServer().isLobby())player.sendMessage(LanguagePath.PROXY_STAFF_COMMAND_LOBBY_ALREADY);
         player.api().cloud().cloudAPI().sendToLobby();
-        player.sendMessage("§7You were send to the lobby!", "§7Du wurdest zur Lobby teleportiert!");
+        player.sendMessage(LanguagePath.PROXY_STAFF_COMMAND_LOBBY_SUCCESS);
     }
 }

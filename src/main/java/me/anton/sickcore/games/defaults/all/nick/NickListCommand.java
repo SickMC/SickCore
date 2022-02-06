@@ -4,6 +4,7 @@ import co.aikar.commands.BaseCommand;
 import co.aikar.commands.annotation.CommandAlias;
 import co.aikar.commands.annotation.Default;
 import co.aikar.commands.annotation.Description;
+import me.anton.sickcore.api.player.apiPlayer.language.LanguagePath;
 import me.anton.sickcore.api.player.bukkitPlayer.BukkitPlayer;
 import me.anton.sickcore.api.player.bukkitPlayer.IBukkitPlayer;
 import me.anton.sickcore.api.utils.minecraft.messages.ConsoleMessages;
@@ -26,14 +27,14 @@ public class NickListCommand extends BaseCommand {
         HashMap<Player, String> nicklist = new HashMap<>();
         IBukkitPlayer player = new BukkitPlayer(sender);
 
-        if (!player.api().isTeam()){player.message().noTeam();return;}
+        if (!player.api().isTeam()){player.sendMessage(LanguagePath.NETWORK_COMMAND_NOSTAFF);return;}
 
         player.getPlayer().getServer().getOnlinePlayers().forEach(onlinePlayer -> {
             IBukkitPlayer online = new BukkitPlayer(onlinePlayer);
             if (!online.isNicked()) return;
             nicklist.put(onlinePlayer, online.getName());
         });
-        if (nicklist.isEmpty()){new BukkitPlayer(sender).sendMessage("§7No player is nicked!", "§7Es ist gerade kein Player genickt!"); return;}
+        if (nicklist.isEmpty()){player.getPlayer().sendMessage((String) player.api().languageObject("§7No player is nicked!", "§7Es ist gerade kein Player genickt!")); return;}
 
         NickListInventory.openInventory(new BukkitPlayer(sender));
     }

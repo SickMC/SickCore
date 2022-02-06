@@ -33,9 +33,9 @@ public class TitleBuilder {
     public TitleBuilder(String title, String subtitle, int stay){
         this.title = title;
         this.subtitle = subtitle;
-        this.fadeIn = 1;
+        this.fadeIn = 2;
         this.stay = stay;
-        this.fadeOut = 1;
+        this.fadeOut = 2;
     }
 
     public void sendTitle(Player player){
@@ -49,7 +49,6 @@ public class TitleBuilder {
         String[] args = title.split("");
         String[] subArgs = subtitle.split("");
         int length = args.length;
-        int subLength = subArgs.length;
         AtomicInteger count = new AtomicInteger(0);
         this.current = "";
         taskID = Bukkit.getScheduler().runTaskTimerAsynchronously(Core.getInstance().bukkit().getPlugin(), () -> {
@@ -62,13 +61,6 @@ public class TitleBuilder {
             }
             new SoundBuilder(Sound.BLOCK_NOTE_BLOCK_PLING, net.kyori.adventure.sound.Sound.Source.AMBIENT, 2,1).play(player);
 
-            if(isColorCode(args[count.get()])){
-                current += args[count.get()] + args[count.get()+1];
-                count.set(count.get()+2);
-            }else{
-                current += args[count.get()];
-                count.set(count.get()+1);
-            }
             new TitleBuilder(current, null, 0,10,0);
         },0,2).getTaskId();
     }
@@ -77,7 +69,6 @@ public class TitleBuilder {
         String[] args = title.split("");
         String[] subArgs = subtitle.split("");
         int length = args.length;
-        int subLength = subArgs.length;
         AtomicInteger count = new AtomicInteger(0);
         this.current = "";
         int taskID = Bukkit.getScheduler().runTaskTimerAsynchronously(Core.getInstance().bukkit().getPlugin(), () -> {
@@ -89,20 +80,8 @@ public class TitleBuilder {
                 stop();
             }
             new SoundBuilder(Sound.BLOCK_NOTE_BLOCK_PLING, net.kyori.adventure.sound.Sound.Source.AMBIENT, 2,1).play(player);
-
-            if(isColorCode(args[count.get()])){
-                current += args[count.get()] + args[count.get()+1];
-                count.set(count.get()+2);
-            }else{
-                current += args[count.get()];
-                count.set(count.get()+1);
-            }
             new TitleBuilder(current, null, 0,10,0);
         },0,speed).getTaskId();
-    }
-
-    private boolean isColorCode(String s){
-        return s.equals("&") ||s.equals("§");
     }
 
     private void stop(){

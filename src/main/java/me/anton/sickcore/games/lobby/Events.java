@@ -41,7 +41,6 @@ public class Events extends BukkitHandler {
         LobbyItems.addLobbyItems(bukkitPlayer);
         List<Rank> glowingRanks = Arrays.asList(Rank.ADMIN, Rank.BUILDER, Rank.CONTENT, Rank.MODERATOR);
         if (glowingRanks.contains(bukkitPlayer.api().getRank()) && !bukkitPlayer.isNicked())player.setGlowing(true);
-        bukkitPlayer.sendAnimatedTitle(new TitleBuilder("Lobby", "", 5), new TitleBuilder("Lobby", "", 5));
     }
 
     @Override

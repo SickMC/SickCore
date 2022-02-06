@@ -2,28 +2,23 @@ package me.anton.sickcore.api.player.apiPlayer.enums;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
-import org.bukkit.ChatColor;
+import me.anton.sickcore.api.utils.common.ColorUtils;
 
 @Getter
 @AllArgsConstructor
 public enum Rank {
 
-    ADMIN(001, "Admin", ChatColor.DARK_RED),
-    MODERATOR(002, "Mod", ChatColor.DARK_GREEN),
-    DEV(003, "Dev", ChatColor.DARK_AQUA),
-    BUILDER(004, "Builder", ChatColor.DARK_AQUA),
-    CONTENT(005, "Content", ChatColor.DARK_AQUA),
-    MVP(006, "MVP", ChatColor.AQUA),
-    VIP(007, "VIP", ChatColor.LIGHT_PURPLE),
-    PLAYER(010, "Player", ChatColor.GRAY);
+    ADMIN(001, "Admin", "DARK_RED"),
+    MODERATOR(002, "Mod", "DARK_GREEN"),
+    DEV(003, "Dev", "DARK_AQUA"),
+    BUILDER(004, "Builder", "DARK_AQUA"),
+    CONTENT(005, "Content", "DARK_AQUA"),
+    MVP(006, "MVP", "AQUA"),
+    VIP(007, "VIP", "LIGHT_PURPLE"),
+    PLAYER(010, "Player", "GRAY");
 
     private final double priority;
-    private final String rawPrefix;
-    private final ChatColor color;
-
-    public String getPrefix(){
-        return getColor() + getRawPrefix() + "§8 × §r";
-    }
-
+    private final String name;
+    private final String color;
 
 }

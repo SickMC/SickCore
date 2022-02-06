@@ -21,4 +21,17 @@ public class ColorUtils {
         return NamedTextColor.nearestTo(color1);
     }
 
+    public static NamedTextColor toNamedTextColor(String color){
+        org.bukkit.ChatColor color1 = toChatColor(color);
+        return toNamedTextColor(color1);
+    }
+
+    public static org.bukkit.ChatColor toChatColor(String color){
+        return org.bukkit.ChatColor.valueOf(color);
+    }
+
+    public static ChatColor toBungeeColor(String color){
+        return ChatColor.of(color);
+    }
+
 }

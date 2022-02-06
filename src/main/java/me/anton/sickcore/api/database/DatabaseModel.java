@@ -1,5 +1,6 @@
 package me.anton.sickcore.api.database;
 
+import com.mongodb.client.FindIterable;
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoDatabase;
 import com.mongodb.client.model.Filters;
@@ -7,9 +8,7 @@ import lombok.Getter;
 import me.anton.sickcore.core.Core;
 import org.bson.Document;
 
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.UUID;
+import java.util.*;
 
 @Getter
 public class DatabaseModel {
@@ -25,6 +24,11 @@ public class DatabaseModel {
     public void createDocument(Document document){
         if (documentExists(document))return;
         collection.insertOne(document);
+    }
+
+    public void updateDocument(Finder finder, Document document){
+        if (!documentExists(collection.find(finder.bson()).first()))createDocument(document);
+        collection.replaceOne(finder.bson(), document);
     }
 
     public void updateDocument(String key, String value, Document document){
@@ -48,8 +52,8 @@ public class DatabaseModel {
         return collection.find(document).first() != null;
     }
 
-    public boolean documentExists(String key, String value){
-        return collection.find(Filters.eq(key, value)).first() != null;
+    public boolean documentExists(Finder finder){
+        return collection.find(finder.bson()).first() != null;
     }
 
     public Document getDocument(String key, String value){
@@ -60,7 +64,11 @@ public class DatabaseModel {
         return collection.find(finder.bson()).first();
     }
 
-    public void deleteDocument(String key, String value){
-        collection.deleteOne(Filters.eq(key, value));
+    public List<Document> getAllValues(){
+        return collection.find().into(new ArrayList<>());
+    }
+
+    public void deleteDocument(Finder finder){
+        collection.deleteOne(finder.bson());
     }
 }

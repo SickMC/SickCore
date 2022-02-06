@@ -4,6 +4,7 @@ import me.anton.sickcore.api.player.apiPlayer.IAPIPlayer;
 import me.anton.sickcore.api.player.apiPlayer.provider.DiscordAPIPlayerAdapter;
 import me.anton.sickcore.api.player.bungeePlayer.IBungeePlayer;
 import me.anton.sickcore.api.player.discordPlayer.DiscordPlayer;
+import me.anton.sickcore.api.player.discordPlayer.IDiscordPlayer;
 import me.anton.sickcore.api.utils.discord.DiscordIds;
 import me.anton.sickcore.modules.discord.DiscordModule;
 import me.anton.sickcore.modules.discord.handlers.command.SlashCommand;
@@ -15,6 +16,7 @@ import net.dv8tion.jda.api.events.interaction.SlashCommandEvent;
 import net.dv8tion.jda.api.interactions.InteractionHook;
 import net.dv8tion.jda.api.interactions.commands.OptionType;
 import net.dv8tion.jda.api.interactions.commands.build.OptionData;
+import net.md_5.bungee.api.chat.TextComponent;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -48,7 +50,7 @@ public class VerifyCommand extends SlashCommand {
     }
 
     @Override
-    public void execute(User user, InteractionHook hook, SlashCommandEvent event) {
+    public void execute(User user, IDiscordPlayer player, InteractionHook hook, SlashCommandEvent event) {
         DiscordModule module = DiscordModule.getInstance();
         VerifyModule verifyModule = VerifyModule.getVerifyModule();
 
@@ -58,15 +60,15 @@ public class VerifyCommand extends SlashCommand {
 
         if (!verifyModule.getVerifyList().containsValue(verifyID)){hook.sendMessageEmbeds(getWrongCodeEmbed(user)).setEphemeral(true).queue();return;}
 
-        IBungeePlayer player = verifyModule.getVerifyListReturn().get(verifyID);
+        IBungeePlayer bungeeplayer = verifyModule.getVerifyListReturn().get(verifyID);
 
-        verify(player, user.getId());
+        verify(bungeeplayer, user.getId());
 
-        verifyModule.getVerifyListReturn().remove(verifyID, player);
-        verifyModule.getVerifyList().remove(player, verifyID);
+        verifyModule.getVerifyListReturn().remove(verifyID, bungeeplayer);
+        verifyModule.getVerifyList().remove(bungeeplayer, verifyID);
 
-        sendLog(user, player);
-        player.sendMessage("§7Your account is now linked with §6" + event.getMember().getUser().getAsTag() + "§7!", "§7Dein Account ist nun mit §6" + event.getMember().getUser().getAsTag() + "§7 verbunden!");
+        sendLog(user, bungeeplayer);
+        bungeeplayer.bungeeAPI().sendMessage(new TextComponent((String) bungeeplayer.api().languageObject("§7Your account is now linked with §6" + event.getMember().getUser().getAsTag() + "§7!", "§7Dein Account ist nun mit §6" + event.getMember().getUser().getAsTag() + "§7 verbunden!")));
         hook.sendMessageEmbeds(getVerified(user)).queue();
     }
 

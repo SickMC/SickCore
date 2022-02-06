@@ -4,6 +4,7 @@ import co.aikar.commands.BaseCommand;
 import co.aikar.commands.annotation.CommandAlias;
 import co.aikar.commands.annotation.Default;
 import eu.thesimplecloud.api.CloudAPI;
+import me.anton.sickcore.api.player.apiPlayer.language.LanguagePath;
 import me.anton.sickcore.api.player.bungeePlayer.BungeePlayer;
 import me.anton.sickcore.api.player.bungeePlayer.IBungeePlayer;
 import me.anton.sickcore.api.utils.minecraft.messages.ConsoleMessages;
@@ -23,9 +24,9 @@ public class BuildServerCommand extends BaseCommand {
         IBungeePlayer player = new BungeePlayer(sender);
         if (!player.api().isTeam())return;
 
-        if (player.api().cloud().cloudAPI().getConnectedServer().getName().startsWith("Build-"))player.sendMessage("§4You are already on the buildserver!", "§4Du bist bereits auf dem Buildserver!");
+        if (player.api().cloud().cloudAPI().getConnectedServer().getName().startsWith("Build-"))player.sendMessage(LanguagePath.PROXY_STAFF_COMMAND_BUILDSERVER_ALREADY);
         player.api().cloud().cloudAPI().connect(CloudAPI.getInstance().getCloudServiceManager().getCloudServiceByName("Build-1"));
-        player.sendMessage("§7You were send to the buildserver!", "§7Du wurdest zum Build-Server teleportiert!");
+        player.sendMessage(LanguagePath.PROXY_STAFF_COMMAND_BUILDSERVER_SUCCESS);
     }
 
 }

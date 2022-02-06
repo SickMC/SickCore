@@ -1,4 +1,4 @@
-package me.anton.sickcore.games.defaults.commands;
+package me.anton.sickcore.games.defaults.additional.commands;
 
 import co.aikar.commands.BaseCommand;
 import co.aikar.commands.CommandHelp;

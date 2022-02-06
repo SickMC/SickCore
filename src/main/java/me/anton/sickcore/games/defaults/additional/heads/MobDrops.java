@@ -1,4 +1,4 @@
-package me.anton.sickcore.games.defaults.heads;
+package me.anton.sickcore.games.defaults.additional.heads;
 
 import me.anton.sickcore.api.handler.listeners.bukkit.BukkitHandler;
 import me.anton.sickcore.api.player.bukkitPlayer.IBukkitPlayer;

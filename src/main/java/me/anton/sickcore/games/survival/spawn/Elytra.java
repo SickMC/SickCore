@@ -43,7 +43,7 @@ public class Elytra extends BukkitHandler {
         }
         timesBoosted.put(rawEvent.getPlayer().getUniqueId(), timesBoosted.get(rawEvent .getPlayer().getUniqueId()) + 1);
         if (timesBoosted.get(rawEvent.getPlayer().getUniqueId()) <= 5)rawEvent.getPlayer().boostElytra(new ItemStack(Material.FIREWORK_ROCKET));
-        bukkitPlayer.sendMessage("§4You used all of your boosts!", "§4Du hast alle deine Boosts benutzt!");
+        bukkitPlayer.getPlayer().sendMessage((String) bukkitPlayer.api().languageObject("§4You used all of your boosts!", "§4Du hast alle deine Boosts benutzt!"));
     }
 
     @Override

@@ -23,43 +23,43 @@ public class RankInventory {
 
         InventoryBuilder admin = new InventoryBuilder(apiplayer, title + "§6 - Admin", 27, InventoryUsage.UTILITY);
 
-        admin.setItem(new ItemBuilder(Material.GRAY_DYE).setName(player.api().languageString("§6Player", "§6Spieler")).setLore(player.api().languageString(pickRank, depickRank)).addItemFlags(ItemFlag.HIDE_ATTRIBUTES).build(), 10, event -> {
+        admin.setItem(new ItemBuilder(Material.GRAY_DYE).setName((String) player.api().languageObject("§6Player", "§6Spieler")).setLore((String) player.api().languageObject(pickRank, depickRank)).addItemFlags(ItemFlag.HIDE_ATTRIBUTES).build(), 10, event -> {
             player.getPlayer().closeInventory();
             player.api().setNickRank(Rank.PLAYER);
             player.playSound(DefaultSounds.levelUP);
             AutoNickInventory.openAutoNickInventory(player);
         });
-        admin.setItem(new ItemBuilder(Material.PINK_DYE).setName(player.api().languageString("§6VIP", "§6VIP")).setLore(player.api().languageString(pickRank, depickRank)).addItemFlags(ItemFlag.HIDE_ATTRIBUTES).build(), 11, event -> {
+        admin.setItem(new ItemBuilder(Material.PINK_DYE).setName((String) player.api().languageObject("§6VIP", "§6VIP")).setLore((String) player.api().languageObject(pickRank, depickRank)).addItemFlags(ItemFlag.HIDE_ATTRIBUTES).build(), 11, event -> {
             player.getPlayer().closeInventory();
             player.api().setNickRank(Rank.VIP);
             player.playSound(DefaultSounds.levelUP);
             AutoNickInventory.openAutoNickInventory(player);
         });
-        admin.setItem(new ItemBuilder(Material.LIGHT_BLUE_DYE).setName(player.api().languageString("§6MVP", "§6MVP")).setLore(player.api().languageString(pickRank, depickRank)).addItemFlags(ItemFlag.HIDE_ATTRIBUTES).build(), 12, event -> {
+        admin.setItem(new ItemBuilder(Material.LIGHT_BLUE_DYE).setName((String) player.api().languageObject("§6MVP", "§6MVP")).setLore((String) player.api().languageObject(pickRank, depickRank)).addItemFlags(ItemFlag.HIDE_ATTRIBUTES).build(), 12, event -> {
             player.getPlayer().closeInventory();
             player.api().setNickRank(Rank.MVP);
             player.playSound(DefaultSounds.levelUP);
             AutoNickInventory.openAutoNickInventory(player);
         });
-        admin.setItem(new ItemBuilder(Material.BLUE_DYE).setName(player.api().languageString("§6Staff", "§6Staff")).setLore(player.api().languageString(pickRank, depickRank)).addItemFlags(ItemFlag.HIDE_ATTRIBUTES).build(), 13, event -> {
+        admin.setItem(new ItemBuilder(Material.BLUE_DYE).setName((String) player.api().languageObject("§6Staff", "§6Staff")).setLore((String) player.api().languageObject(pickRank, depickRank)).addItemFlags(ItemFlag.HIDE_ATTRIBUTES).build(), 13, event -> {
             player.getPlayer().closeInventory();
             player.api().setNickRank(Rank.CONTENT);
             player.playSound(DefaultSounds.levelUP);
             AutoNickInventory.openAutoNickInventory(player);
         });
-        admin.setItem(new ItemBuilder(Material.GREEN_DYE).setName(player.api().languageString("§6Moderator", "§6Moderator")).setLore(player.api().languageString(pickRank, depickRank)).addItemFlags(ItemFlag.HIDE_ATTRIBUTES).build(), 14, event -> {
+        admin.setItem(new ItemBuilder(Material.GREEN_DYE).setName((String) player.api().languageObject("§6Moderator", "§6Moderator")).setLore((String) player.api().languageObject(pickRank, depickRank)).addItemFlags(ItemFlag.HIDE_ATTRIBUTES).build(), 14, event -> {
             player.getPlayer().closeInventory();
             player.api().setNickRank(Rank.MODERATOR);
             player.playSound(DefaultSounds.levelUP);
             AutoNickInventory.openAutoNickInventory(player);
         });
-        admin.setItem(new ItemBuilder(Material.RED_DYE).setName(player.api().languageString("§6Developer", "§6Developer")).setLore(player.api().languageString(pickRank, depickRank)).addItemFlags(ItemFlag.HIDE_ATTRIBUTES).build(), 15, event -> {
+        admin.setItem(new ItemBuilder(Material.RED_DYE).setName((String) player.api().languageObject("§6Developer", "§6Developer")).setLore((String) player.api().languageObject(pickRank, depickRank)).addItemFlags(ItemFlag.HIDE_ATTRIBUTES).build(), 15, event -> {
             player.getPlayer().closeInventory();
             player.api().setNickRank(Rank.DEV);
             player.playSound(DefaultSounds.levelUP);
             AutoNickInventory.openAutoNickInventory(player);
         });
-        admin.setItem(new ItemBuilder(Material.RED_DYE).setName(player.api().languageString("§6Admin", "§6Admin")).setLore(player.api().languageString(pickRank, depickRank)).addItemFlags(ItemFlag.HIDE_ATTRIBUTES).build(), 16, event -> {
+        admin.setItem(new ItemBuilder(Material.RED_DYE).setName((String) player.api().languageObject("§6Admin", "§6Admin")).setLore((String) player.api().languageObject(pickRank, depickRank)).addItemFlags(ItemFlag.HIDE_ATTRIBUTES).build(), 16, event -> {
             player.getPlayer().closeInventory();
             player.api().setNickRank(Rank.ADMIN);
             player.playSound(DefaultSounds.levelUP);
@@ -76,19 +76,19 @@ public class RankInventory {
 
         InventoryBuilder builder = new InventoryBuilder(apiplayer, title, 27, InventoryUsage.UTILITY);
 
-        builder.setItem(new ItemBuilder(Material.GRAY_DYE).setName(player.api().languageString("§6Player", "§6Spielers")).setLore(player.api().languageString(pickRank, depickRank)).addItemFlags(ItemFlag.HIDE_ATTRIBUTES).build(), 11, event -> {
+        builder.setItem(new ItemBuilder(Material.GRAY_DYE).setName((String) player.api().languageObject("§6Player", "§6Spielers")).setLore((String) player.api().languageObject(pickRank, depickRank)).addItemFlags(ItemFlag.HIDE_ATTRIBUTES).build(), 11, event -> {
             player.getPlayer().closeInventory();
             player.api().setNickRank(Rank.PLAYER);
             player.playSound(DefaultSounds.levelUP);
             AutoNickInventory.openAutoNickInventory(player);
         });
-        builder.setItem(new ItemBuilder(Material.PINK_DYE).setName(player.api().languageString("§6VIP", "§6VIP")).setLore(player.api().languageString(pickRank, depickRank)).addItemFlags(ItemFlag.HIDE_ATTRIBUTES).build(), 13, event -> {
+        builder.setItem(new ItemBuilder(Material.PINK_DYE).setName((String) player.api().languageObject("§6VIP", "§6VIP")).setLore((String) player.api().languageObject(pickRank, depickRank)).addItemFlags(ItemFlag.HIDE_ATTRIBUTES).build(), 13, event -> {
             player.getPlayer().closeInventory();
             player.api().setNickRank(Rank.VIP);
             player.playSound(DefaultSounds.levelUP);
             AutoNickInventory.openAutoNickInventory(player);
         });
-        builder.setItem(new ItemBuilder(Material.LIGHT_BLUE_DYE).setName(player.api().languageString("§6MVP", "§6MVP")).setLore(player.api().languageString(pickRank, depickRank)).addItemFlags(ItemFlag.HIDE_ATTRIBUTES).build(), 15, event -> {
+        builder.setItem(new ItemBuilder(Material.LIGHT_BLUE_DYE).setName((String) player.api().languageObject("§6MVP", "§6MVP")).setLore((String) player.api().languageObject(pickRank, depickRank)).addItemFlags(ItemFlag.HIDE_ATTRIBUTES).build(), 15, event -> {
             player.getPlayer().closeInventory();
             player.api().setNickRank(Rank.MVP);
             player.playSound(DefaultSounds.levelUP);

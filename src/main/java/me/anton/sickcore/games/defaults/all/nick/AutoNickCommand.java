@@ -24,7 +24,7 @@ public class AutoNickCommand extends BaseCommand {
         }
 
         IBukkitPlayer bukkitPlayer = new BukkitPlayer(((Player) sender).getUniqueId());
-        if (!bukkitPlayer.api().isTeam() || bukkitPlayer.api().getRank() == Rank.MVP){bukkitPlayer.sendMessage("§4Available with MVP or higher!", "§4Verfügbar mit MVP oder höher!");return;}
+        if (!bukkitPlayer.api().isTeam() || bukkitPlayer.api().getRank() == Rank.MVP){bukkitPlayer.getPlayer().sendMessage((String) bukkitPlayer.api().languageObject("§4Available with MVP or higher!", "§4Verfügbar mit MVP oder höher!"));return;}
 
         AutoNickInventory.openAutoNickInventory(bukkitPlayer);
     }

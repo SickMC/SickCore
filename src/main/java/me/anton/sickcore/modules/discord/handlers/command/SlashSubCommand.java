@@ -4,6 +4,7 @@ import lombok.Data;
 import me.anton.sickcore.api.player.apiPlayer.APIPlayer;
 import me.anton.sickcore.api.player.apiPlayer.IAPIPlayer;
 import me.anton.sickcore.api.player.apiPlayer.provider.DiscordAPIPlayerAdapter;
+import me.anton.sickcore.api.player.discordPlayer.IDiscordPlayer;
 import me.anton.sickcore.modules.discord.handlers.messages.DiscordMessages;
 import net.dv8tion.jda.api.entities.User;
 import net.dv8tion.jda.api.events.interaction.SlashCommandEvent;
@@ -62,7 +63,7 @@ public abstract class SlashSubCommand {
         return state;
     }
 
-    public abstract void execute(User user, InteractionHook hook, SlashCommandEvent event);
+    public abstract void execute(User user, IDiscordPlayer player, InteractionHook hook, SlashCommandEvent event);
 
     public IAPIPlayer getApiPlayer(User user){
         return this.mainCommand.getApiPlayer(user);

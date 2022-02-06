@@ -1,6 +1,7 @@
 package me.anton.sickcore.modules.discord.modules.ticket;
 
 import lombok.Getter;
+import me.anton.sickcore.api.database.Finder;
 import me.anton.sickcore.api.player.discordPlayer.IDiscordPlayer;
 import me.anton.sickcore.api.utils.discord.DiscordIds;
 import me.anton.sickcore.modules.discord.DiscordModule;
@@ -26,7 +27,7 @@ public class Ticket {
     private DiscordModule dModule = DiscordModule.getInstance();
 
     public Ticket(Member player){
-        if (!module.getModel().documentExists("playerID", player.getUser().getId()))module.getModel().createDocument(new Document("playerID", player.getUser().getId())
+        if (!module.getModel().documentExists(Finder.stringFinder("playerID", player.getUser().getId())))module.getModel().createDocument(new Document("playerID", player.getUser().getId())
                     .append("assignedID", "0")
                     .append("channelID", "0"));
 
@@ -62,7 +63,7 @@ public class Ticket {
         ticketChannel.putPermissionOverride(player).setDeny(Permission.VIEW_CHANNEL).queue();
         ticketChannel.putPermissionOverride(dModule.getJda().getRoleById(DiscordIds.mod)).setDeny(Permission.VIEW_CHANNEL).queue();
         ticketChannel.getManager().setParent(dModule.getMainGuild().getCategoryById(module.getTicketArchiveCategoryID())).queue();
-        module.getModel().deleteDocument("playerID",player.getUser().getId());
+        module.getModel().deleteDocument(new Finder("playerID",player.getUser().getId()));
     }
 
 }

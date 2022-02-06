@@ -1,4 +1,4 @@
-package me.anton.sickcore.games.defaults.heads;
+package me.anton.sickcore.games.defaults.additional.heads;
 
 import me.anton.sickcore.games.defaults.all.HeadDBAPI;
 import me.anton.sickcore.api.utils.common.string.EnumUtils;

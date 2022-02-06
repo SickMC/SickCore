@@ -23,12 +23,12 @@ public class NickCommand extends BaseCommand {
         }
 
         IBukkitPlayer bukkitPlayer = new BukkitPlayer(((Player) sender).getUniqueId());
-        if (!bukkitPlayer.api().isTeam() || bukkitPlayer.api().getRank() == Rank.MVP){bukkitPlayer.sendMessage("§4Available with MVP or higher!", "§4Verfügbar mit MVP oder höher!");return;}
-        if (bukkitPlayer.isNicked()){bukkitPlayer.sendMessage("§4You are already nicked!", "§4Du bist bereits genickt!"); return;}
+        if (!bukkitPlayer.api().isTeam() || bukkitPlayer.api().getRank() == Rank.MVP){bukkitPlayer.getPlayer().sendMessage((String) bukkitPlayer.api().languageObject("§4Available with MVP or higher!", "§4Verfügbar mit MVP oder höher!"));return;}
+        if (bukkitPlayer.isNicked()){bukkitPlayer.getPlayer().sendMessage((String) bukkitPlayer.api().languageObject("§4You are already nicked!", "§4Du bist bereits genickt!")); return;}
 
         bukkitPlayer.nick();
-        bukkitPlayer.sendMessage("§7You are now nicked as §6" + bukkitPlayer.getName() + "§7 !", "§7Du bist nun genickt als §6" + bukkitPlayer.getName() + "§7 !");
-        bukkitPlayer.sendMessage("§7Your nickskin is by §6" +  bukkitPlayer.getNickSkinName() + "§7 !", "§7Dein NickSkin ist von §6" + bukkitPlayer.getNickSkinName() + "§7 !");
+        bukkitPlayer.getPlayer().sendMessage((String) bukkitPlayer.api().languageObject("§7You are now nicked as §6" + bukkitPlayer.getName() + "§7 !", "§7Du bist nun genickt als §6" + bukkitPlayer.getName() + "§7 !"));
+        bukkitPlayer.getPlayer().sendMessage((String) bukkitPlayer.api().languageObject("§7Your nickskin is by §6" +  bukkitPlayer.getNickSkinName() + "§7 !", "§7Dein NickSkin ist von §6" + bukkitPlayer.getNickSkinName() + "§7 !"));
     }
 
 }

@@ -22,6 +22,5 @@ public class RuleReaction extends ListenerAdapter {
         }
         event.getGuild().addRoleToMember(event.getMember(), player).queue();
         event.reply("Rules accepted!").setEphemeral(true).queue();
-        return;
     }
 }

@@ -106,7 +106,7 @@ public class PagedInventoryBuilder {
 
         if (!pagedItems.containsKey(1)) {
             LinkedHashMap<ItemStack, Consumer<InventoryClickEvent>> map = new LinkedHashMap<>();
-            map.put(new ItemBuilder(Material.BARRIER).setName(apiPlayer.api().languageString("§4Nothing found", "§4Es wurde nichts gefunden!")).build(), event -> event.setCancelled(true));
+            map.put(new ItemBuilder(Material.BARRIER).setName((String) apiPlayer.api().languageObject("§4Nothing found", "§4Es wurde nichts gefunden!")).build(), event -> event.setCancelled(true));
             pagedItems.put(1, map);
             return;
         }
@@ -135,16 +135,16 @@ public class PagedInventoryBuilder {
 
         inventoryHandler.fillPlaceholder(0,8,45,53,1,7,9,17,36,44,46,52,2,3,5,6,47,51);
 
-        inventoryHandler.setItem(new ItemBuilder(Material.PAPER).setName(apiPlayer.api().languageString("§7Page §6" + page + "§7/§6" + pagedItems.size(),"§7Seite §6" + page + "§7/§6" + pagedItems.size())).build(), 49, event -> event.setCancelled(true));
+        inventoryHandler.setItem(new ItemBuilder(Material.PAPER).setName((String) apiPlayer.api().languageObject("§7Page §6" + page + "§7/§6" + pagedItems.size(),"§7Seite §6" + page + "§7/§6" + pagedItems.size())).build(), 49, event -> event.setCancelled(true));
 
-        inventoryHandler.setItem(new ItemBuilder(headback).setName(apiPlayer.api().languageString("§7Backward","§7Zurück")).build(), 48, event -> {
+        inventoryHandler.setItem(new ItemBuilder(headback).setName((String) apiPlayer.api().languageObject("§7Backward","§7Zurück")).build(), 48, event -> {
             if (!hasPage(page - 1)) {
                 DefaultSounds.anvil.play(apiPlayer);
                 return;
             }
             open(page - 1);
         });
-        inventoryHandler.setItem(new ItemBuilder(headforwa).setName(apiPlayer.api().languageString("§7Forward","§7Vor")).build(), 50, event -> {
+        inventoryHandler.setItem(new ItemBuilder(headforwa).setName((String) apiPlayer.api().languageObject("§7Forward","§7Vor")).build(), 50, event -> {
             if (!hasPage(page + 1)) {
                 DefaultSounds.anvil.play(apiPlayer);
                 return;
