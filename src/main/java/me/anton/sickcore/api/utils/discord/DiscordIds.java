@@ -21,4 +21,9 @@ public class DiscordIds {
     public static String discordLogChannel = "908426086071808012";
     public static String staffchat = "908091369183121418";
     public static String chat = "908092924359737384";
+
+    public static String talk1 = "908688840896675840";
+    public static String talk2 = "908688880851628043";
+    public static String talk3 = "908805298305790003";
+
 }
