@@ -2,6 +2,7 @@ package me.anton.sickcore.modules.discord;
 
 import lombok.Getter;
 import me.anton.sickcore.api.database.DatabaseModel;
+import me.anton.sickcore.api.database.Finder;
 import me.anton.sickcore.api.utils.common.FileUtils;
 import me.anton.sickcore.api.utils.common.system.Logger;
 import me.anton.sickcore.core.Core;
@@ -36,6 +37,7 @@ public class DiscordModule implements IModule {
     public static DiscordModule instance;
     private Document model;
     private DatabaseModel gamePlayer;
+    private DatabaseModel discordModel;
 
     private JDA jda;
     private JDABuilder builder;
@@ -47,9 +49,10 @@ public class DiscordModule implements IModule {
     public void load() {
         if (!Core.getInstance().bungee().isMainProxy())return;
         instance = this;
+        this.discordModel = new DatabaseModel("discord");
         this.commandBuilder = new SlashCommandBuilder();
         moduleHandler = new DiscordModuleHandler();
-        model = FileUtils.getAsDocument("discord");
+        model = discordModel.getDocument(Finder.stringFinder("bot", "sickmc"));
         this.gamePlayer = new DatabaseModel("discordPlayer");
         register();
     }

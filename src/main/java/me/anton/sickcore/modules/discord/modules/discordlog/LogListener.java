@@ -1,6 +1,7 @@
 package me.anton.sickcore.modules.discord.modules.discordlog;
 
 import me.anton.sickcore.modules.discord.DiscordModule;
+import me.anton.sickcore.modules.discord.modules.autodelete.DeleteListener;
 import net.dv8tion.jda.api.audit.ActionType;
 import net.dv8tion.jda.api.audit.AuditLogEntry;
 import net.dv8tion.jda.api.entities.Guild;
@@ -176,12 +177,16 @@ public class LogListener extends ListenerAdapter {
 
     @Override
     public void onMessageDelete(@NotNull MessageDeleteEvent event) {
+        for (String s : cache.get(event.getMessageIdLong()).getContentRaw().split(" "))
+            if (DeleteListener.deletions.contains(s))return;
+
         guild.retrieveAuditLogs()
                 .type(ActionType.MESSAGE_DELETE)
                 .limit(1)
                 .queue(list ->{
                     if (list.isEmpty())return;
                     AuditLogEntry entry = list.get(0);
+                    if (entry.getUser().isBot())return;
                     MessageEmbed embed = new me.anton.sickcore.modules.discord.handlers.messages.EmbedBuilder()
                             .setTitle("Message Delete")
                             .setContent("A message of " + cache.get(event.getMessageIdLong()).getAuthor().getAsMention() + " was deleted by: " + entry.getUser().getAsMention() + "\n\n**Content:** \n```" + cache.get(event.getMessageIdLong()).getContentRaw() + "```").build();
@@ -192,6 +197,7 @@ public class LogListener extends ListenerAdapter {
 
     @Override
     public void onMessageUpdate(@NotNull MessageUpdateEvent event) {
+        if (event.getMember().getUser().isBot())return;
         MessageEmbed embed = new me.anton.sickcore.modules.discord.handlers.messages.EmbedBuilder()
                 .setTitle("Message Update")
                 .setContent("A message of " + event.getAuthor().getAsMention() + " was edited!\n\n**Old Content:** \n```" + cache.get(event.getMessageIdLong()).getContentRaw() + "```\n **New Content:** \n```" + event.getMessage().getContentRaw() + "```").build();
