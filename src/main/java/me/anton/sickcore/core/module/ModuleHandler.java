@@ -2,6 +2,7 @@ package me.anton.sickcore.core.module;
 
 import me.anton.sickcore.modules.basic.BasicModule;
 import me.anton.sickcore.modules.discord.DiscordModule;
+import me.anton.sickcore.games.defaults.all.maintenance.MaintenanceModule;
 import me.anton.sickcore.modules.motd.MOTDModule;
 
 import java.util.Arrays;

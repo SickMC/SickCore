@@ -177,6 +177,7 @@ public class LogListener extends ListenerAdapter {
 
     @Override
     public void onMessageDelete(@NotNull MessageDeleteEvent event) {
+        if (!cache.containsKey(event.getMessageIdLong()))return;
         for (String s : cache.get(event.getMessageIdLong()).getContentRaw().split(" "))
             if (DeleteListener.deletions.contains(s))return;
 
@@ -197,6 +198,7 @@ public class LogListener extends ListenerAdapter {
 
     @Override
     public void onMessageUpdate(@NotNull MessageUpdateEvent event) {
+        if (!cache.containsKey(event.getMessageIdLong()))return;
         if (event.getMember().getUser().isBot())return;
         MessageEmbed embed = new me.anton.sickcore.modules.discord.handlers.messages.EmbedBuilder()
                 .setTitle("Message Update")

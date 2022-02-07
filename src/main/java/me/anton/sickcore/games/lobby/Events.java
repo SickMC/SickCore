@@ -4,8 +4,9 @@ import lombok.Getter;
 import me.anton.sickcore.api.handler.listeners.bukkit.BukkitHandler;
 import me.anton.sickcore.api.player.apiPlayer.enums.Rank;
 import me.anton.sickcore.api.player.bukkitPlayer.IBukkitPlayer;
-import me.anton.sickcore.api.utils.minecraft.bukkit.player.TitleBuilder;
 import me.anton.sickcore.games.lobby.utility.LobbyItems;
+import me.anton.sickcore.games.defaults.all.maintenance.MaintenanceModule;
+import net.kyori.adventure.text.Component;
 import org.bukkit.Bukkit;
 import org.bukkit.GameMode;
 import org.bukkit.Location;
@@ -24,11 +25,23 @@ import org.bukkit.inventory.ItemStack;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.UUID;
 
 public class Events extends BukkitHandler {
 
     @Getter
     private final static Location spawn = new Location(Bukkit.getWorld("Lobby-1"), 0.5, 65.5, 0.5);
+
+    @Override
+    public void onPlayerLogin(PlayerLoginEvent rawEvent, IBukkitPlayer bukkitPlayer) {
+        if (MaintenanceModule.getInstance().isSecure()){
+            if (!rawEvent.getPlayer().getUniqueId().equals(UUID.fromString("84c7eef5-ae2c-4ebb-a006-c3ee07643d79")))
+                if (MaintenanceModule.getInstance().isActive())rawEvent.disallow(PlayerLoginEvent.Result.KICK_OTHER, Component.text("Maintenance is enabled!"));
+        }else {
+            if (!bukkitPlayer.api().isTeam())
+                if (MaintenanceModule.getInstance().isActive())rawEvent.disallow(PlayerLoginEvent.Result.KICK_OTHER, Component.text("Maintenance is enabled!"));
+        }
+    }
 
     @Override
     public void onPlayerJoin(PlayerJoinEvent rawEvent, IBukkitPlayer bukkitPlayer) {

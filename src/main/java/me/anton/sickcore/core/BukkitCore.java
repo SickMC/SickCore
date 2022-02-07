@@ -14,6 +14,7 @@ import me.anton.sickcore.games.defaults.all.HeadDBAPI;
 import me.anton.sickcore.games.defaults.all.InvSee;
 import me.anton.sickcore.games.defaults.all.LagCommand;
 import me.anton.sickcore.games.defaults.all.appereance.UnknownCommandProvider;
+import me.anton.sickcore.games.defaults.all.maintenance.MaintenanceModule;
 import me.anton.sickcore.games.defaults.all.nick.AutoNickCommand;
 import me.anton.sickcore.games.defaults.all.nick.NickCommand;
 import me.anton.sickcore.games.defaults.all.nick.NickListCommand;
@@ -41,6 +42,7 @@ public class BukkitCore extends Core {
     private final PaperCommandManager manager;
     private final BukkitListenerProvider provider;
     private final GameHandler handler;
+    private final MaintenanceModule maintenanceModule;
 
     public BukkitCore(JavaPlugin plugin){
         instance = this;
@@ -52,11 +54,13 @@ public class BukkitCore extends Core {
         manager.enableUnstableAPI("help");
         this.provider = new BukkitListenerProvider();
         this.handler = new GameHandler();
+        this.maintenanceModule = new MaintenanceModule();
     }
 
     public void onLoad(){
         register();
         handler.loadGames();
+        maintenanceModule.load();
     }
 
     public void onUnLoad(){
