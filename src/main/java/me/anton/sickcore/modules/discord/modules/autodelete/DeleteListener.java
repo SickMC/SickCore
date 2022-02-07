@@ -1,5 +1,7 @@
 package me.anton.sickcore.modules.discord.modules.autodelete;
 
+import me.anton.sickcore.api.utils.discord.DiscordIds;
+import me.anton.sickcore.modules.discord.DiscordModule;
 import me.anton.sickcore.modules.discord.handlers.messages.EmbedBuilder;
 import me.anton.sickcore.modules.discord.modules.discordlog.DiscordLogModule;
 import net.dv8tion.jda.api.entities.Message;
@@ -25,6 +27,10 @@ public class DeleteListener extends ListenerAdapter {
 
     @Override
     public void onMessageReceived(@NotNull MessageReceivedEvent event) {
+        if (event.getMember().getRoles().contains(DiscordModule.getInstance().getMainGuild().getRoleById(DiscordIds.mod))
+                || event.getMember().getRoles().contains(DiscordModule.getInstance().getMainGuild().getRoleById(DiscordIds.staff))
+                || event.getMember().getRoles().contains(DiscordModule.getInstance().getMainGuild().getRoleById(DiscordIds.admin))
+                || event.getMember().getUser().equals(DiscordModule.getInstance().getJda().getSelfUser()))return;
         for (String s : event.getMessage().getContentRaw().split(" ")){
             if (!deletions.contains(s))return;
             MessageEmbed reply = new EmbedBuilder(event.getMember())
