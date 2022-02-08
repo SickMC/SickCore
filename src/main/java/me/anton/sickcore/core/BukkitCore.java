@@ -24,6 +24,7 @@ import me.anton.sickcore.games.defaults.all.vanish.VanishAction;
 import me.anton.sickcore.games.defaults.all.vanish.VanishCommand;
 import me.anton.sickcore.games.defaults.all.vanish.VanishListCommand;
 import me.anton.sickcore.core.game.GameHandler;
+import org.bukkit.entity.Player;
 import org.bukkit.event.Listener;
 import org.bukkit.plugin.java.JavaPlugin;
 
@@ -43,6 +44,7 @@ public class BukkitCore extends Core {
     private final BukkitListenerProvider provider;
     private final GameHandler handler;
     private final MaintenanceModule maintenanceModule;
+    private List<Player> vanished;
 
     public BukkitCore(JavaPlugin plugin){
         instance = this;
@@ -55,6 +57,7 @@ public class BukkitCore extends Core {
         this.provider = new BukkitListenerProvider();
         this.handler = new GameHandler();
         this.maintenanceModule = new MaintenanceModule();
+        this.vanished = new ArrayList<>();
     }
 
     public void onLoad(){

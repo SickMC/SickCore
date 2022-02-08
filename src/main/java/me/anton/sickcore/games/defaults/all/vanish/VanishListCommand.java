@@ -8,6 +8,7 @@ import me.anton.sickcore.api.player.apiPlayer.language.LanguagePath;
 import me.anton.sickcore.api.player.bukkitPlayer.BukkitPlayer;
 import me.anton.sickcore.api.player.bukkitPlayer.IBukkitPlayer;
 import me.anton.sickcore.api.utils.minecraft.messages.ConsoleMessages;
+import me.anton.sickcore.core.BukkitCore;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -26,7 +27,7 @@ public class VanishListCommand extends BaseCommand {
 
         if (!player.api().isTeam()){player.sendMessage(LanguagePath.NETWORK_COMMAND_NOSTAFF);return;}
 
-        if (VanishListInventory.vanishlist.isEmpty()){player.getPlayer().sendMessage((String) player.api().languageObject("§7No player is vanished!", "§7Es ist gerade kein Player gevanished!")); return;}
+        if (BukkitCore.getInstance().bukkit().getVanished().isEmpty()){player.getPlayer().sendMessage((String) player.api().languageObject("§7No player is vanished!", "§7Es ist gerade kein Player gevanished!")); return;}
 
         VanishListInventory.openInventory(new BukkitPlayer(sender));
     }
