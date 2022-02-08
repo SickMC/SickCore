@@ -11,7 +11,7 @@ import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
 import org.bukkit.plugin.java.JavaPlugin;
 
-public class VanishAction extends BukkitHandler {
+public class VanishAction{
 
     JavaPlugin plugin;
 
@@ -24,22 +24,7 @@ public class VanishAction extends BukkitHandler {
         });
     }
 
-    public VanishAction(){
 
-    }
-
-    @Override
-    public void onPlayerJoin(PlayerJoinEvent rawEvent, IBukkitPlayer bukkitPlayer) {
-        for (Player player : BukkitCore.getInstance().bukkit().getVanished()) {
-            new VanishAction(player);
-        }
-    }
-
-
-    @Override
-    public void onPlayerQuit(PlayerQuitEvent rawEvent, IBukkitPlayer bukkitPlayer) {
-        if (BukkitCore.getInstance().bukkit().getVanished().contains(bukkitPlayer.getPlayer()))BukkitCore.getInstance().bukkit().getVanished().remove(bukkitPlayer.getPlayer());
-    }
 
     public static void unVanish(Player player){
         Bukkit.getOnlinePlayers().forEach(handlers ->{

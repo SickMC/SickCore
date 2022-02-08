@@ -19,10 +19,7 @@ import me.anton.sickcore.games.defaults.all.nick.AutoNickCommand;
 import me.anton.sickcore.games.defaults.all.nick.NickCommand;
 import me.anton.sickcore.games.defaults.all.nick.NickListCommand;
 import me.anton.sickcore.games.defaults.all.nick.UnnickCommand;
-import me.anton.sickcore.games.defaults.all.vanish.UnVanishCommand;
-import me.anton.sickcore.games.defaults.all.vanish.VanishAction;
-import me.anton.sickcore.games.defaults.all.vanish.VanishCommand;
-import me.anton.sickcore.games.defaults.all.vanish.VanishListCommand;
+import me.anton.sickcore.games.defaults.all.vanish.*;
 import me.anton.sickcore.core.game.GameHandler;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Listener;
@@ -164,7 +161,7 @@ public class BukkitCore extends Core {
 
         //Vanish
         manager.registerCommand(new VanishCommand(), false);
-        provider.register(new VanishAction());
+        provider.register(new VanishActionProvider());
         manager.registerCommand(new UnVanishCommand(), false);
         manager.registerCommand(new VanishListCommand(), false);
     }
