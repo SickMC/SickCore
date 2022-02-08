@@ -12,7 +12,10 @@ public class LobbyCommandAd extends BungeeHandler {
         if (!message.equalsIgnoreCase("7l") || !message.equalsIgnoreCase("7lobby") || !message.equalsIgnoreCase("7hub") || !message.equalsIgnoreCase("7leave"))return;
         rawEvent.setCancelled(true);
 
-        if (player.api().cloud().cloudAPI().getConnectedServer().isLobby())player.sendMessage(LanguagePath.PROXY_STAFF_COMMAND_LOBBY_ALREADY);
+        if (player.api().cloud().cloudAPI().getConnectedServer().isLobby()){
+            player.sendMessage(LanguagePath.PROXY_STAFF_COMMAND_LOBBY_ALREADY);
+            return;
+        }
         player.api().cloud().cloudAPI().sendToLobby();
         player.sendMessage(LanguagePath.PROXY_STAFF_COMMAND_LOBBY_SUCCESS);
     }

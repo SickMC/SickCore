@@ -23,7 +23,10 @@ public class LobbyCommand extends BaseCommand {
         }
 
         IBungeePlayer player = new BungeePlayer(sender);
-        if (player.api().cloud().cloudAPI().getConnectedServer().isLobby())player.sendMessage(LanguagePath.PROXY_STAFF_COMMAND_LOBBY_ALREADY);
+        if (player.api().cloud().cloudAPI().getConnectedServer().isLobby()){
+            player.sendMessage(LanguagePath.PROXY_STAFF_COMMAND_LOBBY_ALREADY);
+            return;
+        }
         player.api().cloud().cloudAPI().sendToLobby();
         player.sendMessage(LanguagePath.PROXY_STAFF_COMMAND_LOBBY_SUCCESS);
     }

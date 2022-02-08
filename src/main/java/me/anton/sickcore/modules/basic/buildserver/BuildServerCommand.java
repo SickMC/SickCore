@@ -24,7 +24,10 @@ public class BuildServerCommand extends BaseCommand {
         IBungeePlayer player = new BungeePlayer(sender);
         if (!player.api().isTeam())return;
 
-        if (player.api().cloud().cloudAPI().getConnectedServer().getName().startsWith("Build-"))player.sendMessage(LanguagePath.PROXY_STAFF_COMMAND_BUILDSERVER_ALREADY);
+        if (player.api().cloud().cloudAPI().getConnectedServer().getName().startsWith("Build-")){
+            player.sendMessage(LanguagePath.PROXY_STAFF_COMMAND_BUILDSERVER_ALREADY);
+            return;
+        }
         player.api().cloud().cloudAPI().connect(CloudAPI.getInstance().getCloudServiceManager().getCloudServiceByName("Build-1"));
         player.sendMessage(LanguagePath.PROXY_STAFF_COMMAND_BUILDSERVER_SUCCESS);
     }
