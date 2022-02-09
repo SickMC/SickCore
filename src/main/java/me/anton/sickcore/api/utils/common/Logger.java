@@ -1,4 +1,4 @@
-package me.anton.sickcore.api.utils.common.system;
+package me.anton.sickcore.api.utils.common;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

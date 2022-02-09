@@ -1,4 +1,4 @@
-package me.anton.sickcore.api.utils.common.string;
+package me.anton.sickcore.api.utils.common;
 
 import net.md_5.bungee.api.ChatColor;
 
@@ -38,6 +38,17 @@ public class StringUtils {
         }
         String copy = builder.toString();
         builder.append(text).append(copy);
+
+        return builder.toString();
+    }
+
+    public static String getEnumName(Enum e){
+        StringBuilder builder = new StringBuilder();
+        for (String s : e.name().split("_")){
+            if(!builder.toString().isEmpty()) builder.append(" ");
+            builder.append(s.substring(0, 1).toUpperCase());
+            builder.append(s.toLowerCase().substring(1, s.length()));
+        }
 
         return builder.toString();
     }

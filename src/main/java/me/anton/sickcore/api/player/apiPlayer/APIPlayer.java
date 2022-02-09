@@ -15,7 +15,7 @@ import me.anton.sickcore.api.player.bungeePlayer.IBungeePlayer;
 import me.anton.sickcore.api.player.cloudPlayer.CloudAPIPlayer;
 import me.anton.sickcore.api.player.cloudPlayer.ICloudAPIPlayer;
 import me.anton.sickcore.api.utils.common.ColorUtils;
-import me.anton.sickcore.api.utils.common.string.EnumUtils;
+import me.anton.sickcore.api.utils.common.StringUtils;
 import me.anton.sickcore.api.utils.minecraft.player.uniqueid.UUIDFetcher;
 import me.anton.sickcore.core.Core;
 import org.bson.Document;
@@ -67,7 +67,7 @@ public class APIPlayer implements IAPIPlayer {
 
     @Override
     public void setLanguage(Language language) {
-        document.replace("language", EnumUtils.toName(language).toLowerCase());
+        document.replace("language", StringUtils.getEnumName(language).toLowerCase());
         update();
     }
 
@@ -107,7 +107,7 @@ public class APIPlayer implements IAPIPlayer {
 
     @Override
     public void setNickRank(Rank rank) {
-        document.replace("nickrank", EnumUtils.toName(rank));
+        document.replace("nickrank", StringUtils.getEnumName(rank));
         update();
     }
 

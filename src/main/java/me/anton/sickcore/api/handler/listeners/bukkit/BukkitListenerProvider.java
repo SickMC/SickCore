@@ -1,7 +1,7 @@
 package me.anton.sickcore.api.handler.listeners.bukkit;
 
 import me.anton.sickcore.api.utils.common.runnable.Runnabled;
-import me.anton.sickcore.api.utils.common.system.Logger;
+import me.anton.sickcore.api.utils.common.Logger;
 
 import java.util.ArrayList;
 import java.util.Collection;
