@@ -5,7 +5,7 @@ import eu.thesimplecloud.api.service.ICloudService;
 import eu.thesimplecloud.api.servicegroup.ICloudServiceGroup;
 import eu.thesimplecloud.api.wrapper.IWrapperInfo;
 import me.anton.sickcore.api.player.discordPlayer.IDiscordPlayer;
-import me.anton.sickcore.api.utils.common.math.MathUtils;
+import me.anton.sickcore.api.utils.common.MathUtils;
 import me.anton.sickcore.modules.discord.handlers.command.SlashCommand;
 import me.anton.sickcore.modules.discord.handlers.command.SlashSubCommand;
 import me.anton.sickcore.modules.discord.handlers.messages.EmbedBuilder;

@@ -1,9 +1,7 @@
 package me.anton.sickcore.core.game;
 
 import eu.thesimplecloud.api.CloudAPI;
-import lombok.Getter;
-import me.anton.sickcore.api.utils.common.system.Logger;
-import me.anton.sickcore.core.BukkitCore;
+import me.anton.sickcore.api.utils.common.Logger;
 import me.anton.sickcore.games.build.BuildGame;
 import me.anton.sickcore.games.lobby.LobbyGame;
 import me.anton.sickcore.games.survival.SurvivalGame;

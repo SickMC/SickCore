@@ -4,7 +4,7 @@ import lombok.Getter;
 import me.anton.sickcore.api.database.DatabaseModel;
 import me.anton.sickcore.api.database.Finder;
 import me.anton.sickcore.api.utils.common.FileUtils;
-import me.anton.sickcore.api.utils.common.system.Logger;
+import me.anton.sickcore.api.utils.common.Logger;
 import me.anton.sickcore.core.Core;
 import me.anton.sickcore.core.module.IModule;
 import me.anton.sickcore.modules.discord.handlers.command.SelectionMenuListener;

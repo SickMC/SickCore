@@ -1,8 +1,7 @@
 package me.anton.sickcore.games.defaults.additional.heads;
 
 import me.anton.sickcore.games.defaults.all.HeadDBAPI;
-import me.anton.sickcore.api.utils.common.string.EnumUtils;
-import me.anton.sickcore.api.utils.common.string.StringUtils;
+import me.anton.sickcore.api.utils.common.StringUtils;
 import me.anton.sickcore.api.utils.minecraft.bukkit.item.ItemBuilder;
 import me.arcaniax.hdb.api.HeadDatabaseAPI;
 import org.bukkit.entity.*;
@@ -576,36 +575,36 @@ public class MobHeads {
         String name = "";
         if (entity.getType() == EntityType.VILLAGER){
             Villager villager = (Villager) entity;
-            name = StringUtils.capitalize(EnumUtils.toName(villager.getProfession()));
+            name = StringUtils.capitalize(StringUtils.getEnumName(villager.getProfession()));
         }else if (entity.getType() == EntityType.WOLF){
             Fox wolf = (Fox) entity;
-            name = StringUtils.capitalize(EnumUtils.toName(wolf.getFoxType())) + " Fox";
+            name = StringUtils.capitalize(StringUtils.getEnumName(wolf.getFoxType())) + " Fox";
         }else if (entity.getType() == EntityType.AXOLOTL){
             Axolotl axolotl = (Axolotl) entity;
-            name = StringUtils.capitalize(EnumUtils.toName(axolotl.getVariant())) + " Axolotl";
+            name = StringUtils.capitalize(StringUtils.getEnumName(axolotl.getVariant())) + " Axolotl";
         }else if (entity.getType() == EntityType.SHEEP){
             Sheep sheep = (Sheep) entity;
-            name = StringUtils.capitalize(EnumUtils.toName(sheep.getColor())) + " Sheep";
+            name = StringUtils.capitalize(StringUtils.getEnumName(sheep.getColor())) + " Sheep";
         }else if (entity.getType() == EntityType.CAT){
             Cat cat = (Cat) entity;
-            name = StringUtils.capitalize(EnumUtils.toName(cat.getCatType())) + " Cat";
+            name = StringUtils.capitalize(StringUtils.getEnumName(cat.getCatType())) + " Cat";
         }else if (entity.getType() == EntityType.HORSE){
             Horse cat = (Horse) entity;
-            name = StringUtils.capitalize(EnumUtils.toName(cat.getColor())) + " Horse";
+            name = StringUtils.capitalize(StringUtils.getEnumName(cat.getColor())) + " Horse";
         }else if (entity.getType() == EntityType.LLAMA){
             Llama cat = (Llama) entity;
-            name = StringUtils.capitalize(EnumUtils.toName(cat.getColor())) + " LLama";
+            name = StringUtils.capitalize(StringUtils.getEnumName(cat.getColor())) + " LLama";
         }else if (entity.getType() == EntityType.PARROT){
             Parrot cat = (Parrot) entity;
-            name = StringUtils.capitalize(EnumUtils.toName(cat.getVariant())) + " Parrot";
+            name = StringUtils.capitalize(StringUtils.getEnumName(cat.getVariant())) + " Parrot";
         }else if (entity.getType() == EntityType.MUSHROOM_COW){
             MushroomCow cat = (MushroomCow) entity;
-            name = StringUtils.capitalize(EnumUtils.toName(cat.getVariant())) + " Mushroom Cow";
+            name = StringUtils.capitalize(StringUtils.getEnumName(cat.getVariant())) + " Mushroom Cow";
         }else if (entity.getType() == EntityType.TRADER_LLAMA){
             TraderLlama cat = (TraderLlama) entity;
-            name = StringUtils.capitalize(EnumUtils.toName(cat.getColor())) + " Trader LLama";
+            name = StringUtils.capitalize(StringUtils.getEnumName(cat.getColor())) + " Trader LLama";
         }else {
-            name = StringUtils.capitalize(EnumUtils.toName(entity.getType()));
+            name = StringUtils.capitalize(StringUtils.getEnumName(entity.getType()));
         }
 
         ItemStack head = headAPI.getItemHead(String.valueOf(id));
@@ -621,7 +620,7 @@ public class MobHeads {
         }
         ItemStack head = headAPI.getItemHead(String.valueOf(id));
 
-        ItemBuilder itemBuilder = new ItemBuilder(head).setName("§5" + EnumUtils.toName(entity.getType())).addItemFlags(ItemFlag.HIDE_ATTRIBUTES);
+        ItemBuilder itemBuilder = new ItemBuilder(head).setName("§5" + StringUtils.getEnumName(entity.getType())).addItemFlags(ItemFlag.HIDE_ATTRIBUTES);
         return itemBuilder.build();
     }
 

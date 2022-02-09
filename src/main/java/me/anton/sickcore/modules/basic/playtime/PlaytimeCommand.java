@@ -6,6 +6,7 @@ import me.anton.sickcore.api.player.apiPlayer.language.LanguagePath;
 import me.anton.sickcore.api.player.bungeePlayer.BungeePlayer;
 import me.anton.sickcore.api.player.bungeePlayer.IBungeePlayer;
 import me.anton.sickcore.api.utils.common.Replacable;
+import me.anton.sickcore.api.utils.common.TimeUtils;
 import me.anton.sickcore.api.utils.common.math.TimeFormatting;
 import me.anton.sickcore.api.utils.minecraft.messages.ConsoleMessages;
 import me.anton.sickcore.api.utils.minecraft.player.uniqueid.UUIDFetcher;
@@ -27,7 +28,7 @@ public class PlaytimeCommand extends BaseCommand {
         IBungeePlayer player = new BungeePlayer(sender);
         IBungeePlayer targetpl = new BungeePlayer(UUIDFetcher.fetchUniqueId(target));
 
-        player.sendMessage(targetpl.api().languageString(LanguagePath.PROXY_COMMAND_PLAYTIME_TIME).replace(new Replacable("%playtime%", TimeFormatting.formatMillis(targetpl.api().cloud().cloudAPI().getOnlineTime()))));
+        player.sendMessage(targetpl.api().languageString(LanguagePath.PROXY_COMMAND_PLAYTIME_TIME).replace(new Replacable("%playtime%", TimeUtils.formatMillis(targetpl.api().cloud().cloudAPI().getOnlineTime()))));
     }
 
     @Default
@@ -40,7 +41,7 @@ public class PlaytimeCommand extends BaseCommand {
 
         IBungeePlayer player = new BungeePlayer(sender);
 
-        player.sendMessage(player.api().languageString(LanguagePath.PROXY_COMMAND_PLAYTIME_TIME).replace(new Replacable("%playtime%", TimeFormatting.formatMillis(player.api().cloud().cloudAPI().getOnlineTime()))));
+        player.sendMessage(player.api().languageString(LanguagePath.PROXY_COMMAND_PLAYTIME_TIME).replace(new Replacable("%playtime%", TimeUtils.formatMillis(player.api().cloud().cloudAPI().getOnlineTime()))));
     }
 
 }

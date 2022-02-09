@@ -10,7 +10,7 @@ import me.anton.sickcore.api.database.DatabaseModel;
 import me.anton.sickcore.api.database.Finder;
 import me.anton.sickcore.api.player.bungeePlayer.BungeePlayer;
 import me.anton.sickcore.api.player.bungeePlayer.IBungeePlayer;
-import me.anton.sickcore.api.utils.common.math.Randoms;
+import me.anton.sickcore.api.utils.common.MathUtils;
 import me.anton.sickcore.api.utils.discord.DiscordIds;
 import me.anton.sickcore.api.utils.minecraft.messages.ConsoleMessages;
 import me.anton.sickcore.modules.discord.DiscordModule;
@@ -42,8 +42,8 @@ public class MCDiscordCommand extends BaseCommand {
 
         if (player.api().isVerified()){player.bungeeAPI().sendMessage(new TextComponent((String) player.api().languageObject("§7You are already verified with §6" + DiscordModule.getInstance().getJda().getUserById(player.api().getDiscordID()).getAsTag() + "§7!", "§7Du bist bereits mit §6" + DiscordModule.getInstance().getJda().getUserById(player.api().getDiscordID()).getAsTag() + "§7 verbunden!")));return;}
 
-        int verifyCode = Randoms.getRandomNumberInRange(100000, 999999);
-        if (VerifyModule.getVerifyModule().getVerifyList().containsValue(verifyCode))verifyCode = Randoms.getRandomNumberInRange(100000, 999999);
+        int verifyCode = MathUtils.getRandomNumberInRange(100000, 999999);
+        if (VerifyModule.getVerifyModule().getVerifyList().containsValue(verifyCode))verifyCode = MathUtils.getRandomNumberInRange(100000, 999999);
 
         VerifyModule.getVerifyModule().getVerifyList().put(player, verifyCode);
         VerifyModule.getVerifyModule().getVerifyListReturn().put(verifyCode, player);
