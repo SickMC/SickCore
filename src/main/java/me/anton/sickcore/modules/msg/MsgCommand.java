@@ -1,0 +1,44 @@
+package me.anton.sickcore.modules.msg;
+
+import co.aikar.commands.BaseCommand;
+import co.aikar.commands.CommandHelp;
+import co.aikar.commands.annotation.*;
+import me.anton.sickcore.api.player.apiPlayer.language.LanguagePath;
+import me.anton.sickcore.api.player.bungeePlayer.BungeePlayer;
+import me.anton.sickcore.api.player.bungeePlayer.IBungeePlayer;
+import me.anton.sickcore.api.utils.minecraft.messages.ConsoleMessages;
+import me.anton.sickcore.core.BungeeCore;
+import net.md_5.bungee.api.CommandSender;
+import net.md_5.bungee.api.chat.TextComponent;
+import net.md_5.bungee.api.connection.ProxiedPlayer;
+
+@CommandAlias("msg|message|tell|w")
+public class MsgCommand extends BaseCommand {
+
+    @Default
+    @Syntax("<Player> <Message>")
+    @Description("Sends the player a message")
+    public void onMsg(CommandSender commandSender, String name, String[] message){
+        if (!(commandSender instanceof ProxiedPlayer)){
+            ConsoleMessages.noPlayerBungee(commandSender);
+            return;
+        }
+        IBungeePlayer player = new BungeePlayer(commandSender);
+        ProxiedPlayer targetproxied = BungeeCore.getInstance().getPlugin().getProxy().getPlayer(name);
+        if (!targetproxied.isConnected()){
+            player.sendMessage(LanguagePath.NETWORK_COMMAND_NOPLAYER);
+            return;
+        }
+        IBungeePlayer target = new BungeePlayer(targetproxied);
+        String formatted = String.join(" ", message);
+        player.getPlayer().sendMessage(new TextComponent("§7To §6" + name + "§8 » §7" + formatted));
+        target.getPlayer().sendMessage(new TextComponent("§7From §6" + player.api().getName() + "§7 » §7" + formatted));
+    }
+
+    @HelpCommand
+    public void onHelp(CommandHelp commandHelp){
+        commandHelp.showHelp();
+    }
+
+
+}
