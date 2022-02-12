@@ -4,14 +4,14 @@ import co.aikar.commands.BungeeCommandManager;
 import lombok.Getter;
 import me.anton.sickcore.api.handler.listeners.bungee.BungeeListenerProvider;
 import me.anton.sickcore.core.Core;
-import me.anton.sickcore.core.module.IModule;
+import me.anton.sickcore.core.module.proxiedModule.ProxiedIModule;
 import me.anton.sickcore.modules.basic.buildserver.BuildServerCommand;
 import me.anton.sickcore.modules.basic.lobby.LobbyCommand;
 import me.anton.sickcore.modules.basic.lobby.LobbyCommandAd;
 import me.anton.sickcore.modules.basic.playtime.PlaytimeCommand;
 
 @Getter
-public class BasicModule implements IModule {
+public class BasicModule implements ProxiedIModule {
 
     private BungeeCommandManager manager;
     private BungeeListenerProvider provider;

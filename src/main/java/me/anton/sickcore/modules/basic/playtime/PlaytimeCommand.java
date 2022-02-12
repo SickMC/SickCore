@@ -7,7 +7,6 @@ import me.anton.sickcore.api.player.bungeePlayer.BungeePlayer;
 import me.anton.sickcore.api.player.bungeePlayer.IBungeePlayer;
 import me.anton.sickcore.api.utils.common.Replacable;
 import me.anton.sickcore.api.utils.common.TimeUtils;
-import me.anton.sickcore.api.utils.common.math.TimeFormatting;
 import me.anton.sickcore.api.utils.minecraft.messages.ConsoleMessages;
 import me.anton.sickcore.api.utils.minecraft.player.uniqueid.UUIDFetcher;
 import net.md_5.bungee.api.CommandSender;
