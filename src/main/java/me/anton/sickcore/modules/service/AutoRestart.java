@@ -10,6 +10,7 @@ import me.anton.sickcore.api.player.bungeePlayer.BungeePlayer;
 import me.anton.sickcore.api.player.bungeePlayer.IBungeePlayer;
 import me.anton.sickcore.api.utils.common.Replacable;
 import me.anton.sickcore.core.Core;
+import me.anton.sickcore.core.Environment;
 import net.md_5.bungee.api.connection.ProxiedPlayer;
 
 import java.text.SimpleDateFormat;
@@ -23,7 +24,7 @@ public class AutoRestart implements Runnable{
         String time = timeFormat.format(date);
         int remain = 60-(Integer.parseInt(time.split(":")[1]));
 
-        if (!Core.getInstance().isProxy())return;
+        if (!Core.getInstance().getEnvironment().equals(Environment.BUNGEECORD))return;
 
         switch (time) {
             case "00:30", "00:45", "00:50", "00:55", "00:56", "00:57", "00:58", "00:59" -> {
