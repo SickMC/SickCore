@@ -10,17 +10,19 @@ import me.anton.sickcore.api.handler.listeners.bukkit.events.vehicle.*;
 import me.anton.sickcore.api.handler.listeners.bukkit.events.world.*;
 import me.anton.sickcore.api.player.apiPlayer.IAPIPlayer;
 import me.anton.sickcore.api.player.bukkitPlayer.IBukkitPlayer;
-import me.anton.sickcore.games.defaults.all.HeadDBAPI;
-import me.anton.sickcore.games.defaults.all.InvSee;
-import me.anton.sickcore.games.defaults.all.LagCommand;
-import me.anton.sickcore.games.defaults.all.appereance.UnknownCommandProvider;
-import me.anton.sickcore.games.defaults.all.maintenance.MaintenanceModule;
-import me.anton.sickcore.games.defaults.all.nick.AutoNickCommand;
-import me.anton.sickcore.games.defaults.all.nick.NickCommand;
-import me.anton.sickcore.games.defaults.all.nick.NickListCommand;
-import me.anton.sickcore.games.defaults.all.nick.UnnickCommand;
-import me.anton.sickcore.games.defaults.all.vanish.*;
-import me.anton.sickcore.core.game.GameHandler;
+import me.anton.sickcore.core.module.globalmodule.GlobalModule;
+import me.anton.sickcore.gameapi.AbstractGame;
+import me.anton.sickcore.gameapi.GameBootstrap;
+import me.anton.sickcore.game.defaults.all.HeadDBAPI;
+import me.anton.sickcore.game.defaults.all.InvSee;
+import me.anton.sickcore.game.defaults.all.LagCommand;
+import me.anton.sickcore.gameapi.chat.UnknownCommandProvider;
+import me.anton.sickcore.game.defaults.all.maintenance.MaintenanceModule;
+import me.anton.sickcore.game.defaults.all.nick.AutoNickCommand;
+import me.anton.sickcore.game.defaults.all.nick.NickCommand;
+import me.anton.sickcore.game.defaults.all.nick.NickListCommand;
+import me.anton.sickcore.game.defaults.all.nick.UnnickCommand;
+import me.anton.sickcore.game.defaults.all.vanish.*;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Listener;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -35,36 +37,38 @@ public class BukkitCore extends Core {
     @Getter
     private static BukkitCore instance;
     private final JavaPlugin plugin;
-    private List<IBukkitPlayer> onlineBukkitPlayers;
-    private List<IAPIPlayer> onlineAPIPlayers;
     private final PaperCommandManager manager;
     private final BukkitListenerProvider provider;
-    private final GameHandler handler;
+    private final GameBootstrap bootstrap;
     private final MaintenanceModule maintenanceModule;
     private List<Player> vanished;
 
     public BukkitCore(JavaPlugin plugin){
         instance = this;
         this.plugin = plugin;
-        this.onlineBukkitPlayers = new ArrayList<>();
-        this.onlineAPIPlayers = new ArrayList<>();
         this.manager = new PaperCommandManager(plugin);
         manager.enableUnstableAPI("brigadier");
         manager.enableUnstableAPI("help");
         this.provider = new BukkitListenerProvider();
-        this.handler = new GameHandler();
+        this.bootstrap = new GameBootstrap();
         this.maintenanceModule = new MaintenanceModule();
         this.vanished = new ArrayList<>();
     }
 
     public void onLoad(){
+        Core.getInstance().getGlobalModuleHandler().getModules().forEach(GlobalModule::load);
         register();
-        handler.loadGames();
+        bootstrap.loadGame();
         maintenanceModule.load();
     }
 
     public void onUnLoad(){
-        handler.unloadGame();
+        Core.getInstance().getGlobalModuleHandler().getModules().forEach(GlobalModule::unload);
+        bootstrap.unloadGame();
+    }
+
+    public AbstractGame getCurrentGame(){
+        return bootstrap.current;
     }
 
     private void register(){
@@ -166,11 +170,4 @@ public class BukkitCore extends Core {
         manager.registerCommand(new VanishListCommand(), false);
     }
 
-    public List<IBukkitPlayer> getOnlineBukkitPlayers(){
-        return onlineBukkitPlayers;
-    }
-
-    public List<IAPIPlayer> getOnlineAPIPlayers() {
-        return onlineAPIPlayers;
-    }
 }

@@ -7,7 +7,8 @@ import me.anton.sickcore.api.handler.listeners.bungee.BungeeEventProvider;
 import me.anton.sickcore.api.handler.listeners.bungee.BungeeListenerProvider;
 import me.anton.sickcore.api.handler.listeners.bungee.events.player.*;
 import me.anton.sickcore.api.handler.listeners.bungee.events.service.ServerPingEventHandler;
-import me.anton.sickcore.core.module.ModuleHandler;
+import me.anton.sickcore.core.module.globalmodule.GlobalModule;
+import me.anton.sickcore.core.module.proxiedModule.ProxiedModuleHandler;
 import me.anton.sickcore.modules.service.AutoRestart;
 import net.md_5.bungee.api.plugin.Plugin;
 
@@ -23,7 +24,7 @@ public class BungeeCore extends Core{
     private final Plugin plugin;
     private final BungeeCommandManager manager;
     private final BungeeListenerProvider provider;
-    private final ModuleHandler moduleHandler;
+    private final ProxiedModuleHandler moduleHandler;
     private boolean isMainProxy;
 
     public BungeeCore(Plugin plugin){
@@ -33,7 +34,7 @@ public class BungeeCore extends Core{
         manager.enableUnstableAPI("brigadier");
         manager.enableUnstableAPI("help");
         this.provider = new BungeeListenerProvider();
-        moduleHandler = new ModuleHandler();
+        moduleHandler = new ProxiedModuleHandler();
         moduleHandler.loadModules();
     }
 
@@ -41,11 +42,13 @@ public class BungeeCore extends Core{
         register();
         isMainProxy = CloudAPI.getInstance().getThisSidesName().equals("Proxy-1");
 
+        Core.getInstance().getGlobalModuleHandler().getModules().forEach(GlobalModule::load);
         moduleHandler.loadModules();
         restartScheduler();
     }
 
     public void onUnLoad(){
+        Core.getInstance().getGlobalModuleHandler().getModules().forEach(GlobalModule::unload);
         moduleHandler.unLoadModules();
     }
 

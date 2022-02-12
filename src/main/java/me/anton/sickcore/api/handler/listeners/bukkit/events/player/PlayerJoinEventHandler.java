@@ -12,11 +12,8 @@ import org.bukkit.event.player.PlayerJoinEvent;
 
 public class PlayerJoinEventHandler extends BukkitEventProvider<PlayerJoinEvent> {
 
-
     @EventHandler
     public void handleEvent(PlayerJoinEvent event) {
-        Core.getInstance().bukkit().getOnlineBukkitPlayers().add(new BukkitPlayer(event.getPlayer()));
-        Core.getInstance().bukkit().getOnlineAPIPlayers().add(new APIPlayer(event.getPlayer().getUniqueId()));
         IBukkitPlayer bukkitPlayer = new BukkitPlayer(event.getPlayer().getUniqueId());
         BukkitListenerProvider provider = BukkitCore.getInstance().getProvider();
         provider.iterator(run -> run.onPlayerJoin(event, bukkitPlayer));
