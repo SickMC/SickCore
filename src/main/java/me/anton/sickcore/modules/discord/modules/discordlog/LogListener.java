@@ -92,7 +92,7 @@ public class LogListener extends ListenerAdapter {
     public void onGuildMemberUpdateNickname(@NotNull GuildMemberUpdateNicknameEvent event) {
         MessageEmbed embed = new me.anton.sickcore.modules.discord.handlers.messages.EmbedBuilder()
                 .setTitle("NicknameChange")
-                .setContent(event.getMember().getAsMention() + "'s nickname changed from: \n__" + event.getOldNickname() + "__ to: " + event.getNewNickname() + "__").build();
+                .setContent(event.getMember().getAsMention() + "'s nickname changed from: \n__" + event.getOldNickname() + "__ to: __" + event.getNewNickname() + "__").build();
         module.log(embed);
     }
 
