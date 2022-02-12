@@ -5,7 +5,7 @@ import lombok.Getter;
 import lombok.Setter;
 import me.anton.sickcore.api.player.apiPlayer.IAPIPlayer;
 import me.anton.sickcore.api.player.bukkitPlayer.IBukkitPlayer;
-import me.anton.sickcore.games.defaults.all.HeadDBAPI;
+import me.anton.sickcore.game.defaults.all.HeadDBAPI;
 import me.anton.sickcore.api.utils.common.Logger;
 import me.anton.sickcore.api.utils.minecraft.bukkit.item.ItemBuilder;
 import me.anton.sickcore.api.utils.minecraft.bukkit.player.sound.DefaultSounds;
