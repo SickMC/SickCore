@@ -43,9 +43,20 @@ public class ItemBuilder {
         return this;
     }
 
+    public ItemBuilder setEnchanted(boolean value){
+        if (!value){
+            itemMeta.getEnchants().forEach((enchantment, id) -> itemMeta.removeEnchant(enchantment));
+            itemMeta.removeItemFlags(ItemFlag.HIDE_ENCHANTS);
+            return this;
+        }
+        itemMeta.addEnchant(Enchantment.MENDING, 1, true);
+        itemMeta.addItemFlags(ItemFlag.HIDE_ENCHANTS);
+        return this;
+    }
+
     public ItemBuilder setName(@Nullable String title){
         if (title == null)title = "§6";
-        itemMeta.setDisplayName(title);
+        itemMeta.displayName(Component.text(title));
         return this;
     }
 
@@ -89,7 +100,7 @@ public class ItemBuilder {
         return this;
     }
 
-    public ItemBuilder setSkullMeta(UUID owner){
+    public ItemBuilder setSkull(UUID owner){
         if (!(itemStack.getType() == Material.PLAYER_HEAD)) return this;
         SkullMeta skullMeta = (SkullMeta) itemMeta;
         skullMeta.setOwningPlayer(Bukkit.getOfflinePlayer(owner));

@@ -2,9 +2,9 @@ package me.anton.sickcore.gameapi;
 
 import eu.thesimplecloud.api.CloudAPI;
 import me.anton.sickcore.api.utils.common.Logger;
-import me.anton.sickcore.game.games.build.BuildGame;
-import me.anton.sickcore.game.games.lobby.LobbyGame;
-import me.anton.sickcore.game.games.survival.SurvivalGame;
+import me.anton.sickcore.games.build.BuildGame;
+import me.anton.sickcore.games.lobby.LobbyGame;
+import me.anton.sickcore.games.survival.SurvivalGame;
 
 import java.util.Arrays;
 import java.util.List;

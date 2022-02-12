@@ -5,7 +5,7 @@ import lombok.Getter;
 import lombok.Setter;
 import me.anton.sickcore.api.player.apiPlayer.IAPIPlayer;
 import me.anton.sickcore.api.player.bukkitPlayer.IBukkitPlayer;
-import me.anton.sickcore.game.defaults.all.HeadDBAPI;
+import me.anton.sickcore.games.all.HeadDBAPI;
 import me.anton.sickcore.api.utils.common.Logger;
 import me.anton.sickcore.api.utils.minecraft.bukkit.item.ItemBuilder;
 import me.anton.sickcore.api.utils.minecraft.bukkit.player.sound.DefaultSounds;
@@ -77,7 +77,7 @@ public class PagedInventoryBuilder {
         for (int i = 0; i <= highestOrder; i++) {
             if (!itemStacks.containsKey(i)) continue;
             for (ItemStack itemStack : itemStacks.get(i).keySet()) {
-                if (currentPage.size() == (22)) {
+                if (currentPage.size() == (28)) {
                     pagedItems.put(currentPageCount, new LinkedHashMap<>(currentPage));
                     currentPageCount++;
                     currentPage.clear();
@@ -88,7 +88,7 @@ public class PagedInventoryBuilder {
         }
         if (this.itemStacks.containsKey(-1)) {
             for (ItemStack itemStack : itemStacks.get(-1).keySet()) {
-                if (currentPage.size() == 22) {
+                if (currentPage.size() == 28) {
                     pagedItems.put(currentPageCount, new LinkedHashMap<>(currentPage));
                     currentPageCount++;
                     currentPage.clear();
@@ -98,7 +98,7 @@ public class PagedInventoryBuilder {
             }
         }
 
-        if (currentPageCount != 0 && ((currentPageCount < 22))) {
+        if (currentPageCount != 0 && ((currentPageCount < 28))) {
             pagedItems.put(currentPageCount, new LinkedHashMap<>(currentPage));
             currentPage.clear();
             return;
@@ -112,7 +112,7 @@ public class PagedInventoryBuilder {
         }
 
         if (fillLastPage) {
-            int fills = (22) - getItemStacks().get(getPages()).size();
+            int fills = (28) - getItemStacks().get(getPages()).size();
             for (int i = 0; i < fills; i++) {
                 getItemStacks().get(getPages()).put(filler, event -> event.setCancelled(true));
             }
@@ -154,10 +154,9 @@ public class PagedInventoryBuilder {
 
         int slot = 10;
         for (ItemStack itemStack : this.pagedItems.get(page).keySet()) {
-            if (slot == 16) slot = 19;
-            if (slot == 25) slot = 28;
-            if (slot == 34) slot = 37;
-            if (slot == 43) slot = 46;
+            if (slot == 17) slot = 19;
+            if (slot == 26) slot = 28;
+            if (slot == 35) slot = 37;
             Consumer<InventoryClickEvent> consumer = this.pagedItems.get(page).get(itemStack);
             inventoryHandler.setItem(itemStack, slot, consumer);
             slot++;

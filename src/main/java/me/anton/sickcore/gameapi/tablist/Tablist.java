@@ -22,7 +22,6 @@ public class Tablist {
 
     public void reload() {
         for (Player player : Bukkit.getOnlinePlayers()) {
-            Logger.info("Reload");
 
             IBukkitPlayer bukkitPlayer = new BukkitPlayer(player);
             TabData data = new TabData(bukkitPlayer);
@@ -32,7 +31,6 @@ public class Tablist {
             Scoreboard scoreboard = player.getScoreboard();
 
             if (bukkitPlayer.isNicked()) {
-                Logger.info("Nick Reload");
                 if (scoreboard.getTeam(data.getNickedteamName()) == null)
                     scoreboard.registerNewTeam(data.getNickedteamName());
                 Team team = scoreboard.getTeam(data.getNickedteamName());
