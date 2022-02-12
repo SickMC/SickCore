@@ -6,10 +6,10 @@ import me.anton.sickcore.api.player.apiPlayer.language.Language;
 import me.anton.sickcore.api.player.apiPlayer.language.LanguageObject;
 import me.anton.sickcore.api.player.apiPlayer.language.LanguagePath;
 import me.anton.sickcore.api.utils.common.ColorUtils;
-import me.anton.sickcore.games.defaults.all.vanish.VanishAction;
+import me.anton.sickcore.game.defaults.all.nick.NickListCommand;
+import me.anton.sickcore.game.defaults.all.vanish.VanishAction;
 import me.anton.sickcore.api.utils.minecraft.bukkit.player.TitleBuilder;
 import me.anton.sickcore.api.utils.minecraft.bukkit.player.sound.SoundBuilder;
-import me.anton.sickcore.api.utils.minecraft.player.uniqueid.UUIDFetcher;
 import me.anton.sickcore.modules.punishment.PunishmentMessages;
 import org.bukkit.Bukkit;
 import org.bukkit.Sound;
@@ -57,9 +57,9 @@ public class BukkitPlayer implements IBukkitPlayer{
 
     @Override
     public void nick() {
+        if (isNicked())return;
         NickAPI.nick(bukkitPlayer, player.getNickname());
         NickAPI.setSkin(bukkitPlayer, player.getNickSkinName());
-        NickAPI.setUniqueId(bukkitPlayer, UUIDFetcher.fetchUniqueId(player.getNickname()));
         NickAPI.refreshPlayer(bukkitPlayer);
     }
 
@@ -68,7 +68,6 @@ public class BukkitPlayer implements IBukkitPlayer{
         if (!isNicked())return;
         NickAPI.resetNick(bukkitPlayer);
         NickAPI.resetSkin(bukkitPlayer);
-        NickAPI.resetUniqueId(bukkitPlayer);
         NickAPI.refreshPlayer(bukkitPlayer);
     }
 
@@ -88,8 +87,8 @@ public class BukkitPlayer implements IBukkitPlayer{
     }
 
     @Override
-    public String getNickedDisplayName() {
-        return "§" + ColorUtils.toChatColor(player.getNickRank().getColor()) + "§8 × §r" + player.getNickRank().getColor() + getName();
+    public String getNickDisplayName() {
+        return "§" + ColorUtils.toChatColor(player.getNickRank().getColor()).getChar() + player.getNickRank().getName() + "§8 × §r" + "§" + ColorUtils.toChatColor(player.getNickRank().getColor()).getChar() + api().getNickname() + "§r §r";
     }
 
     @Override

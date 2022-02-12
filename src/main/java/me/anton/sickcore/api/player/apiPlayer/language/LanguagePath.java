@@ -9,6 +9,7 @@ public enum LanguagePath {
 
     NETWORK_COMMAND_NOPERMISSION("network.command.noPermission"),
     NETWORK_COMMAND_NOSTAFF("network.command.noStaff"),
+    NETWORK_COMMAND_NOMOD("network.command.noMod"),
     PAPER_COMMAND_LAGCOMMAND_TIMINGS("paper.command.lagCommand.timings"),
     PAPER_COMMAND_LOBBY_MODI_MODINPCHANDLER_SERVERNOTAVAILABLE("paper.command.lobby.modi.ModiNPCHandler.serverNotAvailable"),
     PAPER_COMMAND_LOBBY_MODI_MODINPCHANDLER_TELEPORTSUCCESS("paper.command.lobby.modi.ModiNPCHandler.teleportSuccess"),
@@ -26,7 +27,8 @@ public enum LanguagePath {
     PROXY_STAFF_COMMAND_LOBBY_SUCCESS("proxy.staff.command.lobby.success"),
     PROXY_COMMAND_PLAYTIME_TIME("proxy.command.playtime.time"),
     PROXY_SERVICE_RESTART_WARNING("proxy.service.restart.warning"),
-    PROXY_SERVICE_RESTART_NOW("proxy.service.restart.warning.seconds");
+    PROXY_SERVICE_RESTART_NOW("proxy.service.restart.warning.seconds"),
+    NETWORK_COMMAND_NOPLAYER("network.command.noPlayer");
 
     public String path;
 }

@@ -3,12 +3,10 @@ package me.anton.sickcore.api.player.bungeePlayer;
 import lombok.Getter;
 import me.anton.sickcore.api.player.apiPlayer.APIPlayer;
 import me.anton.sickcore.api.player.apiPlayer.IAPIPlayer;
-import me.anton.sickcore.api.player.apiPlayer.language.Language;
 import me.anton.sickcore.api.player.apiPlayer.language.LanguageObject;
 import me.anton.sickcore.api.player.apiPlayer.language.LanguagePath;
 import net.md_5.bungee.api.CommandSender;
 import net.md_5.bungee.api.ProxyServer;
-import net.md_5.bungee.api.chat.BaseComponent;
 import net.md_5.bungee.api.chat.TextComponent;
 import net.md_5.bungee.api.connection.ProxiedPlayer;
 
@@ -57,7 +55,7 @@ public class BungeePlayer implements IBungeePlayer {
     }
 
     @Override
-    public ProxiedPlayer bungeeAPI() {
+    public ProxiedPlayer getPlayer() {
         return bungeePlayer;
     }
 }

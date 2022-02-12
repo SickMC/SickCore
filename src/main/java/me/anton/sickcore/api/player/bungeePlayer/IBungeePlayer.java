@@ -14,5 +14,5 @@ public interface IBungeePlayer {
 
     public IAPIPlayer api();
 
-    public ProxiedPlayer bungeeAPI();
+    public ProxiedPlayer getPlayer();
 }

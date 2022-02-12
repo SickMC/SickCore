@@ -24,7 +24,7 @@ public interface IBukkitPlayer {
 
     public String getNickSkinName();
 
-    public String getNickedDisplayName();
+    public String getNickDisplayName();
 
     public IAPIPlayer api();
 

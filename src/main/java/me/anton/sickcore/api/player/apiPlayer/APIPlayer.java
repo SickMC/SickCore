@@ -17,7 +17,9 @@ import me.anton.sickcore.api.player.cloudPlayer.ICloudAPIPlayer;
 import me.anton.sickcore.api.utils.common.ColorUtils;
 import me.anton.sickcore.api.utils.common.StringUtils;
 import me.anton.sickcore.api.utils.minecraft.player.uniqueid.UUIDFetcher;
+import me.anton.sickcore.core.BungeeCore;
 import me.anton.sickcore.core.Core;
+import me.anton.sickcore.core.Environment;
 import org.bson.Document;
 import org.bukkit.ChatColor;
 import org.jetbrains.annotations.NotNull;
@@ -34,7 +36,7 @@ public class APIPlayer implements IAPIPlayer {
         this.uuid = uuid;
         this.model = Core.getInstance().getPlayerModel();
         this.document = model.getDocument("uuid", uuid.toString());
-        if (!model.documentExists(new Finder("uuid", uuid.toString())) && Core.getInstance().isProxy())createAPIPlayer();
+        if (!model.documentExists(new Finder("uuid", uuid.toString())) && Core.getInstance().getEnvironment().equals(Environment.BUNGEECORD))createAPIPlayer();
         if(!document.getString("name").equals(UUIDFetcher.fetchName(uuid))){document.replace("name",UUIDFetcher.fetchName(uuid)); update();}
     }
 
@@ -46,7 +48,8 @@ public class APIPlayer implements IAPIPlayer {
     }
 
     private void createAPIPlayer() {
-        if (!Core.getInstance().isProxy())return;
+        if (!Core.getInstance().getEnvironment().equals(Environment.BUNGEECORD))return;
+        if (!BungeeCore.getInstance().isMainProxy())return;
         model.createDocument(new Document("uuid", uuid.toString())
                 .append("language", "deutschde")
                 .append("coins", 0)
@@ -235,7 +238,7 @@ public class APIPlayer implements IAPIPlayer {
 
     @Override
     public boolean isTeam(){
-        return getRank() == Rank.ADMIN ||getRank() == Rank.MODERATOR || getRank() == Rank.CONTENT || getRank() == Rank.MODERATOR || getRank() == Rank.BUILDER;
+        return getRank() == Rank.ADMIN ||getRank() == Rank.MODERATOR || getRank() == Rank.CONTENT || getRank() == Rank.MODERATOR || getRank() == Rank.BUILDER || getRank() == Rank.DEV;
     }
 
     @Override
@@ -245,12 +248,12 @@ public class APIPlayer implements IAPIPlayer {
 
     @Override
     public boolean isHigher(Rank rank) {
-        return getRank().getPriority() >= rank.getPriority();
+        return getRank().getPriority() <= rank.getPriority();
     }
 
     @Override
     public boolean isLower(Rank rank) {
-        return getRank().getPriority() <= rank.getPriority();
+        return getRank().getPriority() >= rank.getPriority();
     }
 
     private void update(){
