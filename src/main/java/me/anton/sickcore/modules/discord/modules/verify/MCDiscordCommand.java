@@ -40,7 +40,7 @@ public class MCDiscordCommand extends BaseCommand {
 
         IBungeePlayer player = new BungeePlayer(sender);
 
-        if (player.api().isVerified()){player.bungeeAPI().sendMessage(new TextComponent((String) player.api().languageObject("§7You are already verified with §6" + DiscordModule.getInstance().getJda().getUserById(player.api().getDiscordID()).getAsTag() + "§7!", "§7Du bist bereits mit §6" + DiscordModule.getInstance().getJda().getUserById(player.api().getDiscordID()).getAsTag() + "§7 verbunden!")));return;}
+        if (player.api().isVerified()){player.getPlayer().sendMessage(new TextComponent((String) player.api().languageObject("§7You are already verified with §6" + DiscordModule.getInstance().getJda().getUserById(player.api().getDiscordID()).getAsTag() + "§7!", "§7Du bist bereits mit §6" + DiscordModule.getInstance().getJda().getUserById(player.api().getDiscordID()).getAsTag() + "§7 verbunden!")));return;}
 
         int verifyCode = MathUtils.getRandomNumberInRange(100000, 999999);
         if (VerifyModule.getVerifyModule().getVerifyList().containsValue(verifyCode))verifyCode = MathUtils.getRandomNumberInRange(100000, 999999);
@@ -56,7 +56,7 @@ public class MCDiscordCommand extends BaseCommand {
         en.setClickEvent(new ClickEvent(ClickEvent.Action.COPY_TO_CLIPBOARD, String.valueOf(verifyCode)));
         en.setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, new ComponentBuilder("Klicke um den Code zu kopieren!").create()));
 
-        player.bungeeAPI().sendMessage(en, de);
+        player.getPlayer().sendMessage(en, de);
         MessageEmbed embed = new EmbedBuilder()
                 .setTimestamp(Instant.now())
                 .setTitle("**Verify | SickMC**")
@@ -77,14 +77,14 @@ public class MCDiscordCommand extends BaseCommand {
 
         IBungeePlayer player = new BungeePlayer(sender);
 
-        if (!player.api().isVerified()){player.bungeeAPI().sendMessage(new TextComponent((String) player.api().languageObject("§4You are not verifed!", "§4Du bist nicht verifiziert!")));return;}
+        if (!player.api().isVerified()){player.getPlayer().sendMessage(new TextComponent((String) player.api().languageObject("§4You are not verifed!", "§4Du bist nicht verifiziert!")));return;}
         Document playermodel = model.getDocument(Finder.stringFinder("userID", player.api().getDiscordID()));
         playermodel.replace("enabled", false);
         model.updateDocument(Finder.stringFinder("userID", player.api().getDiscordID()), playermodel);
 
         player.api().setDiscordID("0");
 
-        player.bungeeAPI().sendMessage(new TextComponent((String) player.api().languageObject("§7Your discord account is now §6unverified§7!", "§7Dein Discord Account ist nun §6unverifiziert§7!")));
+        player.getPlayer().sendMessage(new TextComponent((String) player.api().languageObject("§7Your discord account is now §6unverified§7!", "§7Dein Discord Account ist nun §6unverifiziert§7!")));
 
     }
 
@@ -98,11 +98,11 @@ public class MCDiscordCommand extends BaseCommand {
 
         IBungeePlayer player = new BungeePlayer(sender);
 
-        if (!player.api().isVerified()){player.bungeeAPI().sendMessage(new TextComponent((String) player.api().languageObject("§4You are not verifed!", "§4Du bist nicht verifiziert!")));return;}
+        if (!player.api().isVerified()){player.getPlayer().sendMessage(new TextComponent((String) player.api().languageObject("§4You are not verifed!", "§4Du bist nicht verifiziert!")));return;}
 
         new RankUpdate(player);
 
-        player.bungeeAPI().sendMessage(new TextComponent((String) player.api().languageObject("§7Your rank successfully updated!", "§7Dein Rang wurde erfolgreich neu geladen!")));
+        player.getPlayer().sendMessage(new TextComponent((String) player.api().languageObject("§7Your rank successfully updated!", "§7Dein Rang wurde erfolgreich neu geladen!")));
 
     }
 

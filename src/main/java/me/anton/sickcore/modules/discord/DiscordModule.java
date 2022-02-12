@@ -6,7 +6,7 @@ import me.anton.sickcore.api.database.Finder;
 import me.anton.sickcore.api.utils.common.FileUtils;
 import me.anton.sickcore.api.utils.common.Logger;
 import me.anton.sickcore.core.Core;
-import me.anton.sickcore.core.module.IModule;
+import me.anton.sickcore.core.module.proxiedModule.ProxiedIModule;
 import me.anton.sickcore.modules.discord.handlers.command.SelectionMenuListener;
 import me.anton.sickcore.modules.discord.handlers.command.SlashCommandBuilder;
 import me.anton.sickcore.modules.discord.modules.DiscordModuleHandler;
@@ -30,7 +30,7 @@ import java.util.Arrays;
 import java.util.List;
 
 @Getter
-public class DiscordModule implements IModule {
+public class DiscordModule implements ProxiedIModule {
 
     private DiscordModuleHandler moduleHandler;
     @Getter

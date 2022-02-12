@@ -10,6 +10,7 @@ import me.anton.sickcore.modules.discord.handlers.messages.EmbedBuilder;
 import net.dv8tion.jda.api.entities.User;
 import net.dv8tion.jda.api.events.interaction.SlashCommandEvent;
 import net.dv8tion.jda.api.interactions.InteractionHook;
+import net.dv8tion.jda.api.interactions.commands.OptionMapping;
 import net.dv8tion.jda.api.interactions.commands.OptionType;
 import net.dv8tion.jda.api.interactions.commands.build.OptionData;
 
@@ -36,6 +37,7 @@ public class ClearCommand extends SlashCommand {
     public List<OptionData> initOptionData() {
         List<OptionData> data = new ArrayList<>();
         data.add(new OptionData(OptionType.INTEGER, "amount", "Amount of messages", true));
+        data.add(new OptionData(OptionType.USER, "member", "Messages of member", false));
         return data;
     }
 
@@ -48,6 +50,7 @@ public class ClearCommand extends SlashCommand {
     public void execute(User user, IDiscordPlayer player, InteractionHook hook, SlashCommandEvent event) {
         DiscordModule module = StaffCommandModule.getInstance().getModule();
 
+        OptionMapping target = event.getOption("member");
         int amount = (int) event.getOption("amount").getAsDouble();
 
         IAPIPlayer apiPlayer = getApiPlayer(user);
@@ -57,7 +60,16 @@ public class ClearCommand extends SlashCommand {
         if (!apiPlayer.isTeam()){event.replyEmbeds(new EmbedBuilder(getMember(user)).setContent("This is a staff command!").setTitle("No Staff").build()).setEphemeral(true).queue();return;}
 
         event.getTextChannel().getHistory().retrievePast(amount).queue(list ->{
-            list.forEach(message -> message.delete().queue());
+            if (target == null) {
+                list.forEach(message -> message.delete().queue());
+                event.reply("Messages deleted!").setEphemeral(true).queue();
+            }else {
+                list.forEach(message -> {
+                    if (!message.getAuthor().equals(target.getAsUser())) return;
+                    message.delete().queue();
+                    event.reply("Messages deleted!").setEphemeral(true).queue();
+                });
+            }
         });
     }
 }

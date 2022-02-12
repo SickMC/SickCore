@@ -11,6 +11,8 @@ import net.dv8tion.jda.api.events.interaction.ButtonClickEvent;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
 import org.jetbrains.annotations.NotNull;
 
+import java.util.concurrent.TimeUnit;
+
 public class TicketListener extends ListenerAdapter {
 
     private final TicketModule ticketModule = TicketModule.getInstance();
@@ -27,6 +29,7 @@ public class TicketListener extends ListenerAdapter {
                 Ticket ticket = new Ticket(event.getMember());
                 ticket.open();
                 DiscordLogModule.getInstance().log(new EmbedBuilder(event.getMember()).setTitle("Ticket").setContent("Der Spieler " + event.getMember().getAsMention() + " hat das Ticket " + ticket.getTicketChannel().getAsMention() + " erstellt!").build());
+                event.replyEmbeds(new EmbedBuilder(event.getMember()).setTitle("Ticket").setContent("Your ticket is opened in " + ticket.getTicketChannel().getAsMention()).build()).setEphemeral(true).queue();
                 break;
             }
             case "ticket_assign" -> {
@@ -39,12 +42,20 @@ public class TicketListener extends ListenerAdapter {
 
                 ticket.assign(event.getMember());
                 DiscordLogModule.getInstance().log(new EmbedBuilder(event.getMember()).setTitle("Ticket").setContent("Das Ticket " + event.getTextChannel().getAsMention() + " wurde von " + event.getMember().getAsMention() + " übernommen!").build());
+                event.replyEmbeds(new EmbedBuilder(event.getMember()).setTitle("Ticket").setContent("Du hast das Ticket übernommen!").build()).setEphemeral(true).queue();
                 break;
             }
             case "ticket_close" -> {
                 Ticket ticket = TicketAdapter.getTicketByChannel(event.getTextChannel());
                 ticket.close(new DiscordPlayer(event.getMember()));
                 DiscordLogModule.getInstance().log(new EmbedBuilder(event.getMember()).setTitle("Ticket").setContent("Das Ticket " + event.getTextChannel().getAsMention() + " wurde von " + event.getMember().getAsMention() + " geschlossen!").build());
+                event.replyEmbeds(new EmbedBuilder(event.getMember()).setTitle("Ticket").setContent("Du hast das Ticket geschlossen!").build()).setEphemeral(true).queue();
+                break;
+            }
+            case "ticket_delete" -> {
+                event.getTextChannel().delete().queueAfter(5, TimeUnit.SECONDS);
+                DiscordLogModule.getInstance().log(new EmbedBuilder(event.getMember()).setTitle("Ticket").setContent("Die Ticket History von " + event.getTextChannel().getAsMention() + " wurde gelöscht!").build());
+                event.replyEmbeds(new EmbedBuilder(event.getMember()).setTitle("Ticket").setContent("Das Ticket löscht sich in einigen Sekunden!").build()).queue();
                 break;
             }
         }

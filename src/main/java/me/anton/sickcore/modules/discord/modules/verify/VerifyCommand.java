@@ -68,7 +68,7 @@ public class VerifyCommand extends SlashCommand {
         verifyModule.getVerifyList().remove(bungeeplayer, verifyID);
 
         sendLog(user, bungeeplayer);
-        bungeeplayer.bungeeAPI().sendMessage(new TextComponent((String) bungeeplayer.api().languageObject("§7Your account is now linked with §6" + event.getMember().getUser().getAsTag() + "§7!", "§7Dein Account ist nun mit §6" + event.getMember().getUser().getAsTag() + "§7 verbunden!")));
+        bungeeplayer.getPlayer().sendMessage(new TextComponent((String) bungeeplayer.api().languageObject("§7Your account is now linked with §6" + event.getMember().getUser().getAsTag() + "§7!", "§7Dein Account ist nun mit §6" + event.getMember().getUser().getAsTag() + "§7 verbunden!")));
         hook.sendMessageEmbeds(getVerified(user)).queue();
     }
 
