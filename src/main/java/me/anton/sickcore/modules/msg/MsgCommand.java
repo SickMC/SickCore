@@ -18,6 +18,7 @@ public class MsgCommand extends BaseCommand {
     @Default
     @Syntax("<Player> <Message>")
     @Description("Sends the player a message")
+    @CommandCompletion("@Players")
     public void onMsg(CommandSender commandSender, String name, String[] message){
         if (!(commandSender instanceof ProxiedPlayer)){
             ConsoleMessages.noPlayerBungee(commandSender);
@@ -32,13 +33,7 @@ public class MsgCommand extends BaseCommand {
         IBungeePlayer target = new BungeePlayer(targetproxied);
         String formatted = String.join(" ", message);
         player.getPlayer().sendMessage(new TextComponent("§7To §6" + name + "§8 » §7" + formatted));
-        target.getPlayer().sendMessage(new TextComponent("§7From §6" + player.api().getName() + "§7 » §7" + formatted));
+        target.getPlayer().sendMessage(new TextComponent("§7From §6" + player.api().getName() + "§8 » §7" + formatted));
     }
-
-    @HelpCommand
-    public void onHelp(CommandHelp commandHelp){
-        commandHelp.showHelp();
-    }
-
 
 }

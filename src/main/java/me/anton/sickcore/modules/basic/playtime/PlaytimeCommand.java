@@ -15,7 +15,7 @@ import net.md_5.bungee.api.connection.ProxiedPlayer;
 @CommandAlias("playtime|onlinetime|ot|pt")
 public class PlaytimeCommand extends BaseCommand {
 
-    @CommandCompletion("@displayedPlayers")
+    @CommandCompletion("@Players")
     @Syntax("<player>")
     @Description("Shows the onlinetime of the player")
     public void onCMd(CommandSender sender, String target){
@@ -30,7 +30,6 @@ public class PlaytimeCommand extends BaseCommand {
         player.sendMessage(targetpl.api().languageString(LanguagePath.PROXY_COMMAND_PLAYTIME_TIME).replace(new Replacable("%playtime%", TimeUtils.formatMillis(targetpl.api().cloud().cloudAPI().getOnlineTime()))));
     }
 
-    @Default
     @Description("Shows the onlinetime of the player")
     public void onCMDD(CommandSender sender){
         if (!(sender instanceof ProxiedPlayer)) {
