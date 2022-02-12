@@ -1,11 +1,9 @@
 package me.anton.sickcore.gameapi.tablist;
 
 import eu.thesimplecloud.api.CloudAPI;
-import it.unimi.dsi.fastutil.shorts.ShortRBTreeSet;
 import lombok.Getter;
 import me.anton.sickcore.api.database.Finder;
 import me.anton.sickcore.api.player.bukkitPlayer.IBukkitPlayer;
-import me.anton.sickcore.api.utils.common.ColorUtils;
 import me.anton.sickcore.core.BukkitCore;
 import me.anton.sickcore.core.Core;
 import org.bson.Document;
@@ -34,8 +32,8 @@ public class TabData {
 
     public TabData(IBukkitPlayer player){
         this.player = player;
-        this.displayname = ColorUtils.toChatColor(player.api().getRank().getColor()) + player.api().getRank().getName() + "§8 × §r" + player.api().getRankColor() + player.api().getName() + "§r";
-        this.nickedDisplayname = ColorUtils.toChatColor(player.api().getNickRank().getColor()) + player.api().getNickRank().getName() + "§8 × §r" + player.api().getNickRank().getColor() + player.api().getNickname() + "§r";
+        this.displayname = player.api().getRank().getColor() + player.api().getRank().getName() + "§8 × §r" + player.api().getRankColor() + player.api().getName() + "§r";
+        this.nickedDisplayname = player.api().getNickRank().getColor() + player.api().getNickRank().getName() + "§8 × §r" + player.api().getNickRank().getColor() + player.api().getNickname() + "§r";
         this.header = (String) player.api().languageObject(headeren, headerde);
         this.footer = (String) player.api().languageObject(footeren, footerde);
         this.criteria = player.api().getRank().getPriority() + player.api().getRank().getName();

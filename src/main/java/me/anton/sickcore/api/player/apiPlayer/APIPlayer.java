@@ -2,6 +2,7 @@ package me.anton.sickcore.api.player.apiPlayer;
 
 import eu.thesimplecloud.module.permission.PermissionPool;
 import eu.thesimplecloud.module.permission.player.IPermissionPlayer;
+import lombok.Getter;
 import me.anton.sickcore.api.database.DatabaseModel;
 import me.anton.sickcore.api.database.Finder;
 import me.anton.sickcore.api.player.apiPlayer.language.Language;
@@ -20,12 +21,13 @@ import me.anton.sickcore.api.utils.minecraft.player.uniqueid.UUIDFetcher;
 import me.anton.sickcore.core.BungeeCore;
 import me.anton.sickcore.core.Core;
 import me.anton.sickcore.core.Environment;
+import me.anton.sickcore.modules.notify.NotifyType;
 import org.bson.Document;
-import org.bukkit.ChatColor;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.UUID;
 
+@Getter
 public class APIPlayer implements IAPIPlayer {
 
     private final DatabaseModel model;
@@ -37,7 +39,14 @@ public class APIPlayer implements IAPIPlayer {
         this.model = Core.getInstance().getPlayerModel();
         this.document = model.getDocument("uuid", uuid.toString());
         if (!model.documentExists(new Finder("uuid", uuid.toString())) && Core.getInstance().getEnvironment().equals(Environment.BUNGEECORD))createAPIPlayer();
-        if(!document.getString("name").equals(UUIDFetcher.fetchName(uuid))){document.replace("name",UUIDFetcher.fetchName(uuid)); update();}
+        if(!document.getString("name").equals(UUIDFetcher.fetchName(uuid))){
+            document.replace("name",UUIDFetcher.fetchName(uuid));
+            update();
+        }
+        if (document.get("notify", Document.class) == null){
+            document.append("notify", new Document("service", false).append("report", false).append("punishment", false).append("teamchat", false));
+            update();
+        }
     }
 
     public APIPlayer(@NotNull String discordID){
@@ -59,7 +68,8 @@ public class APIPlayer implements IAPIPlayer {
                 .append("autonick", "true")
                 .append("discordid", "0")
                 .append("rankcolor", "default")
-                .append("name", UUIDFetcher.fetchName(uuid)));
+                .append("name", UUIDFetcher.fetchName(uuid))
+                .append("notify", new Document("service", false).append("report", false).append("punishment", false).append("teamchat", false)));
     }
 
     @Override
@@ -164,14 +174,14 @@ public class APIPlayer implements IAPIPlayer {
     }
 
     @Override
-    public ChatColor getRankColor() {
+    public String getRankColor() {
         if (!hasRankColor()) return getDefaultRankColor();
-        return ChatColor.valueOf(document.getString("rankcolor").toUpperCase());
+        return document.getString("rankcolor");
     }
 
     @Override
-    public void setRankColor(ChatColor color) {
-        document.replace("rankcolor", color.name().toLowerCase());
+    public void setRankColor(String color) {
+        document.replace("rankcolor", color);
         update();
     }
 
@@ -186,8 +196,8 @@ public class APIPlayer implements IAPIPlayer {
     }
 
     @Override
-    public ChatColor getDefaultRankColor() {
-        return ColorUtils.toChatColor(getRank().getColor());
+    public String getDefaultRankColor() {
+        return getRank().getColor();
     }
 
     @Override
@@ -212,8 +222,8 @@ public class APIPlayer implements IAPIPlayer {
 
     @Override
     public String getDisplayName() {
-        if (hasRankColor()) return "§" + ColorUtils.toChatColor(getRank().getColor()).getChar() + getRank().getName() +  "§8 × §r" + getRankColor() + getName() + "§r §r";
-        return "§" + ColorUtils.toChatColor(getRank().getColor()).getChar() + getRank().getName() +  "§8 × §r" + getDefaultRankColor() + getName() + "§r §r";
+        if (hasRankColor()) return getRank().getColor() + getRank().getName() +  "§8 × §r" + getRankColor() + getName() + "§r §r";
+        return getRank().getColor() + getRank().getName() +  "§8 × §r" + getDefaultRankColor() + getName() + "§r §r";
     }
 
     @Override
@@ -256,10 +266,22 @@ public class APIPlayer implements IAPIPlayer {
         return getRank().getPriority() >= rank.getPriority();
     }
 
+    @Override
+    public Document getNotifyConfig() {
+        return document.get("notify", Document.class);
+    }
+
+    @Override
+    public void setNotify(NotifyType type, boolean value){
+        Document updated = getNotifyConfig();
+        updated.put(type.name().toLowerCase(), value);
+        document.put("notify", updated);
+        update();
+    }
+
     private void update(){
         model.updateDocument("uuid", uuid.toString(), document);
     }
-
 }
 
 

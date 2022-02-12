@@ -8,6 +8,8 @@ import me.anton.sickcore.api.player.apiPlayer.language.LanguagePath;
 import me.anton.sickcore.api.player.bukkitPlayer.IBukkitPlayer;
 import me.anton.sickcore.api.player.bungeePlayer.IBungeePlayer;
 import me.anton.sickcore.api.player.cloudPlayer.ICloudAPIPlayer;
+import me.anton.sickcore.modules.notify.NotifyType;
+import org.bson.Document;
 import org.bukkit.ChatColor;
 
 import java.util.UUID;
@@ -50,15 +52,15 @@ public interface IAPIPlayer {
 
     public boolean isVerified();
 
-    public ChatColor getRankColor();
+    public String getRankColor();
 
-    public void setRankColor(ChatColor color);
+    public void setRankColor(String color);
 
     public boolean hasRankColor();
 
     public Rank getRank();
 
-    public ChatColor getDefaultRankColor();
+    public String getDefaultRankColor();
 
     public UUID getUUID();
 
@@ -83,4 +85,8 @@ public interface IAPIPlayer {
     public boolean isHigher(Rank rank);
 
     public boolean isLower(Rank rank);
+
+    public Document getNotifyConfig();
+
+    public void setNotify(NotifyType type, boolean value);
 }

@@ -87,7 +87,7 @@ public class BukkitPlayer implements IBukkitPlayer{
 
     @Override
     public String getNickDisplayName() {
-        return "§" + ColorUtils.toChatColor(player.getNickRank().getColor()).getChar() + player.getNickRank().getName() + "§8 × §r" + "§" + ColorUtils.toChatColor(player.getNickRank().getColor()).getChar() + api().getNickname() + "§r §r";
+        return player.getNickRank().getColor() + player.getNickRank().getName() + "§8 × §r" + "§" + player.getNickRank().getColor() + api().getNickname() + "§r §r";
     }
 
     @Override

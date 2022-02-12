@@ -4,7 +4,7 @@ import me.anton.sickcore.api.player.apiPlayer.IAPIPlayer;
 import me.anton.sickcore.api.player.apiPlayer.enums.Rank;
 import me.anton.sickcore.api.player.bukkitPlayer.BukkitPlayer;
 import me.anton.sickcore.api.player.bukkitPlayer.IBukkitPlayer;
-import me.anton.sickcore.game.defaults.all.nick.AutoNickInventory;
+import me.anton.sickcore.games.all.nick.AutoNickInventory;
 import me.anton.sickcore.api.utils.minecraft.bukkit.inventory.InventoryBuilder;
 import me.anton.sickcore.api.utils.minecraft.bukkit.inventory.InventoryUsage;
 import me.anton.sickcore.api.utils.minecraft.bukkit.item.ItemBuilder;

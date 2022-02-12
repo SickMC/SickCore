@@ -10,14 +10,12 @@ import org.bukkit.plugin.java.JavaPlugin;
 
 public class VanishAction{
 
-    JavaPlugin plugin;
-
     public VanishAction(Player player){
         if (BukkitCore.getInstance().bukkit().getVanished().contains(player))return;
         Bukkit.getOnlinePlayers().forEach(handler -> {
             IBukkitPlayer bukkitPlayer = new BukkitPlayer(handler);
             if (bukkitPlayer.api().isAdmin())return;
-            handler.hidePlayer(plugin, player);
+            handler.hidePlayer(Core.getInstance().bukkit().getPlugin(), player);
             BukkitCore.getInstance().bukkit().getVanished().add(player);
         });
     }
