@@ -14,6 +14,7 @@ import me.anton.sickcore.api.utils.minecraft.messages.ConsoleMessages;
 import me.anton.sickcore.games.all.HeadDBAPI;
 import me.arcaniax.hdb.api.HeadDatabaseAPI;
 import org.bson.Document;
+import org.bukkit.Material;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
@@ -37,7 +38,7 @@ public class NotifyCommand extends BaseCommand {
     }
 
     private void openNotifyInv(IBukkitPlayer bukkitPlayer){
-        InventoryBuilder inventoryBuilder = new InventoryBuilder(bukkitPlayer.api(), "§6Notify", 27, InventoryUsage.UTILITY);
+        InventoryBuilder inventoryBuilder = new InventoryBuilder(bukkitPlayer.api(), "§6Notify", 4*9, InventoryUsage.UTILITY);
         HeadDatabaseAPI api = HeadDBAPI.getApi();
 
         Document config = bukkitPlayer.api().getNotifyConfig();
@@ -47,17 +48,44 @@ public class NotifyCommand extends BaseCommand {
             DefaultSounds.levelUP.play(bukkitPlayer);
             openNotifyInv(bukkitPlayer);
         });
-        inventoryBuilder.setItem(new ItemBuilder(api.getItemHead("28606")).setName("§6Team Chat").setLore(config.getBoolean("service") ? "§7Click to disable team chat" : "§7Click to enable team chat").setEnchanted(config.getBoolean("teamchat")).build(),12 ,event -> {
+        inventoryBuilder.setItem( new ItemBuilder(config.getBoolean("service") ? Material.LIME_DYE : Material.GRAY_DYE).setName("§6Service Updates").setLore(config.getBoolean("service") ? "§7Click to disable service updates" : "§7Click to enable service updated").build(), 19, event -> {
+            bukkitPlayer.api().setNotify(NotifyType.SERVICE, !config.getBoolean("service"));
+            DefaultSounds.levelUP.play(bukkitPlayer);
+            openNotifyInv(bukkitPlayer);
+        });
+
+
+        inventoryBuilder.setItem(new ItemBuilder(api.getItemHead("28606")).setName("§6Team Chat").setLore(config.getBoolean("teamchat") ? "§7Click to disable team chat" : "§7Click to enable team chat").setEnchanted(config.getBoolean("teamchat")).build(),12 ,event -> {
             bukkitPlayer.api().setNotify(NotifyType.TEAMCHAT, !config.getBoolean("teamchat"));
             DefaultSounds.levelUP.play(bukkitPlayer);
             openNotifyInv(bukkitPlayer);
         });
-        inventoryBuilder.setItem(new ItemBuilder(api.getItemHead("26414")).setName("§6Reports").setLore(config.getBoolean("service") ? "§7Click to disable reports" : "§7Click to enable reports").setEnchanted(config.getBoolean("report")).build(),14 ,event -> {
+        inventoryBuilder.setItem( new ItemBuilder(config.getBoolean("teamchat") ? Material.LIME_DYE : Material.GRAY_DYE).setName("§6Team Chat")
+                .setLore(config.getBoolean("teamchat") ? "§7Click to disable teamchat" : "§7Click to enable teamchat").build(), 20, event -> {
+            bukkitPlayer.api().setNotify(NotifyType.TEAMCHAT, !config.getBoolean("teamchat"));
+            DefaultSounds.levelUP.play(bukkitPlayer);
+            openNotifyInv(bukkitPlayer);
+        });
+
+        inventoryBuilder.setItem(new ItemBuilder(api.getItemHead("26414")).setName("§6Reports").setLore(config.getBoolean("report") ? "§7Click to disable reports" : "§7Click to enable reports").setEnchanted(config.getBoolean("report")).build(),14 ,event -> {
             bukkitPlayer.api().setNotify(NotifyType.REPORT, !config.getBoolean("report"));
             DefaultSounds.levelUP.play(bukkitPlayer);
             openNotifyInv(bukkitPlayer);
         });
-        inventoryBuilder.setItem(new ItemBuilder(api.getItemHead("3229")).setName("§6Punishments").setLore(config.getBoolean("service") ? "§7Click to disable punishments" : "§7Click to enable punishments").setEnchanted(config.getBoolean("punishment")).build(),16 ,event -> {
+        inventoryBuilder.setItem( new ItemBuilder(config.getBoolean("report") ? Material.LIME_DYE : Material.GRAY_DYE).setName("§6Reports")
+                .setLore(config.getBoolean("report") ? "§7Click to disable reports" : "§7Click to enable reports").build(), 21, event -> {
+            bukkitPlayer.api().setNotify(NotifyType.REPORT, !config.getBoolean("report"));
+            DefaultSounds.levelUP.play(bukkitPlayer);
+            openNotifyInv(bukkitPlayer);
+        });
+
+        inventoryBuilder.setItem(new ItemBuilder(api.getItemHead("3229")).setName("§6Punishments").setLore(config.getBoolean("punishment") ? "§7Click to disable punishments" : "§7Click to enable punishments").setEnchanted(config.getBoolean("punishment")).build(),16 ,event -> {
+            bukkitPlayer.api().setNotify(NotifyType.PUNISHMENT, !config.getBoolean("punishment"));
+            DefaultSounds.levelUP.play(bukkitPlayer);
+            openNotifyInv(bukkitPlayer);
+        });
+        inventoryBuilder.setItem( new ItemBuilder(config.getBoolean("punishment") ? Material.LIME_DYE : Material.GRAY_DYE).setName("§6Punishments")
+                .setLore(config.getBoolean("punishment") ? "§7Click to disable punishments" : "§7Click to enable punishments").build(), 22, event -> {
             bukkitPlayer.api().setNotify(NotifyType.PUNISHMENT, !config.getBoolean("punishment"));
             DefaultSounds.levelUP.play(bukkitPlayer);
             openNotifyInv(bukkitPlayer);
