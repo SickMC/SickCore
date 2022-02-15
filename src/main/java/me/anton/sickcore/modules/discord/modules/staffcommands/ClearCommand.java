@@ -7,6 +7,7 @@ import me.anton.sickcore.modules.discord.handlers.command.SlashCommand;
 import me.anton.sickcore.modules.discord.handlers.command.SlashSubCommand;
 import me.anton.sickcore.modules.discord.handlers.messages.DiscordMessages;
 import me.anton.sickcore.modules.discord.handlers.messages.EmbedBuilder;
+import me.anton.sickcore.modules.discord.modules.discordlog.DiscordLogModule;
 import net.dv8tion.jda.api.entities.User;
 import net.dv8tion.jda.api.events.interaction.SlashCommandEvent;
 import net.dv8tion.jda.api.interactions.InteractionHook;
@@ -63,11 +64,13 @@ public class ClearCommand extends SlashCommand {
             if (target == null) {
                 list.forEach(message -> message.delete().queue());
                 event.reply("Messages deleted!").setEphemeral(true).queue();
+                DiscordLogModule.getInstance().log(new EmbedBuilder(event.getMember()).setTitle("Clear").setContent(event.getMember().getAsMention() + " cleared " + amount + " messages in " + event.getTextChannel().getAsMention() + "!").build());
             }else {
                 list.forEach(message -> {
                     if (!message.getAuthor().equals(target.getAsUser())) return;
                     message.delete().queue();
                     event.reply("Messages deleted!").setEphemeral(true).queue();
+                    DiscordLogModule.getInstance().log(new EmbedBuilder(event.getMember()).setTitle("Clear").setContent(event.getMember().getAsMention() + " cleared " + amount + " messages of " + target.getAsUser().getAsMention() + " in " + event.getTextChannel().getAsMention() + "!").build());
                 });
             }
         });

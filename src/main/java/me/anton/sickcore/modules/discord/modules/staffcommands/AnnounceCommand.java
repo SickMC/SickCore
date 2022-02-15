@@ -49,6 +49,7 @@ public class AnnounceCommand extends SlashCommand {
 
     @Override
     public void execute(User user, IDiscordPlayer player, InteractionHook hook, SlashCommandEvent event) {
+        event.deferReply().queue();
         DiscordModule module = StaffCommandModule.getInstance().getModule();
 
         String rawtitle = event.getOption("title").getAsString();
@@ -57,14 +58,14 @@ public class AnnounceCommand extends SlashCommand {
         if (event.getOption("mention") != null)mentionable = event.getOption("mention").getAsMentionable();
 
         String content = rawContent.replace("%n", "\n");
+        content = content.replace("&n", "\n");
 
         EmbedBuilder builder = new EmbedBuilder()
                 .setTitle(rawtitle)
                 .setContent(content);
 
-        if (mentionable != null)builder.mention(mentionable);
-
-        DiscordModule.getInstance().getMainGuild().getTextChannelById(DiscordIds.newsChannel).sendMessageEmbeds(builder.build()).queue();
-        event.reply("Message send!").queue();
+        DiscordModule.getInstance().getMainGuild().getTextChannelById(DiscordIds.staffchat).sendMessageEmbeds(builder.build()).queue();
+        if (mentionable != null)DiscordModule.getInstance().getMainGuild().getTextChannelById(DiscordIds.staffchat).sendMessage(mentionable.getAsMention()).queue();
+        event.getTextChannel().sendMessage("Announcement sent!").queue();
     }
 }

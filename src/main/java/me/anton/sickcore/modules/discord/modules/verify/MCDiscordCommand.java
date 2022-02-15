@@ -50,13 +50,13 @@ public class MCDiscordCommand extends BaseCommand {
 
         BaseComponent en = new TextComponent("§7Your verify code is §6" + verifyCode + "§7!");
         en.setClickEvent(new ClickEvent(ClickEvent.Action.COPY_TO_CLIPBOARD, String.valueOf(verifyCode)));
-        en.setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, new ComponentBuilder("Click to copy the code!").create()));
+        en.setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, new ComponentBuilder("§7Click to copy the code!").create()));
 
         BaseComponent de = new TextComponent("§7Dein Verifikationscode ist §6" + verifyCode + "§7!");
         en.setClickEvent(new ClickEvent(ClickEvent.Action.COPY_TO_CLIPBOARD, String.valueOf(verifyCode)));
-        en.setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, new ComponentBuilder("Klicke um den Code zu kopieren!").create()));
+        en.setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, new ComponentBuilder("§7Klicke um den Code zu kopieren!").create()));
 
-        player.getPlayer().sendMessage(en, de);
+        player.getPlayer().sendMessage((BaseComponent) player.api().languageObject(en, de));
         MessageEmbed embed = new EmbedBuilder()
                 .setTimestamp(Instant.now())
                 .setTitle("**Verify | SickMC**")
@@ -64,6 +64,7 @@ public class MCDiscordCommand extends BaseCommand {
                 .setFooter("SickMC • Requested by " + player.api().getName())
                 .setColor(Color.ORANGE).build();
         TextChannel textChannel = DiscordModule.getInstance().getJda().getTextChannelById(DiscordIds.discordLogChannel);
+        textChannel.sendMessageEmbeds(embed).queue();
     }
 
     @Subcommand("delete")
@@ -82,10 +83,10 @@ public class MCDiscordCommand extends BaseCommand {
         playermodel.replace("enabled", false);
         model.updateDocument(Finder.stringFinder("userID", player.api().getDiscordID()), playermodel);
 
+        DiscordModule.getInstance().getMainGuild().retrieveMemberById(player.api().getDiscordID()).queue(member -> DiscordModule.getInstance().getMainGuild().modifyMemberRoles(member, DiscordModule.getInstance().getMainGuild().getRoleById(DiscordIds.player)).queue());
         player.api().setDiscordID("0");
 
         player.getPlayer().sendMessage(new TextComponent((String) player.api().languageObject("§7Your discord account is now §6unverified§7!", "§7Dein Discord Account ist nun §6unverifiziert§7!")));
-
     }
 
     @Subcommand("update")
