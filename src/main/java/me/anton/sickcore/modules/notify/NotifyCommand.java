@@ -61,7 +61,7 @@ public class NotifyCommand extends BaseCommand {
             openNotifyInv(bukkitPlayer);
         });
         inventoryBuilder.setItem( new ItemBuilder(config.getBoolean("teamchat") ? Material.LIME_DYE : Material.GRAY_DYE).setName("§6Team Chat")
-                .setLore(config.getBoolean("teamchat") ? "§7Click to disable teamchat" : "§7Click to enable teamchat").build(), 20, event -> {
+                .setLore(config.getBoolean("teamchat") ? "§7Click to disable teamchat" : "§7Click to enable teamchat").build(), 21, event -> {
             bukkitPlayer.api().setNotify(NotifyType.TEAMCHAT, !config.getBoolean("teamchat"));
             DefaultSounds.levelUP.play(bukkitPlayer);
             openNotifyInv(bukkitPlayer);
@@ -73,7 +73,7 @@ public class NotifyCommand extends BaseCommand {
             openNotifyInv(bukkitPlayer);
         });
         inventoryBuilder.setItem( new ItemBuilder(config.getBoolean("report") ? Material.LIME_DYE : Material.GRAY_DYE).setName("§6Reports")
-                .setLore(config.getBoolean("report") ? "§7Click to disable reports" : "§7Click to enable reports").build(), 21, event -> {
+                .setLore(config.getBoolean("report") ? "§7Click to disable reports" : "§7Click to enable reports").build(), 23, event -> {
             bukkitPlayer.api().setNotify(NotifyType.REPORT, !config.getBoolean("report"));
             DefaultSounds.levelUP.play(bukkitPlayer);
             openNotifyInv(bukkitPlayer);
@@ -85,12 +85,13 @@ public class NotifyCommand extends BaseCommand {
             openNotifyInv(bukkitPlayer);
         });
         inventoryBuilder.setItem( new ItemBuilder(config.getBoolean("punishment") ? Material.LIME_DYE : Material.GRAY_DYE).setName("§6Punishments")
-                .setLore(config.getBoolean("punishment") ? "§7Click to disable punishments" : "§7Click to enable punishments").build(), 22, event -> {
+                .setLore(config.getBoolean("punishment") ? "§7Click to disable punishments" : "§7Click to enable punishments").build(), 25, event -> {
             bukkitPlayer.api().setNotify(NotifyType.PUNISHMENT, !config.getBoolean("punishment"));
             DefaultSounds.levelUP.play(bukkitPlayer);
             openNotifyInv(bukkitPlayer);
         });
 
+        inventoryBuilder.fillEmpty();
         inventoryBuilder.open();
     }
 
