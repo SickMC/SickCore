@@ -21,7 +21,7 @@ public class SurvivalGame extends AbstractGame {
     @Override
     public void onLoad() {
         instance = this;
-        registerListeners(new SurvivalChat(), new MobDrops(), new SkullDrops(), new StartingEquip(), new Teleport(), new Protection(), new Elytra(), new MobDrops(), new SkullDrops());
+        registerListeners(new SurvivalChat(), new MobDrops(), new SkullDrops(), new StartingEquip(), new MobDrops(), new SkullDrops());
         registerCommands(new EnderchestSee(), new SharePos(), new HeadCollection(), new HeadManageCommand());
     }
 

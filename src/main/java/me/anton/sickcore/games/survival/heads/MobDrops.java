@@ -13,10 +13,9 @@ import org.bukkit.inventory.ItemStack;
 
 public class MobDrops extends BukkitHandler {
 
-    private static HeadDatabaseAPI dbAPI = HeadDBAPI.getApi();
-
     @Override
     public void onEntityDeathByPlayer(Entity entity, EntityDeathEvent rawEvent, IBukkitPlayer killer) {
+        HeadDatabaseAPI dbAPI = HeadDBAPI.getApi();
         Player bkiller = killer.getPlayer();
         SurvivalGamePlayer gamePlayer = new SurvivalGamePlayer(killer.getPlayer().getUniqueId());
         if (MathUtils.getRandomNumberInRange(1,64) == 1){
@@ -34,6 +33,7 @@ public class MobDrops extends BukkitHandler {
     }
 
     public static ItemStack getMobItem(Entity entity){
+        HeadDatabaseAPI dbAPI = HeadDBAPI.getApi();
         String prefix = "§e";
         MobHead head = getMobHead(entity);
         if (entity.getType() == EntityType.VILLAGER){

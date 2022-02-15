@@ -64,7 +64,7 @@ public class HeadCollection extends BaseCommand {
                     DefaultSounds.pling.play(opener);
                 });
             } else {
-                inventoryBuilder.addItem(new ItemBuilder(api.getItemHead(String.valueOf(value.getId()))).setName("§6" + value.getHeadName()).setLore("§7You haven't found this head yet!").setEnchanted(false).build(), event -> {
+                inventoryBuilder.addItem(new ItemBuilder(api.getItemHead("9992")).setName("§6???").setLore("§7You haven't found this head yet!").setEnchanted(false).build(), event -> {
                     event.setCancelled(true);
                     DefaultSounds.pling.play(opener);
                 });

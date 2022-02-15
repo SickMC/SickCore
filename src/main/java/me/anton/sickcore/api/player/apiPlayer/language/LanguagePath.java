@@ -10,6 +10,7 @@ public enum LanguagePath {
     NETWORK_COMMAND_NOPERMISSION("network.command.noPermission"),
     NETWORK_COMMAND_NOSTAFF("network.command.noStaff"),
     NETWORK_COMMAND_NOMOD("network.command.noMod"),
+    NETWORK_COMMAND_NOADMIN("network.command.noAdmin"),
     PAPER_COMMAND_LAGCOMMAND_TIMINGS("paper.command.lagCommand.timings"),
     PAPER_COMMAND_LOBBY_MODI_MODINPCHANDLER_SERVERNOTAVAILABLE("paper.command.lobby.modi.ModiNPCHandler.serverNotAvailable"),
     PAPER_COMMAND_LOBBY_MODI_MODINPCHANDLER_TELEPORTSUCCESS("paper.command.lobby.modi.ModiNPCHandler.teleportSuccess"),

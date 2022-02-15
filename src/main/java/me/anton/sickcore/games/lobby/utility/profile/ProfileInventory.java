@@ -139,7 +139,7 @@ public class ProfileInventory{
             BukkitCore.getInstance().getCurrentGame().getTablist().reload();
         });
         builder.setItem(new ItemBuilder(Material.LIGHT_GRAY_DYE).setName((String) iapiPlayer.languageObject("§6Gray", "§6Grau")).setLore(lanClick).build(), 40, event -> {
-            iapiPlayer.setRankColor("§" + ChatColor.GRAY);
+            iapiPlayer.setRankColor("§" + ChatColor.GRAY.getChar());
             DefaultSounds.levelUP.play(player);
             openProfileInventory(player);
             BukkitCore.getInstance().getCurrentGame().getTablist().reload();
