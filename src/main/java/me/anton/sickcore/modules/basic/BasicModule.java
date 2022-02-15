@@ -1,41 +1,52 @@
 package me.anton.sickcore.modules.basic;
 
-import co.aikar.commands.BungeeCommandManager;
 import lombok.Getter;
-import me.anton.sickcore.api.handler.listeners.bungee.BungeeListenerProvider;
+import me.anton.sickcore.core.BukkitCore;
+import me.anton.sickcore.core.BungeeCore;
 import me.anton.sickcore.core.Core;
-import me.anton.sickcore.core.module.proxiedModule.ProxiedIModule;
+import me.anton.sickcore.core.module.globalmodule.GlobalModule;
 import me.anton.sickcore.modules.basic.buildserver.BuildServerCommand;
+import me.anton.sickcore.modules.basic.commandremake.FindCommand;
+import me.anton.sickcore.modules.basic.commandremake.ListCommand;
+import me.anton.sickcore.modules.basic.commandremake.SendCommand;
+import me.anton.sickcore.modules.basic.commandremake.ServerCommand;
 import me.anton.sickcore.modules.basic.lobby.LobbyCommand;
 import me.anton.sickcore.modules.basic.lobby.LobbyCommandAd;
 import me.anton.sickcore.modules.basic.playtime.PlaytimeCommand;
 
 @Getter
-public class BasicModule implements ProxiedIModule {
+public class BasicModule extends GlobalModule {
 
-    private BungeeCommandManager manager;
-    private BungeeListenerProvider provider;
+    private BungeeCore bungeeCore;
+    private BukkitCore bukkitCore;
 
     @Override
     public void load() {
-        this.manager = Core.getInstance().bungee().getManager();
-        this.provider = Core.getInstance().bungee().getProvider();
+        switch (Core.getInstance().getEnvironment()){
+            case BUKKIT -> {
+                this.bukkitCore = BukkitCore.getInstance();
 
-        register();
+                bukkitCore.getManager().registerCommand(new ServerCommand(), true);
+                bukkitCore.getManager().registerCommand(new SendCommand(), true);
+                bukkitCore.getManager().registerCommand(new FindCommand(), true);
+                bukkitCore.getManager().registerCommand(new ListCommand(), true);
+            }
+            case BUNGEECORD -> {
+                this.bungeeCore = BungeeCore.getInstance();
+                bungeeCore.getManager().registerCommand(new LobbyCommand());
+                bungeeCore.getProvider().register(new LobbyCommandAd());
+
+                bungeeCore.getManager().registerCommand(new BuildServerCommand());
+
+                bungeeCore.getManager().registerCommand(new PlaytimeCommand());
+            }
+        }
     }
 
     @Override
     public void unload() {
-
+        this.bukkitCore = null;
+        this.bungeeCore = null;
     }
 
-    @Override
-    public void register() {
-        manager.registerCommand(new LobbyCommand());
-        provider.register(new LobbyCommandAd());
-
-        manager.registerCommand(new BuildServerCommand());
-
-        manager.registerCommand(new PlaytimeCommand());
-    }
 }

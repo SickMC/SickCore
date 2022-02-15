@@ -2,6 +2,9 @@ package me.anton.sickcore.modules.basic.playtime;
 
 import co.aikar.commands.BaseCommand;
 import co.aikar.commands.annotation.*;
+import eu.thesimplecloud.api.CloudAPI;
+import eu.thesimplecloud.api.player.ICloudPlayer;
+import eu.thesimplecloud.api.player.IOfflineCloudPlayer;
 import me.anton.sickcore.api.player.apiPlayer.language.LanguagePath;
 import me.anton.sickcore.api.player.bungeePlayer.BungeePlayer;
 import me.anton.sickcore.api.player.bungeePlayer.IBungeePlayer;
@@ -10,36 +13,36 @@ import me.anton.sickcore.api.utils.common.TimeUtils;
 import me.anton.sickcore.api.utils.minecraft.messages.ConsoleMessages;
 import me.anton.sickcore.api.utils.minecraft.player.uniqueid.UUIDFetcher;
 import net.md_5.bungee.api.CommandSender;
+import net.md_5.bungee.api.chat.TextComponent;
 import net.md_5.bungee.api.connection.ProxiedPlayer;
 
-@CommandAlias("playtime|onlinetime|ot|pt")
+@CommandAlias("playtime|pt")
 public class PlaytimeCommand extends BaseCommand {
 
-    @CommandCompletion("@Players")
-    @Syntax("<player>")
-    @Description("Shows the onlinetime of the player")
-    public void onCMd(CommandSender sender, String target){
+    @Default
+    @Syntax("<Player>")
+    @Description("Shows the playtime of the player")
+    public void onCMDD(CommandSender sender, @Optional String targetRaw){
         if (!(sender instanceof ProxiedPlayer)) {
             ConsoleMessages.noPlayerBungee(sender);
             return;
         }
 
         IBungeePlayer player = new BungeePlayer(sender);
-        IBungeePlayer targetpl = new BungeePlayer(UUIDFetcher.fetchUniqueId(target));
 
-        player.sendMessage(targetpl.api().languageString(LanguagePath.PROXY_COMMAND_PLAYTIME_TIME).replace(new Replacable("%playtime%", TimeUtils.formatMillis(targetpl.api().cloud().cloudAPI().getOnlineTime()))));
-    }
+        if (targetRaw != null) {
+            IOfflineCloudPlayer cloudPlayer = CloudAPI.getInstance().getCloudPlayerManager().getOfflineCloudPlayer(targetRaw).getBlockingOrNull();
+            if (cloudPlayer == null){
+                player.getPlayer().sendMessage(new TextComponent("§4This player cannot be found!"));
+                return;
+            }
 
-    @Description("Shows the onlinetime of the player")
-    public void onCMDD(CommandSender sender){
-        if (!(sender instanceof ProxiedPlayer)) {
-            ConsoleMessages.noPlayerBungee(sender);
+            player.sendMessage(player.api().languageString(LanguagePath.PROXY_COMMAND_PLAYTIME_TIME).replace(new Replacable("%playtime%", TimeUtils.formatMillis(cloudPlayer.getOnlineTime()))));
             return;
         }
-
-        IBungeePlayer player = new BungeePlayer(sender);
 
         player.sendMessage(player.api().languageString(LanguagePath.PROXY_COMMAND_PLAYTIME_TIME).replace(new Replacable("%playtime%", TimeUtils.formatMillis(player.api().cloud().cloudAPI().getOnlineTime()))));
     }
+
 
 }
