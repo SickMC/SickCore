@@ -64,8 +64,8 @@ public class AnnounceCommand extends SlashCommand {
                 .setTitle(rawtitle)
                 .setContent(content);
 
-        DiscordModule.getInstance().getMainGuild().getTextChannelById(DiscordIds.staffchat).sendMessageEmbeds(builder.build()).queue();
-        if (mentionable != null)DiscordModule.getInstance().getMainGuild().getTextChannelById(DiscordIds.staffchat).sendMessage(mentionable.getAsMention()).queue();
+        DiscordModule.getInstance().getMainGuild().getTextChannelById(DiscordIds.newsChannel).sendMessageEmbeds(builder.build()).queue();
+        if (mentionable != null)DiscordModule.getInstance().getMainGuild().getTextChannelById(DiscordIds.newsChannel).sendMessage(mentionable.getAsMention()).queue();
         event.getTextChannel().sendMessage("Announcement sent!").queue();
     }
 }
