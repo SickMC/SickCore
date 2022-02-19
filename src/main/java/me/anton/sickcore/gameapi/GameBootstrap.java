@@ -4,6 +4,7 @@ import eu.thesimplecloud.api.CloudAPI;
 import me.anton.sickcore.api.utils.common.Logger;
 import me.anton.sickcore.games.build.BuildGame;
 import me.anton.sickcore.games.lobby.LobbyGame;
+import me.anton.sickcore.games.monopoly.MonopolyGame;
 import me.anton.sickcore.games.survival.SurvivalGame;
 
 import java.util.Arrays;
@@ -14,7 +15,8 @@ public class GameBootstrap {
     public AbstractGame current = null;
     private List<AbstractGame> games = Arrays.asList(new LobbyGame(),
             new BuildGame(),
-            new SurvivalGame());
+            new SurvivalGame(),
+            new MonopolyGame());
 
     public void loadGame(){
         for (AbstractGame game : games) {
