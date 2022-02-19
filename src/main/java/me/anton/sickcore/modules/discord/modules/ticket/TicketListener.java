@@ -19,6 +19,7 @@ public class TicketListener extends ListenerAdapter {
 
     @Override
     public void onButtonClick(@NotNull ButtonClickEvent event) {
+        if (!event.getGuild().equals(DiscordModule.getInstance().getMainGuild()))return;
         switch (event.getComponentId()) {
             case "ticket_create" -> {
                 if (ticketModule.getModel().documentExists(Finder.stringFinder("playerID", event.getMember().getUser().getId()))) {

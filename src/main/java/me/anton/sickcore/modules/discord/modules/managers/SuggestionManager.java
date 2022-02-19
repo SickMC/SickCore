@@ -1,6 +1,7 @@
 package me.anton.sickcore.modules.discord.modules.managers;
 
 import me.anton.sickcore.api.utils.discord.DiscordIds;
+import me.anton.sickcore.modules.discord.DiscordModule;
 import net.dv8tion.jda.api.entities.Emote;
 import net.dv8tion.jda.api.entities.MessageEmbed;
 import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
@@ -12,6 +13,7 @@ public class SuggestionManager extends ListenerAdapter {
 
     @Override
     public void onMessageReceived(@NotNull MessageReceivedEvent event) {
+        if (!event.getGuild().equals(DiscordModule.getInstance().getMainGuild()))return;
         if (!event.getTextChannel().getId().equals(DiscordIds.suggestionchannel))return;
         if (event.getAuthor().isBot())return;
 

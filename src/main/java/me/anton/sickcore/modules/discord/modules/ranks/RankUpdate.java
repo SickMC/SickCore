@@ -4,6 +4,7 @@ import me.anton.sickcore.api.player.apiPlayer.APIPlayer;
 import me.anton.sickcore.api.player.apiPlayer.provider.DiscordAPIPlayerAdapter;
 import me.anton.sickcore.api.player.bungeePlayer.IBungeePlayer;
 import me.anton.sickcore.api.utils.discord.DiscordIds;
+import me.anton.sickcore.api.utils.discord.PrivateGuildIDs;
 import me.anton.sickcore.modules.discord.DiscordModule;
 import net.dv8tion.jda.api.entities.Role;
 
@@ -11,7 +12,11 @@ public class RankUpdate {
 
     public RankUpdate(String userID){
         DiscordModule module = DiscordModule.getInstance();
-        if (!DiscordAPIPlayerAdapter.isVerified(userID))module.getMainGuild().retrieveMemberById(userID).queue(member -> module.getMainGuild().modifyMemberRoles(member, module.getMainGuild().getRoleById(DiscordIds.player)).queue());
+        if (!DiscordAPIPlayerAdapter.isVerified(userID)){
+            module.getMainGuild().retrieveMemberById(userID).queue(member -> module.getMainGuild().modifyMemberRoles(member, module.getMainGuild().getRoleById(DiscordIds.player)).queue());
+            if (DiscordModule.getInstance().getSecondGuild().isMember(DiscordModule.getInstance().getJda().getUserById(userID)))
+                module.getSecondGuild().retrieveMemberById(userID).queue(member -> member.getRoles().forEach(role -> module.getSecondGuild().removeRoleFromMember(member, role)));
+        }
         module.getMainGuild().retrieveMemberById(userID).queue(member -> {
             Role player = module.getMainGuild().getRoleById(DiscordIds.player);
 
@@ -42,41 +47,37 @@ public class RankUpdate {
                 }
             }
         });
+        if (DiscordModule.getInstance().getSecondGuild().isMember(DiscordModule.getInstance().getJda().getUserById(userID)))
+            module.getSecondGuild().retrieveMemberById(userID).queue(member -> {
+                switch (new APIPlayer(userID).getRank()){
+                    case BUILDER -> {
+                        module.getSecondGuild().modifyMemberRoles(member, module.getSecondGuild().getRoleById(PrivateGuildIDs.builder)).queue();
+                        break;
+                    }
+                    case CONTENT -> {
+                        module.getSecondGuild().modifyMemberRoles(member, module.getSecondGuild().getRoleById(PrivateGuildIDs.content)).queue();
+                        break;
+                    }
+                    case DEV -> {
+                        module.getSecondGuild().modifyMemberRoles(member, module.getSecondGuild().getRoleById(PrivateGuildIDs.dev)).queue();
+                        break;
+                    }
+                    case MODERATOR -> {
+                        module.getSecondGuild().modifyMemberRoles(member, module.getSecondGuild().getRoleById(PrivateGuildIDs.mod)).queue();
+                        break;
+                    }
+                    case ADMIN -> {
+                        module.getSecondGuild().modifyMemberRoles(member, module.getSecondGuild().getRoleById(PrivateGuildIDs.admin)).queue();
+                        break;
+                    }
+                }
+            });
     }
 
     public RankUpdate(IBungeePlayer bungeePlayer){
         if (!bungeePlayer.api().isVerified())return;
         DiscordModule module = DiscordModule.getInstance();
-        module.getMainGuild().retrieveMemberById(bungeePlayer.api().getDiscordID()).queue(member -> {
-            Role player = module.getMainGuild().getRoleById(DiscordIds.player);
-
-            switch (bungeePlayer.api().getRank()){
-                case DEV, BUILDER, CONTENT -> {
-                    module.getMainGuild().modifyMemberRoles(member, player, module.getMainGuild().getRoleById(DiscordIds.staff)).queue();
-                    break;
-                }
-                case ADMIN -> {
-                    module.getMainGuild().modifyMemberRoles(member, player, module.getMainGuild().getRoleById(DiscordIds.admin)).queue();
-                    break;
-                }
-                case MODERATOR -> {
-                    module.getMainGuild().modifyMemberRoles(member, player, module.getMainGuild().getRoleById(DiscordIds.mod)).queue();
-                    break;
-                }
-                case PLAYER -> {
-                    module.getMainGuild().modifyMemberRoles(member, player).queue();
-                    break;
-                }
-                case VIP -> {
-                    module.getMainGuild().modifyMemberRoles(member, player, module.getMainGuild().getRoleById(DiscordIds.vip)).queue();
-                    break;
-                }
-                case MVP -> {
-                    module.getMainGuild().modifyMemberRoles(member, player, module.getMainGuild().getRoleById(DiscordIds.mvp)).queue();
-                    break;
-                }
-            }
-        });
+        new RankUpdate(bungeePlayer.api().getDiscordID());
     }
 
 }

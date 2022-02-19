@@ -35,11 +35,13 @@ public class LogListener extends ListenerAdapter {
 
     @Override
     public void onMessageReceived(@NotNull MessageReceivedEvent event) {
+        if(!event.getGuild().equals(guild))return;
         cache.put(event.getMessageIdLong(), event.getMessage());
     }
 
     @Override
     public void onGuildMemberJoin(@NotNull GuildMemberJoinEvent event) {
+        if(!event.getGuild().equals(guild))return;
         if (event.getUser().isBot())return;
         MessageEmbed builder = new me.anton.sickcore.modules.discord.handlers.messages.EmbedBuilder()
                 .setTitle("Join")
@@ -49,6 +51,8 @@ public class LogListener extends ListenerAdapter {
 
     @Override
     public void onGuildInviteCreate(@NotNull GuildInviteCreateEvent event) {
+        if(!event.getGuild().equals(guild))return;
+
         MessageEmbed builder = new me.anton.sickcore.modules.discord.handlers.messages.EmbedBuilder()
                 .setTitle("InviteCreate")
                 .setContent(event.getInvite().getInviter().getAsMention() + " created the invite: " + event.getInvite().getUrl()).build();
@@ -57,6 +61,8 @@ public class LogListener extends ListenerAdapter {
 
     @Override
     public void onGuildInviteDelete(@NotNull GuildInviteDeleteEvent event) {
+        if(!event.getGuild().equals(guild))return;
+
         MessageEmbed builder = new me.anton.sickcore.modules.discord.handlers.messages.EmbedBuilder()
                 .setTitle("InviteDelete")
                 .setContent("The invite " + event.getUrl() + " was deleted!").build();
@@ -65,6 +71,7 @@ public class LogListener extends ListenerAdapter {
 
     @Override
     public void onGuildMemberRoleAdd(@NotNull GuildMemberRoleAddEvent event) {
+        if(!event.getGuild().equals(guild))return;
         MessageEmbed embed = new me.anton.sickcore.modules.discord.handlers.messages.EmbedBuilder()
                 .setTitle("RoleAdd")
                 .setContent(event.getMember().getAsMention() + " got the role " + event.getRoles().parallelStream().map(role -> role.getAsMention()).collect(Collectors.joining(", "))  + "!" +
@@ -74,6 +81,7 @@ public class LogListener extends ListenerAdapter {
 
     @Override
     public void onGuildMemberRoleRemove(@NotNull GuildMemberRoleRemoveEvent event) {
+        if(!event.getGuild().equals(guild))return;
         MessageEmbed embed = new me.anton.sickcore.modules.discord.handlers.messages.EmbedBuilder()
                 .setTitle("RoleRemove")
                 .setContent(event.getMember().getAsMention() + " lost the role " + event.getRoles().parallelStream().map(role -> role.getAsMention()).collect(Collectors.joining(", "))  + "!" +
@@ -83,6 +91,7 @@ public class LogListener extends ListenerAdapter {
 
     @Override
     public void onGuildMemberUpdateAvatar(@NotNull GuildMemberUpdateAvatarEvent event) {
+        if(!event.getGuild().equals(guild))return;
         MessageEmbed embed = new me.anton.sickcore.modules.discord.handlers.messages.EmbedBuilder()
                 .setTitle("AvatarUpdate")
                 .setContent(event.getMember().getAsMention() + "'s avatar changed from: \n" + event.getOldAvatarUrl() + " to: " + event.getNewAvatarUrl()).build();
@@ -91,6 +100,7 @@ public class LogListener extends ListenerAdapter {
 
     @Override
     public void onGuildMemberUpdateNickname(@NotNull GuildMemberUpdateNicknameEvent event) {
+        if(!event.getGuild().equals(guild))return;
         MessageEmbed embed = new me.anton.sickcore.modules.discord.handlers.messages.EmbedBuilder()
                 .setTitle("NicknameChange")
                 .setContent(event.getMember().getAsMention() + "'s nickname changed from: \n__" + event.getOldNickname() + "__ to: __" + event.getNewNickname() + "__").build();
@@ -99,6 +109,7 @@ public class LogListener extends ListenerAdapter {
 
     @Override
     public void onGuildVoiceLeave(@NotNull GuildVoiceLeaveEvent event) {
+        if(!event.getGuild().equals(guild))return;
         if (event.getEntity().getUser().isBot())return;
         guild.retrieveAuditLogs()
                 .type(ActionType.MEMBER_VOICE_KICK)
@@ -115,6 +126,7 @@ public class LogListener extends ListenerAdapter {
 
     @Override
     public void onGuildVoiceMove(@NotNull GuildVoiceMoveEvent event) {
+        if(!event.getGuild().equals(guild))return;
         if (event.getEntity().getUser().isBot())return;
         guild.retrieveAuditLogs()
                 .type(ActionType.MEMBER_VOICE_MOVE)
@@ -132,6 +144,7 @@ public class LogListener extends ListenerAdapter {
 
     @Override
     public void onGuildBan(@NotNull GuildBanEvent event) {
+        if(!event.getGuild().equals(guild))return;
         guild.retrieveAuditLogs()
                 .type(ActionType.BAN)
                 .limit(1)
@@ -148,6 +161,7 @@ public class LogListener extends ListenerAdapter {
 
     @Override
     public void onGuildUnban(@NotNull GuildUnbanEvent event) {
+        if(!event.getGuild().equals(guild))return;
         guild.retrieveAuditLogs()
                 .type(ActionType.UNBAN)
                 .limit(1)
@@ -164,6 +178,7 @@ public class LogListener extends ListenerAdapter {
 
     @Override
     public void onGuildMemberRemove(@NotNull GuildMemberRemoveEvent event) {
+        if(!event.getGuild().equals(guild))return;
         guild.retrieveAuditLogs()
                 .type(ActionType.KICK)
                 .limit(1)
@@ -180,6 +195,7 @@ public class LogListener extends ListenerAdapter {
 
     @Override
     public void onMessageDelete(@NotNull MessageDeleteEvent event) {
+        if(!event.getGuild().equals(guild))return;
         if (!cache.containsKey(event.getMessageIdLong()))return;
         for (String s : cache.get(event.getMessageIdLong()).getContentRaw().split(" "))
             if (DeleteListener.deletions.contains(s))return;
@@ -202,6 +218,7 @@ public class LogListener extends ListenerAdapter {
 
     @Override
     public void onMessageUpdate(@NotNull MessageUpdateEvent event) {
+        if(!event.getGuild().equals(guild))return;
         if (!cache.containsKey(event.getMessageIdLong()))return;
         if (event.getMember().getUser().isBot())return;
         if (cache.get(event.getMessageIdLong()).getAuthor().isBot())return;

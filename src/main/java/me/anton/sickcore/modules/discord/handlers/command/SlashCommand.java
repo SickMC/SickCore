@@ -77,7 +77,7 @@ public abstract class SlashCommand {
     }
 
     public boolean isStaffChannel(SlashCommandEvent event){
-        return event.getTextChannel().getId().equals(DiscordIds.staffCommandsChannel);
+        return event.getTextChannel().getId().equals("944723457504059392");
     }
 
     private boolean staffCheck(User user, InteractionHook hook){

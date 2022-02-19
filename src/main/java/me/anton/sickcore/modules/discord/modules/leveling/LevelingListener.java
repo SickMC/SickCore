@@ -24,6 +24,7 @@ public class LevelingListener extends ListenerAdapter {
 
     @Override
     public void onMessageReceived(@NotNull MessageReceivedEvent event) {
+        if (!event.getGuild().equals(DiscordModule.getInstance().getMainGuild()))return;
         if (event.getAuthor().isBot())return;
         if (!Arrays.asList(allowed).contains(event.getTextChannel().getId()))return;
         if (!model.documentExists(Finder.stringFinder("userID", event.getAuthor().getId()))){
@@ -55,6 +56,7 @@ public class LevelingListener extends ListenerAdapter {
 
     @Override
     public void onGuildVoiceJoin(@NotNull GuildVoiceJoinEvent event) {
+        if (!event.getGuild().equals(DiscordModule.getInstance().getMainGuild()))return;
         if (event.getMember().getUser().isBot())return;
         if (!Arrays.asList(allowedChannels).contains(event.getChannelJoined().getId()))return;
 

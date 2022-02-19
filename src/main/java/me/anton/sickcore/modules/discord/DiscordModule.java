@@ -43,6 +43,7 @@ public class DiscordModule implements ProxiedIModule {
     private JDABuilder builder;
     private List<GatewayIntent> intents;
     private Guild mainGuild;
+    private Guild secondGuild;
     private SlashCommandBuilder commandBuilder;
 
     @Override
@@ -98,6 +99,7 @@ public class DiscordModule implements ProxiedIModule {
             }
             this.jda.addEventListener(this.commandBuilder);
             this.mainGuild = jda.getGuildById((String)readFromConfig("mainguildID"));
+            this.secondGuild = jda.getGuildById((String) readFromConfig("secondguildID"));
             this.moduleHandler.loadModules();
         } catch (Exception e) {
             e.printStackTrace();

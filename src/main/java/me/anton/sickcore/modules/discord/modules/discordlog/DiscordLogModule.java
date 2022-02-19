@@ -36,7 +36,7 @@ public class DiscordLogModule implements IDiscordModule {
     }
 
     public void log(MessageEmbed embed){
-        TextChannel textChannel = DiscordModule.getInstance().getJda().getTextChannelById(DiscordIds.discordLogChannel);
+        TextChannel textChannel = DiscordModule.getInstance().getSecondGuild().getTextChannelById("944726213488963634");
         textChannel.sendMessageEmbeds(embed).queue();
     }
 

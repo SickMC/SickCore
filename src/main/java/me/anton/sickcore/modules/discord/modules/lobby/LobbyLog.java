@@ -13,6 +13,7 @@ public class LobbyLog extends ListenerAdapter {
 
     @Override
     public void onGuildMemberJoin(@NotNull GuildMemberJoinEvent event) {
+        if (!event.getGuild().equals(DiscordModule.getInstance().getMainGuild()))return;
         MessageEmbed embed = new me.anton.sickcore.modules.discord.handlers.messages.EmbedBuilder(event.getMember())
                 .setTitle("Join")
                 .setContent(event.getMember().getAsMention() + " joined the server! :partying_face:").build();

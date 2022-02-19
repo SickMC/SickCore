@@ -27,6 +27,7 @@ public class DeleteListener extends ListenerAdapter {
 
     @Override
     public void onMessageReceived(@NotNull MessageReceivedEvent event) {
+        if (!event.getGuild().equals(DiscordModule.getInstance().getMainGuild()))return;
         if (event.getMember().getRoles().contains(DiscordModule.getInstance().getMainGuild().getRoleById(DiscordIds.mod))
                 || event.getMember().getRoles().contains(DiscordModule.getInstance().getMainGuild().getRoleById(DiscordIds.staff))
                 || event.getMember().getRoles().contains(DiscordModule.getInstance().getMainGuild().getRoleById(DiscordIds.admin))
