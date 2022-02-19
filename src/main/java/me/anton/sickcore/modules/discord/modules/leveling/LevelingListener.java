@@ -14,6 +14,7 @@ import org.bson.Document;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.Arrays;
+import java.util.concurrent.TimeUnit;
 
 public class LevelingListener extends ListenerAdapter {
 
@@ -26,8 +27,8 @@ public class LevelingListener extends ListenerAdapter {
         if (event.getAuthor().isBot())return;
         if (!Arrays.asList(allowed).contains(event.getTextChannel().getId()))return;
         if (!model.documentExists(Finder.stringFinder("userID", event.getAuthor().getId()))){
-            if (DiscordAPIPlayerAdapter.isVerified(event.getAuthor().getId()))model.createDocument(new Document("userID", event.getAuthor().getId()).append("points", 1).append("enabled", true));
-            else model.createDocument(new Document("userID", event.getAuthor().getId()).append("points", 1).append("enabled", false));
+            if (DiscordAPIPlayerAdapter.isVerified(event.getAuthor().getId()))model.createDocument(new Document("userID", event.getAuthor().getId()).append("points", 1).append("enabled", true).append("cooldown", System.currentTimeMillis() + TimeUnit.MINUTES.toMillis(5)));
+            else model.createDocument(new Document("userID", event.getAuthor().getId()).append("points", 1).append("enabled", false).append("cooldown", System.currentTimeMillis() + TimeUnit.MINUTES.toMillis(5)));
         }
         Document player = model.getDocument(Finder.stringFinder("userID", event.getAuthor().getId()));
         int oldPoint = player.getInteger("points");
@@ -58,13 +59,16 @@ public class LevelingListener extends ListenerAdapter {
         if (!Arrays.asList(allowedChannels).contains(event.getChannelJoined().getId()))return;
 
         if (!model.documentExists(Finder.stringFinder("userID", event.getMember().getUser().getId()))){
-            if (DiscordAPIPlayerAdapter.isVerified(event.getMember().getUser().getId()))model.createDocument(new Document("userID", event.getMember().getUser().getId()).append("points", 5).append("enabled", true));
-            else model.createDocument(new Document("userID", event.getMember().getUser().getId()).append("points", 5).append("enabled", false));
+            if (DiscordAPIPlayerAdapter.isVerified(event.getMember().getUser().getId()))model.createDocument(new Document("userID", event.getMember().getUser().getId()).append("points", 5).append("enabled", true).append("cooldown", System.currentTimeMillis() + TimeUnit.MINUTES.toMillis(5)));
+            else model.createDocument(new Document("userID", event.getMember().getUser().getId()).append("points", 5).append("enabled", false).append("cooldown", System.currentTimeMillis() + TimeUnit.MINUTES.toMillis(5)));
         }
         Document player = model.getDocument(Finder.stringFinder("userID", event.getMember().getUser().getId()));
+        if (player.getLong("cooldown") > System.currentTimeMillis())return;
+
         int oldPoint = player.getInteger("points");
 
         player.replace("points", oldPoint + 5);
+        player.replace("cooldown", System.currentTimeMillis() + TimeUnit.MINUTES.toMillis(5));
 
         model.updateDocument(Finder.stringFinder("userID", event.getMember().getUser().getId()), player);
 

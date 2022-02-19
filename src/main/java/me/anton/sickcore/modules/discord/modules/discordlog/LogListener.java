@@ -40,6 +40,7 @@ public class LogListener extends ListenerAdapter {
 
     @Override
     public void onGuildMemberJoin(@NotNull GuildMemberJoinEvent event) {
+        if (event.getUser().isBot())return;
         MessageEmbed builder = new me.anton.sickcore.modules.discord.handlers.messages.EmbedBuilder()
                 .setTitle("Join")
                 .setContent(event.getMember().getAsMention() + " joined the server!").build();
@@ -98,6 +99,7 @@ public class LogListener extends ListenerAdapter {
 
     @Override
     public void onGuildVoiceLeave(@NotNull GuildVoiceLeaveEvent event) {
+        if (event.getEntity().getUser().isBot())return;
         guild.retrieveAuditLogs()
                 .type(ActionType.MEMBER_VOICE_KICK)
                 .limit(1)
@@ -113,6 +115,7 @@ public class LogListener extends ListenerAdapter {
 
     @Override
     public void onGuildVoiceMove(@NotNull GuildVoiceMoveEvent event) {
+        if (event.getEntity().getUser().isBot())return;
         guild.retrieveAuditLogs()
                 .type(ActionType.MEMBER_VOICE_MOVE)
                 .limit(1)
@@ -188,6 +191,7 @@ public class LogListener extends ListenerAdapter {
                     if (list.isEmpty())return;
                     AuditLogEntry entry = list.get(0);
                     if (entry.getUser().isBot())return;
+                    if (cache.get(event.getMessageIdLong()).getAuthor().isBot())return;
                     MessageEmbed embed = new me.anton.sickcore.modules.discord.handlers.messages.EmbedBuilder()
                             .setTitle("Message Delete")
                             .setContent("A message of " + cache.get(event.getMessageIdLong()).getAuthor().getAsMention() + " was deleted by: " + entry.getUser().getAsMention() + "\n\n**Content:** \n```" + cache.get(event.getMessageIdLong()).getContentRaw() + "```").build();
@@ -200,6 +204,7 @@ public class LogListener extends ListenerAdapter {
     public void onMessageUpdate(@NotNull MessageUpdateEvent event) {
         if (!cache.containsKey(event.getMessageIdLong()))return;
         if (event.getMember().getUser().isBot())return;
+        if (cache.get(event.getMessageIdLong()).getAuthor().isBot())return;
         MessageEmbed embed = new me.anton.sickcore.modules.discord.handlers.messages.EmbedBuilder()
                 .setTitle("Message Update")
                 .setContent("A message of " + event.getAuthor().getAsMention() + " was edited!\n\n**Old Content:** \n```" + cache.get(event.getMessageIdLong()).getContentRaw() + "```\n **New Content:** \n```" + event.getMessage().getContentRaw() + "```").build();

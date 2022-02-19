@@ -38,7 +38,7 @@ public class SurvivalChat extends BukkitHandler {
         rawEvent.quitMessage(null);
         Bukkit.getOnlinePlayers().forEach(player -> {
             IAPIPlayer all = new APIPlayer(player.getUniqueId());
-            if (!bukkitPlayer.api().hasAutoNick())
+            if (!bukkitPlayer.isNicked())
                 all.bukkit().getPlayer().sendMessage((String) all.languageObject(bukkitPlayer.api().getDisplayName() + "§7quit the server!", bukkitPlayer.api().getDisplayName() + "§7hat den Server verlassen!"));
             else
                 all.bukkit().getPlayer().sendMessage((String) all.languageObject(bukkitPlayer.getNickDisplayName() + "§7quit the server!", bukkitPlayer.getNickDisplayName() + "§7hat den Server verlassen!"));

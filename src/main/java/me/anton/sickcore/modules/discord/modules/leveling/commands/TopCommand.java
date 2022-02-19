@@ -57,7 +57,7 @@ public class TopCommand extends SlashCommand {
             members.add(new DiscordGamePlayer(document.getString("userID")));
         });
 
-        Collections.sort(members, Comparator.comparing(DiscordGamePlayer::getPoints));
+        members.sort(Comparator.comparing(DiscordGamePlayer::getPoints));
 
         EmbedBuilder builder = new EmbedBuilder(user).setTitle("Top").setContent(">>> 1.  " + getMember(members.get(members.size() -1).getId()).getAsMention() + ": " + members.get(members.size() -1).getPoints() + "\n" +
                 " 2.  " + getMember(members.get(members.size() - 2).getId()).getAsMention() + ": " + members.get(members.size() - 2).getPoints() + "\n" +

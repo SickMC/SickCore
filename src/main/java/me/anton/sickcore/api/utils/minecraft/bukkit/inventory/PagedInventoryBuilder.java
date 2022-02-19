@@ -77,7 +77,7 @@ public class PagedInventoryBuilder {
         for (int i = 0; i <= highestOrder; i++) {
             if (!itemStacks.containsKey(i)) continue;
             for (ItemStack itemStack : itemStacks.get(i).keySet()) {
-                if (currentPage.size() == (28)) {
+                if (currentPage.size() == 27) {
                     pagedItems.put(currentPageCount, new LinkedHashMap<>(currentPage));
                     currentPageCount++;
                     currentPage.clear();
@@ -88,7 +88,7 @@ public class PagedInventoryBuilder {
         }
         if (this.itemStacks.containsKey(-1)) {
             for (ItemStack itemStack : itemStacks.get(-1).keySet()) {
-                if (currentPage.size() == 28) {
+                if (currentPage.size() == 27) {
                     pagedItems.put(currentPageCount, new LinkedHashMap<>(currentPage));
                     currentPageCount++;
                     currentPage.clear();
@@ -98,7 +98,7 @@ public class PagedInventoryBuilder {
             }
         }
 
-        if (currentPageCount != 0 && ((currentPageCount < 28))) {
+        if (currentPageCount != 0 && ((currentPageCount < 27))) {
             pagedItems.put(currentPageCount, new LinkedHashMap<>(currentPage));
             currentPage.clear();
             return;
@@ -112,7 +112,7 @@ public class PagedInventoryBuilder {
         }
 
         if (fillLastPage) {
-            int fills = (28) - getItemStacks().get(getPages()).size();
+            int fills = (27) - getItemStacks().get(getPages()).size();
             for (int i = 0; i < fills; i++) {
                 getItemStacks().get(getPages()).put(filler, event -> event.setCancelled(true));
             }
