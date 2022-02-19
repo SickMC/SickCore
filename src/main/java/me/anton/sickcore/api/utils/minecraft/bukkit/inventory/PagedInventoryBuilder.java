@@ -128,43 +128,7 @@ public class PagedInventoryBuilder {
     }
 
     public void open() {
-        int page = 1;
-        InventoryBuilder inventoryHandler = handlers.getOrDefault(page, new InventoryBuilder(apiPlayer.api(), name, 6 * 9, InventoryUsage.UTILITY));
-
-        ItemStack headback = HeadDBAPI.getApi().getItemHead("7788");
-        ItemStack headforwa = HeadDBAPI.getApi().getItemHead("7787");
-
-        inventoryHandler.fillPlaceholder(0,8,45,53,1,7,9,17,36,44,46,52,2,3,5,6,47,51);
-
-        inventoryHandler.setItem(new ItemBuilder(Material.PAPER).setName((String) apiPlayer.api().languageObject("§7Page §6" + page + "§7/§6" + pagedItems.size(),"§7Seite §6" + page + "§7/§6" + pagedItems.size())).build(), 49, event -> event.setCancelled(true));
-
-        inventoryHandler.setItem(new ItemBuilder(headback).setName((String) apiPlayer.api().languageObject("§7Backward","§7Zurück")).build(), 48, event -> {
-            if (!hasPage(page - 1)) {
-                DefaultSounds.anvil.play(apiPlayer);
-                return;
-            }
-            open(page - 1);
-        });
-        inventoryHandler.setItem(new ItemBuilder(headforwa).setName((String) apiPlayer.api().languageObject("§7Forward","§7Vor")).build(), 50, event -> {
-            if (!hasPage(page + 1)) {
-                DefaultSounds.anvil.play(apiPlayer);
-                return;
-            }
-            open(page + 1);
-        });
-
-        int slot = 10;
-        for (ItemStack itemStack : this.pagedItems.get(page).keySet()) {
-            if (slot == 17) slot = 19;
-            if (slot == 26) slot = 28;
-            if (slot == 35) slot = 37;
-            Consumer<InventoryClickEvent> consumer = this.pagedItems.get(page).get(itemStack);
-            inventoryHandler.setItem(itemStack, slot, consumer);
-            slot++;
-        }
-
-
-        inventoryHandler.open();
+        open(1);
     }
 
     public void open(int page) {
