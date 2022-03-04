@@ -4,7 +4,7 @@ import eu.thesimplecloud.api.CloudAPI;
 import eu.thesimplecloud.api.service.ICloudService;
 import eu.thesimplecloud.api.servicegroup.ICloudServiceGroup;
 import eu.thesimplecloud.api.wrapper.IWrapperInfo;
-import me.anton.sickcore.api.player.discordPlayer.IDiscordPlayer;
+import me.anton.sickcore.api.player.discordPlayer.DiscordPlayer;
 import me.anton.sickcore.api.utils.common.MathUtils;
 import me.anton.sickcore.modules.discord.handlers.command.SlashCommand;
 import me.anton.sickcore.modules.discord.handlers.command.SlashSubCommand;
@@ -43,7 +43,7 @@ public class CloudListCommand extends SlashSubCommand {
     }
 
     @Override
-    public void execute(User user, IDiscordPlayer player, InteractionHook hook, SlashCommandEvent event) {
+    public void execute(User user, DiscordPlayer player, InteractionHook hook, SlashCommandEvent event) {
         if (!getMainCommand().isStaffChannel(event))return;
         StringBuilder wrapperBuilder = new StringBuilder();
         for (IWrapperInfo wrapperInfo : CloudAPI.getInstance().getWrapperManager().getAllCachedObjects()) {

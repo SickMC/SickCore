@@ -1,14 +1,13 @@
 package me.anton.sickcore.modules.discord.modules.verify;
 
-import me.anton.sickcore.api.player.apiPlayer.IAPIPlayer;
+import me.anton.sickcore.api.player.apiPlayer.APIPlayer;
 import me.anton.sickcore.api.player.apiPlayer.provider.DiscordAPIPlayerAdapter;
-import me.anton.sickcore.api.player.bungeePlayer.IBungeePlayer;
+import me.anton.sickcore.api.player.bungeePlayer.BungeePlayer;
 import me.anton.sickcore.api.player.discordPlayer.DiscordPlayer;
-import me.anton.sickcore.api.player.discordPlayer.IDiscordPlayer;
-import me.anton.sickcore.api.utils.discord.DiscordIds;
 import me.anton.sickcore.modules.discord.DiscordModule;
 import me.anton.sickcore.modules.discord.handlers.command.SlashCommand;
 import me.anton.sickcore.modules.discord.handlers.command.SlashSubCommand;
+import me.anton.sickcore.modules.discord.modules.discordlog.DiscordLogModule;
 import me.anton.sickcore.modules.discord.modules.ranks.RankUpdate;
 import net.dv8tion.jda.api.entities.MessageEmbed;
 import net.dv8tion.jda.api.entities.User;
@@ -50,7 +49,7 @@ public class VerifyCommand extends SlashCommand {
     }
 
     @Override
-    public void execute(User user, IDiscordPlayer player, InteractionHook hook, SlashCommandEvent event) {
+    public void execute(User user, DiscordPlayer player, InteractionHook hook, SlashCommandEvent event) {
         DiscordModule module = DiscordModule.getInstance();
         VerifyModule verifyModule = VerifyModule.getVerifyModule();
 
@@ -60,7 +59,7 @@ public class VerifyCommand extends SlashCommand {
 
         if (!verifyModule.getVerifyList().containsValue(verifyID)){hook.sendMessageEmbeds(getWrongCodeEmbed(user)).setEphemeral(true).queue();return;}
 
-        IBungeePlayer bungeeplayer = verifyModule.getVerifyListReturn().get(verifyID);
+        BungeePlayer bungeeplayer = verifyModule.getVerifyListReturn().get(verifyID);
 
         verify(bungeeplayer, user.getId());
 
@@ -72,17 +71,17 @@ public class VerifyCommand extends SlashCommand {
         hook.sendMessageEmbeds(getVerified(user)).queue();
     }
 
-    private void verify(IBungeePlayer player, String userID){
-        IAPIPlayer iapiPlayer = player.api();
+    private void verify(BungeePlayer player, String userID){
+        APIPlayer iapiPlayer = player.api();
         iapiPlayer.setDiscordID(userID);
         new RankUpdate(userID);
     }
-    private void sendLog(User user, IBungeePlayer player){
+    private void sendLog(User user, BungeePlayer player){
         MessageEmbed embed = new me.anton.sickcore.modules.discord.handlers.messages.EmbedBuilder()
                 .setTitle("Verified")
                 .setContent(user.getAsMention() + " is now verified with mc: " + player.api().getName()).build();
 
-        DiscordModule.getInstance().getMainGuild().getTextChannelById(DiscordIds.discordLogChannel).sendMessageEmbeds(embed).queue();
+        DiscordLogModule.getInstance().log(embed);
     }
 
     private MessageEmbed getWrongCodeEmbed(User user){

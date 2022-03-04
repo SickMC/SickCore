@@ -21,7 +21,7 @@ public class BungeeListenerProvider {
             try {
                 handlerTask.run(handler);
             }catch (Exception e){
-                Logger.error("Error while run proxied handler " + handler.getClass().getName());
+                Logger.error("Error while run proxied handler " + handler.getClass().getName(), this.getClass());
                 e.printStackTrace();
             }
         }

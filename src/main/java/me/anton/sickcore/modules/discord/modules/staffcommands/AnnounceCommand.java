@@ -1,6 +1,6 @@
 package me.anton.sickcore.modules.discord.modules.staffcommands;
 
-import me.anton.sickcore.api.player.discordPlayer.IDiscordPlayer;
+import me.anton.sickcore.api.player.discordPlayer.DiscordPlayer;
 import me.anton.sickcore.api.utils.discord.DiscordIds;
 import me.anton.sickcore.modules.discord.DiscordModule;
 import me.anton.sickcore.modules.discord.handlers.command.SlashCommand;
@@ -48,7 +48,7 @@ public class AnnounceCommand extends SlashCommand {
     }
 
     @Override
-    public void execute(User user, IDiscordPlayer player, InteractionHook hook, SlashCommandEvent event) {
+    public void execute(User user, DiscordPlayer player, InteractionHook hook, SlashCommandEvent event) {
         event.deferReply().queue();
         DiscordModule module = StaffCommandModule.getInstance().getModule();
 

@@ -4,7 +4,6 @@ import co.aikar.commands.BaseCommand;
 import co.aikar.commands.CommandHelp;
 import co.aikar.commands.annotation.*;
 import me.anton.sickcore.api.player.bungeePlayer.BungeePlayer;
-import me.anton.sickcore.api.player.bungeePlayer.IBungeePlayer;
 import me.anton.sickcore.api.utils.minecraft.messages.ConsoleMessages;
 import me.anton.sickcore.modules.notify.NotifyAction;
 import me.anton.sickcore.modules.notify.NotifyType;
@@ -21,7 +20,7 @@ public class TeamChatNotify extends BaseCommand {
             ConsoleMessages.noPlayerBungee(commandSender);
             return;
         }
-        IBungeePlayer player = new BungeePlayer(commandSender);
+        BungeePlayer player = new BungeePlayer(commandSender);
 
         String formatted = String.join(" ", messages);
         String message = player.api().getDisplayName() + "§7(" +  player.api().cloud().cloudAPI().getConnectedServerName() + ")§8 » §7" + formatted;

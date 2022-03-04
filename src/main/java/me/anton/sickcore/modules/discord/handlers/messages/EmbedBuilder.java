@@ -1,7 +1,6 @@
 package me.anton.sickcore.modules.discord.handlers.messages;
 
 import me.anton.sickcore.api.player.discordPlayer.DiscordPlayer;
-import me.anton.sickcore.api.player.discordPlayer.IDiscordPlayer;
 import me.anton.sickcore.modules.discord.DiscordModule;
 import net.dv8tion.jda.api.entities.IMentionable;
 import net.dv8tion.jda.api.entities.Member;
@@ -15,7 +14,7 @@ public class EmbedBuilder {
 
     private net.dv8tion.jda.api.EmbedBuilder builder;
     private EmbedType type;
-    private IDiscordPlayer player = null;
+    private DiscordPlayer player = null;
     private Member member = null;
     private Color color = null;
     private boolean timeStamp = true;
@@ -27,7 +26,7 @@ public class EmbedBuilder {
         this.member = DiscordModule.getInstance().getMainGuild().getMember(user);
     }
 
-    public EmbedBuilder(IDiscordPlayer player){
+    public EmbedBuilder(DiscordPlayer player){
         this.type = EmbedType.UTILITY;
         this.builder = new net.dv8tion.jda.api.EmbedBuilder();
         this.player = player;

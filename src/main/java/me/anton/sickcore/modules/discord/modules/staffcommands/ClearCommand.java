@@ -1,7 +1,7 @@
 package me.anton.sickcore.modules.discord.modules.staffcommands;
 
-import me.anton.sickcore.api.player.apiPlayer.IAPIPlayer;
-import me.anton.sickcore.api.player.discordPlayer.IDiscordPlayer;
+import me.anton.sickcore.api.player.apiPlayer.APIPlayer;
+import me.anton.sickcore.api.player.discordPlayer.DiscordPlayer;
 import me.anton.sickcore.modules.discord.DiscordModule;
 import me.anton.sickcore.modules.discord.handlers.command.SlashCommand;
 import me.anton.sickcore.modules.discord.handlers.command.SlashSubCommand;
@@ -48,13 +48,13 @@ public class ClearCommand extends SlashCommand {
     }
 
     @Override
-    public void execute(User user, IDiscordPlayer player, InteractionHook hook, SlashCommandEvent event) {
+    public void execute(User user, DiscordPlayer player, InteractionHook hook, SlashCommandEvent event) {
         DiscordModule module = StaffCommandModule.getInstance().getModule();
 
         OptionMapping target = event.getOption("member");
         int amount = (int) event.getOption("amount").getAsDouble();
 
-        IAPIPlayer apiPlayer = getApiPlayer(user);
+        APIPlayer apiPlayer = getApiPlayer(user);
 
         if (!apiPlayer.isVerified()) {event.replyEmbeds(DiscordMessages.getNotVerified(getMember(user))).setEphemeral(true).queue();return;}
 

@@ -3,7 +3,7 @@ package me.anton.sickcore.api.player.apiPlayer.language;
 import eu.thesimplecloud.api.CloudAPI;
 import me.anton.sickcore.api.database.DatabaseModel;
 import me.anton.sickcore.api.database.Finder;
-import me.anton.sickcore.api.player.apiPlayer.IAPIPlayer;
+import me.anton.sickcore.api.player.apiPlayer.APIPlayer;
 import me.anton.sickcore.api.utils.common.Replacable;
 import me.anton.sickcore.core.Core;
 
@@ -17,12 +17,12 @@ public class LanguageObject {
     private final String path;
     private String rawString;
     private String rawStringDe;
-    private final IAPIPlayer player;
+    private final APIPlayer player;
     private String message = null;
     private String messageDe = null;
     private List<LanguageObject> appends;
 
-    public LanguageObject(IAPIPlayer iapiPlayer, LanguagePath path){
+    public LanguageObject(APIPlayer iapiPlayer, LanguagePath path){
         this.model = Core.getInstance().getLanguageModel();
         this.path = path.getPath();
         this.player = iapiPlayer;

@@ -14,6 +14,7 @@ public class PlayerLevelChangeEventHandler extends BukkitEventProvider<PlayerLev
     @EventHandler
     public void handleEvent(PlayerLevelChangeEvent event) {
         BukkitListenerProvider provider = BukkitCore.getInstance().getProvider();
+
         provider.iterator(run -> run.onPlayerLevelChangeEvent(event, event.getOldLevel(), event.getNewLevel(), new BukkitPlayer(event.getPlayer())));
     }
 }

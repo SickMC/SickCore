@@ -10,14 +10,10 @@ import me.anton.sickcore.api.player.apiPlayer.enums.Rank;
 import me.anton.sickcore.api.player.apiPlayer.language.LanguageObject;
 import me.anton.sickcore.api.player.apiPlayer.language.LanguagePath;
 import me.anton.sickcore.api.player.bukkitPlayer.BukkitPlayer;
-import me.anton.sickcore.api.player.bukkitPlayer.IBukkitPlayer;
 import me.anton.sickcore.api.player.bungeePlayer.BungeePlayer;
-import me.anton.sickcore.api.player.bungeePlayer.IBungeePlayer;
 import me.anton.sickcore.api.player.cloudPlayer.CloudAPIPlayer;
-import me.anton.sickcore.api.player.cloudPlayer.ICloudAPIPlayer;
-import me.anton.sickcore.api.utils.common.ColorUtils;
 import me.anton.sickcore.api.utils.common.StringUtils;
-import me.anton.sickcore.api.utils.minecraft.player.uniqueid.UUIDFetcher;
+import me.anton.sickcore.api.utils.minecraft.player.UUIDFetcher;
 import me.anton.sickcore.core.BungeeCore;
 import me.anton.sickcore.core.Core;
 import me.anton.sickcore.core.Environment;
@@ -72,145 +68,145 @@ public class APIPlayer implements IAPIPlayer {
                 .append("notify", new Document("service", false).append("report", false).append("punishment", false).append("teamchat", false)));
     }
 
-    @Override
+   
     public Language getLanguage() {
         return Language.valueOf(document.getString("language").toUpperCase());
     }
 
 
-    @Override
+   
     public void setLanguage(Language language) {
         document.replace("language", StringUtils.getEnumName(language).toLowerCase());
         update();
     }
 
-    @Override
+   
     public Integer getCoins() {
         return document.getInteger("coins");
     }
 
-    @Override
+   
     public void setCoins(int amount) {
         document.replace("coins", amount);
         update();
     }
 
-    @Override
+   
     public void addCoins(int amount) {
         document.replace("coins", getCoins() + amount);
         update();
     }
 
-    @Override
+   
     public void removeCoins(int amount) {
         document.replace("coins", Math.max(getCoins() - amount, 0));
         update();
     }
 
-    @Override
+   
     public void setNickname(String nickname) {
         document.replace("nickname", nickname);
         update();
     }
 
-    @Override
+   
     public String getNickname() {
         return document.getString("nickname");
     }
 
-    @Override
+   
     public void setNickRank(Rank rank) {
         document.replace("nickrank", StringUtils.getEnumName(rank));
         update();
     }
 
-    @Override
+   
     public Rank getNickRank() {
         return Rank.valueOf(document.getString("nickrank").toUpperCase());
     }
 
-    @Override
+   
     public String getNickSkinName() {
         return document.getString("nickskin");
     }
 
-    @Override
+   
     public void setNickSkinName(String nickSkinID) {
         document.replace("nickskin", nickSkinID);
         update();
     }
 
-    @Override
+   
     public boolean hasAutoNick() {
         return !document.getString("autonick").equals("false");
     }
 
-    @Override
+   
     public void setAutoNick(boolean value) {
         if (value)document.replace("autonick", "true");
         if (!value)document.replace("autonick", "false");
         update();
     }
 
-    @Override
+   
     public String getDiscordID() {
         return document.getString("discordid");
     }
 
-    @Override
+   
     public void setDiscordID(String discordID) {
         document.replace("discordid", discordID);
         update();
     }
 
-    @Override
+   
     public String getName() {
         return document.getString("name");
     }
 
-    @Override
+   
     public boolean isVerified() {
         return !document.getString("discordid").equals("0");
     }
 
-    @Override
+   
     public String getRankColor() {
         if (!hasRankColor()) return getDefaultRankColor();
         return document.getString("rankcolor");
     }
 
-    @Override
+   
     public void setRankColor(String color) {
         document.replace("rankcolor", color);
         update();
     }
 
-    @Override
+   
     public boolean hasRankColor() {
         return !document.getString("rankcolor").equals("default");
     }
 
-    @Override
+   
     public Rank getRank() {
         return Rank.valueOf(perm().getHighestPermissionGroup().getName().toUpperCase());
     }
 
-    @Override
+   
     public String getDefaultRankColor() {
         return getRank().getColor();
     }
 
-    @Override
+   
     public UUID getUUID() {
         return uuid;
     }
 
-    @Override
+   
     public LanguageObject languageString(LanguagePath path) {
         return new LanguageObject(this, path);
     }
 
-    @Override
+   
     public Object languageObject(Object en, Object de) {
         if (getLanguage().equals(Language.ENGLISCHUK))
             return en;
@@ -220,58 +216,58 @@ public class APIPlayer implements IAPIPlayer {
             return null;
     }
 
-    @Override
+   
     public String getDisplayName() {
         if (hasRankColor()) return getRank().getColor() + getRank().getName() +  "§8 × §r" + getRankColor() + getName() + "§r §r";
         return getRank().getColor() + getRank().getName() +  "§8 × §r" + getDefaultRankColor() + getName() + "§r §r";
     }
 
-    @Override
-    public IBukkitPlayer bukkit() {
+   
+    public BukkitPlayer bukkit() {
         return new BukkitPlayer(this);
     }
 
-    @Override
-    public IBungeePlayer bungee() {
+   
+    public BungeePlayer bungee() {
         return new BungeePlayer(this);
     }
 
-    @Override
-    public ICloudAPIPlayer cloud() {
+   
+    public CloudAPIPlayer cloud() {
         return new CloudAPIPlayer(this);
     }
 
-    @Override
+   
     public IPermissionPlayer perm() {
         return PermissionPool.getInstance().getPermissionPlayerManager().getPermissionPlayer(uuid).getBlocking();
     }
 
-    @Override
+   
     public boolean isTeam(){
         return getRank() == Rank.ADMIN ||getRank() == Rank.MODERATOR || getRank() == Rank.CONTENT || getRank() == Rank.MODERATOR || getRank() == Rank.BUILDER || getRank() == Rank.DEV;
     }
 
-    @Override
+   
     public boolean isAdmin() {
         return getRank() == Rank.ADMIN;
     }
 
-    @Override
+   
     public boolean isHigher(Rank rank) {
         return getRank().getPriority() <= rank.getPriority();
     }
 
-    @Override
+   
     public boolean isLower(Rank rank) {
         return getRank().getPriority() >= rank.getPriority();
     }
 
-    @Override
+   
     public Document getNotifyConfig() {
         return document.get("notify", Document.class);
     }
 
-    @Override
+   
     public void setNotify(NotifyType type, boolean value){
         Document updated = getNotifyConfig();
         updated.put(type.name().toLowerCase(), value);
@@ -281,6 +277,11 @@ public class APIPlayer implements IAPIPlayer {
 
     private void update(){
         model.updateDocument("uuid", uuid.toString(), document);
+    }
+
+    @Override
+    public UUID getUniqueID() {
+        return uuid;
     }
 }
 

@@ -3,9 +3,7 @@ package me.anton.sickcore.games.build.tools;
 import co.aikar.commands.BaseCommand;
 import co.aikar.commands.annotation.CommandAlias;
 import co.aikar.commands.annotation.Default;
-import me.anton.sickcore.api.player.apiPlayer.IAPIPlayer;
 import me.anton.sickcore.api.player.bukkitPlayer.BukkitPlayer;
-import me.anton.sickcore.api.player.bukkitPlayer.IBukkitPlayer;
 import me.anton.sickcore.api.utils.minecraft.bukkit.inventory.PagedInventoryBuilder;
 import me.anton.sickcore.api.utils.minecraft.bukkit.item.ItemBuilder;
 import me.anton.sickcore.api.utils.minecraft.bukkit.player.sound.DefaultSounds;
@@ -26,42 +24,42 @@ public class BuildTools extends BaseCommand {
             return;
         }
 
-        IBukkitPlayer player = new BukkitPlayer(sender);
+        BukkitPlayer player = new BukkitPlayer(sender);
 
-        openToolsInventory(player.api());
+        openToolsInventory(player);
     }
 
-    private void openToolsInventory(IAPIPlayer player){
+    private void openToolsInventory(BukkitPlayer player){
         PagedInventoryBuilder builder = new PagedInventoryBuilder(player, "§6Buildtools");
 
         String click = "§7Click to get this item!";
-        builder.addItem(new ItemBuilder(Material.DEBUG_STICK).setName("§6Debug Stick").setLore(click).build(), event -> {
+        builder.addItem(new ItemBuilder(Material.DEBUG_STICK, player).setName("§6Debug Stick").setLore(click), event -> {
             Player bukkitPlayer = (Player) event.getWhoClicked();
-            DefaultSounds.pling.play(player.bukkit());
+            DefaultSounds.pling.play(player.getPlayer());
             bukkitPlayer.getInventory().addItem(new ItemStack(Material.DEBUG_STICK));
         });
-        builder.addItem(new ItemBuilder(InvisItemFrame.generateInvisibleItemFrame()).setName("§6Invisible Item Frame").setLore(click).build(), event -> {
+        builder.addItem(new ItemBuilder(InvisItemFrame.generateInvisibleItemFrame(), player).setName("§6Invisible Item Frame").setLore(click), event -> {
             Player bukkitPlayer = (Player) event.getWhoClicked();
-            DefaultSounds.pling.play(player.bukkit());
+            DefaultSounds.pling.play(player.getPlayer());
             bukkitPlayer.getInventory().addItem(InvisItemFrame.generateInvisibleItemFrame());
         });
-        builder.addItem(new ItemBuilder(Material.BARRIER).setName("§6Barrier").setLore(click).build(), event -> {
+        builder.addItem(new ItemBuilder(Material.BARRIER, player).setName("§6Barrier").setLore(click), event -> {
             Player bukkitPlayer = (Player) event.getWhoClicked();
-            DefaultSounds.pling.play(player.bukkit());
+            DefaultSounds.pling.play(player.getPlayer());
             bukkitPlayer.getInventory().addItem(new ItemStack(Material.BARRIER));
         });
-        builder.addItem(new ItemBuilder(Material.STRUCTURE_BLOCK).setName("§6Structure Block").setLore(click).build(), event -> {
+        builder.addItem(new ItemBuilder(Material.STRUCTURE_BLOCK, player).setName("§6Structure Block").setLore(click), event -> {
             Player bukkitPlayer = (Player) event.getWhoClicked();
-            DefaultSounds.pling.play(player.bukkit());
+            DefaultSounds.pling.play(player.getPlayer());
             bukkitPlayer.getInventory().addItem(new ItemStack(Material.STRUCTURE_BLOCK));
         });
-        builder.addItem(new ItemBuilder(Material.STRUCTURE_VOID).setName("§6Structure Void").setLore(click).build(), event -> {
+        builder.addItem(new ItemBuilder(Material.STRUCTURE_VOID, player).setName("§6Structure Void").setLore(click),event -> {
             Player bukkitPlayer = (Player) event.getWhoClicked();
-            DefaultSounds.pling.play(player.bukkit());
+            DefaultSounds.pling.play(player.getPlayer());
             bukkitPlayer.getInventory().addItem(new ItemStack(Material.STRUCTURE_VOID));
         });
-        builder.resort();
-        builder.open(1);
+
+        builder.open();
     }
 
 }

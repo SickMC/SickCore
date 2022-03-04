@@ -1,7 +1,7 @@
 package me.anton.sickcore.modules.discord.modules.leveling.rewards;
 
 import lombok.Getter;
-import me.anton.sickcore.api.player.discordPlayer.IDiscordPlayer;
+import me.anton.sickcore.api.player.discordPlayer.DiscordPlayer;
 import me.anton.sickcore.modules.discord.modules.leveling.DiscordReward;
 
 public class CoinReward extends DiscordReward {
@@ -14,7 +14,7 @@ public class CoinReward extends DiscordReward {
     }
 
     @Override
-    public void assign(IDiscordPlayer player) {
+    public void assign(DiscordPlayer player) {
         player.api().setCoins(player.api().getCoins() + coins);
     }
 

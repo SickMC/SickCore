@@ -2,7 +2,6 @@ package me.anton.sickcore.api.player.bukkitPlayer;
 
 import lombok.Getter;
 import me.anton.sickcore.api.player.apiPlayer.APIPlayer;
-import me.anton.sickcore.api.player.apiPlayer.IAPIPlayer;
 
 import java.util.UUID;
 
@@ -10,8 +9,8 @@ import java.util.UUID;
 public class AbstractGamePlayer {
 
     private final UUID uniqueID;
-    private final IBukkitPlayer player;
-    private final IAPIPlayer apiPlayer;
+    private final BukkitPlayer player;
+    private final APIPlayer apiPlayer;
 
     public AbstractGamePlayer(UUID uuid){
         this.uniqueID = uuid;

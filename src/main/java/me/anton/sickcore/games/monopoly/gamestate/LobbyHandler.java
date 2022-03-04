@@ -3,9 +3,7 @@ package me.anton.sickcore.games.monopoly.gamestate;
 import io.papermc.paper.event.player.AsyncChatEvent;
 import me.anton.sickcore.api.handler.listeners.bukkit.BukkitHandler;
 import me.anton.sickcore.api.player.apiPlayer.APIPlayer;
-import me.anton.sickcore.api.player.apiPlayer.IAPIPlayer;
 import me.anton.sickcore.api.player.bukkitPlayer.BukkitPlayer;
-import me.anton.sickcore.api.player.bukkitPlayer.IBukkitPlayer;
 import me.anton.sickcore.api.utils.minecraft.bukkit.player.TitleBuilder;
 import me.anton.sickcore.core.BukkitCore;
 import me.anton.sickcore.games.monopoly.MonopolyGame;
@@ -22,11 +20,11 @@ import java.util.concurrent.atomic.AtomicInteger;
 public class LobbyHandler extends BukkitHandler {
 
     @Override
-    public void onPlayerJoin(PlayerJoinEvent rawEvent, IBukkitPlayer bukkitPlayer) {
+    public void onPlayerJoin(PlayerJoinEvent rawEvent, BukkitPlayer bukkitPlayer) {
         if (!MonopolyGame.getInstance().getCurrent().equals(GameState.LOBBY))return;
         rawEvent.joinMessage(null);
         Bukkit.getOnlinePlayers().forEach(player -> {
-            IAPIPlayer all = new APIPlayer(player.getUniqueId());
+            APIPlayer all = new APIPlayer(player.getUniqueId());
             if (bukkitPlayer.api().hasAutoNick())
                 all.bukkit().getPlayer().sendMessage((String) all.languageObject(bukkitPlayer.getNickDisplayName() + "§7joined the game §8(" + Bukkit.getOnlinePlayers() + "/8)§7!", bukkitPlayer.getNickDisplayName() + "§7hat den Server betreten§8(" + Bukkit.getOnlinePlayers() + "/8)§7!"));
             else
@@ -36,11 +34,11 @@ public class LobbyHandler extends BukkitHandler {
     }
 
     @Override
-    public void onPlayerQuit(PlayerQuitEvent rawEvent, IBukkitPlayer bukkitPlayer) {
+    public void onPlayerQuit(PlayerQuitEvent rawEvent, BukkitPlayer bukkitPlayer) {
         if (!MonopolyGame.getInstance().getCurrent().equals(GameState.LOBBY))return;
         rawEvent.quitMessage(null);
         Bukkit.getOnlinePlayers().forEach(player -> {
-            IAPIPlayer all = new APIPlayer(player.getUniqueId());
+            APIPlayer all = new APIPlayer(player.getUniqueId());
             if (!bukkitPlayer.isNicked())
                 all.bukkit().getPlayer().sendMessage((String) all.languageObject(bukkitPlayer.api().getDisplayName() + "§7quit the game §8(" + Bukkit.getOnlinePlayers() + "/8)§7!", bukkitPlayer.api().getDisplayName() + "§7hat den Server verlassen§8(" + Bukkit.getOnlinePlayers() + "/8)§7!"));
             else
@@ -50,7 +48,7 @@ public class LobbyHandler extends BukkitHandler {
     }
 
     @Override
-    public void onPlayerAsyncChat(AsyncChatEvent rawEvent, IBukkitPlayer bukkitPlayer) {
+    public void onPlayerAsyncChat(AsyncChatEvent rawEvent, BukkitPlayer bukkitPlayer) {
         if (!MonopolyGame.getInstance().getCurrent().equals(GameState.LOBBY))return;
         rawEvent.getPlayer().getServer().getOnlinePlayers().forEach(player -> {
             if (!bukkitPlayer.isNicked())

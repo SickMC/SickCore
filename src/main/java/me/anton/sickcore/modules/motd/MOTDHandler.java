@@ -56,9 +56,7 @@ public class MOTDHandler extends BungeeHandler {
 
         Document maintenance = Core.getInstance().getAppereanceModel().getDocument(Finder.stringFinder("type", "maintenance"));
 
-        if (!maintenance.getBoolean("active"))
-            serverPing.setVersion(new ServerPing.Protocol("§7Players §8» §6" + CloudAPI.getInstance().getCloudPlayerManager().getNetworkOnlinePlayerCount().getBlocking(), serverPing.getVersion().getProtocol() - 1));
-        else
+        if (maintenance.getBoolean("active"))
             serverPing.setVersion(new ServerPing.Protocol("§7Maintenance", serverPing.getVersion().getProtocol()));
 
         rawEvent.setResponse(serverPing);

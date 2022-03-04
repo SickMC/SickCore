@@ -1,7 +1,7 @@
 package me.anton.sickcore.games.survival.spawn;
 
 import me.anton.sickcore.api.handler.listeners.bukkit.BukkitHandler;
-import me.anton.sickcore.api.player.bukkitPlayer.IBukkitPlayer;
+import me.anton.sickcore.api.player.bukkitPlayer.BukkitPlayer;
 import me.anton.sickcore.core.Core;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
@@ -19,7 +19,7 @@ public class Teleport extends BukkitHandler {
     Location spawnlocation = Elytra.spawnlocation;
 
     @Override
-    public void onPlayerInteract(PlayerInteractEvent rawEvent, IBukkitPlayer bukkitPlayer) {
+    public void onPlayerInteract(PlayerInteractEvent rawEvent, BukkitPlayer bukkitPlayer) {
         if (rawEvent.getClickedBlock() == null)return;
         if (!rawEvent.getClickedBlock().getLocation().getChunk().equals(spawnlocation.getChunk()))return;
         if (rawEvent.getAction() != Action.PHYSICAL)return;
@@ -35,7 +35,7 @@ public class Teleport extends BukkitHandler {
     }
 
     @Override
-    public void onPlayerJoin(PlayerJoinEvent rawEvent, IBukkitPlayer bukkitPlayer) {
+    public void onPlayerJoin(PlayerJoinEvent rawEvent, BukkitPlayer bukkitPlayer) {
         if (rawEvent.getPlayer().hasPlayedBefore())return;
         rawEvent.getPlayer().teleport(spawnlocation);
     }

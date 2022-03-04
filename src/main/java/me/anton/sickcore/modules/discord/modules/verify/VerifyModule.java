@@ -1,8 +1,7 @@
 package me.anton.sickcore.modules.discord.modules.verify;
 
 import lombok.Getter;
-import me.anton.sickcore.api.player.bungeePlayer.IBungeePlayer;
-import me.anton.sickcore.core.BukkitCore;
+import me.anton.sickcore.api.player.bungeePlayer.BungeePlayer;
 import me.anton.sickcore.core.BungeeCore;
 import me.anton.sickcore.modules.discord.DiscordModule;
 import me.anton.sickcore.modules.discord.modules.IDiscordModule;
@@ -14,8 +13,8 @@ public class VerifyModule implements IDiscordModule {
 
     @Getter
     private static VerifyModule verifyModule;
-    private HashMap<IBungeePlayer, Integer> verifyList = new HashMap<>();
-    private HashMap<Integer, IBungeePlayer> verifyListReturn = new HashMap<>();
+    private HashMap<BungeePlayer, Integer> verifyList = new HashMap<>();
+    private HashMap<Integer, BungeePlayer> verifyListReturn = new HashMap<>();
 
     @Override
     public void load() {

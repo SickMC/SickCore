@@ -3,8 +3,7 @@ package me.anton.sickcore.games.survival.appereance;
 import io.papermc.paper.event.player.AsyncChatEvent;
 import me.anton.sickcore.api.handler.listeners.bukkit.BukkitHandler;
 import me.anton.sickcore.api.player.apiPlayer.APIPlayer;
-import me.anton.sickcore.api.player.apiPlayer.IAPIPlayer;
-import me.anton.sickcore.api.player.bukkitPlayer.IBukkitPlayer;
+import me.anton.sickcore.api.player.bukkitPlayer.BukkitPlayer;
 import me.anton.sickcore.games.survival.SurvivalGamePlayer;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.TextColor;
@@ -20,10 +19,10 @@ import java.util.List;
 public class SurvivalChat extends BukkitHandler {
 
     @Override
-    public void onPlayerJoin(PlayerJoinEvent rawEvent, IBukkitPlayer bukkitPlayer) {
+    public void onPlayerJoin(PlayerJoinEvent rawEvent, BukkitPlayer bukkitPlayer) {
         rawEvent.joinMessage(null);
         Bukkit.getOnlinePlayers().forEach(player -> {
-            IAPIPlayer all = new APIPlayer(player.getUniqueId());
+            APIPlayer all = new APIPlayer(player.getUniqueId());
             if (bukkitPlayer.api().hasAutoNick())
                 all.bukkit().getPlayer().sendMessage((String) all.languageObject(bukkitPlayer.getNickDisplayName() + "§7joined the server!", bukkitPlayer.getNickDisplayName() + "§7hat den Server betreten!"));
             else
@@ -34,10 +33,10 @@ public class SurvivalChat extends BukkitHandler {
     }
 
     @Override
-    public void onPlayerQuit(PlayerQuitEvent rawEvent, IBukkitPlayer bukkitPlayer) {
+    public void onPlayerQuit(PlayerQuitEvent rawEvent, BukkitPlayer bukkitPlayer) {
         rawEvent.quitMessage(null);
         Bukkit.getOnlinePlayers().forEach(player -> {
-            IAPIPlayer all = new APIPlayer(player.getUniqueId());
+            APIPlayer all = new APIPlayer(player.getUniqueId());
             if (!bukkitPlayer.isNicked())
                 all.bukkit().getPlayer().sendMessage((String) all.languageObject(bukkitPlayer.api().getDisplayName() + "§7quit the server!", bukkitPlayer.api().getDisplayName() + "§7hat den Server verlassen!"));
             else
@@ -47,7 +46,7 @@ public class SurvivalChat extends BukkitHandler {
     }
 
     @Override
-    public void onPlayerAsyncChat(AsyncChatEvent rawEvent, IBukkitPlayer bukkitPlayer) {
+    public void onPlayerAsyncChat(AsyncChatEvent rawEvent, BukkitPlayer bukkitPlayer) {
         rawEvent.getPlayer().getServer().getOnlinePlayers().forEach(player -> {
             if (!bukkitPlayer.isNicked())
                 player.sendMessage(Component.text(bukkitPlayer.api().getDisplayName() + "§8» §7").append(rawEvent.message().color(TextColor.color(11184810))));
@@ -59,7 +58,7 @@ public class SurvivalChat extends BukkitHandler {
     }
 
     @Override
-    public void onPlayerDeath(Location deathLocation, List<ItemStack> drops, PlayerDeathEvent rawEvent, IBukkitPlayer bukkitPlayer) {
+    public void onPlayerDeath(Location deathLocation, List<ItemStack> drops, PlayerDeathEvent rawEvent, BukkitPlayer bukkitPlayer) {
         rawEvent.deathMessage(Component.text(rawEvent.deathMessage() + "§7!"));
     }
 }

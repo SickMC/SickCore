@@ -8,7 +8,6 @@ import co.aikar.commands.annotation.Optional;
 import me.anton.sickcore.api.player.apiPlayer.enums.Rank;
 import me.anton.sickcore.api.player.apiPlayer.language.LanguagePath;
 import me.anton.sickcore.api.player.bukkitPlayer.BukkitPlayer;
-import me.anton.sickcore.api.player.bukkitPlayer.IBukkitPlayer;
 import me.anton.sickcore.api.utils.minecraft.bukkit.inventory.PagedInventoryBuilder;
 import me.anton.sickcore.api.utils.minecraft.bukkit.item.ItemBuilder;
 import me.anton.sickcore.api.utils.minecraft.bukkit.player.sound.DefaultSounds;
@@ -32,7 +31,7 @@ public class HeadCollection extends BaseCommand {
             return;
         }
 
-        IBukkitPlayer player = new BukkitPlayer(sender);
+        BukkitPlayer player = new BukkitPlayer(sender);
 
         if (target == null){
             openHeadCollection(player, player);
@@ -45,33 +44,31 @@ public class HeadCollection extends BaseCommand {
             if (offlinePlayer == null){
                 player.sendMessage(LanguagePath.NETWORK_COMMAND_NOPLAYER);
             }else {
-                IBukkitPlayer targetAPI = new BukkitPlayer(offlinePlayer.getUniqueId());
+                BukkitPlayer targetAPI = new BukkitPlayer(offlinePlayer.getUniqueId());
                 openHeadCollection(targetAPI, player);
             }
         }
 
     }
 
-    private void openHeadCollection(IBukkitPlayer target, IBukkitPlayer opener){
+    private void openHeadCollection(BukkitPlayer target, BukkitPlayer opener){
         SurvivalGamePlayer gamePlayer = new SurvivalGamePlayer(target.api().getUUID());
         HeadDatabaseAPI api = HeadDBAPI.getApi();
 
-        PagedInventoryBuilder inventoryBuilder = new PagedInventoryBuilder(opener.api(), "§6Head Collection");
+        PagedInventoryBuilder inventoryBuilder = new PagedInventoryBuilder(opener, "§6Head Collection");
         for (MobHead value : MobHead.values()) {
             if (gamePlayer.hasCompleted(value)) {
-                inventoryBuilder.addItem(new ItemBuilder(api.getItemHead(String.valueOf(value.getId()))).setName("§6" + value.getHeadName()).setLore("§7You already found this head!").setEnchanted(true).build(), event -> {
+                inventoryBuilder.addItem(new ItemBuilder(api.getItemHead(String.valueOf(value.getId())), opener).setName("§6" + value.getHeadName()).setLore("§7You already found this head!").setEnchanted(true), event -> {
                     event.setCancelled(true);
                     DefaultSounds.pling.play(opener);
                 });
             } else {
-                inventoryBuilder.addItem(new ItemBuilder(api.getItemHead("9992")).setName("§6" + value.getHeadName()).setLore("§7You haven't found this head yet!").setEnchanted(false).build(), event -> {
+                inventoryBuilder.addItem(new ItemBuilder(api.getItemHead("9992"), opener).setName("§6" + value.getHeadName()).setLore("§7You haven't found this head yet!").setEnchanted(false), event -> {
                     event.setCancelled(true);
                     DefaultSounds.pling.play(opener);
                 });
             }
         }
-
-        inventoryBuilder.resort();
-        inventoryBuilder.open(1);
+        inventoryBuilder.open();
     }
 }

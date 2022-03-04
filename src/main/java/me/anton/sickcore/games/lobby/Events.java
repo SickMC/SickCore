@@ -3,7 +3,7 @@ package me.anton.sickcore.games.lobby;
 import lombok.Getter;
 import me.anton.sickcore.api.handler.listeners.bukkit.BukkitHandler;
 import me.anton.sickcore.api.player.apiPlayer.enums.Rank;
-import me.anton.sickcore.api.player.bukkitPlayer.IBukkitPlayer;
+import me.anton.sickcore.api.player.bukkitPlayer.BukkitPlayer;
 import me.anton.sickcore.games.lobby.utility.LobbyItems;
 import me.anton.sickcore.games.all.maintenance.MaintenanceModule;
 import net.kyori.adventure.text.Component;
@@ -33,7 +33,7 @@ public class Events extends BukkitHandler {
     private final static Location spawn = new Location(Bukkit.getWorld("Lobby-1"), 0.5, 65.5, 0.5);
 
     @Override
-    public void onPlayerLogin(PlayerLoginEvent rawEvent, IBukkitPlayer bukkitPlayer) {
+    public void onPlayerLogin(PlayerLoginEvent rawEvent, BukkitPlayer bukkitPlayer) {
         if (MaintenanceModule.getInstance().isSecure()){
             if (!rawEvent.getPlayer().getUniqueId().equals(UUID.fromString("84c7eef5-ae2c-4ebb-a006-c3ee07643d79")))
                 if (MaintenanceModule.getInstance().isActive())rawEvent.disallow(PlayerLoginEvent.Result.KICK_OTHER, Component.text("Maintenance is enabled!"));
@@ -44,7 +44,7 @@ public class Events extends BukkitHandler {
     }
 
     @Override
-    public void onPlayerJoin(PlayerJoinEvent rawEvent, IBukkitPlayer bukkitPlayer) {
+    public void onPlayerJoin(PlayerJoinEvent rawEvent, BukkitPlayer bukkitPlayer) {
         Player player = bukkitPlayer.getPlayer();
 
         player.teleport(getSpawn());
@@ -57,12 +57,12 @@ public class Events extends BukkitHandler {
     }
 
     @Override
-    public void onPlayerDamageByPlayer(IBukkitPlayer damager, EntityDamageByEntityEvent rawEvent, IBukkitPlayer bukkitPlayer) {
+    public void onPlayerDamageByPlayer(BukkitPlayer damager, EntityDamageByEntityEvent rawEvent, BukkitPlayer bukkitPlayer) {
         rawEvent.setCancelled(true);
     }
 
     @Override
-    public void onFoodLevelChange(FoodLevelChangeEvent rawEvent, IBukkitPlayer bukkitPlayer) {
+    public void onFoodLevelChange(FoodLevelChangeEvent rawEvent, BukkitPlayer bukkitPlayer) {
         rawEvent.setCancelled(true);
     }
 
@@ -72,12 +72,12 @@ public class Events extends BukkitHandler {
     }
 
     @Override
-    public void onBlockBreak(Block block, BlockBreakEvent rawEvent, IBukkitPlayer bukkitPlayer) {
+    public void onBlockBreak(Block block, BlockBreakEvent rawEvent, BukkitPlayer bukkitPlayer) {
         rawEvent.setCancelled(true);
     }
 
     @Override
-    public void onBlockPlace(Block block, BlockPlaceEvent rawEvent, IBukkitPlayer bukkitPlayer) {
+    public void onBlockPlace(Block block, BlockPlaceEvent rawEvent, BukkitPlayer bukkitPlayer) {
         rawEvent.setCancelled(true);
     }
 
@@ -92,47 +92,47 @@ public class Events extends BukkitHandler {
     }
 
     @Override
-    public void onPlayerInteract(PlayerInteractEvent rawEvent, IBukkitPlayer bukkitPlayer) {
+    public void onPlayerInteract(PlayerInteractEvent rawEvent, BukkitPlayer bukkitPlayer) {
         rawEvent.setCancelled(true);
     }
 
     @Override
-    public void onPlayerInteractAtEntity(PlayerInteractAtEntityEvent rawEvent, IBukkitPlayer bukkitPlayer) {
+    public void onPlayerInteractAtEntity(PlayerInteractAtEntityEvent rawEvent, BukkitPlayer bukkitPlayer) {
         rawEvent.setCancelled(true);
     }
 
     @Override
-    public void onPlayerInteractAtPlayer(PlayerInteractAtEntityEvent rawEvent, IBukkitPlayer bukkitPlayer, IBukkitPlayer target) {
+    public void onPlayerInteractAtPlayer(PlayerInteractAtEntityEvent rawEvent, BukkitPlayer bukkitPlayer, BukkitPlayer target) {
         rawEvent.setCancelled(true);
     }
 
     @Override
-    public void onPlayerInteractEntity(Entity entity, PlayerInteractEntityEvent rawEvent, IBukkitPlayer bukkitPlayer) {
+    public void onPlayerInteractEntity(Entity entity, PlayerInteractEntityEvent rawEvent, BukkitPlayer bukkitPlayer) {
         rawEvent.setCancelled(true);
     }
 
     @Override
-    public void onPlayerMove(PlayerMoveEvent rawEvent, IBukkitPlayer bukkitPlayer) {
+    public void onPlayerMove(PlayerMoveEvent rawEvent, BukkitPlayer bukkitPlayer) {
         if (rawEvent.getPlayer().getLocation().getY() <= 55)rawEvent.getPlayer().teleport(getSpawn());
     }
 
     @Override
-    public void onHandSwap(IBukkitPlayer player, PlayerSwapHandItemsEvent rawEvent) {
+    public void onHandSwap(BukkitPlayer player, PlayerSwapHandItemsEvent rawEvent) {
         rawEvent.setCancelled(true);
     }
 
     @Override
-    public void onPlayerDropItem(PlayerDropItemEvent rawEvent, IBukkitPlayer bukkitPlayer, ItemStack drop) {
+    public void onPlayerDropItem(PlayerDropItemEvent rawEvent, BukkitPlayer bukkitPlayer, ItemStack drop) {
         rawEvent.setCancelled(true);
     }
 
     @Override
-    public void onPlayerItemInteract(ItemStack itemStack, PlayerInteractEvent rawEvent, IBukkitPlayer bukkitPlayer) {
+    public void onPlayerItemInteract(ItemStack itemStack, PlayerInteractEvent rawEvent, BukkitPlayer bukkitPlayer) {
         rawEvent.setCancelled(true);
     }
 
     @Override
-    public void onItemInventoryMove(InventoryMoveItemEvent rawEvent, ItemStack itemStack) {
+    public void onItemInventoryMove(InventoryMoveItemEvent rawEvent, ItemStack itemStack, BukkitPlayer player) {
         rawEvent.setCancelled(true);
     }
 
@@ -142,7 +142,7 @@ public class Events extends BukkitHandler {
     }
 
     @Override
-    public void onInventoryClick(InventoryClickEvent rawEvent, IBukkitPlayer bukkitPlayer) {
+    public void onInventoryClick(InventoryClickEvent rawEvent, BukkitPlayer bukkitPlayer) {
         rawEvent.setCancelled(true);
     }
 }

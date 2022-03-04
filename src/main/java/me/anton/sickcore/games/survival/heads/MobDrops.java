@@ -1,7 +1,7 @@
 package me.anton.sickcore.games.survival.heads;
 
 import me.anton.sickcore.api.handler.listeners.bukkit.BukkitHandler;
-import me.anton.sickcore.api.player.bukkitPlayer.IBukkitPlayer;
+import me.anton.sickcore.api.player.bukkitPlayer.BukkitPlayer;
 import me.anton.sickcore.api.utils.common.MathUtils;
 import me.anton.sickcore.api.utils.minecraft.bukkit.item.ItemBuilder;
 import me.anton.sickcore.games.all.HeadDBAPI;
@@ -14,7 +14,7 @@ import org.bukkit.inventory.ItemStack;
 public class MobDrops extends BukkitHandler {
 
     @Override
-    public void onEntityDeathByPlayer(Entity entity, EntityDeathEvent rawEvent, IBukkitPlayer killer) {
+    public void onEntityDeathByPlayer(Entity entity, EntityDeathEvent rawEvent, BukkitPlayer killer) {
         HeadDatabaseAPI dbAPI = HeadDBAPI.getApi();
         Player bkiller = killer.getPlayer();
         SurvivalGamePlayer gamePlayer = new SurvivalGamePlayer(killer.getPlayer().getUniqueId());
@@ -26,7 +26,7 @@ public class MobDrops extends BukkitHandler {
             if (MathUtils.getRandomNumberInRange(1,1000) == 1){
                 MobHead head = MobHead.SPECIAL_SHEEP;
                 ItemStack s = dbAPI.getItemHead(String.valueOf(head.getId()));
-                bkiller.getWorld().dropItem(entity.getLocation(), new ItemBuilder(s).setName("§5" + head.getHeadName()).setLore("§7Chance: 1 to 1000").build());
+                bkiller.getWorld().dropItem(entity.getLocation(), new ItemBuilder(s, killer).setName("§5" + head.getHeadName()).setLore("§7Chance: 1 to 1000").build());
                 gamePlayer.completeHead(MobHead.SPECIAL_SHEEP);
             }
         }
@@ -38,48 +38,48 @@ public class MobDrops extends BukkitHandler {
         MobHead head = getMobHead(entity);
         if (entity.getType() == EntityType.VILLAGER){
             Villager villager = (Villager) entity;
-            return new ItemBuilder(dbAPI.getItemHead(String.valueOf(head.getId()))).setName(prefix + head.getHeadName()).build();
+            return new ItemBuilder(dbAPI.getItemHead(String.valueOf(head.getId())), null).setName(prefix + head.getHeadName()).build();
         }
         if (entity.getType() == EntityType.FOX){
             Fox fox = (Fox) entity;
-            return new ItemBuilder(dbAPI.getItemHead(String.valueOf(head.getId()))).setName(prefix + head.getHeadName()).build();
+            return new ItemBuilder(dbAPI.getItemHead(String.valueOf(head.getId())), null).setName(prefix + head.getHeadName()).build();
         }
         if (entity.getType() == EntityType.AXOLOTL){
             Axolotl axolotl = (Axolotl) entity;
-            return new ItemBuilder(dbAPI.getItemHead(String.valueOf(head.getId()))).setName(prefix + head.getHeadName()).build();
+            return new ItemBuilder(dbAPI.getItemHead(String.valueOf(head.getId())), null).setName(prefix + head.getHeadName()).build();
         }
         if (entity.getType() == EntityType.SHEEP){
             Sheep sheep = (Sheep) entity;
-            return new ItemBuilder(dbAPI.getItemHead(String.valueOf(head.getId()))).setName(prefix + head.getHeadName()).build();
+            return new ItemBuilder(dbAPI.getItemHead(String.valueOf(head.getId())), null).setName(prefix + head.getHeadName()).build();
         }
         if (entity.getType() == EntityType.CAT){
             Cat cat = (Cat) entity;
-            return new ItemBuilder(dbAPI.getItemHead(String.valueOf(head.getId()))).setName(prefix + head.getHeadName()).build();
+            return new ItemBuilder(dbAPI.getItemHead(String.valueOf(head.getId())), null).setName(prefix + head.getHeadName()).build();
         }
         if (entity.getType() == EntityType.HORSE){
             Horse horse = (Horse) entity;
-            return new ItemBuilder(dbAPI.getItemHead(String.valueOf(head.getId()))).setName(prefix + head.getHeadName()).build();
+            return new ItemBuilder(dbAPI.getItemHead(String.valueOf(head.getId())), null).setName(prefix + head.getHeadName()).build();
         }
         if (entity.getType() == EntityType.LLAMA){
             Llama llama = (Llama) entity;
-            return new ItemBuilder(dbAPI.getItemHead(String.valueOf(head.getId()))).setName(prefix + head.getHeadName()).build();
+            return new ItemBuilder(dbAPI.getItemHead(String.valueOf(head.getId())), null).setName(prefix + head.getHeadName()).build();
         }
         if (entity.getType() == EntityType.PARROT){
             Parrot parrot = (Parrot) entity;
-            return new ItemBuilder(dbAPI.getItemHead(String.valueOf(head.getId()))).setName(prefix + head.getHeadName()).build();
+            return new ItemBuilder(dbAPI.getItemHead(String.valueOf(head.getId())), null).setName(prefix + head.getHeadName()).build();
         }
         if (entity.getType() == EntityType.MUSHROOM_COW){
             MushroomCow mushroomCow = (MushroomCow) entity;
             String name = mushroomCow.getType().name().replace("_", "");
-            return new ItemBuilder(dbAPI.getItemHead(String.valueOf(head.getId()))).setName(prefix + head.getHeadName()).build();
+            return new ItemBuilder(dbAPI.getItemHead(String.valueOf(head.getId())), null).setName(prefix + head.getHeadName()).build();
         }
         if (entity.getType() == EntityType.TRADER_LLAMA){
             TraderLlama traderLlama = (TraderLlama) entity;
             String name = traderLlama.getType().name().replace("_", "");
-            return new ItemBuilder(dbAPI.getItemHead(String.valueOf(head.getId()))).setName(prefix + head.getHeadName()).build();
+            return new ItemBuilder(dbAPI.getItemHead(String.valueOf(head.getId())), null).setName(prefix + head.getHeadName()).build();
         }
 
-        return new ItemBuilder(dbAPI.getItemHead(String.valueOf(head.getId()))).setName(prefix + head.getHeadName()).build();
+        return new ItemBuilder(dbAPI.getItemHead(String.valueOf(head.getId())), null).setName(prefix + head.getHeadName()).build();
     }
 
     public static MobHead getMobHead(Entity entity){

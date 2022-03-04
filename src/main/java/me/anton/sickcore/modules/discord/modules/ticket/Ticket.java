@@ -2,14 +2,13 @@ package me.anton.sickcore.modules.discord.modules.ticket;
 
 import lombok.Getter;
 import me.anton.sickcore.api.database.Finder;
-import me.anton.sickcore.api.player.discordPlayer.IDiscordPlayer;
+import me.anton.sickcore.api.player.discordPlayer.DiscordPlayer;
 import me.anton.sickcore.api.utils.discord.DiscordIds;
 import me.anton.sickcore.modules.discord.DiscordModule;
 import me.anton.sickcore.modules.discord.handlers.messages.EmbedBuilder;
 import net.dv8tion.jda.api.Permission;
 import net.dv8tion.jda.api.entities.Emoji;
 import net.dv8tion.jda.api.entities.Member;
-import net.dv8tion.jda.api.entities.MessageEmbed;
 import net.dv8tion.jda.api.entities.TextChannel;
 import net.dv8tion.jda.api.interactions.components.Button;
 import org.bson.Document;
@@ -59,7 +58,7 @@ public class Ticket {
         ticketChannel.sendMessageEmbeds(new EmbedBuilder(teamler).setTitle("Ticket").setContent("Das Ticket wurde von " + teamler.getAsMention() + " übernommen!").build()).queue();
     }
 
-    public void close(IDiscordPlayer closer){
+    public void close(DiscordPlayer closer){
         ticketChannel.sendMessageEmbeds(new EmbedBuilder().setTitle("Ticket").setContent("Das Ticket wurde von " + closer.member().getAsMention() + " geschlossen!").build()).queue();
         ticketChannel.putPermissionOverride(player).setDeny(Permission.VIEW_CHANNEL).queue();
         ticketChannel.putPermissionOverride(dModule.getJda().getRoleById(DiscordIds.mod)).setDeny(Permission.VIEW_CHANNEL).queue();

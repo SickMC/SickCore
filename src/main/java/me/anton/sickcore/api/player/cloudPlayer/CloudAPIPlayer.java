@@ -9,13 +9,13 @@ import me.anton.sickcore.api.player.apiPlayer.language.Language;
 
 import java.util.UUID;
 
-public class CloudAPIPlayer implements ICloudAPIPlayer {
+public class CloudAPIPlayer implements IAPIPlayer {
 
 
-    private final IAPIPlayer player;
+    private final APIPlayer player;
     private final ICloudPlayer cloudPlayer;
 
-    public CloudAPIPlayer(IAPIPlayer player){
+    public CloudAPIPlayer(APIPlayer player){
         this.player = player;
         this.cloudPlayer = CloudAPI.getInstance().getCloudPlayerManager().getCloudPlayer(player.getUUID()).getBlocking();
     }
@@ -30,7 +30,7 @@ public class CloudAPIPlayer implements ICloudAPIPlayer {
         this.player = new APIPlayer(cloudPlayer.getUniqueId());
     }
 
-    @Override
+    
     public void sendMessage(String en, String de) {
         if (this.player.getLanguage().equals(Language.ENGLISCHUK))
             cloudPlayer.sendMessage(en);
@@ -38,7 +38,7 @@ public class CloudAPIPlayer implements ICloudAPIPlayer {
             cloudPlayer.sendMessage(de);
     }
 
-    @Override
+    
     public void sendMessage(CloudText en, CloudText de) {
         if (this.player.getLanguage().equals(Language.ENGLISCHUK))
             cloudPlayer.sendMessage(en);
@@ -46,13 +46,18 @@ public class CloudAPIPlayer implements ICloudAPIPlayer {
             cloudPlayer.sendMessage(de);
     }
 
-    @Override
-    public IAPIPlayer api() {
+    
+    public APIPlayer api() {
         return player;
     }
 
-    @Override
+    
     public ICloudPlayer cloudAPI() {
         return cloudPlayer;
+    }
+
+    
+    public UUID getUniqueID() {
+        return null;
     }
 }

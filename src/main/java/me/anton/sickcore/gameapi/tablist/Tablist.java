@@ -1,7 +1,6 @@
 package me.anton.sickcore.gameapi.tablist;
 
 import me.anton.sickcore.api.player.bukkitPlayer.BukkitPlayer;
-import me.anton.sickcore.api.player.bukkitPlayer.IBukkitPlayer;
 import me.anton.sickcore.api.utils.common.ColorUtils;
 import me.anton.sickcore.gameapi.AbstractGame;
 import net.kyori.adventure.text.Component;
@@ -21,7 +20,7 @@ public class Tablist {
     public void reload() {
         for (Player player : Bukkit.getOnlinePlayers()) {
 
-            IBukkitPlayer bukkitPlayer = new BukkitPlayer(player);
+            BukkitPlayer bukkitPlayer = new BukkitPlayer(player);
             TabData data = new TabData(bukkitPlayer);
 
             player.sendPlayerListHeaderAndFooter(Component.text(data.getHeader()), Component.text(data.getFooter()));

@@ -9,15 +9,14 @@ import co.aikar.commands.annotation.Subcommand;
 import me.anton.sickcore.api.database.DatabaseModel;
 import me.anton.sickcore.api.database.Finder;
 import me.anton.sickcore.api.player.bungeePlayer.BungeePlayer;
-import me.anton.sickcore.api.player.bungeePlayer.IBungeePlayer;
 import me.anton.sickcore.api.utils.common.MathUtils;
 import me.anton.sickcore.api.utils.discord.DiscordIds;
 import me.anton.sickcore.api.utils.minecraft.messages.ConsoleMessages;
 import me.anton.sickcore.modules.discord.DiscordModule;
+import me.anton.sickcore.modules.discord.modules.discordlog.DiscordLogModule;
 import me.anton.sickcore.modules.discord.modules.ranks.RankUpdate;
 import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.entities.MessageEmbed;
-import net.dv8tion.jda.api.entities.TextChannel;
 import net.md_5.bungee.api.CommandSender;
 import net.md_5.bungee.api.chat.*;
 import net.md_5.bungee.api.chat.TextComponent;
@@ -38,7 +37,7 @@ public class MCDiscordCommand extends BaseCommand {
             return;
         }
 
-        IBungeePlayer player = new BungeePlayer(sender);
+        BungeePlayer player = new BungeePlayer(sender);
 
         if (player.api().isVerified()){player.getPlayer().sendMessage(new TextComponent((String) player.api().languageObject("§7You are already verified with §6" + DiscordModule.getInstance().getJda().getUserById(player.api().getDiscordID()).getAsTag() + "§7!", "§7Du bist bereits mit §6" + DiscordModule.getInstance().getJda().getUserById(player.api().getDiscordID()).getAsTag() + "§7 verbunden!")));return;}
 
@@ -63,8 +62,7 @@ public class MCDiscordCommand extends BaseCommand {
                 .setDescription(player.api().getName() +" started verification! \nHis code is " + verifyCode +"!")
                 .setFooter("SickMC • Requested by " + player.api().getName())
                 .setColor(Color.ORANGE).build();
-        TextChannel textChannel = DiscordModule.getInstance().getJda().getTextChannelById(DiscordIds.discordLogChannel);
-        textChannel.sendMessageEmbeds(embed).queue();
+        DiscordLogModule.getInstance().log(embed);
     }
 
     @Subcommand("delete")
@@ -76,7 +74,7 @@ public class MCDiscordCommand extends BaseCommand {
         }
         DatabaseModel model = DiscordModule.getInstance().getGamePlayer();
 
-        IBungeePlayer player = new BungeePlayer(sender);
+        BungeePlayer player = new BungeePlayer(sender);
 
         if (!player.api().isVerified()){player.getPlayer().sendMessage(new TextComponent((String) player.api().languageObject("§4You are not verifed!", "§4Du bist nicht verifiziert!")));return;}
         Document playermodel = model.getDocument(Finder.stringFinder("userID", player.api().getDiscordID()));
@@ -97,7 +95,7 @@ public class MCDiscordCommand extends BaseCommand {
             return;
         }
 
-        IBungeePlayer player = new BungeePlayer(sender);
+        BungeePlayer player = new BungeePlayer(sender);
 
         if (!player.api().isVerified()){player.getPlayer().sendMessage(new TextComponent((String) player.api().languageObject("§4You are not verifed!", "§4Du bist nicht verifiziert!")));return;}
 

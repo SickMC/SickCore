@@ -18,12 +18,12 @@ import xyz.haoshoku.nick.api.NickAPI;
 
 import java.util.UUID;
 
-public class BukkitPlayer implements IBukkitPlayer{
+public class BukkitPlayer implements IAPIPlayer{
 
-    private final IAPIPlayer player;
+    private final APIPlayer player;
     private final Player bukkitPlayer;
 
-    public BukkitPlayer(IAPIPlayer apiPlayer){
+    public BukkitPlayer(APIPlayer apiPlayer){
         this.player = apiPlayer;
         this.bukkitPlayer = Bukkit.getPlayer(apiPlayer.getUUID());
     }
@@ -44,17 +44,17 @@ public class BukkitPlayer implements IBukkitPlayer{
         this.player = new APIPlayer(bukkitPlayer.getUniqueId());
     }
 
-    @Override
+    
     public void sendMessage(LanguagePath path) {
         getPlayer().sendMessage(this.player.languageString(path).build());
     }
 
-    @Override
+    
     public void sendMessage(LanguageObject object){
         getPlayer().sendMessage(object.build());
     }
 
-    @Override
+    
     public void nick() {
         if (isNicked())return;
         NickAPI.nick(bukkitPlayer, player.getNickname());
@@ -62,7 +62,7 @@ public class BukkitPlayer implements IBukkitPlayer{
         NickAPI.refreshPlayer(bukkitPlayer);
     }
 
-    @Override
+    
     public void unnick() {
         if (!isNicked())return;
         NickAPI.resetNick(bukkitPlayer);
@@ -70,37 +70,37 @@ public class BukkitPlayer implements IBukkitPlayer{
         NickAPI.refreshPlayer(bukkitPlayer);
     }
 
-    @Override
+    
     public boolean isNicked() {
         return NickAPI.isNicked(bukkitPlayer);
     }
 
-    @Override
+    
     public String getName() {
         return NickAPI.getName(bukkitPlayer);
     }
 
-    @Override
+    
     public String getNickSkinName() {
         return player.getNickSkinName();
     }
 
-    @Override
+    
     public String getNickDisplayName() {
         return player.getNickRank().getColor() + player.getNickRank().getName() + "§8 × §r" + player.getNickRank().getColor() + api().getNickname() + "§r §r";
     }
 
-    @Override
-    public IAPIPlayer api() {
+    
+    public APIPlayer api() {
         return player;
     }
 
-    @Override
+    
     public Player getPlayer() {
         return bukkitPlayer;
     }
 
-    @Override
+    
     public void sendTitle(TitleBuilder EnTitleBuilder, TitleBuilder deTitleBuilder) {
         if (player.getLanguage().equals(Language.DEUTSCHDE))
             deTitleBuilder.sendTitle(bukkitPlayer);
@@ -108,7 +108,7 @@ public class BukkitPlayer implements IBukkitPlayer{
             EnTitleBuilder.sendTitle(bukkitPlayer);
     }
 
-    @Override
+    
     public void sendAnimatedTitle(TitleBuilder EnTitleBuilder, TitleBuilder deTitleBuilder) {
         if (player.getLanguage().equals(Language.DEUTSCHDE))
             deTitleBuilder.sendAnimatedTitle(bukkitPlayer);
@@ -116,7 +116,7 @@ public class BukkitPlayer implements IBukkitPlayer{
             EnTitleBuilder.sendAnimatedTitle(bukkitPlayer);
     }
 
-    @Override
+    
     public void sendCustomAnimatedTitle(TitleBuilder EnTitleBuilder, TitleBuilder deTitleBuilder, int speed, SoundBuilder finishSound) {
         if (player.getLanguage().equals(Language.DEUTSCHDE))
             deTitleBuilder.sendCustomAnimatedTitle(bukkitPlayer, speed, finishSound);
@@ -124,33 +124,38 @@ public class BukkitPlayer implements IBukkitPlayer{
             EnTitleBuilder.sendCustomAnimatedTitle(bukkitPlayer, speed, finishSound);
     }
 
-    @Override
+    
     public void stopAllTitles() {
         bukkitPlayer.resetTitle();
     }
 
-    @Override
+    
     public void playSound(Sound sound, int pitch, int volume) {
         new SoundBuilder(sound, net.kyori.adventure.sound.Sound.Source.AMBIENT, pitch, volume).play(bukkitPlayer);
     }
 
-    @Override
+    
     public void playSound(SoundBuilder sound){
         sound.play(bukkitPlayer);
     }
 
-    @Override
+    
     public void kick(String reasonen, String reasonde) {
         getPlayer().kick(PunishmentMessages.paperKick(reasonen, reasonde, this));
     }
 
-    @Override
+    
     public void vanish() {
         new VanishAction(bukkitPlayer);
     }
 
-    @Override
+    
     public void unVanish() {
         VanishAction.unVanish(bukkitPlayer);
+    }
+
+    
+    public UUID getUniqueID() {
+        return player.getUniqueID();
     }
 }

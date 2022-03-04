@@ -1,9 +1,7 @@
 package me.anton.sickcore.modules.discord.modules.ticket;
 
 import me.anton.sickcore.api.database.Finder;
-import me.anton.sickcore.api.player.apiPlayer.provider.DiscordAPIPlayerAdapter;
 import me.anton.sickcore.api.player.discordPlayer.DiscordPlayer;
-import me.anton.sickcore.api.player.discordPlayer.IDiscordPlayer;
 import me.anton.sickcore.modules.discord.DiscordModule;
 import me.anton.sickcore.modules.discord.handlers.messages.EmbedBuilder;
 import me.anton.sickcore.modules.discord.modules.discordlog.DiscordLogModule;

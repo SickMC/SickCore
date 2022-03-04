@@ -1,10 +1,16 @@
 package me.anton.sickcore.api.utils.minecraft.bukkit.item;
 
+import lombok.Getter;
+import me.anton.sickcore.api.player.bukkitPlayer.BukkitPlayer;
+import me.anton.sickcore.api.utils.common.Logger;
+import me.anton.sickcore.api.utils.minecraft.bukkit.inventory.InventoryBuilder;
 import net.kyori.adventure.text.Component;
 import org.bukkit.Bukkit;
 import org.bukkit.Color;
 import org.bukkit.Material;
 import org.bukkit.enchantments.Enchantment;
+import org.bukkit.event.inventory.InventoryClickEvent;
+import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.Damageable;
@@ -15,27 +21,42 @@ import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.UUID;
+import java.util.function.Consumer;
 
+@Getter
 public class ItemBuilder {
+
+    @Getter
+    private static HashMap<UUID, HashMap<ItemStack, ItemBuilder>> playerHandler = new HashMap<>();
 
     private ItemStack itemStack;
     private ItemMeta itemMeta;
+    private Consumer<PlayerInteractEvent> itemClickEvent;
+    private final BukkitPlayer player;
+    private InventoryBuilder builder;
 
-    public ItemBuilder(Material material){
+    public ItemBuilder(Material material, @Nullable BukkitPlayer player){
         this.itemStack = new ItemStack(material, 1);
         this.itemMeta = itemStack.getItemMeta();
+        this.player = player;
+        this.itemClickEvent = null;
     }
 
-    public ItemBuilder(Material material, int amount){
+    public ItemBuilder(Material material, int amount,@Nullable BukkitPlayer player){
         this.itemStack = new ItemStack(material, amount);
         this.itemMeta = itemStack.getItemMeta();
+        this.player = player;
+        this.itemClickEvent = null;
     }
 
-    public ItemBuilder(ItemStack itemStack){
+    public ItemBuilder(ItemStack itemStack,@Nullable BukkitPlayer player){
         this.itemStack = itemStack;
         this.itemMeta = itemStack.getItemMeta();
+        this.player = player;
+        this.itemClickEvent = null;
     }
 
     public ItemBuilder addEnchantment(Enchantment enchantment, int level){
@@ -83,6 +104,19 @@ public class ItemBuilder {
         return this;
     }
 
+    public void onPlayerClick(PlayerInteractEvent event){
+        if (itemClickEvent == null)return;
+        this.itemClickEvent.accept(event);
+    }
+
+    public ItemBuilder setPlayerEvent(Consumer<PlayerInteractEvent> event){
+        HashMap<ItemStack, ItemBuilder> add = new HashMap<>(playerHandler.get(player.getUniqueID()));
+        add.put(this.build(), this);
+        playerHandler.put(player.api().getUUID(), add);
+        this.itemClickEvent = event;
+        return this;
+    }
+
     public ItemBuilder setLeatherArmorColor(@NotNull Color color){
         LeatherArmorMeta meta = (LeatherArmorMeta) itemMeta;
         meta.setColor(color);
@@ -108,8 +142,8 @@ public class ItemBuilder {
     }
 
     public ItemStack build(){
-        itemStack.setItemMeta(itemMeta);
-        return itemStack;
+        this.itemStack.setItemMeta(this.itemMeta);
+        return this.itemStack;
     }
 
 }

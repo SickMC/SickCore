@@ -3,7 +3,6 @@ package me.anton.sickcore.games.all;
 import co.aikar.commands.BaseCommand;
 import co.aikar.commands.annotation.*;
 import me.anton.sickcore.api.player.apiPlayer.APIPlayer;
-import me.anton.sickcore.api.player.apiPlayer.IAPIPlayer;
 import me.anton.sickcore.api.player.apiPlayer.language.LanguageObject;
 import me.anton.sickcore.api.player.apiPlayer.language.LanguagePath;
 import me.anton.sickcore.api.utils.common.Replacable;
@@ -25,7 +24,7 @@ public class LagCommand extends BaseCommand {
         }
 
         Player player = (Player) sender;
-        IAPIPlayer iapiPlayer = new APIPlayer(player.getUniqueId());
+        APIPlayer iapiPlayer = new APIPlayer(player.getUniqueId());
 
         int averageTPS = 0;
         for (Player all : Bukkit.getOnlinePlayers())

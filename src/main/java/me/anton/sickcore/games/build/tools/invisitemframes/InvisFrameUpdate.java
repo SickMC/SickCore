@@ -1,7 +1,7 @@
 package me.anton.sickcore.games.build.tools.invisitemframes;
 
 import me.anton.sickcore.api.handler.listeners.bukkit.BukkitHandler;
-import me.anton.sickcore.api.player.bukkitPlayer.IBukkitPlayer;
+import me.anton.sickcore.api.player.bukkitPlayer.BukkitPlayer;
 import me.anton.sickcore.core.BukkitCore;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
@@ -58,7 +58,7 @@ public class InvisFrameUpdate extends BukkitHandler {
     }
 
     @Override
-    public void onPlayerInteractEntity(Entity entity, PlayerInteractEntityEvent rawEvent, IBukkitPlayer bukkitPlayer) {
+    public void onPlayerInteractEntity(Entity entity, PlayerInteractEntityEvent rawEvent, BukkitPlayer bukkitPlayer) {
         if(isFrameEntity(entity) &&
                 entity.getPersistentDataContainer().has(invisibleKey, PersistentDataType.BYTE))
         {
@@ -75,7 +75,7 @@ public class InvisFrameUpdate extends BukkitHandler {
     }
 
     @Override
-    public void onHangingPlace(HangingPlaceEvent rawEvent, Hanging hanging, IBukkitPlayer handler) {
+    public void onHangingPlace(HangingPlaceEvent rawEvent, Hanging hanging, BukkitPlayer handler) {
         if(!isFrameEntity(hanging) || handler.getPlayer() == null)
         {
             return;

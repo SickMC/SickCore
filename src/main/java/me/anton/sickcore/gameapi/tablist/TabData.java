@@ -3,7 +3,7 @@ package me.anton.sickcore.gameapi.tablist;
 import eu.thesimplecloud.api.CloudAPI;
 import lombok.Getter;
 import me.anton.sickcore.api.database.Finder;
-import me.anton.sickcore.api.player.bukkitPlayer.IBukkitPlayer;
+import me.anton.sickcore.api.player.bukkitPlayer.BukkitPlayer;
 import me.anton.sickcore.core.BukkitCore;
 import me.anton.sickcore.core.Core;
 import org.bson.Document;
@@ -15,7 +15,7 @@ public class TabData {
     private int online = CloudAPI.getInstance().getCloudPlayerManager().getNetworkOnlinePlayerCount().getBlocking();
     private String title = BukkitCore.getInstance().getCurrentGame().getName();
 
-    public final IBukkitPlayer player;
+    public final BukkitPlayer player;
     public final String displayname;
     public final String nickedDisplayname;
     public final String header;
@@ -30,7 +30,7 @@ public class TabData {
     private String footeren = config.getString("footer").replace("%online%", String.valueOf(online)).replace("%n", "\n").replace("%modi%", title).replace("%server%", CloudAPI.getInstance().getThisSidesName());
     private String footerde = config.getString("footerde").replace("%online%", String.valueOf(online)).replace("%n", "\n").replace("%modi%", title).replace("%server%", CloudAPI.getInstance().getThisSidesName());
 
-    public TabData(IBukkitPlayer player){
+    public TabData(BukkitPlayer player){
         this.player = player;
         this.displayname = player.api().getRank().getColor() + player.api().getRank().getName() + "§8 × §r" + player.api().getRankColor() + player.api().getName() + "§r";
         this.nickedDisplayname = player.api().getNickRank().getColor() + player.api().getNickRank().getName() + "§8 × §r" + player.api().getNickRank().getColor() + player.api().getNickname() + "§r";

@@ -2,6 +2,7 @@ package me.anton.sickcore.api.handler.listeners.bukkit.events.player;
 
 import me.anton.sickcore.api.handler.listeners.bukkit.BukkitEventProvider;
 import me.anton.sickcore.api.handler.listeners.bukkit.BukkitListenerProvider;
+import me.anton.sickcore.api.player.bukkitPlayer.BukkitPlayer;
 import me.anton.sickcore.core.BukkitCore;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -12,6 +13,6 @@ public class PlayerUnknownCommandEvent extends BukkitEventProvider<UnknownComman
     public void handleEvent(UnknownCommandEvent event) {
         if (!(event.getSender() instanceof Player))return;
         BukkitListenerProvider provider = BukkitCore.getInstance().getProvider();
-        provider.iterator(run -> run.onPlayerUnknownCommand(event, event.getCommandLine()));
+        provider.iterator(run -> run.onPlayerUnknownCommand(event, event.getCommandLine(), new BukkitPlayer(event.getSender())));
     }
 }

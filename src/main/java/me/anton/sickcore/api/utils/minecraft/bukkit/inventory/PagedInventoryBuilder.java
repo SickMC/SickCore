@@ -2,171 +2,138 @@ package me.anton.sickcore.api.utils.minecraft.bukkit.inventory;
 
 
 import lombok.Getter;
-import lombok.Setter;
-import me.anton.sickcore.api.player.apiPlayer.IAPIPlayer;
-import me.anton.sickcore.api.player.bukkitPlayer.IBukkitPlayer;
+import me.anton.sickcore.api.player.bukkitPlayer.BukkitPlayer;
 import me.anton.sickcore.games.all.HeadDBAPI;
-import me.anton.sickcore.api.utils.common.Logger;
 import me.anton.sickcore.api.utils.minecraft.bukkit.item.ItemBuilder;
-import me.anton.sickcore.api.utils.minecraft.bukkit.player.sound.DefaultSounds;
+import me.arcaniax.hdb.api.HeadDatabaseAPI;
 import org.bukkit.Material;
 import org.bukkit.event.inventory.InventoryClickEvent;
-import org.bukkit.inventory.ItemStack;
 
-import java.util.HashMap;
-import java.util.LinkedHashMap;
+import java.util.*;
 import java.util.function.Consumer;
+import java.util.stream.Collectors;
 
 @Getter
 public class PagedInventoryBuilder {
 
-    private final IBukkitPlayer apiPlayer;
+    private final BukkitPlayer player;
     private final String name;
-    private final HashMap<Integer, InventoryBuilder> handlers;
-    private final HashMap<Integer, LinkedHashMap<ItemStack, Consumer<InventoryClickEvent>>> pagedItems;
-    private final HashMap<Integer, LinkedHashMap<ItemStack, Consumer<InventoryClickEvent>>> itemStacks;
-    private Consumer<InventoryBuilder> defaultItemsConsumer;
-    private Consumer<InventoryBuilder> pagedInventoryConsumer;
-    private int highestOrder;
-    @Setter
-    private boolean fillLastPage = false;
-    private ItemStack filler;
+    private List<PagedInventoryItem> items;
+    private List<List<PagedInventoryItem>> pagedItems;
+    private int pages;
 
-    public PagedInventoryBuilder(IAPIPlayer apiPlayer, String name) {
+    public PagedInventoryBuilder(BukkitPlayer player, String name){
+        this.player = player;
         this.name = name;
-        this.apiPlayer = apiPlayer.bukkit();
-        this.handlers = new HashMap<>();
-        this.pagedItems = new HashMap<>();
-        this.itemStacks = new HashMap<>();
-        this.highestOrder = 1;
-        this.filler = new ItemBuilder(Material.BARRIER).setName("§7").build();
+        this.items = new ArrayList<>();
+        this.pagedItems = new ArrayList<>();
     }
 
-    public int getPages() {
-        return this.pagedItems.size();
+    public void addItem(ItemBuilder item){
+        items.add(new PagedInventoryItem(item, 1, event -> event.setCancelled(true)));
     }
 
-    public void addItem(ItemStack itemStack, int order, Consumer<InventoryClickEvent> consumer) {
-        if (order > this.highestOrder) this.highestOrder = order;
-        if (itemStack == null) return;
-        Material material;
-        try {
-            material = itemStack.getType();
-        } catch (Exception e) {
-            Logger.error("Error while add item: " + itemStack.getType());
-            e.printStackTrace();
-            return;
-        }
-        if (material == Material.AIR) return;
-        if (material == Material.CAVE_AIR) return;
-        if (material == Material.VOID_AIR) return;
-        LinkedHashMap<ItemStack, Consumer<InventoryClickEvent>> map = this.itemStacks.getOrDefault(order, new LinkedHashMap<>());
-        map.put(itemStack, consumer);
-        itemStacks.put(order, map);
+    public void addItem(ItemBuilder item, Consumer<InventoryClickEvent> event){
+        items.add(new PagedInventoryItem(item, 1, event));
     }
 
-    public void addItem(ItemStack itemStack, Consumer<InventoryClickEvent> consumer) {
-        addItem(itemStack, -1, consumer);
+    public void addItem(ItemBuilder item, int importance){
+        items.add(new PagedInventoryItem(item, importance, event -> event.setCancelled(true)));
     }
 
-    public void resort() {
+    public void addItem(ItemBuilder item, int importance, Consumer<InventoryClickEvent> event){
+        items.add(new PagedInventoryItem(item, importance, event));
+    }
+
+    public void sort(){
         pagedItems.clear();
-        int currentPageCount = 1;
-        LinkedHashMap<ItemStack, Consumer<InventoryClickEvent>> currentPage = new LinkedHashMap<>();
+        List<PagedInventoryItem> sorted = items.stream().sorted(Comparator.comparing(PagedInventoryItem::getImportance)).collect(Collectors.toList());
 
-        for (int i = 0; i <= highestOrder; i++) {
-            if (!itemStacks.containsKey(i)) continue;
-            for (ItemStack itemStack : itemStacks.get(i).keySet()) {
-                if (currentPage.size() == 27) {
-                    pagedItems.put(currentPageCount, new LinkedHashMap<>(currentPage));
-                    currentPageCount++;
-                    currentPage.clear();
-                    continue;
-                }
-                currentPage.put(itemStack, itemStacks.get(i).get(itemStack));
-            }
-        }
-        if (this.itemStacks.containsKey(-1)) {
-            for (ItemStack itemStack : itemStacks.get(-1).keySet()) {
-                if (currentPage.size() == 27) {
-                    pagedItems.put(currentPageCount, new LinkedHashMap<>(currentPage));
-                    currentPageCount++;
-                    currentPage.clear();
-                    continue;
-                }
-                currentPage.put(itemStack, itemStacks.get(-1).get(itemStack));
-            }
-        }
+        pages = (sorted.size() / 25) + 1;
 
-        if (currentPageCount != 0 && ((currentPageCount < 27))) {
-            pagedItems.put(currentPageCount, new LinkedHashMap<>(currentPage));
-            currentPage.clear();
+        if (pages == 1){
+            List<PagedInventoryItem> itemsToAdd = new ArrayList<>(sorted);
+            pagedItems.add(itemsToAdd);
+
+            return;
+        }
+        
+        for (int i = 0; i < pages; i++) {
+            List<PagedInventoryItem> pagedItemsToadd = new ArrayList<>();
+
+            for (int slot = 0; slot <= 24; slot++) {
+                if (slot == 24)break;
+                if (slot >= sorted.size())break;
+                pagedItemsToadd.add(sorted.get(slot));
+                sorted.remove(slot);
+            }
+
+            pagedItems.add(pagedItemsToadd);
+        }
+    }
+
+    public void open(int i){
+        sort();
+
+        HeadDatabaseAPI heads = HeadDBAPI.getApi();
+
+        if (i == 1){
+            InventoryBuilder builder = new InventoryBuilder(player, name, 6);
+            builder.fillPlaceholder(2,3,4,5,6,10,16,18, 26, 27, 35,37,43,47,48,49,50,51);
+            int[] purple = {0, 1, 9, 44, 52,53};
+            int[] pink = {7,8,17, 36,45,46};
+            for (int prasd : purple) builder.setItem(new ItemBuilder(Material.PURPLE_STAINED_GLASS_PANE, player).setName(null), prasd);
+            for (int prasd : pink) builder.setItem(new ItemBuilder(Material.MAGENTA_STAINED_GLASS_PANE, player).setName(null), prasd);
+
+            for (PagedInventoryItem item : pagedItems.get(0)) {
+                builder.addItem(item.getBuilder(), item.getClickEvent());
+            }
+
+            if (pages != 1){
+                ItemBuilder nextPage = new ItemBuilder(heads.getItemHead("9979"), player)
+                        .setName((String) player.api().languageObject("§6Next page", "§6Nächste Seite"))
+                        .setLore((String) player.api().languageObject("§7Click to open the next page!", "§7Klicke um die nächste Seite zu öffnen!"));
+
+                ItemBuilder pageItem = new ItemBuilder(Material.PAPER, player).setName((String) player.api().languageObject("§7Page: §6" + i + "§7/§6" + pages, "§7Seite: §6" + i + "§7/§6" + pages));
+
+                builder.setItem(nextPage, 50,event -> open(i + 1));
+                builder.setItem(pageItem, 49, event -> event.setCancelled(true));
+            }
+
+            builder.setOnMove(event -> event.setCancelled(true));
+            builder.open();
             return;
         }
 
-        if (!pagedItems.containsKey(1)) {
-            LinkedHashMap<ItemStack, Consumer<InventoryClickEvent>> map = new LinkedHashMap<>();
-            map.put(new ItemBuilder(Material.BARRIER).setName((String) apiPlayer.api().languageObject("§4Nothing found", "§4Es wurde nichts gefunden!")).build(), event -> event.setCancelled(true));
-            pagedItems.put(1, map);
-            return;
+        ItemBuilder nextPage = new ItemBuilder(heads.getItemHead("9979"), player)
+                .setName((String) player.api().languageObject("§6Next page", "§6Nächste Seite"))
+                .setLore((String) player.api().languageObject("§7Click to open the next page!", "§7Klicke um die nächste Seite zu öffnen!"));
+        ItemBuilder previousPage = new ItemBuilder(heads.getItemHead("9982"), player)
+                .setName((String) player.api().languageObject("§6Previous page", "§6Vorherige Seite"))
+                .setLore((String) player.api().languageObject("§7Click to open the previous page!", "§7Klicke um die vorherige Seite zu öffnen!"));
+        ItemBuilder pageItem = new ItemBuilder(Material.PAPER, player).setName((String) player.api().languageObject("§7Page: §6" + i + "§7/§6" + pages, "§7Seite: §6" + i + "§7/§6" + pages));
+
+        InventoryBuilder builder = new InventoryBuilder(player, name, 6);
+        builder.fillPlaceholder(2,3,4,5,6,10,16,18, 26, 27, 35,37,43,47,48,49,50,51);
+        int[] purple = {0, 1, 9, 44, 52,53};
+        int[] pink = {7,8,17, 36,45,46};
+        for (int prasd : purple) builder.setItem(new ItemBuilder(Material.PURPLE_STAINED_GLASS_PANE, player).setName(null), prasd);
+        for (int prasd : pink) builder.setItem(new ItemBuilder(Material.MAGENTA_STAINED_GLASS_PANE, player).setName(null), prasd);
+
+        if (i == pages)builder.fillPlaceholder(50);
+        else builder.setItem(nextPage, 50,event -> open(i + 1));
+        builder.setItem(previousPage, 48,event -> open(i - 1));
+        builder.setItem(pageItem, 49, event -> event.setCancelled(true));
+
+        for (PagedInventoryItem item : pagedItems.get(i - 1)) {
+            builder.addItem(item.getBuilder(), item.getClickEvent());
         }
 
-        if (fillLastPage) {
-            int fills = (27) - getItemStacks().get(getPages()).size();
-            for (int i = 0; i < fills; i++) {
-                getItemStacks().get(getPages()).put(filler, event -> event.setCancelled(true));
-            }
-        }
+        builder.setOnMove(event -> event.setCancelled(true));
+        builder.open();
     }
 
-    public boolean hasPage(int page) {
-        return this.pagedItems.containsKey(page);
-    }
-
-    public void pagedInventoryItems(Consumer<InventoryBuilder> consumer) {
-        this.pagedInventoryConsumer = consumer;
-    }
-
-    public void open() {
+    public void open(){
         open(1);
-    }
-
-    public void open(int page) {
-        InventoryBuilder inventoryHandler = handlers.getOrDefault(page, new InventoryBuilder(apiPlayer.api(), name, 6 * 9, InventoryUsage.UTILITY));
-
-        ItemStack headback = HeadDBAPI.getApi().getItemHead("7788");
-        ItemStack headforwa = HeadDBAPI.getApi().getItemHead("7787");
-
-        inventoryHandler.fillPlaceholder(0,8,45,53,1,7,9,17,36,44,46,52,2,3,5,6,47,51);
-
-        inventoryHandler.setItem(new ItemBuilder(Material.PAPER).setName((String) apiPlayer.api().languageObject("§7Page §6" + page + "§7/§6" + pagedItems.size(),"§7Seite §6" + page + "§7/§6" + pagedItems.size())).build(), 49, event -> event.setCancelled(true));
-
-        inventoryHandler.setItem(new ItemBuilder(headback).setName((String) apiPlayer.api().languageObject("§7Backward","§7Zurück")).build(), 48, event -> {
-            if (!hasPage(page - 1)) {
-                DefaultSounds.anvil.play(apiPlayer);
-                return;
-            }
-            open(page - 1);
-        });
-        inventoryHandler.setItem(new ItemBuilder(headforwa).setName((String) apiPlayer.api().languageObject("§7Forward","§7Vor")).build(), 50, event -> {
-            if (!hasPage(page + 1)) {
-                DefaultSounds.anvil.play(apiPlayer);
-                return;
-            }
-            open(page + 1);
-        });
-
-        int slot = 10;
-        for (ItemStack itemStack : this.pagedItems.get(page).keySet()) {
-            if (slot == 17) slot = 19;
-            if (slot == 26) slot = 28;
-            if (slot == 35) slot = 37;
-            Consumer<InventoryClickEvent> consumer = this.pagedItems.get(page).get(itemStack);
-            inventoryHandler.setItem(itemStack, slot, consumer);
-            slot++;
-        }
-
-
-        inventoryHandler.open();
     }
 }

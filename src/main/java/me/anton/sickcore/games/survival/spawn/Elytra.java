@@ -1,7 +1,7 @@
 package me.anton.sickcore.games.survival.spawn;
 
 import me.anton.sickcore.api.handler.listeners.bukkit.BukkitHandler;
-import me.anton.sickcore.api.player.bukkitPlayer.IBukkitPlayer;
+import me.anton.sickcore.api.player.bukkitPlayer.BukkitPlayer;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -23,13 +23,13 @@ public class Elytra extends BukkitHandler {
     private HashMap<UUID, Integer> timesBoosted = new HashMap<UUID, Integer>();
 
     @Override
-    public void onPlayerElytra(IBukkitPlayer player, EntityToggleGlideEvent rawEvent) {
+    public void onPlayerElytra(BukkitPlayer player, EntityToggleGlideEvent rawEvent) {
         if (!glidingPlayers.contains(player.getPlayer().getUniqueId()))return;
         rawEvent.setCancelled(true);
     }
 
     @Override
-    public void onPlayerToggleSneak(PlayerToggleSneakEvent rawEvent, IBukkitPlayer bukkitPlayer) {
+    public void onPlayerToggleSneak(PlayerToggleSneakEvent rawEvent, BukkitPlayer bukkitPlayer) {
         if (!glidingPlayers.contains(rawEvent.getPlayer().getUniqueId()))return;
         if (!timesBoosted.containsKey(rawEvent.getPlayer().getUniqueId())) {
             rawEvent.getPlayer().boostElytra(new ItemStack(Material.FIREWORK_ROCKET));
@@ -41,7 +41,7 @@ public class Elytra extends BukkitHandler {
     }
 
     @Override
-    public void onPlayerMove(PlayerMoveEvent rawEvent, IBukkitPlayer bukkitPlayer) {
+    public void onPlayerMove(PlayerMoveEvent rawEvent, BukkitPlayer bukkitPlayer) {
         Location plocation = rawEvent.getPlayer().getLocation().clone().subtract(0, 1,0);
         Block block = plocation.getBlock();
         if (!rawEvent.getPlayer().getLocation().getChunk().equals(spawnlocation.getChunk()) && rawEvent.getPlayer().getLocation().getY() >= 290)return;

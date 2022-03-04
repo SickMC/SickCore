@@ -23,7 +23,7 @@ public class BukkitListenerProvider {
             try {
                 task.run(handler);
             }catch (Exception e){
-                Logger.error("Error while run bukkit handler " + handler.getClass().getName());
+                Logger.error("Error while run bukkit handler " + handler.getClass().getName(), this.getClass());
                 e.printStackTrace();
             }
         }

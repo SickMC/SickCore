@@ -1,7 +1,6 @@
 package me.anton.sickcore.modules.discord.handlers.messages;
 
 import me.anton.sickcore.api.player.discordPlayer.DiscordPlayer;
-import me.anton.sickcore.api.player.discordPlayer.IDiscordPlayer;
 import me.anton.sickcore.api.utils.discord.DiscordIds;
 import me.anton.sickcore.modules.discord.DiscordModule;
 import net.dv8tion.jda.api.entities.Member;
@@ -17,7 +16,7 @@ public class DiscordMessages {
                 .setTitle("Keine Rechte")
                 .setContent("Du hast keine Rechte dafür!");
 
-        IDiscordPlayer player = new DiscordPlayer(member);
+        DiscordPlayer player = new DiscordPlayer(member);
         return player.getEmbed(en.build(), de.build());
     }
 
@@ -38,7 +37,7 @@ public class DiscordMessages {
                 .setTitle("Staff Command")
                 .setContent("Das ist ein Staff Command!");
 
-        IDiscordPlayer player = new DiscordPlayer(member);
+        DiscordPlayer player = new DiscordPlayer(member);
         return player.getEmbed(en.build(), de.build());
     }
 

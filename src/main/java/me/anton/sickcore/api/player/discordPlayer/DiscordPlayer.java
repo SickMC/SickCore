@@ -12,9 +12,11 @@ import net.dv8tion.jda.api.entities.MessageEmbed;
 import net.dv8tion.jda.api.entities.User;
 import org.bson.Document;
 
-public class DiscordPlayer implements IDiscordPlayer{
+import java.util.UUID;
 
-    private final IAPIPlayer player;
+public class DiscordPlayer implements IAPIPlayer{
+
+    private final APIPlayer player;
     private final Member member;
 
     public DiscordPlayer(Member member) {
@@ -22,25 +24,25 @@ public class DiscordPlayer implements IDiscordPlayer{
         this.player = new APIPlayer(member.getUser().getId());
     }
 
-    @Override
+    
     public MessageEmbed getEmbed(MessageEmbed en, MessageEmbed de) {
         if (player.getLanguage() == Language.DEUTSCHDE)return de;
         else return en;
     }
 
-    @Override
+    
     public String getMessage(String en, String de) {
         if (player.getLanguage() == Language.DEUTSCHDE)return de;
         else return en;
     }
 
-    @Override
-    public IAPIPlayer api() {
+    
+    public APIPlayer api() {
         if (!DiscordAPIPlayerAdapter.isVerified(member))return null;
         return player;
     }
 
-    @Override
+    
     public DiscordLevel getLevel() {
         if (!DiscordAPIPlayerAdapter.isVerified(member))return null;
         DiscordLevel level = null;
@@ -53,7 +55,7 @@ public class DiscordPlayer implements IDiscordPlayer{
         return level;
     }
 
-    @Override
+    
     public int getPoints(){
         if (!DiscordAPIPlayerAdapter.isVerified(member))return 0;
         DatabaseModel model = DiscordModule.getInstance().getGamePlayer();
@@ -61,13 +63,18 @@ public class DiscordPlayer implements IDiscordPlayer{
         return leveldoc.getInteger("points");
     }
 
-    @Override
+    
     public User user() {
         return member.getUser();
     }
 
-    @Override
+    
     public Member member() {
         return member;
+    }
+
+    @Override
+    public UUID getUniqueID() {
+        return player.getUniqueID();
     }
 }

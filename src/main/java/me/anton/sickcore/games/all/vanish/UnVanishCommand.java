@@ -6,7 +6,6 @@ import co.aikar.commands.annotation.Default;
 import co.aikar.commands.annotation.Description;
 import me.anton.sickcore.api.player.apiPlayer.language.LanguagePath;
 import me.anton.sickcore.api.player.bukkitPlayer.BukkitPlayer;
-import me.anton.sickcore.api.player.bukkitPlayer.IBukkitPlayer;
 import me.anton.sickcore.api.utils.minecraft.messages.ConsoleMessages;
 import me.anton.sickcore.core.BukkitCore;
 import org.bukkit.command.CommandSender;
@@ -23,7 +22,7 @@ public class UnVanishCommand extends BaseCommand {
             return;
         }
 
-        IBukkitPlayer player = new BukkitPlayer((Player)sender);
+        BukkitPlayer player = new BukkitPlayer((Player)sender);
 
         if (!player.api().isTeam()){player.sendMessage(LanguagePath.NETWORK_COMMAND_NOSTAFF);return;}
         if (!BukkitCore.getInstance().bukkit().getVanished().contains(player.getPlayer())){

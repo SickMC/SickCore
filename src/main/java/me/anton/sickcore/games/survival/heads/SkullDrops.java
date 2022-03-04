@@ -2,7 +2,7 @@ package me.anton.sickcore.games.survival.heads;
 
 
 import me.anton.sickcore.api.handler.listeners.bukkit.BukkitHandler;
-import me.anton.sickcore.api.player.bukkitPlayer.IBukkitPlayer;
+import me.anton.sickcore.api.player.bukkitPlayer.BukkitPlayer;
 import me.anton.sickcore.api.utils.minecraft.bukkit.item.ItemBuilder;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -15,8 +15,8 @@ import java.util.List;
 public class SkullDrops extends BukkitHandler {
 
     @Override
-    public void onPlayerDeathByPlayer(Location deathLocation, List<ItemStack> drops, PlayerDeathEvent rawEvent, IBukkitPlayer bukkitPlayer, IBukkitPlayer killer) {
-        ItemStack itemStack = new ItemBuilder(Material.PLAYER_HEAD)
+    public void onPlayerDeathByPlayer(Location deathLocation, List<ItemStack> drops, PlayerDeathEvent rawEvent, BukkitPlayer bukkitPlayer, BukkitPlayer killer) {
+        ItemStack itemStack = new ItemBuilder(Material.PLAYER_HEAD, killer)
                 .setSkull(bukkitPlayer.getPlayer().getUniqueId()).setName("§b" + bukkitPlayer.api().getName() + "'s Head")
                 .addItemFlags(ItemFlag.HIDE_ATTRIBUTES).build();
 

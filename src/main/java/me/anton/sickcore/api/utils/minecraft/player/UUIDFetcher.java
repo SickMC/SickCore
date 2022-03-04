@@ -1,4 +1,4 @@
-package me.anton.sickcore.api.utils.minecraft.player.uniqueid;
+package me.anton.sickcore.api.utils.minecraft.player;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;

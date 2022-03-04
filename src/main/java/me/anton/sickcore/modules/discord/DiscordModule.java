@@ -83,7 +83,7 @@ public class DiscordModule implements ProxiedIModule {
                 GatewayIntent.DIRECT_MESSAGE_REACTIONS
         );
 
-        Logger.info("Starting Discordbot...");
+        Logger.info("Starting Discordbot...", this.getClass());
         JDABuilder jdaBuilder = JDABuilder.createDefault((String) readFromConfig("token"), intents).setMemberCachePolicy(MemberCachePolicy.ALL);
         jdaBuilder.setActivity(Activity.playing("on play.sickmc.net"));
         jdaBuilder.setAutoReconnect(true);
@@ -94,7 +94,7 @@ public class DiscordModule implements ProxiedIModule {
             this.jda = jdaBuilder.build();
             this.jda.awaitReady();
             for (Guild guild : this.jda.getGuilds()) {
-                Logger.info("[Discord] Loading members of guild: " + guild);
+                Logger.info("[Discord] Loading members of guild: " + guild, this.getClass());
                 guild.loadMembers().get();
             }
             this.jda.addEventListener(this.commandBuilder);
@@ -107,7 +107,7 @@ public class DiscordModule implements ProxiedIModule {
     }
 
     public void stop(){
-        Logger.info("Stopping Discordbot...");
+        Logger.info("Stopping Discordbot...", this.getClass());
         builder.setStatus(OnlineStatus.OFFLINE);
     }
 

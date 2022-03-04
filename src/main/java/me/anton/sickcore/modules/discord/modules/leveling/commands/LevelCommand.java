@@ -4,7 +4,6 @@ import me.anton.sickcore.api.database.DatabaseModel;
 import me.anton.sickcore.api.database.Finder;
 import me.anton.sickcore.api.player.apiPlayer.provider.DiscordAPIPlayerAdapter;
 import me.anton.sickcore.api.player.discordPlayer.DiscordPlayer;
-import me.anton.sickcore.api.player.discordPlayer.IDiscordPlayer;
 import me.anton.sickcore.api.utils.discord.DiscordIds;
 import me.anton.sickcore.modules.discord.DiscordModule;
 import me.anton.sickcore.modules.discord.handlers.command.SlashCommand;
@@ -53,7 +52,7 @@ public class LevelCommand extends SlashCommand {
     }
 
     @Override
-    public void execute(User user, IDiscordPlayer player, InteractionHook hook, SlashCommandEvent event) {
+    public void execute(User user, DiscordPlayer player, InteractionHook hook, SlashCommandEvent event) {
         if (!event.getTextChannel().getId().equals(DiscordIds.botchatchannel)){
             hook.sendMessageEmbeds(DiscordMessages.getOnlyBotChat(getMember(user))).setEphemeral(true).queue();
             return;
@@ -79,7 +78,7 @@ public class LevelCommand extends SlashCommand {
                     + "**\nProgress to **" + player.getLevel().getNext().getName() + "**:\n >>> " + player.getPoints() + "/" + player.getLevel().getEnd()).build()).queue();
         }else {
             Member member = event.getOption("member").getAsMember();
-            IDiscordPlayer target = new DiscordPlayer(member);
+            DiscordPlayer target = new DiscordPlayer(member);
             if (!model.documentExists(Finder.stringFinder("userID", member.getUser().getId()))){
                 model.createDocument(new Document("userID", member.getUser().getId()).append("points", 1).append("enabled", false));
                 if (DiscordAPIPlayerAdapter.isVerified(member.getUser().getId())){

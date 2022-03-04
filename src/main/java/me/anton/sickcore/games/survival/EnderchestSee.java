@@ -6,7 +6,6 @@ import co.aikar.commands.annotation.*;
 import me.anton.sickcore.api.player.apiPlayer.enums.Rank;
 import me.anton.sickcore.api.player.apiPlayer.language.LanguagePath;
 import me.anton.sickcore.api.player.bukkitPlayer.BukkitPlayer;
-import me.anton.sickcore.api.player.bukkitPlayer.IBukkitPlayer;
 import me.anton.sickcore.api.utils.minecraft.messages.ConsoleMessages;
 import org.bukkit.Bukkit;
 import org.bukkit.OfflinePlayer;
@@ -26,7 +25,7 @@ public class EnderchestSee extends BaseCommand {
             return;
         }
         Player player = (Player) commandSender;
-        IBukkitPlayer bukkitPlayer = new BukkitPlayer(player);
+        BukkitPlayer bukkitPlayer = new BukkitPlayer(player);
 
         if (!bukkitPlayer.api().isHigher(Rank.MODERATOR)){
             bukkitPlayer.sendMessage(LanguagePath.NETWORK_COMMAND_NOMOD);

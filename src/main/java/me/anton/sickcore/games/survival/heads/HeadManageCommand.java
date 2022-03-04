@@ -7,7 +7,6 @@ import co.aikar.commands.annotation.Description;
 import me.anton.sickcore.api.player.apiPlayer.enums.Rank;
 import me.anton.sickcore.api.player.apiPlayer.language.LanguagePath;
 import me.anton.sickcore.api.player.bukkitPlayer.BukkitPlayer;
-import me.anton.sickcore.api.player.bukkitPlayer.IBukkitPlayer;
 import me.anton.sickcore.api.utils.common.Logger;
 import me.anton.sickcore.api.utils.minecraft.bukkit.inventory.PagedInventoryBuilder;
 import me.anton.sickcore.api.utils.minecraft.bukkit.item.ItemBuilder;
@@ -28,7 +27,7 @@ public class HeadManageCommand extends BaseCommand {
             ConsoleMessages.noPlayer(sender);
             return;
         }
-        IBukkitPlayer player = new BukkitPlayer(sender);
+        BukkitPlayer player = new BukkitPlayer(sender);
 
         if (!player.api().isHigher(Rank.MODERATOR)){
             player.sendMessage(LanguagePath.NETWORK_COMMAND_NOMOD);
@@ -38,20 +37,19 @@ public class HeadManageCommand extends BaseCommand {
         openHeadCollection(player);
     }
 
-    private void openHeadCollection(IBukkitPlayer opener){
+    private void openHeadCollection(BukkitPlayer opener){
         HeadDatabaseAPI api = HeadDBAPI.getApi();
 
-        PagedInventoryBuilder inventoryBuilder = new PagedInventoryBuilder(opener.api(), "§6Head Collection");
+        PagedInventoryBuilder inventoryBuilder = new PagedInventoryBuilder(opener, "§6Head Collection");
         for (MobHead value : MobHead.values()) {
-            if (api.getItemHead(String.valueOf(value.getId())) == null) Logger.error(value.getHeadName());
-            inventoryBuilder.addItem(new ItemBuilder(api.getItemHead(String.valueOf(value.getId()))).setName("§6" + value.getHeadName()).setLore("§7Click to get this head!").build(), event -> {
+            if (api.getItemHead(String.valueOf(value.getId())) == null) Logger.error(value.getHeadName(), this.getClass());
+            inventoryBuilder.addItem(new ItemBuilder(api.getItemHead(String.valueOf(value.getId())), opener).setName("§6" + value.getHeadName()).setLore("§7Click to get this head!"), event -> {
                 DefaultSounds.levelUP.play(opener);
-                opener.getPlayer().getInventory().addItem(new ItemBuilder(api.getItemHead(String.valueOf(value.getId()))).setName("§6" + value.getHeadName()).build());
+                opener.getPlayer().getInventory().addItem(new ItemBuilder(api.getItemHead(String.valueOf(value.getId())), opener).setName("§6" + value.getHeadName()).build());
             });
         }
 
-        inventoryBuilder.resort();
-        inventoryBuilder.open(1);
+        inventoryBuilder.open();
     }
 
 }

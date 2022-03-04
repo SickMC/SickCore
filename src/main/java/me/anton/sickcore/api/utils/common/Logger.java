@@ -10,25 +10,30 @@ public class Logger {
     @Getter
     private static Level level = Level.ERROR;
 
-    public static void debug(String message){
-        log(message, Level.DEBUG);
+    public static void debug(String message, Class clazz){
+        log(message, Level.DEBUG, clazz);
     }
 
-    public static void error(String message){
-        log(message, Level.ERROR);
+    public static void error(String message, Class clazz){
+        log(message, Level.ERROR, clazz);
     }
 
-    public static void info(String message){
-        log(message, Level.INFO);
+    public static void info(String message, Class clazz){
+        log(message, Level.INFO, clazz);
     }
 
-    public static void warn(String message){
-        log(message, Level.WARN);
+    public static void warn(String message, Class clazz){
+        log(message, Level.WARN, clazz);
     }
 
     public static void log(String message, Level level){
         if(level.getPriority() < level.getPriority()) return;
         System.out.println(level.getPrefix() + message);
+    }
+
+    public static void log(String message, Level level, Class clazz){
+        if(level.getPriority() < level.getPriority()) return;
+        System.out.println(level.getPrefix()+ "(" + clazz.getSimpleName() + ")" + message);
     }
 
     @AllArgsConstructor

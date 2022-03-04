@@ -65,6 +65,7 @@ public class LevelingListener extends ListenerAdapter {
             else model.createDocument(new Document("userID", event.getMember().getUser().getId()).append("points", 5).append("enabled", false).append("cooldown", System.currentTimeMillis() + TimeUnit.MINUTES.toMillis(5)));
         }
         Document player = model.getDocument(Finder.stringFinder("userID", event.getMember().getUser().getId()));
+        if (!player.containsKey("cooldown"))player.append("cooldown", System.currentTimeMillis() + TimeUnit.MINUTES.toMillis(5));
         if (player.getLong("cooldown") > System.currentTimeMillis())return;
 
         int oldPoint = player.getInteger("points");

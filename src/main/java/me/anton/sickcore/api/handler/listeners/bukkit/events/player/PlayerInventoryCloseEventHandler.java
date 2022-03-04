@@ -3,7 +3,6 @@ package me.anton.sickcore.api.handler.listeners.bukkit.events.player;
 import me.anton.sickcore.api.handler.listeners.bukkit.BukkitEventProvider;
 import me.anton.sickcore.api.handler.listeners.bukkit.BukkitListenerProvider;
 import me.anton.sickcore.api.player.bukkitPlayer.BukkitPlayer;
-import me.anton.sickcore.api.player.bukkitPlayer.IBukkitPlayer;
 import me.anton.sickcore.api.utils.minecraft.bukkit.inventory.InventoryBuilder;
 import me.anton.sickcore.core.BukkitCore;
 import org.bukkit.event.EventHandler;
@@ -14,21 +13,19 @@ public class PlayerInventoryCloseEventHandler extends BukkitEventProvider<Invent
 
     @EventHandler
     public void handleEvent(InventoryCloseEvent event) {
-        IBukkitPlayer bukkitPlayer = new BukkitPlayer(event.getPlayer().getUniqueId());
+        BukkitPlayer bukkitPlayer = new BukkitPlayer(event.getPlayer().getUniqueId());
 
-        if(inventoryHandler(bukkitPlayer, event)) return;
+        if(inventoryBuilder(bukkitPlayer, event)) return;
         BukkitListenerProvider provider = BukkitCore.getInstance().getProvider();
         provider.iterator(run -> run.onInventoryClose(event, bukkitPlayer));
     }
 
-    private boolean inventoryHandler(IBukkitPlayer apiPlayer, InventoryCloseEvent event){
-        if(InventoryBuilder.getHandlers().containsKey(apiPlayer.api().getUUID())){
-            InventoryBuilder inventoryHandler = InventoryBuilder.getHandlers().get(apiPlayer.api().getUUID());
-            if(inventoryHandler.getInventory() == null) return false;
-            if(!inventoryHandler.getInventory().equals(event.getInventory())) return false;
-            inventoryHandler.onClose(event);
-            return true;
-        }
-        return false;
+    private boolean inventoryBuilder(BukkitPlayer apiPlayer, InventoryCloseEvent event){
+        if (!InventoryBuilder.getHandlers().containsKey(apiPlayer.api().getUUID()))return false;
+        InventoryBuilder builder = InventoryBuilder.getHandlers().get(apiPlayer.api().getUUID());
+        if (builder.getInventory() == null)return false;
+        if (!builder.getInventory().equals(event.getInventory()))return false;
+        builder.onClose(event);
+        return true;
     }
 }

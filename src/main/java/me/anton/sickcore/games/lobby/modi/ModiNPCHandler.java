@@ -6,13 +6,13 @@ import eu.thesimplecloud.api.service.ICloudService;
 import me.anton.sickcore.api.handler.listeners.bukkit.BukkitHandler;
 import me.anton.sickcore.api.player.apiPlayer.language.LanguageObject;
 import me.anton.sickcore.api.player.apiPlayer.language.LanguagePath;
-import me.anton.sickcore.api.player.bukkitPlayer.IBukkitPlayer;
+import me.anton.sickcore.api.player.bukkitPlayer.BukkitPlayer;
 import me.anton.sickcore.api.utils.common.Replacable;
 import org.bukkit.event.player.PlayerInteractAtEntityEvent;
 
 public class ModiNPCHandler extends BukkitHandler {
 
-    public void addModiNPC(ICloudService service, IBukkitPlayer player, String npcName, String modiName, PlayerInteractAtEntityEvent event){
+    public void addModiNPC(ICloudService service, BukkitPlayer player, String npcName, String modiName, PlayerInteractAtEntityEvent event){
         if (event.getRightClicked().getCustomName() == null) return;
         if (!event.getRightClicked().getCustomName().equalsIgnoreCase(npcName))return;
         ICloudPlayer cloudPlayer = player.api().cloud().cloudAPI();
@@ -23,7 +23,7 @@ public class ModiNPCHandler extends BukkitHandler {
     }
 
     @Override
-    public void onPlayerInteractAtEntity(PlayerInteractAtEntityEvent rawEvent, IBukkitPlayer bukkitPlayer) {
+    public void onPlayerInteractAtEntity(PlayerInteractAtEntityEvent rawEvent, BukkitPlayer bukkitPlayer) {
         ICloudService levelborder = CloudAPI.getInstance().getCloudServiceManager().getCloudServiceByName("LevelBorder-1");
         ICloudService survival = CloudAPI.getInstance().getCloudServiceManager().getCloudServiceByName("Survival-1");
 

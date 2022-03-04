@@ -1,14 +1,10 @@
 package me.anton.sickcore.modules.discord.handlers.command;
 import lombok.Data;
 import me.anton.sickcore.api.player.apiPlayer.APIPlayer;
-import me.anton.sickcore.api.player.apiPlayer.IAPIPlayer;
 import me.anton.sickcore.api.player.apiPlayer.provider.DiscordAPIPlayerAdapter;
 import me.anton.sickcore.api.player.discordPlayer.DiscordPlayer;
-import me.anton.sickcore.api.player.discordPlayer.IDiscordPlayer;
-import me.anton.sickcore.api.utils.discord.DiscordIds;
 import me.anton.sickcore.modules.discord.DiscordModule;
 import me.anton.sickcore.modules.discord.handlers.messages.DiscordMessages;
-import me.anton.sickcore.modules.discord.handlers.messages.EmbedBuilder;
 import net.dv8tion.jda.api.entities.*;
 import net.dv8tion.jda.api.events.interaction.SlashCommandEvent;
 import net.dv8tion.jda.api.interactions.InteractionHook;
@@ -56,7 +52,7 @@ public abstract class SlashCommand {
         return data;
     }
 
-    public abstract void execute(User user, IDiscordPlayer player, InteractionHook hook, SlashCommandEvent event);
+    public abstract void execute(User user, DiscordPlayer player, InteractionHook hook, SlashCommandEvent event);
 
     public void preExecute(User user, InteractionHook hook, SlashCommandEvent event){
         String subCommandName = event.getSubcommandName();
@@ -93,7 +89,7 @@ public abstract class SlashCommand {
         return state;
     }
 
-    public IAPIPlayer getApiPlayer(User user){
+    public APIPlayer getApiPlayer(User user){
         if (DiscordAPIPlayerAdapter.isVerified(user))return new APIPlayer(user.getId());
         else return null;
     }

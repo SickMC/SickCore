@@ -1,6 +1,6 @@
 package me.anton.sickcore.modules.discord.modules.staffcommands.cloud;
 
-import me.anton.sickcore.api.player.discordPlayer.IDiscordPlayer;
+import me.anton.sickcore.api.player.discordPlayer.DiscordPlayer;
 import me.anton.sickcore.modules.discord.DiscordModule;
 import me.anton.sickcore.modules.discord.handlers.command.SlashCommand;
 import me.anton.sickcore.modules.discord.handlers.command.SlashSubCommand;
@@ -46,7 +46,7 @@ public class CloudCommand extends SlashCommand {
     }
 
     @Override
-    public void execute(User user, IDiscordPlayer player, InteractionHook hook, SlashCommandEvent event) {
+    public void execute(User user, DiscordPlayer player, InteractionHook hook, SlashCommandEvent event) {
         event.replyEmbeds(new EmbedBuilder(DiscordModule.getInstance().getJda().getSelfUser()).setTitle("Cloud").setContent("Cloud is running!").build()).queue();
     }
 }

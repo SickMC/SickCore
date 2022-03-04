@@ -13,12 +13,12 @@ import net.md_5.bungee.api.connection.ProxiedPlayer;
 import java.util.UUID;
 
 @Getter
-public class BungeePlayer implements IBungeePlayer {
+public class BungeePlayer implements IAPIPlayer {
 
-    IAPIPlayer player;
+    APIPlayer player;
     ProxiedPlayer bungeePlayer;
 
-    public BungeePlayer(IAPIPlayer player){
+    public BungeePlayer(APIPlayer player){
         this.player = player;
         this.bungeePlayer = ProxyServer.getInstance().getPlayer(player.getUUID());
     }
@@ -39,24 +39,29 @@ public class BungeePlayer implements IBungeePlayer {
         this.player = new APIPlayer(bungeePlayer.getUniqueId());
     }
 
-    @Override
+    
     public void sendMessage(LanguagePath path) {
         getBungeePlayer().sendMessage(new TextComponent(this.player.languageString(path).build()));
     }
 
-    @Override
+    
     public void sendMessage(LanguageObject object) {
         getBungeePlayer().sendMessage(new TextComponent(object.build()));
     }
 
-    @Override
-    public IAPIPlayer api() {
+    
+    public APIPlayer api() {
         return player;
     }
 
-    @Override
+    
     public ProxiedPlayer getPlayer() {
         return bungeePlayer;
+    }
+
+    @Override
+    public UUID getUniqueID() {
+        return player.getUniqueID();
     }
 }
 

@@ -43,7 +43,7 @@ public class SlashCommandBuilder extends ListenerAdapter {
             }
 
             action.queue(regCommand -> {
-                Logger.info(regCommand.getName() + ": " + regCommand.getId());
+                Logger.info(regCommand.getName() + ": " + regCommand.getId(), this.getClass());
             });
         }
     }

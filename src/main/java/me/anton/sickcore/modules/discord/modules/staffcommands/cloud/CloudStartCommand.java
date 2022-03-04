@@ -2,7 +2,7 @@ package me.anton.sickcore.modules.discord.modules.staffcommands.cloud;
 
 import eu.thesimplecloud.api.CloudAPI;
 import eu.thesimplecloud.api.servicegroup.ICloudServiceGroup;
-import me.anton.sickcore.api.player.discordPlayer.IDiscordPlayer;
+import me.anton.sickcore.api.player.discordPlayer.DiscordPlayer;
 import me.anton.sickcore.modules.discord.handlers.command.SelectionMenuHelper;
 import me.anton.sickcore.modules.discord.handlers.command.SlashCommand;
 import me.anton.sickcore.modules.discord.handlers.command.SlashSubCommand;
@@ -46,7 +46,7 @@ public class CloudStartCommand extends SlashSubCommand {
     }
 
     @Override
-    public void execute(User user, IDiscordPlayer player, InteractionHook hook, SlashCommandEvent event) {
+    public void execute(User user, DiscordPlayer player, InteractionHook hook, SlashCommandEvent event) {
         List<ICloudServiceGroup> groups = CloudAPI.getInstance().getCloudServiceGroupManager().getAllCachedObjects();
 
         SelectionMenu.Builder groupSelector = SelectionMenu.create("cloud:start:group")

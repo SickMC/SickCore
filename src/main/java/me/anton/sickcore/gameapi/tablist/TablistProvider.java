@@ -6,8 +6,7 @@ import eu.thesimplecloud.api.eventapi.CloudEventHandler;
 import eu.thesimplecloud.api.eventapi.IListener;
 import eu.thesimplecloud.module.permission.event.player.PermissionPlayerUpdatedEvent;
 import me.anton.sickcore.api.handler.listeners.bukkit.BukkitHandler;
-import me.anton.sickcore.api.player.bukkitPlayer.IBukkitPlayer;
-import me.anton.sickcore.api.utils.common.Logger;
+import me.anton.sickcore.api.player.bukkitPlayer.BukkitPlayer;
 import me.anton.sickcore.core.BukkitCore;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
@@ -31,17 +30,17 @@ public class TablistProvider extends BukkitHandler implements IListener {
     }
 
     @Override
-    public void onPlayerNickFinish(NickFinishEvent rawEvent, IBukkitPlayer bukkitPlayer, String nickname) {
+    public void onPlayerNickFinish(NickFinishEvent rawEvent, BukkitPlayer bukkitPlayer, String nickname) {
         BukkitCore.getInstance().getCurrentGame().getTablist().reload();
     }
 
     @Override
-    public void onPlayerJoin(PlayerJoinEvent rawEvent, IBukkitPlayer bukkitPlayer) {
+    public void onPlayerJoin(PlayerJoinEvent rawEvent, BukkitPlayer bukkitPlayer) {
         BukkitCore.getInstance().getCurrentGame().getTablist().reload();
     }
 
     @Override
-    public void onPlayerQuit(PlayerQuitEvent rawEvent, IBukkitPlayer bukkitPlayer) {
+    public void onPlayerQuit(PlayerQuitEvent rawEvent, BukkitPlayer bukkitPlayer) {
         BukkitCore.getInstance().getCurrentGame().getTablist().reload();
     }
 }

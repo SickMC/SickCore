@@ -5,20 +5,14 @@ import co.aikar.commands.annotation.*;
 import eu.thesimplecloud.api.CloudAPI;
 import eu.thesimplecloud.api.player.ICloudPlayer;
 import eu.thesimplecloud.api.service.ICloudService;
-import me.anton.sickcore.api.player.apiPlayer.APIPlayer;
-import me.anton.sickcore.api.player.apiPlayer.IAPIPlayer;
-import me.anton.sickcore.api.player.apiPlayer.enums.Rank;
 import me.anton.sickcore.api.player.apiPlayer.language.LanguagePath;
 import me.anton.sickcore.api.player.bukkitPlayer.BukkitPlayer;
-import me.anton.sickcore.api.player.bukkitPlayer.IBukkitPlayer;
 import me.anton.sickcore.api.utils.minecraft.bukkit.inventory.PagedInventoryBuilder;
 import me.anton.sickcore.api.utils.minecraft.bukkit.item.ItemBuilder;
 import me.anton.sickcore.api.utils.minecraft.bukkit.player.sound.DefaultSounds;
 import me.anton.sickcore.api.utils.minecraft.messages.ConsoleMessages;
 import me.anton.sickcore.games.all.HeadDBAPI;
 import me.arcaniax.hdb.api.HeadDatabaseAPI;
-import org.bukkit.Bukkit;
-import org.bukkit.OfflinePlayer;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
@@ -37,7 +31,7 @@ public class SendCommand extends BaseCommand {
         }
 
         Player player = (Player) sender;
-        IBukkitPlayer bukkitPlayer = new BukkitPlayer(player);
+        BukkitPlayer bukkitPlayer = new BukkitPlayer(player);
 
         if (!bukkitPlayer.api().isAdmin()){
             bukkitPlayer.sendMessage(LanguagePath.NETWORK_COMMAND_NOADMIN);
@@ -50,9 +44,9 @@ public class SendCommand extends BaseCommand {
         openServerInv(bukkitPlayer, targetCloud);
     }
 
-    private void openServerInv(IBukkitPlayer bukkitPlayer, ICloudPlayer target){
+    private void openServerInv(BukkitPlayer bukkitPlayer, ICloudPlayer target){
         HeadDatabaseAPI api = HeadDBAPI.getApi();
-        PagedInventoryBuilder builder = new PagedInventoryBuilder(bukkitPlayer.api(), "§6Send");
+        PagedInventoryBuilder builder = new PagedInventoryBuilder(bukkitPlayer, "§6Send");
 
         for (ICloudService service : CloudAPI.getInstance().getCloudServiceManager().getAllCachedObjects()){
             if (service.isProxy())continue;
@@ -61,14 +55,12 @@ public class SendCommand extends BaseCommand {
             if (service.getName().startsWith("Build"))itemStack = api.getItemHead("157");
             if (service.getName().startsWith("Survival"))itemStack = api.getItemHead("50099");
             if (itemStack == null)itemStack = api.getItemHead("8767");
-            builder.addItem(new ItemBuilder(itemStack).setName("§6" + service.getName()).setLore("§7Players: §6" + service.getOnlineCount(), "§7Group: §6" + service.getGroupName() ,"§7Click to connect the player to this server!").build(), event -> {
+            builder.addItem(new ItemBuilder(itemStack, bukkitPlayer).setName("§6" + service.getName()).setLore("§7Players: §6" + service.getOnlineCount(), "§7Group: §6" + service.getGroupName() ,"§7Click to connect the player to this server!"), event -> {
                 target.connect(service);
                 DefaultSounds.levelUP.play(bukkitPlayer);
                 bukkitPlayer.getPlayer().sendMessage((String) bukkitPlayer.api().languageObject("§7You were teleported to the server " + service.getName() + "!", "§7Du wurdest zum Server " + service.getName() + " teleportiert!"));
             });
         }
-
-        builder.resort();
         builder.open();
     }
 

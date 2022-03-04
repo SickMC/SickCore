@@ -6,7 +6,6 @@ import co.aikar.commands.annotation.Default;
 import co.aikar.commands.annotation.Description;
 import me.anton.sickcore.api.player.apiPlayer.language.LanguagePath;
 import me.anton.sickcore.api.player.bukkitPlayer.BukkitPlayer;
-import me.anton.sickcore.api.player.bukkitPlayer.IBukkitPlayer;
 import me.anton.sickcore.api.utils.minecraft.messages.ConsoleMessages;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
@@ -25,12 +24,12 @@ public class NickListCommand extends BaseCommand {
         }
 
         HashMap<Player, String> nicklist = new HashMap<>();
-        IBukkitPlayer player = new BukkitPlayer(sender);
+        BukkitPlayer player = new BukkitPlayer(sender);
 
         if (!player.api().isTeam()){player.sendMessage(LanguagePath.NETWORK_COMMAND_NOSTAFF);return;}
 
         player.getPlayer().getServer().getOnlinePlayers().forEach(onlinePlayer -> {
-            IBukkitPlayer online = new BukkitPlayer(onlinePlayer);
+            BukkitPlayer online = new BukkitPlayer(onlinePlayer);
             if (!online.isNicked()) return;
             nicklist.put(onlinePlayer, online.getName());
         });

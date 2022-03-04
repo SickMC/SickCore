@@ -4,7 +4,6 @@ import co.aikar.commands.BaseCommand;
 import co.aikar.commands.CommandHelp;
 import co.aikar.commands.annotation.*;
 import me.anton.sickcore.api.player.bukkitPlayer.BukkitPlayer;
-import me.anton.sickcore.api.player.bukkitPlayer.IBukkitPlayer;
 import me.anton.sickcore.api.utils.minecraft.messages.ConsoleMessages;
 import net.kyori.adventure.text.Component;
 import org.bukkit.Bukkit;
@@ -22,7 +21,7 @@ public class SharePos extends BaseCommand {
             return;
         }
         Player player = (Player) sender;
-        IBukkitPlayer bukkitPlayer = new BukkitPlayer(player);
+        BukkitPlayer bukkitPlayer = new BukkitPlayer(player);
 
         long x = Math.round(player.getLocation().getX());
         long y = Math.round(player.getLocation().getY());
@@ -44,7 +43,7 @@ public class SharePos extends BaseCommand {
             return;
         }
         Player player = (Player) commandSender;
-        IBukkitPlayer bukkitPlayer = new BukkitPlayer(player);
+        BukkitPlayer bukkitPlayer = new BukkitPlayer(player);
 
         long x = Math.round(player.getLocation().getX());
         long y = Math.round(player.getLocation().getY());

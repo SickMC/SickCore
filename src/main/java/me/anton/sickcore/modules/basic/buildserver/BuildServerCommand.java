@@ -6,7 +6,6 @@ import co.aikar.commands.annotation.Default;
 import eu.thesimplecloud.api.CloudAPI;
 import me.anton.sickcore.api.player.apiPlayer.language.LanguagePath;
 import me.anton.sickcore.api.player.bungeePlayer.BungeePlayer;
-import me.anton.sickcore.api.player.bungeePlayer.IBungeePlayer;
 import me.anton.sickcore.api.utils.minecraft.messages.ConsoleMessages;
 import net.md_5.bungee.api.CommandSender;
 import net.md_5.bungee.api.connection.ProxiedPlayer;
@@ -21,7 +20,7 @@ public class BuildServerCommand extends BaseCommand {
             return;
         }
 
-        IBungeePlayer player = new BungeePlayer(sender);
+        BungeePlayer player = new BungeePlayer(sender);
         if (!player.api().isTeam())return;
 
         if (player.api().cloud().cloudAPI().getConnectedServer().getName().startsWith("Build-")){

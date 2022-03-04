@@ -1,6 +1,6 @@
 package me.anton.sickcore.api.utils.minecraft.bukkit.player.sound;
 
-import me.anton.sickcore.api.player.bukkitPlayer.IBukkitPlayer;
+import me.anton.sickcore.api.player.bukkitPlayer.BukkitPlayer;
 import org.bukkit.Sound;
 import org.bukkit.entity.Player;
 
@@ -24,7 +24,7 @@ public class SoundBuilder {
         player.playSound(net.kyori.adventure.sound.Sound.sound(sound.getKey(), source, pitch, volume));
     }
 
-    public void play(IBukkitPlayer player){
+    public void play(BukkitPlayer player){
         player.getPlayer().playSound(net.kyori.adventure.sound.Sound.sound(sound.getKey(), source, pitch, volume));
     }
 

@@ -3,7 +3,6 @@ package me.anton.sickcore.games.lobby;
 import lombok.Getter;
 import me.anton.sickcore.games.lobby.appereance.LobbyChat;
 import me.anton.sickcore.games.lobby.modi.ModiNPCHandler;
-import me.anton.sickcore.games.lobby.utility.profile.ProfileItem;
 import me.anton.sickcore.gameapi.AbstractGame;
 
 @Getter
@@ -15,7 +14,7 @@ public class LobbyGame extends AbstractGame {
     @Override
     public void onLoad() {
         instance = this;
-        registerListeners(new Events(), new ProfileItem(), new ModiNPCHandler(), new LobbyChat());
+        registerListeners(new Events(), new ModiNPCHandler(), new LobbyChat());
     }
 
     @Override

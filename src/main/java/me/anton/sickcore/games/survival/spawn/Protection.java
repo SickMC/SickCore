@@ -1,7 +1,7 @@
 package me.anton.sickcore.games.survival.spawn;
 
 import me.anton.sickcore.api.handler.listeners.bukkit.BukkitHandler;
-import me.anton.sickcore.api.player.bukkitPlayer.IBukkitPlayer;
+import me.anton.sickcore.api.player.bukkitPlayer.BukkitPlayer;
 import org.bukkit.GameMode;
 import org.bukkit.Location;
 import org.bukkit.block.Block;
@@ -18,14 +18,14 @@ public class Protection extends BukkitHandler {
     Location spawnlocation = Elytra.spawnlocation;
 
     @Override
-    public void onBlockBreak(Block block, BlockBreakEvent rawEvent, IBukkitPlayer bukkitPlayer) {
+    public void onBlockBreak(Block block, BlockBreakEvent rawEvent, BukkitPlayer bukkitPlayer) {
         if (rawEvent.getPlayer().getGameMode().equals(GameMode.CREATIVE))return;
         if (!rawEvent.getBlock().getLocation().getChunk().equals(spawnlocation.getChunk()))return;
         rawEvent.setCancelled(true);
     }
 
     @Override
-    public void onBlockPlace(Block block, BlockPlaceEvent rawEvent, IBukkitPlayer bukkitPlayer) {
+    public void onBlockPlace(Block block, BlockPlaceEvent rawEvent, BukkitPlayer bukkitPlayer) {
         if (rawEvent.getPlayer().getGameMode().equals(GameMode.CREATIVE))return;
         if (!rawEvent.getBlock().getLocation().getChunk().equals(spawnlocation.getChunk()))return;
         rawEvent.setCancelled(true);
@@ -38,13 +38,13 @@ public class Protection extends BukkitHandler {
     }
 
     @Override
-    public void onPlayerDropItem(PlayerDropItemEvent rawEvent, IBukkitPlayer bukkitPlayer, ItemStack drop) {
+    public void onPlayerDropItem(PlayerDropItemEvent rawEvent, BukkitPlayer bukkitPlayer, ItemStack drop) {
         if (!rawEvent.getPlayer().getChunk().equals(spawnlocation.getChunk()))return;
         rawEvent.setCancelled(true);
     }
 
     @Override
-    public void onPlayerInteract(PlayerInteractEvent rawEvent, IBukkitPlayer bukkitPlayer) {
+    public void onPlayerInteract(PlayerInteractEvent rawEvent, BukkitPlayer bukkitPlayer) {
         if (!rawEvent.getPlayer().getChunk().equals(spawnlocation.getChunk()))return;
         rawEvent.setCancelled(true);
     }

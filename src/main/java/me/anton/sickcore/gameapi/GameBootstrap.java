@@ -23,13 +23,13 @@ public class GameBootstrap {
             if (!CloudAPI.getInstance().getThisSidesName().startsWith(game.getName()))continue;
             this.current = game;
             game.load();
-            Logger.info("Game: " + game.getName() + " initialized!");
+            Logger.info("Game: " + game.getName() + " initialized!", this.getClass());
         }
     }
 
     public void unloadGame(){
         current.unload();
-        Logger.info("Game: " + current.getName() + " unloaded!");
+        Logger.info("Game: " + current.getName() + " unloaded!", this.getClass());
         this.current = null;
     }
 
