@@ -8,7 +8,7 @@ import org.bson.Document;
 @Getter
 public class AutoDeleteModule implements IDiscordModule {
 
-    private Document document = getModule().getDiscordModel().getDocument("type", "autoDelete");
+    private Document document = getModule().getConfig().getDocument().get("chatfilter", Document.class);
     @Getter
     private static AutoDeleteModule instance;
 

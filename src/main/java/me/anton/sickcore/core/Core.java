@@ -13,9 +13,9 @@ public abstract class Core {
     protected static Core instance;
     private final MongoConnection mongoConnection;
     private final DatabaseModel playerModel;
-    private final DatabaseModel appereanceModel;
     private final DatabaseModel languageModel;
-    private final DatabaseModel punishmentModel;
+    //private final DatabaseModel punishmentModel;
+    private final DatabaseModel config;
     public final GlobalModuleHandler globalModuleHandler;
     private final Environment environment;
 
@@ -23,9 +23,9 @@ public abstract class Core {
         instance = this;
         mongoConnection = new MongoConnection();
         this.playerModel = new DatabaseModel("sickplayer");
-        this.appereanceModel = new DatabaseModel("sicknetwork");
         this.languageModel = new DatabaseModel("language");
-        this.punishmentModel = new DatabaseModel("punishment");
+        //this.punishmentModel = new DatabaseModel("punishment");
+        this.config = new DatabaseModel("config");
         this.globalModuleHandler = new GlobalModuleHandler();
         if (CloudAPI.getInstance().getThisSidesName().startsWith("Proxy-"))this.environment = Environment.BUNGEECORD;
         else this.environment = Environment.BUKKIT;

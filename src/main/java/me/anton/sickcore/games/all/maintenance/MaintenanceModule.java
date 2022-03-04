@@ -7,6 +7,8 @@ import me.anton.sickcore.api.database.Finder;
 import me.anton.sickcore.api.player.cloudPlayer.CloudAPIPlayer;
 import me.anton.sickcore.core.BukkitCore;
 import me.anton.sickcore.core.Core;
+import me.anton.sickcore.core.UtilConfiguration;
+import me.anton.sickcore.core.module.globalmodule.GlobalModule;
 import org.bson.Document;
 
 import java.util.UUID;
@@ -18,13 +20,13 @@ public class MaintenanceModule {
     private static MaintenanceModule instance;
     public boolean active;
     public boolean secure;
-    private Document maintenance;
+    public UtilConfiguration config;
 
     public void load() {
         instance = this;
-        this.maintenance = Core.getInstance().getAppereanceModel().getDocument(Finder.stringFinder("type", "maintenance"));
-        active = maintenance.getBoolean("active");
-        secure = maintenance.getBoolean("secureMode");
+        this.config = new UtilConfiguration("maintenance");
+        active = config.getDocument().getBoolean("active");
+        secure = config.getDocument().getBoolean("secureMode");
 
         register();
     }
@@ -40,9 +42,10 @@ public class MaintenanceModule {
     public void enable(boolean secure){
         this.secure = secure;
         active = true;
-        maintenance.replace("active", true);
-        if (secure)maintenance.replace("secureMode", true);
-        Core.getInstance().getAppereanceModel().updateDocument(Finder.stringFinder("type", "maintenance"), maintenance);
+        Document document = config.getDocument();
+        document.replace("active", true);
+        if (secure)document.replace("secureMode", true);
+        config.update(document);
         for (ICloudService service : CloudAPI.getInstance().getCloudServiceManager().getAllCachedObjects()){
             if (!service.isLobby())return;
             service.getOnlinePlayers().getBlocking().forEach(player -> {
@@ -59,9 +62,10 @@ public class MaintenanceModule {
     public void disable(){
         this.secure = false;
         this.active = false;
-        maintenance.replace("active", false);
-        maintenance.replace("secureMode", false);
-        Core.getInstance().getAppereanceModel().updateDocument(Finder.stringFinder("type", "maintenance"), maintenance);
+        Document document = config.getDocument();
+        document.replace("active", false);
+        document.replace("secureMode", false);
+        getConfig().update(document);
     }
 
 

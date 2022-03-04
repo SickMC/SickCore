@@ -20,9 +20,10 @@ public class DatabaseModel {
         this.collection = database.getCollection(name);
     }
 
-    public void createDocument(Document document){
-        if (documentExists(document))return;
+    public Document createDocument(Document document){
+        if (documentExists(document))return document;
         collection.insertOne(document);
+        return document;
     }
 
     public void updateDocument(Finder finder, Document document){
@@ -61,6 +62,11 @@ public class DatabaseModel {
 
     public Document getDocument(Finder finder){
         return collection.find(finder.bson()).first();
+    }
+
+    public Document getOrCreate(Finder finder){
+        if (documentExists(finder))return getDocument(finder);
+        return createDocument(new Document(finder.getKey(), finder.getKey()));
     }
 
     public List<Document> getAllValues(){

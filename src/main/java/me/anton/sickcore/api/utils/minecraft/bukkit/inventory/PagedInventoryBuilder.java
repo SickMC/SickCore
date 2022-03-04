@@ -47,7 +47,7 @@ public class PagedInventoryBuilder {
 
     public void sort(){
         pagedItems.clear();
-        List<PagedInventoryItem> sorted = items.stream().sorted(Comparator.comparing(PagedInventoryItem::getImportance)).collect(Collectors.toList());
+        List<PagedInventoryItem> sorted = items.stream().sorted(Comparator.comparing(PagedInventoryItem::getImportance).reversed()).collect(Collectors.toList());
 
         pages = (sorted.size() / 25) + 1;
 

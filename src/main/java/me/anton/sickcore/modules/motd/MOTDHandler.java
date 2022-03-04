@@ -1,10 +1,11 @@
 package me.anton.sickcore.modules.motd;
 
-import eu.thesimplecloud.api.CloudAPI;
 import me.anton.sickcore.api.database.Finder;
 import me.anton.sickcore.api.handler.listeners.bungee.BungeeHandler;
 import me.anton.sickcore.api.utils.common.StringUtils;
 import me.anton.sickcore.core.Core;
+import me.anton.sickcore.gameapi.ConfigurationHandler;
+import me.anton.sickcore.games.all.maintenance.MaintenanceModule;
 import net.md_5.bungee.api.ServerPing;
 import net.md_5.bungee.api.chat.BaseComponent;
 import net.md_5.bungee.api.chat.TextComponent;
@@ -19,7 +20,7 @@ import java.util.UUID;
 
 public class MOTDHandler extends BungeeHandler {
 
-    private Document document = MOTDModule.getInstance().getDocument();
+    private Document document = MOTDModule.getInstance().getConfig().getDocument();
 
     @Override
     public void onPing(ProxyPingEvent rawEvent, PendingConnection pendingConnection, ServerPing serverPing) {
@@ -54,7 +55,7 @@ public class MOTDHandler extends BungeeHandler {
 
         serverPing.setPlayers(players);
 
-        Document maintenance = Core.getInstance().getAppereanceModel().getDocument(Finder.stringFinder("type", "maintenance"));
+        Document maintenance = ConfigurationHandler.getMaintenanceConfig().getDocument();
 
         if (maintenance.getBoolean("active"))
             serverPing.setVersion(new ServerPing.Protocol("§7Maintenance", serverPing.getVersion().getProtocol()));

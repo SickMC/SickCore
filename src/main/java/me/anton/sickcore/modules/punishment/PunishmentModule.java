@@ -17,7 +17,7 @@ public class PunishmentModule extends GlobalModule {
     public void load() {
         instance = this;
 
-        this.punishments = Core.getInstance().getPunishmentModel();
+        //this.punishments = Core.getInstance().getPunishmentModel();
 
         switch (Core.getInstance().getEnvironment()){
             case BUKKIT -> {

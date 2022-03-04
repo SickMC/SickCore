@@ -11,6 +11,7 @@ import me.anton.sickcore.api.utils.minecraft.bukkit.inventory.InventoryBuilder;
 import me.anton.sickcore.api.utils.minecraft.bukkit.inventory.PagedInventoryBuilder;
 import me.anton.sickcore.api.utils.minecraft.bukkit.item.ItemBuilder;
 import me.anton.sickcore.api.utils.minecraft.bukkit.player.sound.DefaultSounds;
+import me.anton.sickcore.gameapi.ConfigurationHandler;
 import me.anton.sickcore.games.monopoly.street.MonopolyStreet;
 import org.bson.Document;
 import org.bukkit.Location;
@@ -62,7 +63,7 @@ public class PositionCommand extends BaseCommand {
                 Location location = player.getPlayer().getLocation();
                 worldPos.put(street.name(), location.toString());
                 path.put(player.getPlayer().getWorld().getName(), worldPos);
-                new DatabaseModel("Monopoly").updateDocument(Finder.stringFinder("type", "positions"), path);
+                ConfigurationHandler.getMonopolyConfig().update(path);
                 DefaultSounds.levelUP.play(player);
             });
         }

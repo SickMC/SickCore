@@ -110,7 +110,9 @@ public class ItemBuilder {
     }
 
     public ItemBuilder setPlayerEvent(Consumer<PlayerInteractEvent> event){
-        HashMap<ItemStack, ItemBuilder> add = new HashMap<>(playerHandler.get(player.getUniqueID()));
+        HashMap<ItemStack, ItemBuilder> add;
+        if (playerHandler.containsKey(player.getUniqueID()))add = new HashMap<>(playerHandler.get(player.getUniqueID()));
+        else add = new HashMap<>();
         add.put(this.build(), this);
         playerHandler.put(player.api().getUUID(), add);
         this.itemClickEvent = event;

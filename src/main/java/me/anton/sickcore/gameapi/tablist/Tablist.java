@@ -1,7 +1,9 @@
 package me.anton.sickcore.gameapi.tablist;
 
+import lombok.Getter;
 import me.anton.sickcore.api.player.bukkitPlayer.BukkitPlayer;
 import me.anton.sickcore.api.utils.common.ColorUtils;
+import me.anton.sickcore.core.UtilConfiguration;
 import me.anton.sickcore.gameapi.AbstractGame;
 import net.kyori.adventure.text.Component;
 import org.bukkit.Bukkit;
@@ -9,12 +11,15 @@ import org.bukkit.entity.Player;
 import org.bukkit.scoreboard.Scoreboard;
 import org.bukkit.scoreboard.Team;
 
+@Getter
 public class Tablist {
 
     public AbstractGame game;
+    public UtilConfiguration config;
 
     public Tablist(AbstractGame game){
         this.game = game;
+        this.config = new UtilConfiguration("tablist");
     }
 
     public void reload() {

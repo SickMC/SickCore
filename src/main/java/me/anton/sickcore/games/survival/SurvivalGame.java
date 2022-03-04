@@ -41,11 +41,6 @@ public class SurvivalGame extends AbstractGame {
     }
 
     @Override
-    public DatabaseModel getModel() {
-        return super.getModel();
-    }
-
-    @Override
     public DatabaseModel getPlayerModel() {
         return super.getPlayerModel();
     }

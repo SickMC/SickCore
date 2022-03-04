@@ -11,7 +11,7 @@ import org.bson.Document;
 @Getter
 public class TabData {
 
-    private Document config = Core.getInstance().getAppereanceModel().getDocument(Finder.stringFinder("type", "tablist"));
+    private Document config = BukkitCore.getInstance().getCurrentGame().getTablist().getConfig().getDocument();
     private int online = CloudAPI.getInstance().getCloudPlayerManager().getNetworkOnlinePlayerCount().getBlocking();
     private String title = BukkitCore.getInstance().getCurrentGame().getName();
 

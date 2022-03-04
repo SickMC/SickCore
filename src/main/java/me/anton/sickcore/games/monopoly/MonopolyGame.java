@@ -4,6 +4,7 @@ import lombok.Getter;
 import lombok.Setter;
 import me.anton.sickcore.api.database.DatabaseModel;
 import me.anton.sickcore.gameapi.AbstractGame;
+import me.anton.sickcore.gameapi.GameConfiguration;
 import me.anton.sickcore.games.monopoly.gamestate.GameState;
 import me.anton.sickcore.games.monopoly.gamestate.GameStateHandler;
 
@@ -20,7 +21,6 @@ public class MonopolyGame extends AbstractGame {
     public void onLoad() {
         instance = this;
         this.handler = new GameStateHandler();
-
     }
 
     @Override
@@ -36,11 +36,6 @@ public class MonopolyGame extends AbstractGame {
     @Override
     public String getName() {
         return "Monopoly";
-    }
-
-    @Override
-    public DatabaseModel getModel() {
-        return super.getModel();
     }
 
     @Override

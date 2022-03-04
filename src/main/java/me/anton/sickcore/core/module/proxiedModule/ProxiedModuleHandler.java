@@ -9,7 +9,7 @@ import java.util.List;
 
 public class ProxiedModuleHandler {
 
-    private List<ProxiedIModule> modules = Arrays.asList(new DiscordModule(), new MOTDModule(), new MsgModule());
+    private List<ProxiedIModule> modules = Arrays.asList(new MsgModule());
 
     public void loadModules(){
         modules.forEach(ProxiedIModule::load);

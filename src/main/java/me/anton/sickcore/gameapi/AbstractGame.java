@@ -6,8 +6,10 @@ import lombok.Getter;
 import me.anton.sickcore.api.database.DatabaseModel;
 import me.anton.sickcore.api.handler.listeners.bukkit.BukkitHandler;
 import me.anton.sickcore.api.handler.listeners.cloud.CloudListenerProvider;
+import me.anton.sickcore.api.utils.common.Logger;
 import me.anton.sickcore.core.BukkitCore;
 import me.anton.sickcore.core.Core;
+import me.anton.sickcore.core.module.globalmodule.ModuleConfiguration;
 import me.anton.sickcore.games.all.nick.NickProvider;
 import me.anton.sickcore.gameapi.tablist.Tablist;
 import me.anton.sickcore.gameapi.tablist.TablistProvider;
@@ -50,9 +52,6 @@ public abstract class AbstractGame {
     }
     public abstract String getName();
     public DatabaseModel getPlayerModel() {return new DatabaseModel(getName() + "_players");}
-    public DatabaseModel getModel(){
-        return new DatabaseModel(getName());
-    }
     public Tablist getTablist(){
         return new Tablist(this);
     }
@@ -65,6 +64,10 @@ public abstract class AbstractGame {
 
         //Nick
         registerListeners(new NickProvider());
+    }
+
+    public GameConfiguration getConfig(){
+        return new GameConfiguration(this, getName());
     }
 
 }

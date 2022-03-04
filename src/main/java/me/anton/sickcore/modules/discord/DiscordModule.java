@@ -6,6 +6,8 @@ import me.anton.sickcore.api.database.Finder;
 import me.anton.sickcore.api.utils.common.FileUtils;
 import me.anton.sickcore.api.utils.common.Logger;
 import me.anton.sickcore.core.Core;
+import me.anton.sickcore.core.Environment;
+import me.anton.sickcore.core.module.globalmodule.GlobalModule;
 import me.anton.sickcore.core.module.proxiedModule.ProxiedIModule;
 import me.anton.sickcore.modules.discord.handlers.command.SelectionMenuListener;
 import me.anton.sickcore.modules.discord.handlers.command.SlashCommandBuilder;
@@ -30,14 +32,12 @@ import java.util.Arrays;
 import java.util.List;
 
 @Getter
-public class DiscordModule implements ProxiedIModule {
+public class DiscordModule extends GlobalModule {
 
     private DiscordModuleHandler moduleHandler;
     @Getter
     public static DiscordModule instance;
-    private Document model;
     private DatabaseModel gamePlayer;
-    private DatabaseModel discordModel;
 
     private JDA jda;
     private JDABuilder builder;
@@ -48,23 +48,23 @@ public class DiscordModule implements ProxiedIModule {
 
     @Override
     public void load() {
+        if (getEnvironment() != Environment.BUNGEECORD)return;
         if (!Core.getInstance().bungee().isMainProxy())return;
         instance = this;
-        this.discordModel = new DatabaseModel("discord");
+        initializeConfig("discordbot");
         this.commandBuilder = new SlashCommandBuilder();
         moduleHandler = new DiscordModuleHandler();
-        model = discordModel.getDocument(Finder.stringFinder("bot", "sickmc"));
         this.gamePlayer = new DatabaseModel("discordPlayer");
         register();
     }
 
     @Override
     public void unload() {
+        if (getEnvironment() != Environment.BUNGEECORD)return;
         if (!Core.getInstance().bungee().isMainProxy())return;
         shutdown();
     }
 
-    @Override
     public void register() {
         start();
         Arrays.asList(new CloudCommand(), new ClearCommand(), new PingCommand(), new VerifyCommand(), new AnnounceCommand(), new LevelCommand(), new TopCommand()).forEach(command -> this.commandBuilder.registerCommand(command));
@@ -117,10 +117,10 @@ public class DiscordModule implements ProxiedIModule {
     }
 
     public Object readFromConfig(String key){
-        return model.get(key);
+        return getConfig().getDocument().get(key);
     }
 
     public Document getCommands(){
-        return FileUtils.getSubDocument("registeredCommands", model);
+        return FileUtils.getSubDocument("registeredCommands", getConfig().getDocument());
     }
 }
