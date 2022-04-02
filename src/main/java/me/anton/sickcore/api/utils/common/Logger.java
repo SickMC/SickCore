@@ -3,6 +3,9 @@ package me.anton.sickcore.api.utils.common;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
+import me.anton.sickcore.core.BukkitCore;
+import me.anton.sickcore.core.ProxyCore;
+import me.anton.sickcore.core.Core;
 
 public class Logger {
 
@@ -28,12 +31,46 @@ public class Logger {
 
     public static void log(String message, Level level){
         if(level.getPriority() < level.getPriority()) return;
-        System.out.println(level.getPrefix() + message);
+        switch (Core.getInstance().getEnvironment()){
+            case BUKKIT -> {
+                switch (level){
+                    case INFO -> BukkitCore.getInstance().getPlugin().getLogger().log(java.util.logging.Level.INFO, message);
+                    case WARN -> BukkitCore.getInstance().getPlugin().getLogger().log(java.util.logging.Level.WARNING, message);
+                    case DEBUG -> BukkitCore.getInstance().getPlugin().getLogger().log(java.util.logging.Level.FINE, message);
+                    case ERROR -> BukkitCore.getInstance().getPlugin().getLogger().log(java.util.logging.Level.SEVERE, message);
+                }
+            }
+            case VELOCITY -> {
+                switch (level){
+                    case INFO -> ProxyCore.getInstance().getBootstrap().getLogger().info(message);
+                    case WARN -> ProxyCore.getInstance().getBootstrap().getLogger().warn(message);
+                    case DEBUG -> ProxyCore.getInstance().getBootstrap().getLogger().debug(message);
+                    case ERROR -> ProxyCore.getInstance().getBootstrap().getLogger().error(message);
+                }
+            }
+        }
     }
 
     public static void log(String message, Level level, Class clazz){
         if(level.getPriority() < level.getPriority()) return;
-        System.out.println(level.getPrefix()+ "(" + clazz.getSimpleName() + ")" + message);
+        switch (Core.getInstance().getEnvironment()){
+            case BUKKIT -> {
+                switch (level){
+                    case INFO -> BukkitCore.getInstance().getPlugin().getLogger().log(java.util.logging.Level.INFO,"(" + clazz.getSimpleName() + ")" +  message);
+                    case WARN -> BukkitCore.getInstance().getPlugin().getLogger().log(java.util.logging.Level.WARNING,"(" + clazz.getSimpleName() + ")" +  message);
+                    case DEBUG -> BukkitCore.getInstance().getPlugin().getLogger().log(java.util.logging.Level.FINE,"(" + clazz.getSimpleName() + ")" +  message);
+                    case ERROR -> BukkitCore.getInstance().getPlugin().getLogger().log(java.util.logging.Level.SEVERE,"(" + clazz.getSimpleName() + ")" +  message);
+                }
+            }
+            case VELOCITY -> {
+                switch (level){
+                    case INFO ->  ProxyCore.getInstance().getBootstrap().getLogger().info("(" + clazz.getSimpleName() + ")" + message);
+                    case WARN ->  ProxyCore.getInstance().getBootstrap().getLogger().warn("(" + clazz.getSimpleName() + ")" +  message);
+                    case DEBUG ->  ProxyCore.getInstance().getBootstrap().getLogger().debug("(" + clazz.getSimpleName() + ")" +  message);
+                    case ERROR ->  ProxyCore.getInstance().getBootstrap().getLogger().error("(" + clazz.getSimpleName() + ")" +  message);
+                }
+            }
+        }
     }
 
     @AllArgsConstructor

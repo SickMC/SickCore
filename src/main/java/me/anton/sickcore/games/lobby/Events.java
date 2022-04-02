@@ -2,10 +2,10 @@ package me.anton.sickcore.games.lobby;
 
 import lombok.Getter;
 import me.anton.sickcore.api.handler.listeners.bukkit.BukkitHandler;
-import me.anton.sickcore.api.player.apiPlayer.enums.Rank;
 import me.anton.sickcore.api.player.bukkitPlayer.BukkitPlayer;
 import me.anton.sickcore.games.lobby.utility.LobbyItems;
 import me.anton.sickcore.games.all.maintenance.MaintenanceModule;
+import me.anton.sickcore.modules.rank.Rank;
 import net.kyori.adventure.text.Component;
 import org.bukkit.Bukkit;
 import org.bukkit.GameMode;
@@ -23,8 +23,6 @@ import org.bukkit.event.player.*;
 import org.bukkit.event.weather.WeatherChangeEvent;
 import org.bukkit.inventory.ItemStack;
 
-import java.util.Arrays;
-import java.util.List;
 import java.util.UUID;
 
 public class Events extends BukkitHandler {
@@ -52,7 +50,6 @@ public class Events extends BukkitHandler {
         player.setSaturation(20);
         player.setHealth(20);
         LobbyItems.addLobbyItems(bukkitPlayer);
-        List<Rank> glowingRanks = Arrays.asList(Rank.ADMIN, Rank.BUILDER, Rank.CONTENT, Rank.MODERATOR);
         if (bukkitPlayer.api().isTeam() && !bukkitPlayer.isNicked())player.setGlowing(true);
     }
 

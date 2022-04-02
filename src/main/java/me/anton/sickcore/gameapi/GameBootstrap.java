@@ -1,6 +1,6 @@
 package me.anton.sickcore.gameapi;
 
-import eu.thesimplecloud.api.CloudAPI;
+import de.dytanic.cloudnet.driver.CloudNetDriver;
 import me.anton.sickcore.api.utils.common.Logger;
 import me.anton.sickcore.games.build.BuildGame;
 import me.anton.sickcore.games.lobby.LobbyGame;
@@ -20,7 +20,7 @@ public class GameBootstrap {
 
     public void loadGame(){
         for (AbstractGame game : games) {
-            if (!CloudAPI.getInstance().getThisSidesName().startsWith(game.getName()))continue;
+            if (!CloudNetDriver.getInstance().getComponentName().startsWith(game.getName()))continue;
             this.current = game;
             game.load();
             Logger.info("Game: " + game.getName() + " initialized!", this.getClass());

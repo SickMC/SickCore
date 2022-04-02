@@ -32,23 +32,33 @@ public class Tablist {
 
             Scoreboard scoreboard = player.getScoreboard();
 
-            if (bukkitPlayer.isNicked()) {
-                if (scoreboard.getTeam(data.getNickedteamName()) == null)
-                    scoreboard.registerNewTeam(data.getNickedteamName());
-                Team team = scoreboard.getTeam(data.getNickedteamName());
-                team.prefix(Component.text(bukkitPlayer.api().getNickRank().getColor() + bukkitPlayer.api().getNickRank().getName() + "§8 × §r" + bukkitPlayer.api().getNickRank().getColor()));
-                team.color(ColorUtils.namedTextColorByChar(bukkitPlayer.api().getNickRank().getColor()));
-                team.suffix(Component.text("§7"));
-                player.displayName(Component.text(data.getNickedDisplayname()));
-                team.addEntry(bukkitPlayer.api().getNickname());
-            } else {
-                if (scoreboard.getTeam(data.getTeamName()) == null) scoreboard.registerNewTeam(data.getTeamName());
+            if (game.isStaff()){
+                if (scoreboard.getTeam(data.getTeamName()) == null)scoreboard.registerNewTeam(data.getTeamName());
                 Team team = scoreboard.getTeam(data.getTeamName());
-                team.prefix(Component.text(bukkitPlayer.api().getRank().getColor() + bukkitPlayer.api().getRank().getName() + "§8 × §r" + bukkitPlayer.api().getRankColor()));
+                team.prefix(Component.text(bukkitPlayer.api().getRank().getParent().getColor() + bukkitPlayer.api().getRank().getParent().getPrivatePrefix() + "§8 × §r" + bukkitPlayer.api().getRankColor()));
                 team.color(ColorUtils.namedTextColorByChar(bukkitPlayer.api().getRankColor()));
                 team.suffix(Component.text("§7"));
                 player.displayName(Component.text(data.getDisplayname()));
                 team.addPlayer(bukkitPlayer.getPlayer());
+            }else {
+                if (bukkitPlayer.isNicked()) {
+                    if (scoreboard.getTeam(data.getNickedteamName()) == null)
+                        scoreboard.registerNewTeam(data.getNickedteamName());
+                    Team team = scoreboard.getTeam(data.getNickedteamName());
+                    team.prefix(Component.text(bukkitPlayer.api().getNickRank().getParent().getColor() + bukkitPlayer.api().getNickRank().getParent().getPrefix() + "§8 × §r" + bukkitPlayer.api().getNickRank().getParent().getColor()));
+                    team.color(ColorUtils.namedTextColorByChar(bukkitPlayer.api().getNickRank().getParent().getColor()));
+                    team.suffix(Component.text("§7"));
+                    player.displayName(Component.text(data.getNickedDisplayname()));
+                    team.addEntry(bukkitPlayer.api().getNickname());
+                } else {
+                    if (scoreboard.getTeam(data.getTeamName()) == null) scoreboard.registerNewTeam(data.getTeamName());
+                    Team team = scoreboard.getTeam(data.getTeamName());
+                    team.prefix(Component.text(bukkitPlayer.api().getRank().getParent().getColor() + bukkitPlayer.api().getRank().getParent().getPrefix() + "§8 × §r" + bukkitPlayer.api().getRankColor()));
+                    team.color(ColorUtils.namedTextColorByChar(bukkitPlayer.api().getRankColor()));
+                    team.suffix(Component.text("§7"));
+                    player.displayName(Component.text(data.getDisplayname()));
+                    team.addPlayer(bukkitPlayer.getPlayer());
+                }
             }
         }
     }

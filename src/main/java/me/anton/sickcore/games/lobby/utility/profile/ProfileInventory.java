@@ -2,7 +2,6 @@ package me.anton.sickcore.games.lobby.utility.profile;
 
 import me.anton.sickcore.api.player.apiPlayer.APIPlayer;
 import me.anton.sickcore.api.player.apiPlayer.language.Language;
-import me.anton.sickcore.api.player.apiPlayer.enums.Rank;
 import me.anton.sickcore.api.player.apiPlayer.language.LanguagePath;
 import me.anton.sickcore.api.player.bukkitPlayer.BukkitPlayer;
 import me.anton.sickcore.api.utils.common.Replacable;
@@ -12,6 +11,7 @@ import me.anton.sickcore.api.utils.minecraft.bukkit.player.sound.DefaultSounds;
 import me.anton.sickcore.core.BukkitCore;
 import me.anton.sickcore.games.all.HeadDBAPI;
 import me.anton.sickcore.games.all.nick.AutoNickInventory;
+import me.anton.sickcore.modules.rank.Rank;
 import me.arcaniax.hdb.api.HeadDatabaseAPI;
 import org.bukkit.ChatColor;
 import org.bukkit.Color;
@@ -29,10 +29,10 @@ public class ProfileInventory{
 
         builder.setItem(language, 11, event -> openLanguageInventory(player));
 
-        if (!player.api().isHigher(Rank.MVP))builder.setItem(new ItemBuilder(Material.NAME_TAG, player).setName("§6Nicktool").setLore("§7" + player.api().languageString(LanguagePath.NETWORK_AVAILABLE_WITHMVPORHIGHER).build()), 13, event -> DefaultSounds.anvil.play(player));
+        if (!player.api().isMVP() || player.api().isTeam())builder.setItem(new ItemBuilder(Material.NAME_TAG, player).setName("§6Nicktool").setLore("§7" + player.api().languageString(LanguagePath.NETWORK_AVAILABLE_WITHMVPORHIGHER).build()), 13, event -> DefaultSounds.anvil.play(player));
         else builder.setItem(new ItemBuilder(Material.NAME_TAG, player).setName("§6Nicktool").setLore("§7Nick: §7" + player.api().getNickname()), 13, event -> AutoNickInventory.openAutoNickInventory(player));
 
-        if (player.api().getRank() == Rank.PLAYER)builder.setItem(new ItemBuilder(Material.LEATHER_CHESTPLATE, player).setLeatherArmorColor(Color.BLUE).setName("§6Rankcolor").setLore("§7" + player.api().languageString(LanguagePath.NETWORK_AVAILABLE_WITHVIPPORHIGHER).build()).addItemFlags(ItemFlag.HIDE_ATTRIBUTES, ItemFlag.HIDE_DYE), 15, event -> DefaultSounds.anvil.play(player));
+        if (player.api().isPlayer())builder.setItem(new ItemBuilder(Material.LEATHER_CHESTPLATE, player).setLeatherArmorColor(Color.BLUE).setName("§6Rankcolor").setLore("§7" + player.api().languageString(LanguagePath.NETWORK_AVAILABLE_WITHVIPPORHIGHER).build()).addItemFlags(ItemFlag.HIDE_ATTRIBUTES, ItemFlag.HIDE_DYE), 15, event -> DefaultSounds.anvil.play(player));
         else builder.setItem(new ItemBuilder(Material.LEATHER_CHESTPLATE, player).setLeatherArmorColor(Color.BLUE).setName("§6Rankcolor").setLore(player.api().languageString(LanguagePath.PAPER_COMMAND_LOBBY_PROFILEINVENTORY_CHOOSE).replace(new Replacable("%e%", "e"), new Replacable("%object%", "rankcolor"), new Replacable("%deobject%", "Rankcolor")).build()).addItemFlags(ItemFlag.HIDE_ATTRIBUTES, ItemFlag.HIDE_DYE),15, event -> openRankColorInventory(player));
 
         builder.fillEmpty();
@@ -70,7 +70,7 @@ public class ProfileInventory{
         InventoryBuilder builder = new InventoryBuilder(player, "§6Rankcolor", 6);
 
         builder.setItem(new ItemBuilder(Material.CLOCK, player).setName(iapiPlayer.languageString(LanguagePath.PAPER_COMMAND_LOBBY_RANKINVENTORY_RESETRANKCOLOR).build()).setLore(iapiPlayer.languageString(LanguagePath.PAPER_COMMAND_LOBBY_RANKINVENTORY_RESETRANKCOLORDESCRIPTION).build()), 13, event -> {
-            iapiPlayer.setRankColor(iapiPlayer.getDefaultRankColor());
+            iapiPlayer.setRankColor(iapiPlayer.getRank().getParent().getColor());
             DefaultSounds.levelUP.play(player);
             BukkitCore.getInstance().getCurrentGame().getTablist().reload();
             openProfileInventory(player);

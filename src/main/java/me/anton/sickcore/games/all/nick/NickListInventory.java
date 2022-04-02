@@ -1,11 +1,10 @@
 package me.anton.sickcore.games.all.nick;
 
-import dev.dbassett.skullcreator.SkullCreator;
 import me.anton.sickcore.api.player.bukkitPlayer.BukkitPlayer;
 import me.anton.sickcore.api.utils.minecraft.bukkit.inventory.PagedInventoryBuilder;
 import me.anton.sickcore.api.utils.minecraft.bukkit.item.ItemBuilder;
+import org.bukkit.Material;
 import org.bukkit.entity.Player;
-import org.bukkit.inventory.ItemStack;
 
 import java.util.HashMap;
 
@@ -20,8 +19,7 @@ public class NickListInventory {
             BukkitPlayer online = new BukkitPlayer(onlinePlayer);
             if (!online.isNicked())return;
             nicklist.put(onlinePlayer, online.getName());
-            ItemStack itemStack = SkullCreator.itemFromUuid(onlinePlayer.getUniqueId());
-            builder.addItem(new ItemBuilder(itemStack, player).setName("§6" + onlinePlayer.getName()).setLore("§7Nickname: §7" + online.getName(), (String) player.api().languageObject("§7Click to unnick the player", "§7Klicke um diesen Spieler zu unnicken")), event -> {
+            builder.addItem(new ItemBuilder(Material.PLAYER_HEAD, player).setSkull(onlinePlayer.getUniqueId()).setName("§6" + onlinePlayer.getName()).setLore("§7Nickname: §7" + online.getName(), (String) player.api().languageObject("§7Click to unnick the player", "§7Klicke um diesen Spieler zu unnicken")), event -> {
                 online.unnick();
                 openInventory(player);
             });

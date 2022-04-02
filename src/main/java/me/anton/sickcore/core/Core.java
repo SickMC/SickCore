@@ -1,6 +1,6 @@
 package me.anton.sickcore.core;
 
-import eu.thesimplecloud.api.CloudAPI;
+import de.dytanic.cloudnet.driver.CloudNetDriver;
 import lombok.Getter;
 import me.anton.sickcore.api.database.DatabaseModel;
 import me.anton.sickcore.api.database.MongoConnection;
@@ -27,7 +27,7 @@ public abstract class Core {
         //this.punishmentModel = new DatabaseModel("punishment");
         this.config = new DatabaseModel("config");
         this.globalModuleHandler = new GlobalModuleHandler();
-        if (CloudAPI.getInstance().getThisSidesName().startsWith("Proxy-"))this.environment = Environment.BUNGEECORD;
+        if (CloudNetDriver.getInstance().getComponentName().startsWith("Proxy-"))this.environment = Environment.VELOCITY;
         else this.environment = Environment.BUKKIT;
     }
 
@@ -35,6 +35,6 @@ public abstract class Core {
         return (BukkitCore) instance;
     }
 
-    public BungeeCore bungee(){ return (BungeeCore) instance; }
+    public ProxyCore bungee(){ return (ProxyCore) instance; }
 
 }

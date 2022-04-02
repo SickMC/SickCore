@@ -1,12 +1,8 @@
 package me.anton.sickcore.modules.motd;
 
 import lombok.Getter;
-import me.anton.sickcore.api.database.Finder;
-import me.anton.sickcore.core.BungeeCore;
-import me.anton.sickcore.core.Core;
+import me.anton.sickcore.core.ProxyCore;
 import me.anton.sickcore.core.module.globalmodule.GlobalModule;
-import me.anton.sickcore.core.module.proxiedModule.ProxiedIModule;
-import org.bson.Document;
 
 @Getter
 public class MOTDModule extends GlobalModule {
@@ -30,7 +26,7 @@ public class MOTDModule extends GlobalModule {
     public void register() {
         switch (getEnvironment()){
             case BUNGEECORD -> {
-                BungeeCore.getInstance().getProvider().register(new MOTDHandler());
+                ProxyCore.getInstance().getProvider().register(new MOTDHandler());
             }
             case BUKKIT -> {
 

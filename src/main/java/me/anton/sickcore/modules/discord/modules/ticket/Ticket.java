@@ -8,9 +8,10 @@ import me.anton.sickcore.modules.discord.DiscordModule;
 import me.anton.sickcore.modules.discord.handlers.messages.EmbedBuilder;
 import net.dv8tion.jda.api.Permission;
 import net.dv8tion.jda.api.entities.Emoji;
+import net.dv8tion.jda.api.entities.Emote;
 import net.dv8tion.jda.api.entities.Member;
 import net.dv8tion.jda.api.entities.TextChannel;
-import net.dv8tion.jda.api.interactions.components.Button;
+import net.dv8tion.jda.api.interactions.components.buttons.Button;
 import org.bson.Document;
 
 public class Ticket {
@@ -64,7 +65,7 @@ public class Ticket {
         ticketChannel.putPermissionOverride(dModule.getJda().getRoleById(DiscordIds.mod)).setDeny(Permission.VIEW_CHANNEL).queue();
         ticketChannel.getManager().setParent(dModule.getMainGuild().getCategoryById(module.getTicketArchiveCategoryID())).queue();
         module.getModel().deleteDocument(new Finder("playerID",player.getUser().getId()));
-        ticketChannel.sendMessageEmbeds(new EmbedBuilder().setTitle("Ticket").setContent("Klicke den :wastebasket: Button um das Ticket zu schließen!").build()).setActionRow(Button.danger("ticket_delete", Emoji.fromUnicode("\uD83D\uDDD1️"))).queue();
+        ticketChannel.sendMessageEmbeds(new EmbedBuilder().setTitle("Ticket").setContent("Klicke den :wastebasket: Button um das Ticket zu schließen!").build()).setActionRow(Button.danger("ticket_delete", Emoji.fromUnicode("U+1F512"))).queue();
     }
 
 }

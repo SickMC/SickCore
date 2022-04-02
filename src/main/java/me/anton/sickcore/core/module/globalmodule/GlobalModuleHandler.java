@@ -4,8 +4,9 @@ import lombok.Getter;
 import me.anton.sickcore.modules.basic.BasicModule;
 import me.anton.sickcore.modules.discord.DiscordModule;
 import me.anton.sickcore.modules.motd.MOTDModule;
-import me.anton.sickcore.modules.notify.NotifyModule;
-import me.anton.sickcore.modules.punishment.PunishmentModule;
+import me.anton.sickcore.modules.staff.notify.NotifyModule;
+import me.anton.sickcore.modules.rank.RankModule;
+import me.anton.sickcore.modules.staff.StaffModule;
 
 import java.util.Arrays;
 import java.util.List;
@@ -13,7 +14,7 @@ import java.util.List;
 public class GlobalModuleHandler {
 
     @Getter
-    public List<GlobalModule> modules = Arrays.asList(new NotifyModule(), new BasicModule(), new DiscordModule(), new MOTDModule());
+    public List<GlobalModule> modules = Arrays.asList(new NotifyModule(), new BasicModule(), new DiscordModule(), new MOTDModule(), new StaffModule(), new RankModule());
 
     public void load(){
         for (GlobalModule module : modules) {

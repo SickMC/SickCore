@@ -1,10 +1,8 @@
 package me.anton.sickcore.gameapi.tablist;
 
-import eu.thesimplecloud.api.event.player.CloudPlayerDisconnectEvent;
-import eu.thesimplecloud.api.event.player.CloudPlayerLoginEvent;
-import eu.thesimplecloud.api.eventapi.CloudEventHandler;
-import eu.thesimplecloud.api.eventapi.IListener;
-import eu.thesimplecloud.module.permission.event.player.PermissionPlayerUpdatedEvent;
+import de.dytanic.cloudnet.driver.event.EventListener;
+import de.dytanic.cloudnet.ext.bridge.event.BridgeProxyPlayerDisconnectEvent;
+import de.dytanic.cloudnet.ext.bridge.event.BridgeProxyPlayerLoginSuccessEvent;
 import me.anton.sickcore.api.handler.listeners.bukkit.BukkitHandler;
 import me.anton.sickcore.api.player.bukkitPlayer.BukkitPlayer;
 import me.anton.sickcore.core.BukkitCore;
@@ -12,20 +10,15 @@ import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
 import xyz.haoshoku.nick.events.NickFinishEvent;
 
-public class TablistProvider extends BukkitHandler implements IListener {
+public class TablistProvider extends BukkitHandler {
 
-    @CloudEventHandler
-    public void handle(PermissionPlayerUpdatedEvent rawEvent) {
+    @EventListener
+    public void handle(BridgeProxyPlayerLoginSuccessEvent rawEvent){
         BukkitCore.getInstance().getCurrentGame().getTablist().reload();
     }
 
-    @CloudEventHandler
-    public void handle(CloudPlayerLoginEvent rawEvent){
-        BukkitCore.getInstance().getCurrentGame().getTablist().reload();
-    }
-
-    @CloudEventHandler
-    public void handle(CloudPlayerDisconnectEvent rawEvent) {
+    @EventListener
+    public void handle(BridgeProxyPlayerDisconnectEvent rawEvent) {
         BukkitCore.getInstance().getCurrentGame().getTablist().reload();
     }
 

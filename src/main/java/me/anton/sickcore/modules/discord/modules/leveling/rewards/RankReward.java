@@ -1,10 +1,9 @@
 package me.anton.sickcore.modules.discord.modules.leveling.rewards;
 
-import eu.thesimplecloud.module.permission.player.PlayerPermissionGroupInfo;
 import lombok.Getter;
-import me.anton.sickcore.api.player.apiPlayer.enums.Rank;
 import me.anton.sickcore.api.player.discordPlayer.DiscordPlayer;
 import me.anton.sickcore.modules.discord.modules.leveling.DiscordReward;
+import me.anton.sickcore.modules.rank.Rank;
 
 import java.util.concurrent.TimeUnit;
 
@@ -25,11 +24,8 @@ public class RankReward extends DiscordReward {
 
     @Override
     public void assign(DiscordPlayer player) {
-        if (expire == -1)player.api().perm().addPermissionGroup(new PlayerPermissionGroupInfo(rank.getName(), -1));
-        else {
-            long timeout = System.currentTimeMillis() + TimeUnit.DAYS.toMillis(expire);
-            player.api().perm().addPermissionGroup(new PlayerPermissionGroupInfo(rank.getName(), timeout));
-        }
+        if (expire == -1)player.api().setRank(rank);
+        else player.api().setRank(rank, TimeUnit.DAYS, expire);
     }
 
     @Override

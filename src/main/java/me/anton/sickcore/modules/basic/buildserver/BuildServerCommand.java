@@ -1,34 +1,38 @@
 package me.anton.sickcore.modules.basic.buildserver;
 
-import co.aikar.commands.BaseCommand;
 import co.aikar.commands.annotation.CommandAlias;
-import co.aikar.commands.annotation.Default;
-import eu.thesimplecloud.api.CloudAPI;
+import com.mojang.brigadier.builder.LiteralArgumentBuilder;
+import com.mojang.brigadier.tree.LiteralCommandNode;
+import com.velocitypowered.api.command.BrigadierCommand;
+import com.velocitypowered.api.command.CommandSource;
+import com.velocitypowered.api.proxy.Player;
+import de.dytanic.cloudnet.ext.bridge.player.executor.ServerSelectorType;
 import me.anton.sickcore.api.player.apiPlayer.language.LanguagePath;
 import me.anton.sickcore.api.player.bungeePlayer.BungeePlayer;
-import me.anton.sickcore.api.utils.minecraft.messages.ConsoleMessages;
-import net.md_5.bungee.api.CommandSender;
-import net.md_5.bungee.api.connection.ProxiedPlayer;
 
-@CommandAlias("bs|buildserver")
-public class BuildServerCommand extends BaseCommand {
+@CommandAlias("bs")
+public class BuildServerCommand  {
 
-    @Default
-    public void onCMD(CommandSender sender){
-        if (!(sender instanceof ProxiedPlayer)){
-            ConsoleMessages.noPlayerBungee(sender);
-            return;
-        }
+    public void onCMD(){
+        LiteralCommandNode<CommandSource> node = LiteralArgumentBuilder
+                .<CommandSource>literal("bs")
+                .executes(context -> {
+                    if (!(context.getSource() instanceof Player))return 0;
+                    BungeePlayer player = new BungeePlayer(context.getSource());
+                    if (!player.api().isTeam()){
+                        player.sendMessage(LanguagePath.NETWORK_COMMAND_NOSTAFF);
+                        return 0;
+                    }
+                    if (player.api().cloud().cloudAPI().getConnectedService().getServerName().startsWith("Build-")){
+                        player.sendMessage(LanguagePath.PROXY_STAFF_COMMAND_BUILDSERVER_ALREADY);
+                        return 0;
+                    }
+                    player.api().cloud().cloudAPI().getPlayerExecutor().connectToGroup("Build", ServerSelectorType.LOWEST_PLAYERS);
+                    player.sendMessage(LanguagePath.PROXY_STAFF_COMMAND_BUILDSERVER_SUCCESS);
+                    return 1;
+                }).build();
 
-        BungeePlayer player = new BungeePlayer(sender);
-        if (!player.api().isTeam())return;
-
-        if (player.api().cloud().cloudAPI().getConnectedServer().getName().startsWith("Build-")){
-            player.sendMessage(LanguagePath.PROXY_STAFF_COMMAND_BUILDSERVER_ALREADY);
-            return;
-        }
-        player.api().cloud().cloudAPI().connect(CloudAPI.getInstance().getCloudServiceManager().getCloudServiceByName("Build-1"));
-        player.sendMessage(LanguagePath.PROXY_STAFF_COMMAND_BUILDSERVER_SUCCESS);
+        BrigadierCommand command = new BrigadierCommand(node);
     }
 
 }

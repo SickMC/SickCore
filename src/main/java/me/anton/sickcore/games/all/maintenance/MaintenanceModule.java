@@ -1,14 +1,12 @@
 package me.anton.sickcore.games.all.maintenance;
 
-import eu.thesimplecloud.api.CloudAPI;
-import eu.thesimplecloud.api.service.ICloudService;
+import de.dytanic.cloudnet.driver.CloudNetDriver;
+import de.dytanic.cloudnet.driver.service.ServiceInfoSnapshot;
+import de.dytanic.cloudnet.ext.bridge.player.IPlayerManager;
 import lombok.Getter;
-import me.anton.sickcore.api.database.Finder;
 import me.anton.sickcore.api.player.cloudPlayer.CloudAPIPlayer;
 import me.anton.sickcore.core.BukkitCore;
-import me.anton.sickcore.core.Core;
 import me.anton.sickcore.core.UtilConfiguration;
-import me.anton.sickcore.core.module.globalmodule.GlobalModule;
 import org.bson.Document;
 
 import java.util.UUID;
@@ -46,15 +44,15 @@ public class MaintenanceModule {
         document.replace("active", true);
         if (secure)document.replace("secureMode", true);
         config.update(document);
-        for (ICloudService service : CloudAPI.getInstance().getCloudServiceManager().getAllCachedObjects()){
-            if (!service.isLobby())return;
-            service.getOnlinePlayers().getBlocking().forEach(player -> {
+        for (ServiceInfoSnapshot service : CloudNetDriver.getInstance().getCloudServiceProvider().getCloudServices()){
+            if (!service.getName().startsWith("Lobby-"))return;
+            CloudNetDriver.getInstance().getServicesRegistry().getFirstService(IPlayerManager.class).onlinePlayers().asPlayers().forEach(player -> {
                 if (!secure)
                     if (!new CloudAPIPlayer(player.getUniqueId()).api().isTeam())
-                        player.getCloudPlayer().getBlocking().kick("Maintenance is now enabled!");
-                else
+                        player.getPlayerExecutor().kick("Maintenance is now enabled!");
+                    else
                     if(!player.getUniqueId().equals(UUID.fromString("84c7eef5-ae2c-4ebb-a006-c3ee07643d79")))
-                        player.getCloudPlayer().getBlocking().kick("Maintenance is now enabled!");
+                        player.getPlayerExecutor().kick("Maintenance is now enabled!");
             });
         }
     }

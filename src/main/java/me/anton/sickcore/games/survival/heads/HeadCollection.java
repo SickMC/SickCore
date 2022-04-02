@@ -5,7 +5,6 @@ import co.aikar.commands.annotation.CommandAlias;
 import co.aikar.commands.annotation.Default;
 import co.aikar.commands.annotation.Description;
 import co.aikar.commands.annotation.Optional;
-import me.anton.sickcore.api.player.apiPlayer.enums.Rank;
 import me.anton.sickcore.api.player.apiPlayer.language.LanguagePath;
 import me.anton.sickcore.api.player.bukkitPlayer.BukkitPlayer;
 import me.anton.sickcore.api.utils.minecraft.bukkit.inventory.PagedInventoryBuilder;
@@ -14,6 +13,7 @@ import me.anton.sickcore.api.utils.minecraft.bukkit.player.sound.DefaultSounds;
 import me.anton.sickcore.api.utils.minecraft.messages.ConsoleMessages;
 import me.anton.sickcore.games.all.HeadDBAPI;
 import me.anton.sickcore.games.survival.SurvivalGamePlayer;
+import me.anton.sickcore.modules.rank.Rank;
 import me.arcaniax.hdb.api.HeadDatabaseAPI;
 import org.bukkit.Bukkit;
 import org.bukkit.OfflinePlayer;
@@ -36,8 +36,8 @@ public class HeadCollection extends BaseCommand {
         if (target == null){
             openHeadCollection(player, player);
         }else {
-            if (!player.api().isHigher(Rank.MVP)){
-                player.sendMessage(LanguagePath.NETWORK_AVAILABLE_WITHMVPORHIGHER);
+            if (!player.api().getRank().equals(new Rank("VIP"))){
+                player.sendMessage(LanguagePath.NETWORK_AVAILABLE_WITHVIPPORHIGHER);
                 return;
             }
             OfflinePlayer offlinePlayer = Bukkit.getPlayerExact(target);

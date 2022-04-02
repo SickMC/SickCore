@@ -42,4 +42,9 @@ public class MonopolyGame extends AbstractGame {
     public DatabaseModel getPlayerModel() {
         return super.getPlayerModel();
     }
+
+    @Override
+    public boolean isStaff() {
+        return false;
+    }
 }

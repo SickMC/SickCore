@@ -1,15 +1,12 @@
 package me.anton.sickcore.gameapi;
 
 import co.aikar.commands.BaseCommand;
-import eu.thesimplecloud.api.eventapi.IListener;
+import de.dytanic.cloudnet.driver.CloudNetDriver;
 import lombok.Getter;
 import me.anton.sickcore.api.database.DatabaseModel;
 import me.anton.sickcore.api.handler.listeners.bukkit.BukkitHandler;
-import me.anton.sickcore.api.handler.listeners.cloud.CloudListenerProvider;
-import me.anton.sickcore.api.utils.common.Logger;
 import me.anton.sickcore.core.BukkitCore;
 import me.anton.sickcore.core.Core;
-import me.anton.sickcore.core.module.globalmodule.ModuleConfiguration;
 import me.anton.sickcore.games.all.nick.NickProvider;
 import me.anton.sickcore.gameapi.tablist.Tablist;
 import me.anton.sickcore.gameapi.tablist.TablistProvider;
@@ -38,8 +35,8 @@ public abstract class AbstractGame {
             Core.getInstance().bukkit().getProvider().register(bukkitHandler);
         }
     }
-    public void registerCloudListeners(IListener listener){
-        CloudListenerProvider.register(listener);
+    public void registerCloudListeners(Object... listener){
+        CloudNetDriver.getInstance().getEventManager().registerListeners(listener);
     }
 
     public void registerCommands(BaseCommand... commands){
@@ -55,6 +52,8 @@ public abstract class AbstractGame {
     public Tablist getTablist(){
         return new Tablist(this);
     }
+
+    public abstract boolean isStaff();
 
     private void register(){
         //Tablist

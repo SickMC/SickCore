@@ -3,6 +3,7 @@ package me.anton.sickcore.api.handler.listeners.bukkit;
 import io.papermc.paper.event.player.AsyncChatEvent;
 import me.anton.sickcore.api.player.bukkitPlayer.BukkitPlayer;
 import me.arcaniax.hdb.api.DatabaseLoadEvent;
+import net.kyori.adventure.text.Component;
 import org.bukkit.Chunk;
 import org.bukkit.Location;
 import org.bukkit.World;
@@ -15,6 +16,7 @@ import org.bukkit.entity.Vehicle;
 import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.event.block.BlockFromToEvent;
 import org.bukkit.event.block.BlockPlaceEvent;
+import org.bukkit.event.block.SignChangeEvent;
 import org.bukkit.event.command.UnknownCommandEvent;
 import org.bukkit.event.entity.*;
 import org.bukkit.event.hanging.HangingBreakEvent;
@@ -31,6 +33,7 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.util.Vector;
 import xyz.haoshoku.nick.events.NickFinishEvent;
 
+import java.awt.*;
 import java.util.Collection;
 import java.util.List;
 import java.util.Map;
@@ -170,5 +173,7 @@ public abstract class BukkitHandler {
     public void onHangingBreak(HangingBreakEvent rawEvent, Hanging hanging){}
 
     public void onHangingPlace(HangingPlaceEvent rawEvent, Hanging hanging, BukkitPlayer handler){}
+
+    public void onPlayerSignChangeEvent(SignChangeEvent rawEvent, Block block, List<Component> lines, BukkitPlayer player){}
 
 }

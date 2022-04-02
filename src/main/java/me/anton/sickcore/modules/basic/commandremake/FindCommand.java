@@ -5,7 +5,6 @@ import co.aikar.commands.annotation.*;
 import dev.dbassett.skullcreator.SkullCreator;
 import eu.thesimplecloud.api.CloudAPI;
 import eu.thesimplecloud.api.player.ICloudPlayer;
-import me.anton.sickcore.api.player.apiPlayer.enums.Rank;
 import me.anton.sickcore.api.player.apiPlayer.language.LanguagePath;
 import me.anton.sickcore.api.player.bukkitPlayer.BukkitPlayer;
 import me.anton.sickcore.api.utils.minecraft.bukkit.inventory.InventoryBuilder;
@@ -30,7 +29,7 @@ public class FindCommand extends BaseCommand {
 
         BukkitPlayer player = new BukkitPlayer(sender);
 
-        if (!player.api().isHigher(Rank.MODERATOR)){
+        if (!player.api().isMod()){
             player.sendMessage(LanguagePath.NETWORK_COMMAND_NOMOD);
             return;
         }

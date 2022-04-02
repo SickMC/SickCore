@@ -2,7 +2,7 @@ package me.anton.sickcore.modules.basic;
 
 import lombok.Getter;
 import me.anton.sickcore.core.BukkitCore;
-import me.anton.sickcore.core.BungeeCore;
+import me.anton.sickcore.core.ProxyCore;
 import me.anton.sickcore.core.Core;
 import me.anton.sickcore.core.module.globalmodule.GlobalModule;
 import me.anton.sickcore.modules.basic.buildserver.BuildServerCommand;
@@ -17,7 +17,7 @@ import me.anton.sickcore.modules.basic.playtime.PlaytimeCommand;
 @Getter
 public class BasicModule extends GlobalModule {
 
-    private BungeeCore bungeeCore;
+    private ProxyCore bungeeCore;
     private BukkitCore bukkitCore;
 
     @Override
@@ -32,7 +32,7 @@ public class BasicModule extends GlobalModule {
                 bukkitCore.getManager().registerCommand(new ListCommand(), true);
             }
             case BUNGEECORD -> {
-                this.bungeeCore = BungeeCore.getInstance();
+                this.bungeeCore = ProxyCore.getInstance();
                 bungeeCore.getManager().registerCommand(new LobbyCommand());
                 bungeeCore.getProvider().register(new LobbyCommandAd());
 

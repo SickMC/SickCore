@@ -1,14 +1,14 @@
 package me.anton.sickcore.api.player.bungeePlayer;
 
+import com.velocitypowered.api.command.CommandSource;
+import com.velocitypowered.api.proxy.Player;
 import lombok.Getter;
 import me.anton.sickcore.api.player.apiPlayer.APIPlayer;
 import me.anton.sickcore.api.player.apiPlayer.IAPIPlayer;
 import me.anton.sickcore.api.player.apiPlayer.language.LanguageObject;
 import me.anton.sickcore.api.player.apiPlayer.language.LanguagePath;
-import net.md_5.bungee.api.CommandSender;
-import net.md_5.bungee.api.ProxyServer;
-import net.md_5.bungee.api.chat.TextComponent;
-import net.md_5.bungee.api.connection.ProxiedPlayer;
+import me.anton.sickcore.core.ProxyCore;
+import net.kyori.adventure.text.Component;
 
 import java.util.UUID;
 
@@ -16,37 +16,37 @@ import java.util.UUID;
 public class BungeePlayer implements IAPIPlayer {
 
     APIPlayer player;
-    ProxiedPlayer bungeePlayer;
+    Player bungeePlayer;
 
     public BungeePlayer(APIPlayer player){
         this.player = player;
-        this.bungeePlayer = ProxyServer.getInstance().getPlayer(player.getUUID());
+        this.bungeePlayer = ProxyCore.getInstance().getPlugin().getPlayer(player.getUUID()).get();
     }
 
     public BungeePlayer(UUID uuid){
         this.player = new APIPlayer(uuid);
-        this.bungeePlayer = ProxyServer.getInstance().getPlayer(uuid);
+        this.bungeePlayer = ProxyCore.getInstance().getPlugin().getPlayer(player.getUUID()).get();
     }
 
-    public BungeePlayer(ProxiedPlayer player){
+    public BungeePlayer(Player player){
         this.player = new APIPlayer(player.getUniqueId());
         this.bungeePlayer = player;
     }
 
-    public BungeePlayer(CommandSender sender){
-        if (!(sender instanceof ProxiedPlayer)) throw new NullPointerException();
-        this.bungeePlayer = (ProxiedPlayer) sender;
+    public BungeePlayer(CommandSource sender){
+        if (!(sender instanceof Player)) throw new NullPointerException();
+        this.bungeePlayer = (Player) sender;
         this.player = new APIPlayer(bungeePlayer.getUniqueId());
     }
 
     
     public void sendMessage(LanguagePath path) {
-        getBungeePlayer().sendMessage(new TextComponent(this.player.languageString(path).build()));
+        getBungeePlayer().sendMessage(Component.text(this.player.languageString(path).build()));
     }
 
     
     public void sendMessage(LanguageObject object) {
-        getBungeePlayer().sendMessage(new TextComponent(object.build()));
+        getBungeePlayer().sendMessage(Component.text(object.build()));
     }
 
     
@@ -55,7 +55,7 @@ public class BungeePlayer implements IAPIPlayer {
     }
 
     
-    public ProxiedPlayer getPlayer() {
+    public Player getPlayer() {
         return bungeePlayer;
     }
 

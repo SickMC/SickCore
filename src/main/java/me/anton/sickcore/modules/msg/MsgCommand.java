@@ -5,7 +5,7 @@ import co.aikar.commands.annotation.*;
 import me.anton.sickcore.api.player.apiPlayer.language.LanguagePath;
 import me.anton.sickcore.api.player.bungeePlayer.BungeePlayer;
 import me.anton.sickcore.api.utils.minecraft.messages.ConsoleMessages;
-import me.anton.sickcore.core.BungeeCore;
+import me.anton.sickcore.core.ProxyCore;
 import net.md_5.bungee.api.CommandSender;
 import net.md_5.bungee.api.chat.TextComponent;
 import net.md_5.bungee.api.connection.ProxiedPlayer;
@@ -23,7 +23,7 @@ public class MsgCommand extends BaseCommand {
             return;
         }
         BungeePlayer player = new BungeePlayer(commandSender);
-        ProxiedPlayer targetproxied = BungeeCore.getInstance().getPlugin().getProxy().getPlayer(name);
+        ProxiedPlayer targetproxied = ProxyCore.getInstance().getPlugin().getProxy().getPlayer(name);
         if (!targetproxied.isConnected()){
             player.sendMessage(LanguagePath.NETWORK_COMMAND_NOPLAYER);
             return;

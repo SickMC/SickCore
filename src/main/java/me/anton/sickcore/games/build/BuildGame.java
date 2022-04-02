@@ -32,5 +32,10 @@ public class BuildGame extends AbstractGame {
         return "Build";
     }
 
+    @Override
+    public boolean isStaff() {
+        return true;
+    }
+
 
 }

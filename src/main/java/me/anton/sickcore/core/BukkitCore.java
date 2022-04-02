@@ -116,6 +116,7 @@ public class BukkitCore extends Core {
                 new PlayerInventoryMoveItemEventHandler(),
                 new PlayerLevelChangeEventHandler(),
                 new PlayerUnknownCommandEvent(),
+                new PlayerSignChangeEventHandler(),
 
                 //Entity
                 new EntityPickUpItemEventHandler(),

@@ -1,14 +1,12 @@
 package me.anton.sickcore.games.all.nick;
 
-import dev.dbassett.skullcreator.SkullCreator;
 import me.anton.sickcore.api.player.bukkitPlayer.BukkitPlayer;
 import me.anton.sickcore.api.utils.minecraft.bukkit.inventory.InventoryBuilder;
 import me.anton.sickcore.api.utils.minecraft.bukkit.inventory.defaults.RankInventory;
 import me.anton.sickcore.api.utils.minecraft.bukkit.item.ItemBuilder;
 import me.anton.sickcore.api.utils.minecraft.bukkit.player.sound.DefaultSounds;
-import me.anton.sickcore.core.Core;
+import me.anton.sickcore.api.utils.minecraft.player.UUIDFetcher;
 import net.kyori.adventure.text.Component;
-import net.wesjd.anvilgui.AnvilGUI;
 import org.bukkit.Material;
 import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
@@ -25,7 +23,7 @@ public class AutoNickInventory {
 
         //Nickname
         autoNickInventory.setItem(new ItemBuilder(Material.ANVIL, player).setName((String) player.api().languageObject("§6Nickname", "§6Nickname")).addItemFlags(ItemFlag.HIDE_ATTRIBUTES).setLore(Arrays.asList("§7Nickname: " + player.api().getNickname(), (String) player.api().languageObject("§7Click to pick your nickname", "§7Klicke um deinen Nicknamen zu wählen"))), 10,event -> {
-            new AnvilGUI.Builder().onComplete((anvilPlayer, text) ->{
+            /*new AnvilGUI.Builder().onComplete((anvilPlayer, text) ->{
                         if (text.length() > 16) {
                             DefaultSounds.anvil.play(player.getPlayer());
                             player.getPlayer().sendMessage((String) player.api().languageObject("§4Your nickname has to be shorter than 17 symbols!", "§4Dein Nickname muss kürzer als 17 Zeichen sein!"));
@@ -45,20 +43,10 @@ public class AutoNickInventory {
                     .plugin(Core.getInstance().bukkit().getPlugin())
                     .title((String) player.api().languageObject("§6Set your nickname", "§6Setze deinen Nickname"))
                     .open(player.getPlayer());
-        });
+        */});
 
-        //Nickskin
-        ItemStack head = SkullCreator.itemFromName(player.api().getNickSkinName());
-        ItemMeta meta = head.getItemMeta();
-        meta.displayName(Component.text((String) player.api().languageObject("§6Nickskin", "§6Nickskin")));
-        List<Component> lores = new ArrayList<>();
-        lores.add(Component.text("§7Nickskin: " + player.api().getNickSkinName()));
-        lores.add(Component.text((String) player.api().languageObject("§7Click to pick your nickskin", "§7Klicke um deinen Nickskin auszuwählen")));
-        meta.lore(lores);
-        meta.addItemFlags(ItemFlag.HIDE_ATTRIBUTES);
-        head.setItemMeta(meta);
-
-        autoNickInventory.setItem(new ItemBuilder(head, player), 11, event -> {
+        autoNickInventory.setItem(new ItemBuilder(Material.PLAYER_HEAD, player).setSkull(UUIDFetcher.fetchUniqueId(player.api().getNickSkinName())).setName((String) player.api().languageObject("§6Nickskin", "§6Nickskin"))
+                .setLore("§7Nickskin: " + player.api().getNickSkinName(),(String) player.api().languageObject("§7Click to pick your nickskin", "§7Klicke um deinen Nickskin auszuwählen")), 11/*{
             new AnvilGUI.Builder().onComplete((anvilPlayer, text) ->{
                         if (text.length() > 16) {
                             DefaultSounds.anvil.play(player.getPlayer());
@@ -79,7 +67,7 @@ public class AutoNickInventory {
                     .plugin(Core.getInstance().bukkit().getPlugin())
                     .title((String) player.api().languageObject("§6Set your nickskin", "§6Setze deinen Nickskin"))
                     .open(player.getPlayer());
-        });
+        }*/);
 
         //NickRank
         autoNickInventory.setItem(new ItemBuilder(Material.DIAMOND_HORSE_ARMOR, player).addItemFlags(ItemFlag.HIDE_ATTRIBUTES).setName((String) player.api().languageObject("§6NickRank", "§6NickRank"))

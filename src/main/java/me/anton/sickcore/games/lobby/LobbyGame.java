@@ -14,7 +14,7 @@ public class LobbyGame extends AbstractGame {
     @Override
     public void onLoad() {
         instance = this;
-        registerListeners(new Events(), new ModiNPCHandler(), new LobbyChat());
+        registerListeners(new Events(), new LobbyChat());
     }
 
     @Override
@@ -30,6 +30,11 @@ public class LobbyGame extends AbstractGame {
     @Override
     public String getName() {
         return "Lobby";
+    }
+
+    @Override
+    public boolean isStaff() {
+        return false;
     }
 
 }

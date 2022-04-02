@@ -87,7 +87,7 @@ public class BukkitPlayer implements IAPIPlayer{
 
     
     public String getNickDisplayName() {
-        return player.getNickRank().getColor() + player.getNickRank().getName() + "§8 × §r" + player.getNickRank().getColor() + api().getNickname() + "§r §r";
+        return player.getNickRank().getParent().getColor() + player.getNickRank().getName() + "§8 × §r" + player.getNickRank().getParent().getColor() + api().getNickname() + "§r §r";
     }
 
     

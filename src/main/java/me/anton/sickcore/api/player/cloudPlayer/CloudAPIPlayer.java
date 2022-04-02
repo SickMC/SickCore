@@ -1,8 +1,9 @@
 package me.anton.sickcore.api.player.cloudPlayer;
 
-import eu.thesimplecloud.api.CloudAPI;
-import eu.thesimplecloud.api.player.ICloudPlayer;
-import eu.thesimplecloud.api.player.text.CloudText;
+import de.dytanic.cloudnet.driver.CloudNetDriver;
+import de.dytanic.cloudnet.ext.bridge.player.CloudPlayer;
+import de.dytanic.cloudnet.ext.bridge.player.ICloudPlayer;
+import de.dytanic.cloudnet.ext.bridge.player.IPlayerManager;
 import me.anton.sickcore.api.player.apiPlayer.APIPlayer;
 import me.anton.sickcore.api.player.apiPlayer.IAPIPlayer;
 import me.anton.sickcore.api.player.apiPlayer.language.Language;
@@ -17,12 +18,12 @@ public class CloudAPIPlayer implements IAPIPlayer {
 
     public CloudAPIPlayer(APIPlayer player){
         this.player = player;
-        this.cloudPlayer = CloudAPI.getInstance().getCloudPlayerManager().getCloudPlayer(player.getUUID()).getBlocking();
+        this.cloudPlayer = CloudNetDriver.getInstance().getServicesRegistry().getFirstService(IPlayerManager.class).getOnlinePlayer(player.getUUID());
     }
 
     public CloudAPIPlayer(UUID uuid){
         this.player = new APIPlayer(uuid);
-        this.cloudPlayer = CloudAPI.getInstance().getCloudPlayerManager().getCloudPlayer(uuid).getBlocking();
+        this.cloudPlayer = CloudNetDriver.getInstance().getServicesRegistry().getFirstService(IPlayerManager.class).getOnlinePlayer(uuid);
     }
 
     public CloudAPIPlayer(ICloudPlayer cloudPlayer){
@@ -33,25 +34,15 @@ public class CloudAPIPlayer implements IAPIPlayer {
     
     public void sendMessage(String en, String de) {
         if (this.player.getLanguage().equals(Language.ENGLISCHUK))
-            cloudPlayer.sendMessage(en);
+            cloudPlayer.getPlayerExecutor().sendChatMessage(en);
         else if (this.player.getLanguage().equals(Language.DEUTSCHDE))
-            cloudPlayer.sendMessage(de);
+            cloudPlayer.getPlayerExecutor().sendChatMessage(de);
     }
-
-    
-    public void sendMessage(CloudText en, CloudText de) {
-        if (this.player.getLanguage().equals(Language.ENGLISCHUK))
-            cloudPlayer.sendMessage(en);
-        else if (this.player.getLanguage().equals(Language.DEUTSCHDE))
-            cloudPlayer.sendMessage(de);
-    }
-
     
     public APIPlayer api() {
         return player;
     }
 
-    
     public ICloudPlayer cloudAPI() {
         return cloudPlayer;
     }
