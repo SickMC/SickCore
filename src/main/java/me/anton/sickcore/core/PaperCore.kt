@@ -18,7 +18,7 @@ class PaperCore(val launcher: KSpigot) : Core() {
     var onlinePlayers = ArrayList<Player>()
 
     suspend fun start(){
-        PaperCoreHandler()
+        PaperCoreHandler().handleCustomEvents()
         moduleHandler.start()
     }
 

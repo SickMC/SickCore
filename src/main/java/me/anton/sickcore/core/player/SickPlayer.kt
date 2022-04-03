@@ -11,7 +11,7 @@ class SickPlayer(val uuid: UUID, val document: MongoDocument) {
     val discordID = document.document.getString("discordID")
     val name = document.document.getString("name")
     val extraPermissions = document.document.getList("extraPermissions", String::class.java)
-    val coins = document.document.getInteger("coins")
+    val addiction = document.document.getInteger("addiction")
     val exp = document.document.getInteger("exp")
 
     suspend fun getRank(): Rank{

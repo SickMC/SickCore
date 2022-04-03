@@ -2,14 +2,12 @@ package me.anton.sickcore.api.utils.minecraft.bukkit.item;
 
 import lombok.Getter;
 import me.anton.sickcore.api.player.bukkitPlayer.BukkitPlayer;
-import me.anton.sickcore.api.utils.common.Logger;
 import me.anton.sickcore.api.utils.minecraft.bukkit.inventory.InventoryBuilder;
 import net.kyori.adventure.text.Component;
 import org.bukkit.Bukkit;
 import org.bukkit.Color;
 import org.bukkit.Material;
 import org.bukkit.enchantments.Enchantment;
-import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;

@@ -2,7 +2,6 @@ package me.anton.sickcore.api.utils.minecraft.bukkit.inventory;
 
 import lombok.Getter;
 import me.anton.sickcore.api.player.bukkitPlayer.BukkitPlayer;
-import me.anton.sickcore.api.utils.common.Logger;
 import me.anton.sickcore.api.utils.minecraft.bukkit.item.ItemBuilder;
 import me.anton.sickcore.api.utils.minecraft.bukkit.player.sound.DefaultSounds;
 import net.kyori.adventure.text.Component;

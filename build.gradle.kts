@@ -18,6 +18,7 @@ dependencies{
     implementation("net.axay:kspigot:1.18.2")
     implementation("org.slf4j:slf4j-simple:1.7.30")
     implementation("org.litote.kmongo:kmongo-coroutine:4.5.0")
+    implementation("io.github.crackthecodeabhi:kreds:0.7")
     compileOnly("eu.thesimplecloud.simplecloud:simplecloud-api:2.3.0")
     compileOnly("eu.thesimplecloud.simplecloud:simplecloud-plugin:2.3.0")
     compileOnly("eu.thesimplecloud.simplecloud:simplecloud-base:2.3.0")

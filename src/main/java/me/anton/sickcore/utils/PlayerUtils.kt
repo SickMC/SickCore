@@ -16,6 +16,7 @@ class PlayerUtils {
             val jsonObject = JsonObject(raw)
             callback(jsonObject.toBsonDocument().getString("name").value)
         }
+
         fun fetchName(uuid: UUID): String{
             val url = URL("https://api.minetools.eu/uuid/$uuid")
             val connection = url.openConnection() as HttpURLConnection

@@ -5,6 +5,7 @@ import com.velocitypowered.api.event.connection.PostLoginEvent
 import kotlinx.coroutines.launch
 import me.anton.sickcore.core.player.SickPlayer
 import me.anton.sickcore.core.player.SickPlayers
+import me.anton.sickcore.utils.velocity.RankUpdateEventCaller
 
 class VelocityCoreHandler {
 
@@ -32,6 +33,10 @@ class VelocityCoreHandler {
                 else SickPlayers.reloadPlayer(it.player.uniqueId)
             }
         }
+    }
+
+    suspend fun handleCustomEvents(){
+        RankUpdateEventCaller().handleRankUpdate()
     }
 
 }

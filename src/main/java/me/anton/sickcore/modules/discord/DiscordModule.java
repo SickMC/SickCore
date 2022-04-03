@@ -2,7 +2,6 @@ package me.anton.sickcore.modules.discord;
 
 import lombok.Getter;
 import me.anton.sickcore.api.database.DatabaseModel;
-import me.anton.sickcore.api.utils.common.Logger;
 import me.anton.sickcore.oldcore.Core;
 import me.anton.sickcore.oldcore.Environment;
 import me.anton.sickcore.oldcore.module.globalmodule.GlobalModule;

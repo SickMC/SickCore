@@ -2,7 +2,6 @@ package me.anton.sickcore.gameapi.tablist;
 
 import lombok.Getter;
 import me.anton.sickcore.api.player.bukkitPlayer.BukkitPlayer;
-import me.anton.sickcore.api.utils.common.ColorUtils;
 import me.anton.sickcore.oldcore.UtilConfiguration;
 import me.anton.sickcore.gameapi.AbstractGame;
 import net.kyori.adventure.text.Component;

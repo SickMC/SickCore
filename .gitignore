@@ -5,6 +5,7 @@
 *.ipr
 *.iws
 src/main/resources/json/mongo.json
+src/main/resources/json/redis.json
 
 
 # IntelliJ

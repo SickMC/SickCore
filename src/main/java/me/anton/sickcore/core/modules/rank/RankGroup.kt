@@ -9,6 +9,7 @@ class RankGroup(name: String, val document: MongoDocument){
     val permissions = document.document.getList("permissions", String::class.java)
     val priority = document.document.getInteger("priority")
     val color = document.document.getString("color")
+    val coloredPrefix = document.document.getString("coloredPrefix")
     val discordRoleID = document.document.getString("discordRoleID")
 
     suspend fun getRanks(): List<Rank>{

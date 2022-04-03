@@ -17,7 +17,7 @@ class VelocityCore(val base: VelocityBootstrap) : Core() {
     var onlinePlayers = ArrayList<Player>()
 
     suspend fun start(){
-        VelocityCoreHandler()
+        VelocityCoreHandler().handleCustomEvents()
         moduleHandler.start()
     }
 

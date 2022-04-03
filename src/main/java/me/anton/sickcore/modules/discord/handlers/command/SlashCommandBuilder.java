@@ -1,6 +1,5 @@
 package me.anton.sickcore.modules.discord.handlers.command;
 
-import me.anton.sickcore.api.utils.common.Logger;
 import me.anton.sickcore.modules.discord.DiscordModule;
 import net.dv8tion.jda.api.events.interaction.SlashCommandEvent;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;

@@ -15,6 +15,12 @@ class AppereanceModule : me.anton.sickcore.core.modules.Module() {
         instance = this
         when(environment){
             Environment.VELOCITY -> MOTDHandler().handleMOTD()
+            Environment.PAPER -> {
+                TablistProvider().handleTablist()
+                CommandSuggestionHandler().handlePaperCommands()
+                NameTagHandler().handleNameTags()
+                ChatHandler().handleChat()
+            }
         }
     }
 
