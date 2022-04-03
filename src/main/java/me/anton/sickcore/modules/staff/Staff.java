@@ -4,8 +4,7 @@ import eu.thesimplecloud.api.CloudAPI;
 import eu.thesimplecloud.api.player.ICloudPlayer;
 import lombok.Getter;
 import me.anton.sickcore.api.player.apiPlayer.APIPlayer;
-import me.anton.sickcore.api.utils.common.FileUtils;
-import me.anton.sickcore.core.module.globalmodule.ModuleConfiguration;
+import me.anton.sickcore.oldcore.module.globalmodule.ModuleConfiguration;
 import me.anton.sickcore.modules.staff.notify.NotifyType;
 import org.bson.Document;
 

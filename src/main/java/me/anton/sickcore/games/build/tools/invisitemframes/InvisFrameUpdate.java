@@ -2,7 +2,7 @@ package me.anton.sickcore.games.build.tools.invisitemframes;
 
 import me.anton.sickcore.api.handler.listeners.bukkit.BukkitHandler;
 import me.anton.sickcore.api.player.bukkitPlayer.BukkitPlayer;
-import me.anton.sickcore.core.BukkitCore;
+import me.anton.sickcore.oldcore.BukkitCore;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.NamespacedKey;

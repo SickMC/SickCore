@@ -1,7 +1,7 @@
 package me.anton.sickcore.modules.msg;
 
-import me.anton.sickcore.core.ProxyCore;
-import me.anton.sickcore.core.module.proxiedModule.ProxiedIModule;
+import me.anton.sickcore.oldcore.ProxyCore;
+import me.anton.sickcore.oldcore.module.proxiedModule.ProxiedIModule;
 
 public class MsgModule implements ProxiedIModule {
 

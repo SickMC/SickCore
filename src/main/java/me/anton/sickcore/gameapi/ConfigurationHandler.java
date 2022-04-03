@@ -1,6 +1,6 @@
 package me.anton.sickcore.gameapi;
 
-import me.anton.sickcore.core.UtilConfiguration;
+import me.anton.sickcore.oldcore.UtilConfiguration;
 import me.anton.sickcore.games.monopoly.MonopolyGame;
 
 public class ConfigurationHandler {

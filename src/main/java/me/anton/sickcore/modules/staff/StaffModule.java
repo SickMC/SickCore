@@ -1,8 +1,8 @@
 package me.anton.sickcore.modules.staff;
 
 import lombok.Getter;
-import me.anton.sickcore.core.BukkitCore;
-import me.anton.sickcore.core.module.globalmodule.GlobalModule;
+import me.anton.sickcore.oldcore.BukkitCore;
+import me.anton.sickcore.oldcore.module.globalmodule.GlobalModule;
 
 public class StaffModule extends GlobalModule {
 

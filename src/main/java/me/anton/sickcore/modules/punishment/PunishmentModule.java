@@ -2,8 +2,8 @@ package me.anton.sickcore.modules.punishment;
 
 import lombok.Getter;
 import me.anton.sickcore.api.database.DatabaseModel;
-import me.anton.sickcore.core.Core;
-import me.anton.sickcore.core.module.globalmodule.GlobalModule;
+import me.anton.sickcore.oldcore.Core;
+import me.anton.sickcore.oldcore.module.globalmodule.GlobalModule;
 
 @Getter
 public class PunishmentModule extends GlobalModule {

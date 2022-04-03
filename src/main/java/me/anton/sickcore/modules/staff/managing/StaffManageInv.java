@@ -2,13 +2,12 @@ package me.anton.sickcore.modules.staff.managing;
 
 import me.anton.sickcore.api.database.Finder;
 import me.anton.sickcore.api.player.bukkitPlayer.BukkitPlayer;
-import me.anton.sickcore.api.utils.common.FileUtils;
 import me.anton.sickcore.api.utils.minecraft.bukkit.inventory.InventoryBuilder;
 import me.anton.sickcore.api.utils.minecraft.bukkit.inventory.PagedInventoryBuilder;
 import me.anton.sickcore.api.utils.minecraft.bukkit.item.ItemBuilder;
 import me.anton.sickcore.api.utils.minecraft.bukkit.player.sound.DefaultSounds;
-import me.anton.sickcore.core.BukkitCore;
-import me.anton.sickcore.core.Core;
+import me.anton.sickcore.oldcore.BukkitCore;
+import me.anton.sickcore.oldcore.Core;
 import me.anton.sickcore.modules.rank.Rank;
 import me.anton.sickcore.modules.rank.RankGroup;
 import me.anton.sickcore.modules.staff.Staff;

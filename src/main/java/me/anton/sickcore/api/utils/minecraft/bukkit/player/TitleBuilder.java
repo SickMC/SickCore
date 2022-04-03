@@ -1,13 +1,12 @@
 package me.anton.sickcore.api.utils.minecraft.bukkit.player;
 
 import me.anton.sickcore.api.utils.minecraft.bukkit.player.sound.SoundBuilder;
-import me.anton.sickcore.core.Core;
+import me.anton.sickcore.oldcore.Core;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.title.Title;
 import org.bukkit.Bukkit;
 import org.bukkit.Sound;
 import org.bukkit.entity.Player;
-import org.bukkit.plugin.java.JavaPlugin;
 
 import java.time.Duration;
 import java.util.concurrent.atomic.AtomicInteger;

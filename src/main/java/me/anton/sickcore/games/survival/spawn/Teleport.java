@@ -2,7 +2,7 @@ package me.anton.sickcore.games.survival.spawn;
 
 import me.anton.sickcore.api.handler.listeners.bukkit.BukkitHandler;
 import me.anton.sickcore.api.player.bukkitPlayer.BukkitPlayer;
-import me.anton.sickcore.core.Core;
+import me.anton.sickcore.oldcore.Core;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Material;

@@ -2,7 +2,7 @@ package me.anton.sickcore.games.all.nick;
 
 import me.anton.sickcore.api.handler.listeners.bukkit.BukkitHandler;
 import me.anton.sickcore.api.player.bukkitPlayer.BukkitPlayer;
-import me.anton.sickcore.core.BukkitCore;
+import me.anton.sickcore.oldcore.BukkitCore;
 import org.bukkit.event.player.PlayerJoinEvent;
 import xyz.haoshoku.nick.events.NickFinishEvent;
 

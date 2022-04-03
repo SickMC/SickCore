@@ -2,13 +2,10 @@ package me.anton.sickcore.modules.discord;
 
 import lombok.Getter;
 import me.anton.sickcore.api.database.DatabaseModel;
-import me.anton.sickcore.api.database.Finder;
-import me.anton.sickcore.api.utils.common.FileUtils;
 import me.anton.sickcore.api.utils.common.Logger;
-import me.anton.sickcore.core.Core;
-import me.anton.sickcore.core.Environment;
-import me.anton.sickcore.core.module.globalmodule.GlobalModule;
-import me.anton.sickcore.core.module.proxiedModule.ProxiedIModule;
+import me.anton.sickcore.oldcore.Core;
+import me.anton.sickcore.oldcore.Environment;
+import me.anton.sickcore.oldcore.module.globalmodule.GlobalModule;
 import me.anton.sickcore.modules.discord.handlers.command.SelectionMenuListener;
 import me.anton.sickcore.modules.discord.handlers.command.SlashCommandBuilder;
 import me.anton.sickcore.modules.discord.modules.DiscordModuleHandler;

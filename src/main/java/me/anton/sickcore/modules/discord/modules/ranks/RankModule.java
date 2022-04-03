@@ -1,6 +1,6 @@
 package me.anton.sickcore.modules.discord.modules.ranks;
 
-import me.anton.sickcore.core.Core;
+import me.anton.sickcore.oldcore.Core;
 import me.anton.sickcore.modules.discord.modules.IDiscordModule;
 import me.anton.sickcore.modules.discord.modules.ranks.listeners.RankListener;
 

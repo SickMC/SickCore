@@ -5,7 +5,7 @@ import me.anton.sickcore.api.handler.listeners.bukkit.BukkitHandler;
 import me.anton.sickcore.api.player.apiPlayer.APIPlayer;
 import me.anton.sickcore.api.player.bukkitPlayer.BukkitPlayer;
 import me.anton.sickcore.api.utils.minecraft.bukkit.player.TitleBuilder;
-import me.anton.sickcore.core.BukkitCore;
+import me.anton.sickcore.oldcore.BukkitCore;
 import me.anton.sickcore.games.monopoly.MonopolyGame;
 import net.kyori.adventure.bossbar.BossBar;
 import net.kyori.adventure.text.Component;

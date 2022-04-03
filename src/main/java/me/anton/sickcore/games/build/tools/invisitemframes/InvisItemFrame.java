@@ -1,6 +1,6 @@
 package me.anton.sickcore.games.build.tools.invisitemframes;
 
-import me.anton.sickcore.core.BukkitCore;
+import me.anton.sickcore.oldcore.BukkitCore;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.NamespacedKey;

@@ -1,10 +1,10 @@
 package me.anton.sickcore.modules.basic;
 
 import lombok.Getter;
-import me.anton.sickcore.core.BukkitCore;
-import me.anton.sickcore.core.ProxyCore;
-import me.anton.sickcore.core.Core;
-import me.anton.sickcore.core.module.globalmodule.GlobalModule;
+import me.anton.sickcore.oldcore.BukkitCore;
+import me.anton.sickcore.oldcore.ProxyCore;
+import me.anton.sickcore.oldcore.Core;
+import me.anton.sickcore.oldcore.module.globalmodule.GlobalModule;
 import me.anton.sickcore.modules.basic.buildserver.BuildServerCommand;
 import me.anton.sickcore.modules.basic.commandremake.FindCommand;
 import me.anton.sickcore.modules.basic.commandremake.ListCommand;

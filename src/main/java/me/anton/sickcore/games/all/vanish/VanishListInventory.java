@@ -3,9 +3,8 @@ package me.anton.sickcore.games.all.vanish;
 import me.anton.sickcore.api.player.bukkitPlayer.BukkitPlayer;
 import me.anton.sickcore.api.utils.minecraft.bukkit.inventory.PagedInventoryBuilder;
 import me.anton.sickcore.api.utils.minecraft.bukkit.item.ItemBuilder;
-import me.anton.sickcore.core.BukkitCore;
+import me.anton.sickcore.oldcore.BukkitCore;
 import org.bukkit.Material;
-import org.bukkit.inventory.ItemStack;
 
 public class VanishListInventory {
 

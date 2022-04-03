@@ -3,9 +3,9 @@ package me.anton.sickcore.api.utils.common;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
-import me.anton.sickcore.core.BukkitCore;
-import me.anton.sickcore.core.ProxyCore;
-import me.anton.sickcore.core.Core;
+import me.anton.sickcore.oldcore.BukkitCore;
+import me.anton.sickcore.oldcore.ProxyCore;
+import me.anton.sickcore.oldcore.Core;
 
 public class Logger {
 

@@ -2,13 +2,6 @@ package me.anton.sickcore.games.survival.heads;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
-import me.anton.sickcore.games.all.HeadDBAPI;
-import me.anton.sickcore.api.utils.common.StringUtils;
-import me.anton.sickcore.api.utils.minecraft.bukkit.item.ItemBuilder;
-import me.arcaniax.hdb.api.HeadDatabaseAPI;
-import org.bukkit.entity.*;
-import org.bukkit.inventory.ItemFlag;
-import org.bukkit.inventory.ItemStack;
 
 @AllArgsConstructor
 @Getter

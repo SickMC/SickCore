@@ -3,7 +3,6 @@ package me.anton.sickcore.modules.staff;
 import lombok.Getter;
 import me.anton.sickcore.api.player.apiPlayer.APIPlayer;
 import me.anton.sickcore.api.player.apiPlayer.IAPIPlayer;
-import me.anton.sickcore.api.utils.common.FileUtils;
 import me.anton.sickcore.modules.rank.Rank;
 import me.anton.sickcore.modules.staff.notify.NotifyType;
 import org.bson.Document;

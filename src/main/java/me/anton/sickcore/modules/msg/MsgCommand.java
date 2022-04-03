@@ -5,7 +5,7 @@ import co.aikar.commands.annotation.*;
 import me.anton.sickcore.api.player.apiPlayer.language.LanguagePath;
 import me.anton.sickcore.api.player.bungeePlayer.BungeePlayer;
 import me.anton.sickcore.api.utils.minecraft.messages.ConsoleMessages;
-import me.anton.sickcore.core.ProxyCore;
+import me.anton.sickcore.oldcore.ProxyCore;
 import net.md_5.bungee.api.CommandSender;
 import net.md_5.bungee.api.chat.TextComponent;
 import net.md_5.bungee.api.connection.ProxiedPlayer;

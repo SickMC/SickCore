@@ -8,9 +8,9 @@ import me.anton.sickcore.api.player.apiPlayer.language.LanguageObject;
 import me.anton.sickcore.api.player.apiPlayer.language.LanguagePath;
 import me.anton.sickcore.api.player.bungeePlayer.BungeePlayer;
 import me.anton.sickcore.api.utils.common.Replacable;
-import me.anton.sickcore.core.Core;
-import me.anton.sickcore.core.Environment;
-import me.anton.sickcore.core.ProxyCore;
+import me.anton.sickcore.oldcore.Core;
+import me.anton.sickcore.oldcore.Environment;
+import me.anton.sickcore.oldcore.ProxyCore;
 import net.kyori.adventure.text.Component;
 
 import java.text.SimpleDateFormat;

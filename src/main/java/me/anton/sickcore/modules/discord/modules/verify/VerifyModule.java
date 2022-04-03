@@ -2,7 +2,7 @@ package me.anton.sickcore.modules.discord.modules.verify;
 
 import lombok.Getter;
 import me.anton.sickcore.api.player.bungeePlayer.BungeePlayer;
-import me.anton.sickcore.core.ProxyCore;
+import me.anton.sickcore.oldcore.ProxyCore;
 import me.anton.sickcore.modules.discord.DiscordModule;
 import me.anton.sickcore.modules.discord.modules.IDiscordModule;
 

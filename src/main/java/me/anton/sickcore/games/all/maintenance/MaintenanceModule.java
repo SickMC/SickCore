@@ -5,8 +5,8 @@ import de.dytanic.cloudnet.driver.service.ServiceInfoSnapshot;
 import de.dytanic.cloudnet.ext.bridge.player.IPlayerManager;
 import lombok.Getter;
 import me.anton.sickcore.api.player.cloudPlayer.CloudAPIPlayer;
-import me.anton.sickcore.core.BukkitCore;
-import me.anton.sickcore.core.UtilConfiguration;
+import me.anton.sickcore.oldcore.BukkitCore;
+import me.anton.sickcore.oldcore.UtilConfiguration;
 import org.bson.Document;
 
 import java.util.UUID;

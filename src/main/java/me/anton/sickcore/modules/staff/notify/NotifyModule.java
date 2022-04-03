@@ -2,10 +2,10 @@ package me.anton.sickcore.modules.staff.notify;
 
 import eu.thesimplecloud.api.CloudAPI;
 import lombok.Getter;
-import me.anton.sickcore.core.BukkitCore;
-import me.anton.sickcore.core.ProxyCore;
-import me.anton.sickcore.core.Core;
-import me.anton.sickcore.core.module.globalmodule.GlobalModule;
+import me.anton.sickcore.oldcore.BukkitCore;
+import me.anton.sickcore.oldcore.ProxyCore;
+import me.anton.sickcore.oldcore.Core;
+import me.anton.sickcore.oldcore.module.globalmodule.GlobalModule;
 import me.anton.sickcore.modules.staff.notify.notifys.ServiceNotify;
 import me.anton.sickcore.modules.staff.notify.notifys.TeamChatNotify;
 

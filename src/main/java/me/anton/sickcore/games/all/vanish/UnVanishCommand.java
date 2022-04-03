@@ -7,7 +7,7 @@ import co.aikar.commands.annotation.Description;
 import me.anton.sickcore.api.player.apiPlayer.language.LanguagePath;
 import me.anton.sickcore.api.player.bukkitPlayer.BukkitPlayer;
 import me.anton.sickcore.api.utils.minecraft.messages.ConsoleMessages;
-import me.anton.sickcore.core.BukkitCore;
+import me.anton.sickcore.oldcore.BukkitCore;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 

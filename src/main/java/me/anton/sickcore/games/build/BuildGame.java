@@ -1,6 +1,6 @@
 package me.anton.sickcore.games.build;
 
-import me.anton.sickcore.core.BukkitCore;
+import me.anton.sickcore.oldcore.BukkitCore;
 import me.anton.sickcore.games.build.appereance.BuildChat;
 import me.anton.sickcore.games.build.game.PositionCommand;
 import me.anton.sickcore.games.build.tools.BuildTools;

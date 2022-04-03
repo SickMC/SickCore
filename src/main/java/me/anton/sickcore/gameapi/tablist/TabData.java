@@ -5,7 +5,7 @@ import de.dytanic.cloudnet.ext.bridge.node.CloudNetBridgeModule;
 import de.dytanic.cloudnet.ext.bridge.player.IPlayerManager;
 import lombok.Getter;
 import me.anton.sickcore.api.player.bukkitPlayer.BukkitPlayer;
-import me.anton.sickcore.core.BukkitCore;
+import me.anton.sickcore.oldcore.BukkitCore;
 import org.bson.Document;
 
 @Getter
