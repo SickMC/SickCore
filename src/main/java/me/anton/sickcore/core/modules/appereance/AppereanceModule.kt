@@ -11,14 +11,14 @@ class AppereanceModule : me.anton.sickcore.core.modules.Module() {
     override val name: String
         get() = "Appereance"
 
-    override fun start() {
+    override suspend fun start() {
         instance = this
         when(environment){
-            Environment.VELOCITY -> MOTDHandler()
+            Environment.VELOCITY -> MOTDHandler().handleMOTD()
         }
     }
 
-    override fun shutdown() {
+    override suspend fun shutdown() {
 
     }
 

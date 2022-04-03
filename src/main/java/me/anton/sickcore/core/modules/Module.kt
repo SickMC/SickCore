@@ -7,8 +7,8 @@ abstract class Module {
 
     abstract val name: String
 
-    abstract fun start()
-    abstract fun shutdown()
+    abstract suspend fun start()
+    abstract suspend fun shutdown()
 
     val environment: Environment = if (PaperCore.instance == null) Environment.VELOCITY else Environment.PAPER
 

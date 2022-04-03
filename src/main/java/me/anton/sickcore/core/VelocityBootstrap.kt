@@ -22,13 +22,13 @@ class VelocityBootstrap @Inject constructor(val server: ProxyServer,val logger: 
     private var core: VelocityCore? = null
 
     @Subscribe
-    fun onProxyInitialize(event: ProxyInitializeEvent){
+    suspend fun onProxyInitialize(event: ProxyInitializeEvent){
         core = VelocityCore(this)
         core!!.start()
     }
 
     @Subscribe
-    fun onProxyShutdown(event: ProxyShutdownEvent){
+    suspend fun onProxyShutdown(event: ProxyShutdownEvent){
         core!!.shutdown()
     }
 

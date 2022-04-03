@@ -17,12 +17,12 @@ class PaperCore(val launcher: KSpigot) : Core() {
     val moduleHandler = ModuleHandler()
     var onlinePlayers = ArrayList<Player>()
 
-    fun start(){
+    suspend fun start(){
         PaperCoreHandler()
         moduleHandler.start()
     }
 
-    fun shutdown(){
+    suspend fun shutdown(){
         moduleHandler.shutdown()
     }
 

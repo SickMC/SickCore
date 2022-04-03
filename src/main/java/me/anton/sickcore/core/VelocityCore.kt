@@ -16,12 +16,12 @@ class VelocityCore(val base: VelocityBootstrap) : Core() {
     val moduleHandler = ModuleHandler()
     var onlinePlayers = ArrayList<Player>()
 
-    fun start(){
+    suspend fun start(){
         VelocityCoreHandler()
         moduleHandler.start()
     }
 
-    fun shutdown(){
+    suspend fun shutdown(){
         moduleHandler.shutdown()
     }
 

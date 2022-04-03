@@ -7,13 +7,13 @@ class ModuleHandler {
 
     val modules = listOf(RankModule(), AppereanceModule())
 
-    fun start(){
+    suspend fun start(){
         modules.forEach {
             it.start()
         }
     }
 
-    fun shutdown(){
+    suspend fun shutdown(){
         modules.forEach {
             it.shutdown()
         }

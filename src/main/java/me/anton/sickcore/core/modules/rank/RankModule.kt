@@ -16,7 +16,7 @@ class RankModule: Module() {
     override val name: String
         get() = "Rank"
 
-    override fun start() {
+    override suspend fun start() {
         instance = this
         when(environment){
             Environment.PAPER -> PermissibleListener()
@@ -24,7 +24,7 @@ class RankModule: Module() {
         }
     }
 
-    override fun shutdown() {
+    override suspend fun shutdown() {
 
     }
 

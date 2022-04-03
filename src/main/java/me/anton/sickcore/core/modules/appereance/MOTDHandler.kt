@@ -12,24 +12,17 @@ import net.kyori.adventure.text.serializer.legacy.LegacyComponentSerializer
 
 class MOTDHandler {
 
-    init {
-        handleMOTD()
-    }
-
-    private fun handleMOTD(){
-        var document: MongoDocument? = null
-        Core.instance.databaseScope.launch {
-            document = Core.instance.configCollection.getDocument("type", "motd")!!
-        }
+    suspend fun handleMOTD(){
+        val document = Core.instance.configCollection.getDocument("type", "motd")!!
 
         listenVelocity<ProxyPingEvent> {
             val ping = it.ping.asBuilder()
-            val firstLine = MiniMessage.miniMessage().deserialize(document!!.document.getString("firstLine") + "<newline>")
-            val secondLine = MiniMessage.miniMessage().deserialize(document!!.document.getString("secondLine"))
+            val firstLine = MiniMessage.miniMessage().deserialize(document.document.getString("firstLine") + "<newline>")
+            val secondLine = MiniMessage.miniMessage().deserialize(document.document.getString("secondLine"))
             val description = firstLine.append(secondLine)
             ping.description(description)
-            ping.maximumPlayers(document!!.document.getInteger("maxPlayers"))
-            ping.version(ServerPing.Version(18, document!!.document.getString("maxPlayers")))
+            ping.maximumPlayers(document.document.getInteger("maxPlayers"))
+            ping.version(ServerPing.Version(18, document.document.getString("maxPlayers")))
 
             it.ping = ping.build()
         }
