@@ -9,6 +9,7 @@ import net.kyori.adventure.text.minimessage.MiniMessage
 import org.bukkit.entity.Bat
 import org.bukkit.entity.EntityType
 import org.bukkit.entity.Player
+import org.bukkit.event.entity.EntityDamageEvent
 import org.bukkit.event.player.PlayerJoinEvent
 import org.bukkit.event.player.PlayerMoveEvent
 
@@ -32,9 +33,14 @@ class NameTagHandler {
         listen<PlayerMoveEvent> {
             players[it.player]?.teleport(it.player.eyeLocation)
         }
+
+        listen<EntityDamageEvent> {
+            if (it.entity !is Bat)return@listen
+            if (players.containsValue(it.entity))it.isCancelled = true
+        }
     }
 
-    fun startNameTagRunnable(player: Player){
+    private fun startNameTagRunnable(player: Player){
         task(sync = false, delay = 3000){
             var attributes: List<String>? = null
             Core.instance.databaseScope.launch {
@@ -44,7 +50,7 @@ class NameTagHandler {
         }
     }
 
-    suspend fun getPlayerAttributes(player: Player): List<String>{
+    private suspend fun getPlayerAttributes(player: Player): List<String>{
         val sickPlayer = SickPlayers.getSickPlayer(player.uniqueId)
         val attributes = ArrayList<String>()
         attributes.add("<gradient:#d7b728:#d7a328>Addiction: </gradient><gradient:#1fc3e0:#19a0b8>${sickPlayer?.addiction.toString()}</gradient>")
