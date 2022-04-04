@@ -40,6 +40,9 @@ class SickPlayers {
                 .append("rank", "Player")
                 .append("rankExpire", "none")
                 .append("permanentRank", "Player")
+                .append("mates", Document())
+                .append("bubble", Document())
+                .append("achievments", Document())
             collection.createDocument(playerDoc)
             return getSickPlayer(uuid)!!
         }

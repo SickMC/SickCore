@@ -27,7 +27,7 @@ class Tablist {
                 ?.let { it1 -> NamedTextColor.nearestTo(it1) })
 
             team.addPlayer(it)
-            it.displayName(MiniMessage.miniMessage().deserialize(sickPlayer.getRank().getParent().coloredPrefix + "<gradient:#5e5e5e:#5e5e5e>× </gradient> <${sickPlayer.getRank().getParent().color}>${it.name}"))
+            it.displayName(sickPlayer.getDisplayname())
         }
     }
 
@@ -44,7 +44,7 @@ class Tablist {
                 ?.let { it1 -> NamedTextColor.nearestTo(it1) })
 
             team.addPlayer(it)
-            it.displayName(MiniMessage.miniMessage().deserialize(sickPlayer.getRank().getParent().coloredPrefix + "<gradient:#5e5e5e:#5e5e5e>× </gradient> <${sickPlayer.getRank().getParent().color}>${it.name}"))
+            it.displayName(sickPlayer.getDisplayname())
         }
     }
 

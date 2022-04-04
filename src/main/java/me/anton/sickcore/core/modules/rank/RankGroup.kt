@@ -1,6 +1,9 @@
 package me.anton.sickcore.core.modules.rank
 
 import me.anton.sickcore.utils.mongo.MongoDocument
+import me.anton.sickcore.utils.redis.publish
+import java.util.*
+import kotlin.collections.ArrayList
 
 class RankGroup(name: String, val document: MongoDocument){
 
@@ -19,6 +22,30 @@ class RankGroup(name: String, val document: MongoDocument){
             ranks.add(Ranks.getRank(it)!!)
         }
         return ranks.toList()
+    }
+
+    suspend fun addPermission(permission: String){
+        val permissions = document.document.getList("permissions", String::class.java)
+        if (!permissions.contains(permission))permissions.add(permission)
+        document.document.replace("permissions", permissions)
+        document.save()
+        publish("rankupdate", UUID.randomUUID().toString())
+    }
+
+    suspend fun removePermission(permission: String){
+        val permissions = document.document.getList("permissions", String::class.java)
+        if (permissions.contains(permission)) permissions.remove(permission)
+        document.document.replace("permissions", permissions)
+        document.save()
+        publish("rankupdate", UUID.randomUUID().toString())
+    }
+
+    suspend fun addRank(rank: Rank){
+        val rankNames = document.document.getList("ranks", String::class.java)
+        rankNames.add(rank.name)
+        document.document.replace("ranks", rankNames)
+        document.save()
+        publish("rankupdate", UUID.randomUUID().toString())
     }
 
 }

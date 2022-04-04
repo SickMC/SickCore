@@ -3,6 +3,8 @@ package me.anton.sickcore.core.player
 import me.anton.sickcore.core.modules.rank.Rank
 import me.anton.sickcore.core.modules.rank.Ranks
 import me.anton.sickcore.utils.mongo.MongoDocument
+import net.kyori.adventure.text.Component
+import net.kyori.adventure.text.minimessage.MiniMessage
 import java.util.UUID
 
 class SickPlayer(val uuid: UUID, val document: MongoDocument) {
@@ -29,6 +31,10 @@ class SickPlayer(val uuid: UUID, val document: MongoDocument) {
         permissions.addAll(getRank().getAllPermissions())
         permissions.addAll(extraPermissions)
         return permissions
+    }
+
+    suspend fun getDisplayname(): Component{
+        return MiniMessage.miniMessage().deserialize(getRank().getParent().coloredPrefix + "<gradient:#5e5e5e:#5e5e5e>× </gradient> <${getRank().getParent().color}>$name")
     }
 
 }
