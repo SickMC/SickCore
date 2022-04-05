@@ -43,6 +43,7 @@ class SickPlayers {
                 .append("mates", Document())
                 .append("bubble", Document())
                 .append("achievments", Document())
+                .append("playtime", 0L)
             collection.createDocument(playerDoc)
             return getSickPlayer(uuid)!!
         }

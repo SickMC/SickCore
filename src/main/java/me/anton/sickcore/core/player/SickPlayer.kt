@@ -2,6 +2,7 @@ package me.anton.sickcore.core.player
 
 import me.anton.sickcore.core.modules.rank.Rank
 import me.anton.sickcore.core.modules.rank.Ranks
+import me.anton.sickcore.core.modules.staff.StaffModule
 import me.anton.sickcore.utils.mongo.MongoDocument
 import net.kyori.adventure.text.Component
 import net.kyori.adventure.text.minimessage.MiniMessage
@@ -15,6 +16,7 @@ class SickPlayer(val uuid: UUID, val document: MongoDocument) {
     val extraPermissions = document.document.getList("extraPermissions", String::class.java)
     val addiction = document.document.getInteger("addiction")
     val exp = document.document.getInteger("exp")
+    val playtime = document.document.getLong("playtime")
 
     suspend fun getRank(): Rank{
         return Ranks.getRank(document.document.getString("rank"))!!
@@ -35,6 +37,14 @@ class SickPlayer(val uuid: UUID, val document: MongoDocument) {
 
     suspend fun getDisplayname(): Component{
         return MiniMessage.miniMessage().deserialize(getRank().getParent().coloredPrefix + "<gradient:#5e5e5e:#5e5e5e>× </gradient> <${getRank().getParent().color}>$name")
+    }
+
+    suspend fun isGreater(name: String): Boolean{
+        return Ranks.getRank(name)!!.getParent().priority > getRank().getParent().priority
+    }
+
+    suspend fun isStaff(): Boolean{
+        return StaffModule.instance.staff.getOverview().document.getList("members", String::class.java).contains(uuid.toString())
     }
 
 }
