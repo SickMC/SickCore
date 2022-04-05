@@ -14,7 +14,13 @@ class AppereanceModule : me.anton.sickcore.core.modules.Module() {
     override suspend fun start() {
         instance = this
         when(environment){
-            Environment.VELOCITY -> MOTDHandler().handleMOTD()
+            Environment.VELOCITY ->{
+                MOTDHandler().handleMOTD()
+                val lobbyCommands = LobbyCommand()
+                lobbyCommands.register()
+                lobbyCommands.registerAddition()
+                PlaytimeCommand().register()
+            }
             Environment.PAPER -> {
                 TablistProvider().handleTablist()
                 CommandSuggestionHandler().handlePaperCommands()

@@ -9,6 +9,7 @@ import com.velocitypowered.api.command.CommandSource
 import com.velocitypowered.api.proxy.Player
 import kotlinx.coroutines.launch
 import me.anton.sickcore.core.Core
+import me.anton.sickcore.core.VelocityCore
 import me.anton.sickcore.core.player.SickPlayers
 import me.anton.sickcore.utils.PlayerUtils
 import me.anton.sickcore.utils.sendMessage
@@ -44,6 +45,8 @@ class MsgCommand  {
             .build()
 
         val command = BrigadierCommand(literalNode)
+        val commandMeta = VelocityCore.instance?.base?.server?.commandManager?.metaBuilder("msg")?.aliases("message", "w", "tell")?.build()
+        VelocityCore.instance?.base?.server?.commandManager?.register(commandMeta, command)
     }
 
 }
