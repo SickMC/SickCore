@@ -8,9 +8,9 @@ import kotlinx.coroutines.launch
 import me.anton.sickcore.core.Core
 import me.anton.sickcore.core.VelocityCore
 import me.anton.sickcore.core.player.SickPlayers
-import me.anton.sickcore.utils.TimeUtils
 import me.anton.sickcore.utils.sendMessage
 import net.kyori.adventure.text.minimessage.MiniMessage
+import kotlin.time.Duration.Companion.milliseconds
 
 class PlaytimeCommand {
 
@@ -21,7 +21,7 @@ class PlaytimeCommand {
                 Core.instance.databaseScope.launch {
                     val veloPlayer = it.source as Player
                     val sickPlayer = SickPlayers.getSickPlayer(veloPlayer.uniqueId)
-                    val text = MiniMessage.miniMessage().deserialize("<gradient:#FFFD0B:#80A720>Your playtime is </gradient><gradient:#FF6F13#FFC034>${TimeUtils.formatTime(sickPlayer!!.playtime)}</gradient><#80A720>!")
+                    val text = MiniMessage.miniMessage().deserialize("<gradient:#FFFD0B:#80A720>Your playtime is </gradient><gradient:#FF6F13#FFC034>${sickPlayer!!.playtime.milliseconds}</gradient><#80A720>!")
                     sendMessage(veloPlayer.uniqueId, text)
                 }
                 1
