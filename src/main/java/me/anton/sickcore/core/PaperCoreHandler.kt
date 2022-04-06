@@ -2,6 +2,8 @@ package me.anton.sickcore.core
 
 import kotlinx.coroutines.launch
 import me.anton.sickcore.core.player.SickPlayers
+import me.anton.sickcore.utils.paper.InventoryBuilders
+import me.anton.sickcore.utils.paper.ItemBuilders
 import me.anton.sickcore.utils.paper.RankUpdateEventCaller
 import me.anton.sickcore.utils.redis.subscribeRedis
 import net.axay.kspigot.event.listen
@@ -20,6 +22,7 @@ class PaperCoreHandler {
     init {
         handlePlayerList()
         handleSickPlayers()
+        handleGUIs()
     }
 
     private fun handlePlayerList(){
@@ -51,6 +54,11 @@ class PaperCoreHandler {
             if (Bukkit.getPlayer(uuid) == null)return@subscribeRedis
             Bukkit.getPlayer(uuid)?.sendMessage(component)
         }
+    }
+
+    fun handleGUIs(){
+        ItemBuilders().registerBuilders()
+        InventoryBuilders().registerInventoryHandlers()
     }
 
 }
