@@ -1,5 +1,7 @@
 package me.anton.sickcore.utils.paper
 
+import com.mojang.authlib.GameProfile
+import com.mojang.authlib.properties.Property
 import kotlinx.coroutines.launch
 import me.anton.sickcore.core.Core
 import me.anton.sickcore.core.player.SickPlayer
@@ -20,6 +22,9 @@ import org.bukkit.inventory.meta.ItemMeta
 import org.bukkit.inventory.meta.LeatherArmorMeta
 import org.bukkit.inventory.meta.SkullMeta
 import org.bukkit.persistence.PersistentDataType
+import org.litote.kmongo.bson
+import java.lang.reflect.Field
+import java.util.Base64
 import java.util.UUID
 
 class ItemBuilder(val player: SickPlayer, val material: Material) {
@@ -98,6 +103,23 @@ class ItemBuilder(val player: SickPlayer, val material: Material) {
         if (itemStack.type != Material.PLAYER_HEAD)return this
         val meta = itemMeta as SkullMeta
         meta.owningPlayer = Bukkit.getOfflinePlayer(owner)
+        return this
+    }
+
+    fun setSkull(base64: String): ItemBuilder{
+        if (itemStack.type != Material.PLAYER_HEAD)return this
+        val profile = GameProfile(UUID.randomUUID(), null)
+        val encoded = Base64.getEncoder().encode(String.format("{textures:{SKIN:{url:\"%s\"}}}", base64).toByteArray())
+        profile.properties.put("textures", Property("textures", String(encoded)))
+        var field:Field? = null
+        val skullMeta = itemMeta as SkullMeta
+
+        field = skullMeta.javaClass.getDeclaredField("profile")
+
+        assert(field != null)
+        field.isAccessible = true
+        field.set(skullMeta, profile)
+
         return this
     }
 
