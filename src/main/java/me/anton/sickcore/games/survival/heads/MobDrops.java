@@ -4,7 +4,6 @@ import me.anton.sickcore.api.handler.listeners.bukkit.BukkitHandler;
 import me.anton.sickcore.api.player.bukkitPlayer.BukkitPlayer;
 import me.anton.sickcore.api.utils.common.MathUtils;
 import me.anton.sickcore.api.utils.minecraft.bukkit.item.ItemBuilder;
-import me.anton.sickcore.games.all.HeadDBAPI;
 import me.anton.sickcore.games.survival.SurvivalGamePlayer;
 import me.arcaniax.hdb.api.HeadDatabaseAPI;
 import org.bukkit.entity.*;

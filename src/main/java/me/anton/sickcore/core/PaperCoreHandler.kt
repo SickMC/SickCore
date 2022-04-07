@@ -6,6 +6,8 @@ import me.anton.sickcore.utils.paper.InventoryBuilders
 import me.anton.sickcore.utils.paper.ItemBuilders
 import me.anton.sickcore.utils.paper.RankUpdateEventCaller
 import me.anton.sickcore.utils.redis.subscribeRedis
+import me.arcaniax.hdb.api.DatabaseLoadEvent
+import me.arcaniax.hdb.api.HeadDatabaseAPI
 import net.axay.kspigot.event.listen
 import net.kyori.adventure.text.Component
 import net.kyori.adventure.text.minimessage.MiniMessage
@@ -23,6 +25,7 @@ class PaperCoreHandler {
         handlePlayerList()
         handleSickPlayers()
         handleGUIs()
+        handleHeadDBAPI()
     }
 
     private fun handlePlayerList(){
@@ -59,6 +62,12 @@ class PaperCoreHandler {
     fun handleGUIs(){
         ItemBuilders().registerBuilders()
         InventoryBuilders().registerInventoryHandlers()
+    }
+
+    fun handleHeadDBAPI(){
+        listen<DatabaseLoadEvent> {
+            PaperCore.instance?.headDBAPI = HeadDatabaseAPI()
+        }
     }
 
 }

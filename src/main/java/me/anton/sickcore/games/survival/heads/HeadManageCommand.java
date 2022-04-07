@@ -10,7 +10,6 @@ import me.anton.sickcore.api.utils.minecraft.bukkit.inventory.PagedInventoryBuil
 import me.anton.sickcore.api.utils.minecraft.bukkit.item.ItemBuilder;
 import me.anton.sickcore.api.utils.minecraft.bukkit.player.sound.DefaultSounds;
 import me.anton.sickcore.api.utils.minecraft.messages.ConsoleMessages;
-import me.anton.sickcore.games.all.HeadDBAPI;
 import me.arcaniax.hdb.api.HeadDatabaseAPI;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;

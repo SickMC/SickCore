@@ -8,7 +8,6 @@ import me.anton.sickcore.api.utils.minecraft.bukkit.inventory.InventoryBuilder;
 import me.anton.sickcore.api.utils.minecraft.bukkit.item.ItemBuilder;
 import me.anton.sickcore.api.utils.minecraft.bukkit.player.sound.DefaultSounds;
 import me.anton.sickcore.oldcore.BukkitCore;
-import me.anton.sickcore.games.all.HeadDBAPI;
 import me.anton.sickcore.games.all.nick.AutoNickInventory;
 import me.arcaniax.hdb.api.HeadDatabaseAPI;
 import org.bukkit.ChatColor;

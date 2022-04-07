@@ -18,19 +18,19 @@ import org.bukkit.inventory.ItemStack
 
 class InventoryBuilder(val player: SickPlayer, private val height: Int, val name: Component) {
 
-    val interactions = HashMap<Int, (InventoryInteractEvent) -> Unit>()
+    val interactions = HashMap<Int, (InventoryClickEvent) -> Unit>()
     val inventory = Bukkit.createInventory(null, 9 * height, name)
 
     init {
         InventoryBuilders.addInventory(this)
     }
 
-    fun setItem(slot: Int, item: ItemBuilder, event: (InventoryInteractEvent) -> Unit){
+    fun setItem(slot: Int, item: ItemBuilder, event: (InventoryClickEvent) -> Unit){
         inventory.setItem(slot, item.build())
         interactions[slot] = event
     }
 
-    fun addItem(item: ItemBuilder, event: (InventoryInteractEvent) -> Unit){
+    fun addItem(item: ItemBuilder, event: (InventoryClickEvent) -> Unit){
         inventory.addItem(item.build())
         interactions[inventory.first(item.build())]
     }
@@ -41,8 +41,11 @@ class InventoryBuilder(val player: SickPlayer, private val height: Int, val name
         }
     }
 
-    fun setPlaceholder(slot: Int){
+    fun setPlaceholder(vararg slot: Int){
         val builder = ItemBuilder(player, Material.GRAY_STAINED_GLASS_PANE).setName(null).addItemFlag(ItemFlag.HIDE_ATTRIBUTES)
+        slot.forEach {
+            setItem(it, builder) { event -> event.isCancelled = true }
+        }
     }
 
     fun open(){
