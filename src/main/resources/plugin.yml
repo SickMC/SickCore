@@ -1,12 +1,14 @@
 name: SickCore
-version: '${project.version}'
-main: me.anton.sickcore.bootstrap.BukkitBootstrap
+version: 1.0.0
+main: me.anton.sickcore.core.PaperBootstrap
 author: Anton x 4NI0N
 description: Core for SickNetwork
 api-version: 1.18
 
 softdepends:
-  - SimpleCloud-Plugin
-  - SimpleCloud-Permission
-  - NickAPI
   - HeadDatabase
+
+libraries:
+  - "net.axay:kspigot:1.18.2"
+  - "org.litote.kmongo:kmongo-coroutine-serialization:4.5.1"
+  - "io.github.crackthecodeabhi:kreds:0.7"

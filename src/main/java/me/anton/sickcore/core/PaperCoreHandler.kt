@@ -2,6 +2,7 @@ package me.anton.sickcore.core
 
 import kotlinx.coroutines.launch
 import me.anton.sickcore.core.player.SickPlayers
+import me.anton.sickcore.utils.mongo.databaseScope
 import me.anton.sickcore.utils.paper.InventoryBuilders
 import me.anton.sickcore.utils.paper.ItemBuilders
 import me.anton.sickcore.utils.paper.RankUpdateEventCaller
@@ -40,7 +41,7 @@ class PaperCoreHandler {
 
     private fun handleSickPlayers(){
         listen<PlayerLoginEvent>() {
-            Core.instance.databaseScope.launch {
+            databaseScope.launch {
                 SickPlayers.reloadPlayer(it.player.uniqueId)
             }
         }

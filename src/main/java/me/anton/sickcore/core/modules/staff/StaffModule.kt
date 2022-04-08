@@ -1,6 +1,7 @@
 package me.anton.sickcore.core.modules.staff
 
 import me.anton.sickcore.core.Environment
+import me.anton.sickcore.core.environment
 
 class StaffModule : me.anton.sickcore.core.modules.Module(){
 

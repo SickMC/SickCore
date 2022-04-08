@@ -8,6 +8,7 @@ import kotlinx.coroutines.launch
 import me.anton.sickcore.core.Core
 import me.anton.sickcore.core.VelocityCore
 import me.anton.sickcore.core.player.SickPlayers
+import me.anton.sickcore.utils.mongo.databaseScope
 import me.anton.sickcore.utils.sendMessage
 import net.kyori.adventure.text.minimessage.MiniMessage
 
@@ -17,7 +18,7 @@ class BuildServerCommand {
         val literalNode = LiteralArgumentBuilder
             .literal<CommandSource>("bs")
             .executes(){
-                Core.instance.databaseScope.launch {
+                databaseScope.launch {
                     val veloPlayer = it.source as Player
                     val player = SickPlayers.getSickPlayer(veloPlayer.uniqueId)!!
                     if (!player.isStaff()){

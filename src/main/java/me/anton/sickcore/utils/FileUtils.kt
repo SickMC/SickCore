@@ -8,7 +8,7 @@ import java.nio.charset.StandardCharsets
 class FileUtils {
     companion object {
         fun getFileAsDocument(name: String): Document {
-            val stream = Companion::class.java.classLoader.getResourceAsStream("$name.json")
+            val stream = Companion::class.java.classLoader.getResourceAsStream("json/$name.json")
             val reader = InputStreamReader(stream, StandardCharsets.UTF_8)
             val bufferedReader = BufferedReader(reader)
             val stringBuilder = StringBuilder()

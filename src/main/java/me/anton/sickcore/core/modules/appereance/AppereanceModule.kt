@@ -1,6 +1,7 @@
 package me.anton.sickcore.core.modules.appereance
 
 import me.anton.sickcore.core.Environment
+import me.anton.sickcore.core.environment
 
 class AppereanceModule : me.anton.sickcore.core.modules.Module() {
 

@@ -1,4 +1,4 @@
-package me.anton.sickcore.games.survival.heads;
+/*package me.anton.sickcore.games.survival.heads;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -139,3 +139,4 @@ public enum MobHead {
     public final String headName;
 
 }
+ */

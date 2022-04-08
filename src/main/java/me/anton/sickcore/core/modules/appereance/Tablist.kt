@@ -4,6 +4,7 @@ import kotlinx.coroutines.launch
 import me.anton.sickcore.core.Core
 import me.anton.sickcore.core.PaperCore
 import me.anton.sickcore.core.player.SickPlayers
+import me.anton.sickcore.utils.mongo.databaseScope
 import me.anton.sickcore.utils.paper.RankUpdateEvent
 import net.axay.kspigot.event.listen
 import net.kyori.adventure.text.format.NamedTextColor
@@ -56,19 +57,19 @@ class TablistProvider {
 
     fun handleTablist(){
         listen<PlayerJoinEvent> {
-            Core.instance.databaseScope.launch {
+            databaseScope.launch {
                 tablist.reloadTablist()
             }
         }
 
         listen<PlayerQuitEvent> {
-            Core.instance.databaseScope.launch {
+            databaseScope.launch {
                 tablist.reloadTablist()
             }
         }
 
         listen<RankUpdateEvent> {
-            Core.instance.databaseScope.launch {
+            databaseScope.launch {
                 tablist.reloadTablist()
             }
         }

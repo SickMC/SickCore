@@ -1,9 +1,10 @@
 package me.anton.sickcore.utils.paper
 
 import kotlinx.coroutines.launch
-import me.anton.sickcore.core.Core
+import me.anton.sickcore.core.PaperCore
 import me.anton.sickcore.core.player.SickPlayer
 import me.anton.sickcore.core.player.SickPlayers
+import me.anton.sickcore.utils.mongo.databaseScope
 import net.axay.kspigot.event.listen
 import net.kyori.adventure.text.Component
 import org.bukkit.Bukkit
@@ -32,7 +33,7 @@ class InventoryBuilder(val player: SickPlayer, private val height: Int, val name
 
     fun addItem(item: ItemBuilder, event: (InventoryClickEvent) -> Unit){
         inventory.addItem(item.build())
-        interactions[inventory.first(item.build())]
+        interactions[inventory.first(item.build())] = event
     }
 
     fun fillEmptyPlaceholders(){
@@ -70,7 +71,7 @@ class InventoryBuilders{
 
     fun registerInventoryHandlers(){
         listen<InventoryClickEvent> {
-            Core.instance.databaseScope.launch {
+            databaseScope.launch {
                 if (it.currentItem == null)return@launch
                 if (!inventorys.containsKey(SickPlayers.getSickPlayer((it.whoClicked as Player).uniqueId)))return@launch
                 val inventorys = inventorys[SickPlayers.getSickPlayer((it.whoClicked as Player).uniqueId)]

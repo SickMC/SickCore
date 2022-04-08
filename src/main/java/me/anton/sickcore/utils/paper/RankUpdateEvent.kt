@@ -4,6 +4,7 @@ import me.anton.sickcore.utils.redis.subscribeRedis
 import org.bukkit.Bukkit
 import org.bukkit.event.Event
 import org.bukkit.event.HandlerList
+import org.bukkit.event.player.PlayerJoinEvent
 
 class RankUpdateEvent : Event() {
 
@@ -14,6 +15,14 @@ class RankUpdateEvent : Event() {
     override fun getHandlers(): HandlerList {
         return HandlerList()
     }
+
+    companion object{
+        @JvmStatic
+        fun getHandlerList():HandlerList{
+            return HandlerList()
+        }
+    }
+
 }
 
 class RankUpdateEventCaller{

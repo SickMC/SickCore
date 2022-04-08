@@ -2,7 +2,9 @@ package me.anton.sickcore.core.modules.rank
 
 import kotlinx.coroutines.launch
 import me.anton.sickcore.core.Core
+import me.anton.sickcore.core.PaperCore
 import me.anton.sickcore.core.player.SickPlayers
+import me.anton.sickcore.utils.mongo.databaseScope
 import org.bukkit.entity.Player
 import org.bukkit.permissions.PermissibleBase
 import org.bukkit.permissions.Permission
@@ -29,8 +31,11 @@ class SickPermissibleBase(private val player: Player) : PermissibleBase(player) 
     }
 
     override fun recalculatePermissions() {
-        Core.instance.databaseScope.launch {
-            val list = SickPlayers.getSickPlayer(player.uniqueId)!!.getPermissions()
+        databaseScope.launch {
+            val list = SickPlayers.getSickPlayer(player.uniqueId)?.getPermissions()
+            list?.forEach {
+                permissions.add(it)
+            }
         }
     }
 

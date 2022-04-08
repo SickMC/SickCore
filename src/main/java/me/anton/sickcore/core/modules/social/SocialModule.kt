@@ -1,6 +1,7 @@
 package me.anton.sickcore.core.modules.social
 
 import me.anton.sickcore.core.Environment
+import me.anton.sickcore.core.environment
 
 class SocialModule : me.anton.sickcore.core.modules.Module() {
 

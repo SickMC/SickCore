@@ -1,6 +1,7 @@
 package me.anton.sickcore.core.modules.rank
 
 import me.anton.sickcore.core.Environment
+import me.anton.sickcore.core.environment
 import me.anton.sickcore.core.modules.Module
 import me.anton.sickcore.utils.mongo.MongoCollection
 

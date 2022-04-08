@@ -1,8 +1,9 @@
 package me.anton.sickcore.core.modules.appereance
 
 import kotlinx.coroutines.launch
-import me.anton.sickcore.core.Core
+import me.anton.sickcore.core.PaperCore
 import me.anton.sickcore.core.player.SickPlayers
+import me.anton.sickcore.utils.mongo.databaseScope
 import net.axay.kspigot.event.listen
 import net.axay.kspigot.runnables.task
 import net.kyori.adventure.text.minimessage.MiniMessage
@@ -20,7 +21,7 @@ class NameTagHandler {
     fun handleNameTags(){
         listen<PlayerJoinEvent> {
             var attributes: List<String>? = null
-            Core.instance.databaseScope.launch {
+            databaseScope.launch {
                 attributes = getPlayerAttributes(it.player)
             }
             players[it.player] = it.player.world.spawnEntity(it.player.eyeLocation, EntityType.BAT) as Bat
@@ -43,7 +44,7 @@ class NameTagHandler {
     private fun startNameTagRunnable(player: Player){
         task(sync = false, delay = 3000){
             var attributes: List<String>? = null
-            Core.instance.databaseScope.launch {
+            databaseScope.launch {
                 attributes = getPlayerAttributes(player)
             }
             players[player]?.customName(MiniMessage.miniMessage().deserialize(attributes?.shuffled()?.get(1) ?: ""))

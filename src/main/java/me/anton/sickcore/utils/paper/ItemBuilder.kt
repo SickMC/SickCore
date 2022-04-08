@@ -4,8 +4,10 @@ import com.mojang.authlib.GameProfile
 import com.mojang.authlib.properties.Property
 import kotlinx.coroutines.launch
 import me.anton.sickcore.core.Core
+import me.anton.sickcore.core.PaperCore
 import me.anton.sickcore.core.player.SickPlayer
 import me.anton.sickcore.core.player.SickPlayers
+import me.anton.sickcore.utils.mongo.databaseScope
 import net.axay.kspigot.event.listen
 import net.kyori.adventure.text.Component
 import net.kyori.adventure.text.minimessage.MiniMessage
@@ -15,6 +17,7 @@ import org.bukkit.Material
 import org.bukkit.NamespacedKey
 import org.bukkit.enchantments.Enchantment
 import org.bukkit.entity.Damageable
+import org.bukkit.entity.Entity
 import org.bukkit.event.player.PlayerInteractEvent
 import org.bukkit.inventory.ItemFlag
 import org.bukkit.inventory.ItemStack
@@ -68,8 +71,19 @@ class ItemBuilder(val player: SickPlayer, val material: Material) {
     }
 
     fun glowing(value: Boolean): ItemBuilder{
-        addEnchantment(Enchantment.ARROW_FIRE, 1)
-        addItemFlag(ItemFlag.HIDE_ENCHANTS)
+        if (value){
+            addEnchantment(Enchantment.ARROW_FIRE, 1)
+            addItemFlag(ItemFlag.HIDE_ENCHANTS)
+        }else
+            removeEnchantments(Enchantment.ARROW_FIRE)
+        return this
+    }
+
+    fun removeEnchantments(vararg enchantments: Enchantment): ItemBuilder{
+        enchantments.forEach {
+            itemMeta.removeEnchant(it)
+        }
+
         return this
     }
 
@@ -111,7 +125,7 @@ class ItemBuilder(val player: SickPlayer, val material: Material) {
         val profile = GameProfile(UUID.randomUUID(), null)
         val encoded = Base64.getEncoder().encode(String.format("{textures:{SKIN:{url:\"%s\"}}}", base64).toByteArray())
         profile.properties.put("textures", Property("textures", String(encoded)))
-        var field:Field? = null
+        val field: Field
         val skullMeta = itemMeta as SkullMeta
 
         field = skullMeta.javaClass.getDeclaredField("profile")
@@ -156,7 +170,7 @@ class ItemBuilders{
 
     fun registerBuilders(){
         listen<PlayerInteractEvent> {
-            Core.instance.databaseScope.launch {
+            databaseScope.launch {
                 if (!it.hasItem())return@launch
                 if (!items.containsKey(SickPlayers.getSickPlayer(it.player.uniqueId)))return@launch
                 val items = items[SickPlayers.getSickPlayer(it.player.uniqueId)]

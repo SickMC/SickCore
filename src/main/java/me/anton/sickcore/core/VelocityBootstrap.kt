@@ -6,6 +6,7 @@ import com.velocitypowered.api.event.proxy.ProxyInitializeEvent
 import com.velocitypowered.api.event.proxy.ProxyShutdownEvent
 import com.velocitypowered.api.plugin.Plugin
 import com.velocitypowered.api.proxy.ProxyServer
+import org.litote.kmongo.serialization.SerializationClassMappingTypeService
 import org.slf4j.Logger
 
 @Plugin(
@@ -23,6 +24,7 @@ class VelocityBootstrap @Inject constructor(val server: ProxyServer,val logger: 
 
     @Subscribe
     suspend fun onProxyInitialize(event: ProxyInitializeEvent){
+        System.setProperty("org.litote.mongo.mapping.service", SerializationClassMappingTypeService::class.qualifiedName!!)
         core = VelocityCore(this)
         core!!.start()
     }

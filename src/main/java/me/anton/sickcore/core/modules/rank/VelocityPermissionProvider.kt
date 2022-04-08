@@ -8,8 +8,10 @@ import com.velocitypowered.api.permission.Tristate
 import com.velocitypowered.api.proxy.Player
 import kotlinx.coroutines.launch
 import me.anton.sickcore.core.Core
+import me.anton.sickcore.core.VelocityCore
 import me.anton.sickcore.core.listenVelocity
 import me.anton.sickcore.core.player.SickPlayers
+import me.anton.sickcore.utils.mongo.databaseScope
 
 class VelocityPermissionProvider : PermissionProvider{
 
@@ -33,7 +35,7 @@ class VelocityPermissionProvider : PermissionProvider{
 
         fun getPermissions(): List<String>{
             val list = ArrayList<String>()
-            Core.instance.databaseScope.launch {
+            databaseScope.launch {
                 list.addAll(SickPlayers.getSickPlayer(player.uniqueId)!!.getPermissions())
             }
             return list.toList()

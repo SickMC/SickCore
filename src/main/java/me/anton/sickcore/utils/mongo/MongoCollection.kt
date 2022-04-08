@@ -1,12 +1,12 @@
 package me.anton.sickcore.utils.mongo
 
 import com.mongodb.client.model.Filters
-import me.anton.sickcore.core.Core
+import me.anton.sickcore.core.*
 import org.bson.Document
 
 class MongoCollection(name: String) {
 
-    val collection = Core.instance.connection.db.getCollection<Document>(name)
+    val collection = MongoConnection.db.getCollection<Document>(name)
 
     suspend fun getDocument(key: String, value: String): MongoDocument?{
         return if(collection.find(Filters.eq(key, value)).first() == null) null

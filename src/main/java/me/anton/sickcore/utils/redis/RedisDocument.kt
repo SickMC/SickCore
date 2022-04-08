@@ -2,18 +2,19 @@ package me.anton.sickcore.utils.redis
 
 import com.google.gson.JsonObject
 import com.google.gson.JsonParser
-import me.anton.sickcore.core.Core
+import me.anton.sickcore.core.*
 
 class RedisDocument(val key: String) {
 
     lateinit var jsonObject: JsonObject
 
     suspend fun load(){
-        jsonObject = JsonParser.parseString(Core.instance.redisConnection.client.get(key)).asJsonObject
+        jsonObject = JsonParser.parseString(if (environment == Environment.PAPER) PaperCore.instance!!.redisConnection.client.get(key) else VelocityCore.instance!!.redisConnection.client.get(key)).asJsonObject
     }
 
     suspend fun save(){
-        Core.instance.redisConnection.client.set(key, jsonObject.toString());
+        if (environment == Environment.PAPER) PaperCore.instance!!.redisConnection.client.set(key, jsonObject.toString())
+        else VelocityCore.instance!!.redisConnection.client.set(key, jsonObject.toString())
     }
 
 }

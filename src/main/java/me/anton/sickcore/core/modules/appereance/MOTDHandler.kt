@@ -5,6 +5,7 @@ import com.velocitypowered.api.proxy.server.ServerPing
 import com.velocitypowered.api.proxy.server.ServerPing.SamplePlayer
 import kotlinx.coroutines.launch
 import me.anton.sickcore.core.Core
+import me.anton.sickcore.core.VelocityCore
 import me.anton.sickcore.core.listenVelocity
 import me.anton.sickcore.utils.mongo.MongoDocument
 import net.kyori.adventure.text.Component
@@ -15,7 +16,7 @@ import java.util.*
 class MOTDHandler {
 
     suspend fun handleMOTD(){
-        val document = Core.instance.configCollection.getDocument("type", "motd")!!
+        val document = VelocityCore.instance!!.configCollection.getDocument("type", "motd")!!
 
         listenVelocity<ProxyPingEvent> {
             val ping = it.ping.asBuilder()

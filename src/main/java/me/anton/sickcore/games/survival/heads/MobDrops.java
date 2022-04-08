@@ -1,4 +1,4 @@
-package me.anton.sickcore.games.survival.heads;
+/*package me.anton.sickcore.games.survival.heads;
 
 import me.anton.sickcore.api.handler.listeners.bukkit.BukkitHandler;
 import me.anton.sickcore.api.player.bukkitPlayer.BukkitPlayer;
@@ -129,4 +129,4 @@ public class MobDrops extends BukkitHandler {
 
         return MobHead.valueOf(entity.getType().name());
     }
-}
+}*/

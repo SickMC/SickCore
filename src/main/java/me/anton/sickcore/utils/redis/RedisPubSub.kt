@@ -4,7 +4,10 @@ import io.github.crackthecodeabhi.kreds.connection.*
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.withContext
-import me.anton.sickcore.core.Core
+import me.anton.sickcore.core.Environment
+import me.anton.sickcore.core.PaperCore
+import me.anton.sickcore.core.VelocityCore
+import me.anton.sickcore.core.environment
 import me.anton.sickcore.utils.FileUtils
 
 suspend inline fun subscribeRedis(channelName: String, crossinline callback: (String) -> Unit){
@@ -31,6 +34,7 @@ suspend inline fun subscribeRedis(channelName: String, crossinline callback: (St
 
 suspend inline fun publish(channelName: String, message: String){
 
-    Core.instance.redisConnection.client.publish(channelName, message)
+    if (environment == Environment.PAPER) PaperCore.instance!!.redisConnection.client.publish(channelName, message)
+    else VelocityCore.instance!!.redisConnection.client.publish(channelName, message)
 
 }
