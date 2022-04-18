@@ -1,12 +1,9 @@
 name: SickCore
 version: 1.0.0
-main: me.anton.sickcore.core.PaperBootstrap
+main: net.sickmc.sickcore.core.PaperBootstrap
 author: Anton x 4NI0N
 description: Core for SickNetwork
 api-version: 1.18
-
-softdepends:
-  - HeadDatabase
 
 libraries:
   - "net.axay:kspigot:1.18.2"
