@@ -1,5 +1,4 @@
 {
-  "address": "45.81.234.49",
-  "port": 6379,
-  "password": "9WdydnmXUi2C7fYav7t8"
+  "address": "localhost",
+  "port": 6379
 }

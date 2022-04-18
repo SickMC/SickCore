@@ -1,9 +1,0 @@
-{
-  "id": "sickcore",
-  "name": "SickCore",
-  "version": "1.1",
-  "authors" : ["btwonion"],
-  "description": "Velocity Core of SickNetwork",
-  "url": "discord.sickmc.net",
-  "main": "net.sickmc.sickcore.core.VelocityBootstrap"
-}
