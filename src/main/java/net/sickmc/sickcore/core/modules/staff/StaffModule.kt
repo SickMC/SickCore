@@ -20,6 +20,7 @@ class StaffModule : net.sickmc.sickcore.core.modules.Module(){
             Environment.VELOCITY ->{
                 BuildServerCommand().register()
             }
+            else -> {}
         }
     }
 

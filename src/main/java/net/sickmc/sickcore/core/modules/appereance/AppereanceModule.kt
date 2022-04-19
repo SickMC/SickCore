@@ -28,6 +28,7 @@ class AppereanceModule : net.sickmc.sickcore.core.modules.Module() {
                 NameTagHandler().handleNameTags()
                 ChatHandler().handleChat()
             }
+            else -> {}
         }
     }
 

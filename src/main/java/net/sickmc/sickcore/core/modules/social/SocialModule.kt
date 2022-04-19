@@ -14,6 +14,7 @@ class SocialModule : net.sickmc.sickcore.core.modules.Module() {
             Environment.VELOCITY -> {
                 MsgCommand().register()
             }
+            else -> {}
         }
     }
 

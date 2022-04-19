@@ -17,6 +17,7 @@ import net.sickmc.sickcore.utils.sendMessage
 import net.axay.kspigot.chat.KColors
 import net.kyori.adventure.text.Component
 import net.kyori.adventure.text.minimessage.MiniMessage
+import net.sickmc.sickcore.core.redisConnection
 
 class MsgCommand  {
 
@@ -32,7 +33,7 @@ class MsgCommand  {
                             val targetUUID = PlayerUtils.fetchUUID(target)
 
                             val noPlayer = Component.text("This player is not online!").color(KColors.DARKRED)
-                            if (VelocityCore.instance!!.redisConnection.client.get(it.toString()) == null) {
+                            if (redisConnection.client.get(it.toString()) == null) {
                                 sendMessage(sender.uniqueId, noPlayer)
                                 return@launch
                             }

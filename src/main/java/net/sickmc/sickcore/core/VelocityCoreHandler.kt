@@ -33,7 +33,7 @@ class VelocityCoreHandler {
                 if (SickPlayers.collection.getDocument("uuid", it.player.uniqueId.toString()) == null)SickPlayers.createPlayer(it.player.uniqueId)
                 else SickPlayers.reloadPlayer(it.player.uniqueId)
 
-                VelocityCore.instance?.redisConnection?.client?.set(it.player.uniqueId.toString(), "{\n" +
+                redisConnection.client.set(it.player.uniqueId.toString(), "{\n" +
                         "  \"joinedAt\": ${System.currentTimeMillis()},\n" +
                         "\"ip\": ${it.player.remoteAddress.hostName}" +
                         "}")
@@ -42,13 +42,13 @@ class VelocityCoreHandler {
 
         listenVelocity<DisconnectEvent> {
             databaseScope.launch {
-                val playerData = VelocityCore.instance?.redisConnection?.client?.get("${it.player.uniqueId}")!!
+                val playerData = redisConnection.client.get("${it.player.uniqueId}")!!
 
                 val doc = Document.parse(playerData)
                 val player = SickPlayers.getSickPlayer(it.player.uniqueId)!!
                 player.document.document["playtime"] = player.document.document.getLong("playtime") + (System.currentTimeMillis() - doc.getLong("joinedAt"))
                 player.document.save()
-                VelocityCore.instance?.redisConnection?.client?.del(it.player.uniqueId.toString())
+                redisConnection.client.del(it.player.uniqueId.toString())
             }
         }
     }

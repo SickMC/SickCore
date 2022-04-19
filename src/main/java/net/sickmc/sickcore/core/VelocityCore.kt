@@ -11,13 +11,13 @@ class VelocityCore(val base: VelocityBootstrap) : Core() {
 
     init {
         instance = this
+        environment = Environment.VELOCITY
     }
 
     val moduleHandler = ModuleHandler()
     var onlinePlayers = ArrayList<Player>()
 
     suspend fun start(){
-        print("csdasd")
         VelocityCoreHandler().handleCustomEvents()
         moduleHandler.start()
     }

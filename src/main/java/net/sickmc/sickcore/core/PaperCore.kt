@@ -3,7 +3,6 @@ package net.sickmc.sickcore.core
 import net.sickmc.sickcore.core.modules.ModuleHandler
 import net.axay.kspigot.main.KSpigot
 import org.bukkit.entity.Player
-
 class PaperCore(val launcher: KSpigot) : Core() {
 
     companion object{
@@ -12,13 +11,13 @@ class PaperCore(val launcher: KSpigot) : Core() {
 
     init {
         instance = this
+        environment = Environment.PAPER
     }
 
     val moduleHandler = ModuleHandler()
     var onlinePlayers = ArrayList<Player>()
 
     suspend fun start(){
-        print("moino")
         val coreHandler = PaperCoreHandler()
         coreHandler.handleMessages()
         coreHandler.handleCustomEvents()

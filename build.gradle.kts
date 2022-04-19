@@ -9,7 +9,6 @@ version = "1.0.0"
 
 repositories{
     mavenCentral()
-    maven ("https://jitpack.io")
     maven ("https://nexus.velocitypowered.com/repository/maven-public/")
 }
 
@@ -20,8 +19,8 @@ dependencies{
     implementation("io.github.crackthecodeabhi:kreds:0.7")
     implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.3.2")
     shadow("org.jetbrains.kotlinx:kotlinx-serialization-json:1.3.2")
-    shadow("org.litote.kmongo:kmongo-coroutine-serialization:4.5.1")
     shadow("io.github.crackthecodeabhi:kreds:0.7")
+    shadow("com.velocitypowered:velocity-api:3.0.1")
     compileOnly("com.velocitypowered:velocity-api:3.0.1")
     annotationProcessor("com.velocitypowered:velocity-api:3.0.1")
 }
@@ -37,10 +36,18 @@ tasks{
     compileKotlin{
         kotlinOptions.jvmTarget = "17"
     }
-    register<Exec>("pushToTesting"){
+    val pushToPaperTesting by registering(Exec::class){
         dependsOn(build)
         group = "push"
         commandLine("wsl", "rsync", "/mnt/c/Users/anton/Desktop/Ordner/Development/SickNetwork/SickCore/build/libs/SickCore-1.0.0-dev-all.jar", "node1:/home/sickmc/network/Testing/paper/plugins/SickCore.jar")
+    }
+    val pushToVelocityTesting by registering(Exec::class){
+        dependsOn(build)
+        group = "push"
         commandLine("wsl", "rsync", "/mnt/c/Users/anton/Desktop/Ordner/Development/SickNetwork/SickCore/build/libs/SickCore-1.0.0-dev-all.jar", "node1:/home/sickmc/network/Testing/velocity/plugins/SickCore.jar")
+    }
+    val pushToTesting by registering(Exec::class){
+        dependsOn(pushToPaperTesting, pushToVelocityTesting)
+        group = "push"
     }
 }

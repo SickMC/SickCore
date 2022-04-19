@@ -22,6 +22,7 @@ class RankModule: Module() {
         when(environment){
             Environment.PAPER -> PermissibleListener()
             Environment.VELOCITY -> VelocityPermissionProvider()
+            else -> {}
         }
     }
 

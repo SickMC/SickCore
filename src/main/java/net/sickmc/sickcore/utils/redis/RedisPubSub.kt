@@ -4,10 +4,7 @@ import io.github.crackthecodeabhi.kreds.connection.*
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.withContext
-import net.sickmc.sickcore.core.Environment
-import net.sickmc.sickcore.core.PaperCore
-import net.sickmc.sickcore.core.VelocityCore
-import net.sickmc.sickcore.core.environment
+import net.sickmc.sickcore.core.*
 import net.sickmc.sickcore.utils.FileUtils
 
 suspend inline fun subscribeRedis(channelName: String, crossinline callback: (String) -> Unit){
@@ -34,7 +31,6 @@ suspend inline fun subscribeRedis(channelName: String, crossinline callback: (St
 
 suspend inline fun publish(channelName: String, message: String){
 
-    if (environment == Environment.PAPER) PaperCore.instance!!.redisConnection.client.publish(channelName, message)
-    else VelocityCore.instance!!.redisConnection.client.publish(channelName, message)
+    redisConnection.client.publish(channelName, message)
 
 }

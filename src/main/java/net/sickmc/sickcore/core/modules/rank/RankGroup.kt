@@ -5,7 +5,7 @@ import net.sickmc.sickcore.utils.redis.publish
 import java.util.*
 import kotlin.collections.ArrayList
 
-class RankGroup(name: String, val document: MongoDocument){
+class RankGroup(val name: String, val document: MongoDocument){
 
     val prefix = document.document.getString("publicPrefix")
     val privatePrefix = document.document.getString("privatePrefix")
