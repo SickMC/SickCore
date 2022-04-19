@@ -17,7 +17,7 @@ class SickPermissibleBase(val player: Player) : PermissibleBase(player) {
 
     override fun isPermissionSet(name: String): Boolean{
         var bool = false
-        databaseScope.launch {
+        runBlocking {
             bool = sickPlayer.getRank().getParent().name == "Administration" || permissions.contains(name)
         }
         return bool
@@ -25,7 +25,7 @@ class SickPermissibleBase(val player: Player) : PermissibleBase(player) {
 
     override fun isPermissionSet(perm: Permission): Boolean {
         var bool = false
-        databaseScope.launch {
+        runBlocking {
             bool = sickPlayer.getRank().getParent().name == "Administration" || permissions.contains(perm.name)
         }
         return bool
@@ -33,7 +33,7 @@ class SickPermissibleBase(val player: Player) : PermissibleBase(player) {
 
     override fun hasPermission(inName: String): Boolean {
         var bool = false
-        databaseScope.launch {
+        runBlocking {
             bool = sickPlayer.getRank().getParent().name == "Administration" || permissions.contains(inName)
         }
         return bool
@@ -41,7 +41,7 @@ class SickPermissibleBase(val player: Player) : PermissibleBase(player) {
 
     override fun hasPermission(perm: Permission): Boolean {
         var bool = false
-        databaseScope.launch {
+        runBlocking {
             bool = sickPlayer.getRank().getParent().name == "Administration" || permissions.contains(perm.name)
         }
         return bool
@@ -68,7 +68,7 @@ class SickPermissibleBase(val player: Player) : PermissibleBase(player) {
 
     private fun validatePlayer(): SickPlayer {
         var cachePlayer: SickPlayer? = null
-        databaseScope.launch {
+        runBlocking {
             cachePlayer = SickPlayers.getSickPlayer(player.uniqueId)
         }
         return cachePlayer!!
