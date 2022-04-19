@@ -46,7 +46,7 @@ tasks{
         group = "push"
         commandLine("wsl", "rsync", "/mnt/c/Users/anton/Desktop/Ordner/Development/SickNetwork/SickCore/build/libs/SickCore-1.0.0-dev-all.jar", "node1:/home/sickmc/network/Testing/velocity/plugins/SickCore.jar")
     }
-    val pushToTesting by registering(Exec::class){
+    val pushToTesting by registering{
         dependsOn(pushToPaperTesting, pushToVelocityTesting)
         group = "push"
     }

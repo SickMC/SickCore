@@ -1,10 +1,8 @@
 package net.sickmc.sickcore.core.modules.rank
 
-import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
 import net.sickmc.sickcore.core.player.SickPlayer
 import net.sickmc.sickcore.core.player.SickPlayers
-import net.sickmc.sickcore.utils.mongo.databaseScope
 import org.bukkit.entity.Player
 import org.bukkit.permissions.PermissibleBase
 import org.bukkit.permissions.Permission
@@ -12,7 +10,7 @@ import org.bukkit.permissions.PermissionAttachmentInfo
 
 class SickPermissibleBase(val player: Player) : PermissibleBase(player) {
 
-    private val permissions = ArrayList<String>()
+    private var permissions = ArrayList<String>()
     private val sickPlayer = validatePlayer()
 
     override fun isPermissionSet(name: String): Boolean{
@@ -48,11 +46,9 @@ class SickPermissibleBase(val player: Player) : PermissibleBase(player) {
     }
 
     override fun recalculatePermissions() {
+        permissions.clear()
         runBlocking {
-            val list = SickPlayers.getSickPlayer(player.uniqueId)?.getPermissions()
-            list?.forEach {
-                permissions.add(it)
-            }
+            permissions.addAll(sickPlayer.getPermissions())
         }
     }
 
