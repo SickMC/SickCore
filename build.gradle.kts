@@ -1,8 +1,8 @@
 plugins {
-    kotlin("jvm") version "1.6.20"
-    id("io.papermc.paperweight.userdev") version "1.3.5"
+    kotlin("jvm") version "1.6.21"
+    id("io.papermc.paperweight.userdev") version "1.3.6"
     id("com.github.johnrengelman.shadow") version "7.1.2"
-    kotlin("plugin.serialization") version "1.6.20"
+    kotlin("plugin.serialization") version "1.6.21"
 }
 
 version = "1.0.0"
@@ -22,7 +22,6 @@ dependencies{
     shadow("io.github.crackthecodeabhi:kreds:0.7")
     shadow("com.velocitypowered:velocity-api:3.0.1")
     compileOnly("com.velocitypowered:velocity-api:3.0.1")
-    annotationProcessor("com.velocitypowered:velocity-api:3.0.1")
 }
 
 tasks{
