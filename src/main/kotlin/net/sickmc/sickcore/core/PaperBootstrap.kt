@@ -17,6 +17,7 @@ class PaperBootstrap : KSpigot() {
 
     override fun startup() {
         this.core = PaperCore(this)
+        core!!.init()
         bootScope.launch {
             core?.start()
         }
