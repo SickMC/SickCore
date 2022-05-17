@@ -3,7 +3,7 @@ package net.sickmc.sickcore.core.modules
 import net.sickmc.sickcore.core.modules.appereance.AppereanceModule
 import net.sickmc.sickcore.core.modules.rank.RankModule
 
-class ModuleHandler {
+object ModuleHandler {
 
     val modules = listOf(RankModule(), AppereanceModule())
 
