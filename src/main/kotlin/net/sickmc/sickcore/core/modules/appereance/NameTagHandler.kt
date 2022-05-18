@@ -1,21 +1,13 @@
 package net.sickmc.sickcore.core.modules.appereance
 
 import kotlinx.coroutines.runBlocking
-import net.sickmc.sickcore.core.player.SickPlayers
+import net.sickmc.sickcore.core.commonPlayer.SickPlayers
 import net.axay.kspigot.event.listen
 import net.axay.kspigot.runnables.task
 import net.kyori.adventure.text.Component
 import net.kyori.adventure.text.minimessage.MiniMessage
-import org.bukkit.entity.ArmorStand
-import org.bukkit.entity.EntityType
 import org.bukkit.entity.Player
-import org.bukkit.entity.Silverfish
-import org.bukkit.event.entity.EntityInteractEvent
-import org.bukkit.event.player.PlayerInteractEntityEvent
-import org.bukkit.event.player.PlayerInteractEvent
 import org.bukkit.event.player.PlayerJoinEvent
-import org.bukkit.event.player.PlayerQuitEvent
-import org.bukkit.event.player.PlayerToggleSneakEvent
 import org.bukkit.scoreboard.DisplaySlot
 
 class NameTagHandler {

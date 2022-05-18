@@ -2,7 +2,6 @@ package net.sickmc.sickcore.core.modules.appereance
 
 import net.sickmc.sickcore.core.Environment
 import net.sickmc.sickcore.core.environment
-
 class AppereanceModule : net.sickmc.sickcore.core.modules.Module() {
 
     companion object{

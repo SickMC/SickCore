@@ -1,25 +1,25 @@
 package net.sickmc.sickcore.core.modules.staff
 
-import com.mongodb.client.model.Filters
 import kotlinx.coroutines.launch
-import net.sickmc.sickcore.core.player.SickPlayer
-import net.sickmc.sickcore.core.player.SickPlayers
-import net.sickmc.sickcore.utils.mongo.MongoCollection
-import net.sickmc.sickcore.utils.mongo.MongoDocument
+import net.sickmc.sickcore.core.commonPlayer.ISickPlayer
+import net.sickmc.sickcore.core.commonPlayer.SickPlayer
+import net.sickmc.sickcore.core.commonPlayer.SickPlayers
 import net.sickmc.sickcore.utils.mongo.databaseScope
+import net.sickmc.sickcore.utils.mongo.retrieveOne
+import net.sickmc.sickcore.utils.mongo.staffColl
 import org.bson.Document
 import java.util.*
 import kotlin.collections.HashMap
 
-class StaffPlayer(val uuid: UUID,val document: MongoDocument) {
+class StaffPlayer(override val uniqueID: UUID, override val document: Document) : ISickPlayer {
 
-    val notifyConfig = document.document.get("notify", Document::class.java)
-    val joined = document.document.getLong("joined")
-    val cooldown = document.document.getLong("cooldown")
-    val warns = document.document.getInteger("warns")
+    val notifyConfig = document.get("notify", Document::class.java)
+    val joined = document.getLong("joined")
+    val cooldown = document.getLong("cooldown")
+    val warns = document.getInteger("warns")
 
     suspend fun getSickPlayer(): SickPlayer{
-        return SickPlayers.getSickPlayer(uuid)!!
+        return SickPlayers.getSickPlayer(uniqueID)!!
     }
 
 }
@@ -27,13 +27,12 @@ class StaffPlayer(val uuid: UUID,val document: MongoDocument) {
 class StaffPlayers{
 
     companion object{
-        val collection = MongoCollection("staff")
         val players = HashMap<UUID, StaffPlayer>()
         init {
             databaseScope.launch {
-                collection.collection.find().toList().forEach{
+                staffColl.find().toList().forEach{
                     if (it.containsKey("type"))return@forEach
-                    players[UUID.fromString(it.getString("uuid"))] = StaffPlayer(UUID.fromString(it.getString("rank")), MongoDocument(collection.collection, "uuid", it.getString("uuid"), it))
+                    players[UUID.fromString(it.getString("uuid"))] = StaffPlayer(UUID.fromString(it.getString("rank")), it)
                 }
             }
         }
@@ -43,8 +42,8 @@ class StaffPlayers{
         suspend fun getStaffPlayer(uuid: UUID): StaffPlayer?{
             if (players.contains(uuid))return players[uuid]
             else{
-                if (collection.getDocument("uuid", uuid.toString()) == null)return null
-                val sickPlayer = StaffPlayer(uuid, collection.getDocument("uuid", uuid.toString())!!)
+                if (staffColl.retrieveOne("uuid", uuid.toString()) == null)return null
+                val sickPlayer = StaffPlayer(uuid, staffColl.retrieveOne("uuid", uuid.toString())!!)
                 players[uuid] = sickPlayer
                 return sickPlayer
             }
@@ -56,7 +55,7 @@ class StaffPlayers{
         }
 
         suspend fun createPlayer(uuid: UUID): StaffPlayer {
-            if (collection.getDocument("uuid", uuid.toString()) != null)return getStaffPlayer(uuid)!!
+            if (staffColl.retrieveOne("uuid", uuid.toString()) != null)return getStaffPlayer(uuid)!!
             val playerDoc = Document("uuid", uuid.toString())
                 .append("joined", System.currentTimeMillis())
                 .append("warns", 0)
@@ -67,7 +66,7 @@ class StaffPlayers{
                     .append("report", "false")
                     .append("teamchat", "false"))
                 .append("cooldown", 0L)
-            collection.createDocument(playerDoc)
+            staffColl.insertOne(playerDoc)
             return getStaffPlayer(uuid)!!
         }
     }

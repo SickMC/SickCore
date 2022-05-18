@@ -1,9 +1,7 @@
 package net.sickmc.sickcore.core.modules.appereance
 
 import kotlinx.coroutines.launch
-import net.sickmc.sickcore.core.Core
-import net.sickmc.sickcore.core.PaperCore
-import net.sickmc.sickcore.core.player.SickPlayers
+import net.sickmc.sickcore.core.commonPlayer.SickPlayers
 import net.sickmc.sickcore.utils.mongo.databaseScope
 import net.sickmc.sickcore.utils.paper.RankUpdateEvent
 import net.axay.kspigot.event.listen
@@ -11,13 +9,14 @@ import net.kyori.adventure.text.format.NamedTextColor
 import net.kyori.adventure.text.format.TextColor
 import net.kyori.adventure.text.minimessage.MiniMessage
 import net.sickmc.sickcore.utils.paper.mm
+import org.bukkit.Bukkit
 import org.bukkit.event.player.PlayerJoinEvent
 import org.bukkit.event.player.PlayerQuitEvent
 
 class Tablist {
 
     suspend fun reloadTablist(){
-        PaperCore.instance?.onlinePlayers?.forEach {
+        Bukkit.getOnlinePlayers().forEach {
             val sickPlayer = SickPlayers.getSickPlayer(it.uniqueId) ?: return@forEach
             val list = it.scoreboard
 
@@ -32,7 +31,7 @@ class Tablist {
     }
 
     suspend fun hardReloadTablist(){
-        PaperCore.instance?.onlinePlayers?.forEach {
+        Bukkit.getOnlinePlayers().forEach {
             val sickPlayer = SickPlayers.reloadPlayer(it.uniqueId) ?: return@forEach
             val list = it.scoreboard
 

@@ -6,12 +6,11 @@ import com.velocitypowered.api.command.CommandSource
 import com.velocitypowered.api.proxy.Player
 import kotlinx.coroutines.launch
 import net.sickmc.sickcore.core.VelocityCore
-import net.sickmc.sickcore.core.player.SickPlayers
+import net.sickmc.sickcore.core.commonPlayer.SickPlayers
 import net.sickmc.sickcore.utils.mongo.databaseScope
 import net.sickmc.sickcore.utils.sendMessage
 import net.kyori.adventure.text.minimessage.MiniMessage
 import kotlin.time.Duration.Companion.milliseconds
-
 class PlaytimeCommand {
 
     fun register(){

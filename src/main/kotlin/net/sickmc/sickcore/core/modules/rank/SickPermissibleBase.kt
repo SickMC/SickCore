@@ -1,8 +1,7 @@
 package net.sickmc.sickcore.core.modules.rank
 
 import kotlinx.coroutines.launch
-import net.sickmc.sickcore.core.player.SickPlayer
-import net.sickmc.sickcore.core.player.SickPlayers
+import net.sickmc.sickcore.core.commonPlayer.SickPlayers
 import net.sickmc.sickcore.utils.mongo.databaseScope
 import org.bukkit.entity.Player
 import org.bukkit.permissions.PermissibleBase

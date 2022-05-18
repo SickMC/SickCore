@@ -1,7 +1,7 @@
 package net.sickmc.sickcore.utils.paper.gui
 
 import net.kyori.adventure.text.Component
-import net.sickmc.sickcore.utils.paper.inventory.ItemBuilder
+import net.sickmc.sickcore.utils.paper.item.ItemBuilder
 import org.bukkit.Bukkit
 import org.bukkit.event.inventory.InventoryCloseEvent
 import org.bukkit.inventory.Inventory

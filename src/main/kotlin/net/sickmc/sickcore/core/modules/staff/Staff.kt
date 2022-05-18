@@ -1,10 +1,11 @@
 package net.sickmc.sickcore.core.modules.staff
 
 import kotlinx.coroutines.launch
-import net.sickmc.sickcore.core.player.SickPlayer
-import net.sickmc.sickcore.utils.mongo.MongoCollection
-import net.sickmc.sickcore.utils.mongo.MongoDocument
+import net.sickmc.sickcore.core.commonPlayer.SickPlayer
 import net.sickmc.sickcore.utils.mongo.databaseScope
+import net.sickmc.sickcore.utils.mongo.retrieveOne
+import net.sickmc.sickcore.utils.mongo.staffColl
+import org.bson.Document
 import java.util.UUID
 
 class Staff {
@@ -17,29 +18,28 @@ class Staff {
         instance = this
     }
 
-    var collection = MongoCollection("staff")
     val overview = loadOverview()
     val players = getStaffPlayers()
 
     fun getStaffPlayers(): List<StaffPlayer>{
         val players = ArrayList<StaffPlayer>()
-        val playerNames = overview.document.getList("members", String::class.java)
+        val playerNames = overview.getList("members", String::class.java)
         playerNames.forEach {
             players.add(StaffPlayers.getCachedStaffPlayer(UUID.fromString(it)))
         }
         return players.toList()
     }
 
-    fun loadOverview(): MongoDocument{
-        var doc: MongoDocument? = null
+    fun loadOverview(): Document{
+        var document: Document? = null
         databaseScope.launch {
-            doc = collection.getDocument("type", "overview")
+            document = staffColl.retrieveOne("type", "overview")
         }
-        return doc ?: error("Staff Overview cannot be loaded")
+        return document ?: error("Staff Overview cannot be loaded")
     }
 
     suspend fun addMember(player: SickPlayer){
-        StaffPlayers.createPlayer(player.uuid)
+        StaffPlayers.createPlayer(player.uniqueID)
     }
 
 }

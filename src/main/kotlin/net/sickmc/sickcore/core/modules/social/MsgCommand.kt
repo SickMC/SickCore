@@ -8,15 +8,13 @@ import com.velocitypowered.api.command.BrigadierCommand
 import com.velocitypowered.api.command.CommandSource
 import com.velocitypowered.api.proxy.Player
 import kotlinx.coroutines.launch
-import net.sickmc.sickcore.core.Core
 import net.sickmc.sickcore.core.VelocityCore
-import net.sickmc.sickcore.core.player.SickPlayers
+import net.sickmc.sickcore.core.commonPlayer.SickPlayers
 import net.sickmc.sickcore.utils.PlayerUtils
 import net.sickmc.sickcore.utils.mongo.databaseScope
 import net.sickmc.sickcore.utils.sendMessage
 import net.axay.kspigot.chat.KColors
 import net.kyori.adventure.text.Component
-import net.kyori.adventure.text.minimessage.MiniMessage
 import net.sickmc.sickcore.core.redisConnection
 import net.sickmc.sickcore.utils.paper.mm
 
@@ -33,7 +31,7 @@ class MsgCommand  {
                             val target = StringArgumentType.getString(it, "target")
                             val targetUUID = PlayerUtils.fetchUUID(target)
 
-                            val noPlayer = Component.text("This player is not online!").color(KColors.DARKRED)
+                            val noPlayer = Component.text("This commonPlayer is not online!").color(KColors.DARKRED)
                             if (redisConnection.client.get(it.toString()) == null) {
                                 sendMessage(sender.uniqueId, noPlayer)
                                 return@launch

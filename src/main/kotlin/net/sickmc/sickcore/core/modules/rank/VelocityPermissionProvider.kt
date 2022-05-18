@@ -8,8 +8,7 @@ import com.velocitypowered.api.permission.Tristate
 import com.velocitypowered.api.proxy.Player
 import kotlinx.coroutines.launch
 import net.sickmc.sickcore.core.listenVelocity
-import net.sickmc.sickcore.core.player.SickPlayer
-import net.sickmc.sickcore.core.player.SickPlayers
+import net.sickmc.sickcore.core.commonPlayer.SickPlayers
 import net.sickmc.sickcore.utils.mongo.databaseScope
 
 class VelocityPermissionProvider : PermissionProvider{

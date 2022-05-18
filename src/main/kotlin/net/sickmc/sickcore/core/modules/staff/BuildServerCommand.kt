@@ -5,9 +5,8 @@ import com.velocitypowered.api.command.BrigadierCommand
 import com.velocitypowered.api.command.CommandSource
 import com.velocitypowered.api.proxy.Player
 import kotlinx.coroutines.launch
-import net.sickmc.sickcore.core.Core
 import net.sickmc.sickcore.core.VelocityCore
-import net.sickmc.sickcore.core.player.SickPlayers
+import net.sickmc.sickcore.core.commonPlayer.SickPlayers
 import net.sickmc.sickcore.utils.mongo.databaseScope
 import net.sickmc.sickcore.utils.sendMessage
 import net.kyori.adventure.text.minimessage.MiniMessage
@@ -23,12 +22,12 @@ class BuildServerCommand {
                     val player = SickPlayers.getSickPlayer(veloPlayer.uniqueId)!!
                     if (!player.isStaff()){
                         val text = MiniMessage.miniMessage().deserialize("<gradient:#890000:#7E0000>This is a staff command!</gradient>")
-                        sendMessage(player.uuid, text)
+                        sendMessage(player.uniqueID, text)
                         return@launch
                     }
                     veloPlayer.createConnectionRequest(VelocityCore.instance?.base?.server?.getServer("BuildServer-1")?.get())
                     val text = MiniMessage.miniMessage().deserialize("<gradient:#5B8906:#05561E>You were teleported to the buildserver!</gradient>")
-                    sendMessage(player.uuid, text)
+                    sendMessage(player.uniqueID, text)
                 }
                 1
             }
