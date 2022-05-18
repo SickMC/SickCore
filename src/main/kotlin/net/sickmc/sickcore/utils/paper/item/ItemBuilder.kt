@@ -1,9 +1,9 @@
-package net.sickmc.sickcore.utils.paper.inventory
+package net.sickmc.sickcore.utils.paper.item
 
 import com.mojang.authlib.GameProfile
 import com.mojang.authlib.properties.Property
-import net.sickmc.sickcore.core.player.SickPlayer
-import net.sickmc.sickcore.core.player.SickPlayers
+import net.sickmc.sickcore.core.commonPlayer.SickPlayer
+import net.sickmc.sickcore.core.commonPlayer.SickPlayers
 import net.axay.kspigot.event.listen
 import net.axay.kspigot.items.name
 import net.kyori.adventure.text.Component
