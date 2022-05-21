@@ -99,7 +99,7 @@ fun Entity.getHead(): MobHead {
             head = EntityHead.valueOf(this.type.name.uppercase().uppercase())
         }
     }
-    return MobHead(head.isOnlyCreative, head.isOnlyNatural, createHead(head.base64))
+    return MobHead(head.isOnlyCreative, head.isOnlyNatural, createHead(head.base64), head)
 }
 
 private fun createHead(base64: String): ItemStack{
@@ -118,7 +118,7 @@ private fun createHead(base64: String): ItemStack{
     }
 }
 
-data class MobHead(val isOnlyCreative: Boolean, val isOnlyNatural: Boolean, val item: ItemStack)
+data class MobHead(val isOnlyCreative: Boolean, val isNaturalAvailable: Boolean, val item: ItemStack, val entityHead: EntityHead)
 
 enum class EntityHead(val isOnlyCreative: Boolean = false, val isOnlyNatural: Boolean = false, val base64: String){
 

@@ -25,13 +25,19 @@ class SickPlayer(override val uniqueID: UUID, override val document: Document) :
     val privileges: List<Privileges> = document.getList("priveleges", String::class.java).map { s -> Privileges.valueOf(s) }
     val rank = Ranks.getCachedRank(document.getString("rank"))
     val permanentRank = Ranks.getCachedRank(document.getString("permanentRank"))
-    val permissions = arrayListOf(rank.getAllPermissions(), extraPermissions)
+    val permissions = getPerms()
     val displayName = mm.deserialize("${rank.parent.coloredPrefix}<#5e5e5e> × ${rank.parent.color} $name")
 
     fun isGreater(name: String): Boolean{
         return Ranks.getCachedRank(name).parent.priority > rank.parent.priority
     }
 
+    private fun getPerms() : List<String>{
+        val cache = arrayListOf<String>()
+        cache.addAll(extraPermissions)
+        cache.addAll(rank.getAllPermissions())
+        return cache
+    }
     fun isStaff(): Boolean{
         return StaffModule.instance.staff.overview.getList("members", String::class.java).contains(uniqueID.toString())
     }
@@ -39,6 +45,13 @@ class SickPlayer(override val uniqueID: UUID, override val document: Document) :
 }
 class SickPlayers : Cache<UUID, SickPlayer>, HashMap<UUID, SickPlayer>() {
 
+    companion object{
+        lateinit var instance: SickPlayers
+    }
+
+    init {
+        instance = this
+    }
     override fun getCachedEntity(entity: UUID): SickPlayer? {
         return this[entity]
     }
@@ -71,8 +84,9 @@ class SickPlayers : Cache<UUID, SickPlayer>, HashMap<UUID, SickPlayer>() {
     }
 
     override suspend fun getEntity(entity: UUID): SickPlayer {
-        return if (players.retrieveOne("uuid", entity.toString()) == null) createEntity(entity)
-        else SickPlayer(entity, players.retrieveOne("uuid", entity.toString())!!)
+        if (players.retrieveOne("uuid", entity.toString()) == null) this[entity] = createEntity(entity)
+        else this[entity] = SickPlayer(entity, players.retrieveOne("uuid", entity.toString())!!)
+        return this[entity]!!
     }
 
 }

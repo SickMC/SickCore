@@ -8,7 +8,7 @@ class Survival : Game() {
     override val startEnvironment: Array<String> = arrayOf("public_survival_latest")
 
     override suspend fun enable() {
-        
+        CommonEvents.register()
     }
 
     override suspend fun disable() {

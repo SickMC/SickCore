@@ -6,7 +6,6 @@ import com.velocitypowered.api.command.CommandSource
 import com.velocitypowered.api.event.player.PlayerChatEvent
 import com.velocitypowered.api.proxy.Player
 import kotlinx.coroutines.launch
-import net.sickmc.sickcore.core.Core
 import net.sickmc.sickcore.core.VelocityCore
 import net.sickmc.sickcore.core.listenVelocity
 import net.sickmc.sickcore.utils.mongo.databaseScope

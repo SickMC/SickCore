@@ -15,7 +15,7 @@ repositories{
 dependencies{
     paperDevBundle("1.18.2-R0.1-SNAPSHOT")
     implementation("net.axay:kspigot:1.18.2")
-    implementation("org.litote.kmongo:kmongo-coroutine-serialization:4.5.1")
+    implementation("org.litote.kmongo:kmongo-coroutine-serialization:4.6.0")
     implementation("io.github.crackthecodeabhi:kreds:0.7")
     implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.3.2")
     shadow("org.jetbrains.kotlinx:kotlinx-serialization-json:1.3.2")

@@ -24,7 +24,6 @@ class AppereanceModule : net.sickmc.sickcore.core.modules.Module() {
             Environment.PAPER -> {
                 TablistProvider().handleTablist()
                 CommandSuggestionHandler().handlePaperCommands()
-                NameTagHandler().handleNameTags()
                 ChatHandler().handleChat()
             }
             else -> {}

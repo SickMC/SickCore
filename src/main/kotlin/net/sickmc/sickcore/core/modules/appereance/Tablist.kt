@@ -17,7 +17,7 @@ class Tablist {
 
     suspend fun reloadTablist(){
         Bukkit.getOnlinePlayers().forEach {
-            val sickPlayer = SickPlayers.getSickPlayer(it.uniqueId) ?: return@forEach
+            val sickPlayer = SickPlayers.instance.getEntity(it.uniqueId) ?: return@forEach
             val list = it.scoreboard
 
             var team = list.getTeam(sickPlayer.rank.parent.priority.toString() + sickPlayer.name)
@@ -32,7 +32,7 @@ class Tablist {
 
     suspend fun hardReloadTablist(){
         Bukkit.getOnlinePlayers().forEach {
-            val sickPlayer = SickPlayers.reloadPlayer(it.uniqueId) ?: return@forEach
+            val sickPlayer = SickPlayers.instance.reloadEntity(it.uniqueId) ?: return@forEach
             val list = it.scoreboard
 
             var team = list.getTeam(sickPlayer.rank.parent.priority.toString() + sickPlayer.name)

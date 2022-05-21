@@ -7,6 +7,7 @@ import net.axay.kspigot.main.KSpigot
 import net.kyori.adventure.text.minimessage.MiniMessage
 import net.sickmc.sickcore.core.games.Game
 import net.sickmc.sickcore.core.commonPlayer.SickPlayers
+import net.sickmc.sickcore.core.games.survival.SurvivalPlayers
 import net.sickmc.sickcore.utils.mongo.databaseScope
 import net.sickmc.sickcore.utils.paper.RankUpdateEventCaller
 import net.sickmc.sickcore.utils.paper.gui.GUI
@@ -15,7 +16,7 @@ import org.bukkit.Bukkit
 import org.bukkit.event.player.PlayerLoginEvent
 import java.util.*
 
-class PaperCore(val launcher: KSpigot) : Core() {
+class PaperCore(val launcher: KSpigot) {
 
     companion object{
         var instance: PaperCore? = null
@@ -47,6 +48,7 @@ object PaperCoreHandler{
 
     val core = PaperCore.instance!!
     suspend fun enable(){
+        registerCaches()
         initiateStartUp()
         handleCustomEvents()
         enableMessageReceiver()
@@ -62,10 +64,14 @@ object PaperCoreHandler{
         Bukkit.getScoreboardManager().mainScoreboard.objectives.forEach { it.unregister() }
     }
 
+    fun registerCaches(){
+        SurvivalPlayers()
+        SickPlayers()
+    }
     private fun handleSickPlayers(){
         listen<PlayerLoginEvent>() {
             databaseScope.launch {
-                SickPlayers.reloadPlayer(it.player.uniqueId)
+                SickPlayers.instance.reloadEntity(it.player.uniqueId)
                 it.player.scoreboard.objectives.forEach { it.unregister() }
             }
         }

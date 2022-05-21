@@ -31,6 +31,6 @@ suspend inline fun subscribeRedis(channelName: String, crossinline callback: (St
 
 suspend inline fun publish(channelName: String, message: String){
 
-    redisConnection.client.publish(channelName, message)
+    kreds.publish(channelName, message)
 
 }

@@ -19,7 +19,7 @@ class StaffPlayer(override val uniqueID: UUID, override val document: Document) 
     val warns = document.getInteger("warns")
 
     suspend fun getSickPlayer(): SickPlayer{
-        return SickPlayers.getSickPlayer(uniqueID)!!
+        return SickPlayers.instance.getEntity(uniqueID)
     }
 
 }

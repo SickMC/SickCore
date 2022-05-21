@@ -12,7 +12,7 @@ class SickPermissibleBase(private val player: Player) : PermissibleBase(player) 
 
     private var permissions = arrayListOf<String>()
     private var operator = validateAdmin()
-    private var sickPlayer = SickPlayers.getCachedSickPlayer(player.uniqueId)
+    private var sickPlayer = SickPlayers.instance.getCachedEntity(player.uniqueId)!!
 
     override fun isPermissionSet(name: String): Boolean{
         return operator || permissions.contains(name)
@@ -31,7 +31,7 @@ class SickPermissibleBase(private val player: Player) : PermissibleBase(player) 
     }
 
     override fun recalculatePermissions() {
-        databaseScope.launch {sickPlayer = SickPlayers.reloadPlayer(player.uniqueId) ?: error("Failed to reload SickPlayer") }
+        databaseScope.launch {sickPlayer = SickPlayers.instance.reloadEntity(player.uniqueId) ?: error("Failed to reload SickPlayer") }
         permissions = arrayListOf()
         permissions.addAll(sickPlayer.permissions)
         operator = validateAdmin()

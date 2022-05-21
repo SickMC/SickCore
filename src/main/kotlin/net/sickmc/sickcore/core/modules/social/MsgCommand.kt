@@ -15,8 +15,8 @@ import net.sickmc.sickcore.utils.mongo.databaseScope
 import net.sickmc.sickcore.utils.sendMessage
 import net.axay.kspigot.chat.KColors
 import net.kyori.adventure.text.Component
-import net.sickmc.sickcore.core.redisConnection
 import net.sickmc.sickcore.utils.paper.mm
+import net.sickmc.sickcore.utils.redis.kreds
 
 class MsgCommand  {
 
@@ -32,13 +32,13 @@ class MsgCommand  {
                             val targetUUID = PlayerUtils.fetchUUID(target)
 
                             val noPlayer = Component.text("This commonPlayer is not online!").color(KColors.DARKRED)
-                            if (redisConnection.client.get(it.toString()) == null) {
+                            if (kreds.get(it.toString()) == null) {
                                 sendMessage(sender.uniqueId, noPlayer)
                                 return@launch
                             }
                             val message = StringArgumentType.getString(it, "msg")
-                            val senderText = SickPlayers.getCachedSickPlayer(sender.uniqueId).displayName.append(mm.deserialize("<#5b6667>» ")).
-                                append(SickPlayers.getCachedSickPlayer(targetUUID).displayName).append(mm.deserialize("<#858585>: $message"))
+                            val senderText = SickPlayers.instance.getCachedEntity(sender.uniqueId)!!.displayName.append(mm.deserialize("<#5b6667>» ")).
+                                append(SickPlayers.instance.getCachedEntity(targetUUID)!!.displayName).append(mm.deserialize("<#858585>: $message"))
                             sendMessage(targetUUID, senderText)
                         }
                         1

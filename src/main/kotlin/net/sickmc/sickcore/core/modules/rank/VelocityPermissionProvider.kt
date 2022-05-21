@@ -16,7 +16,7 @@ class VelocityPermissionProvider : PermissionProvider{
     init {
         listenVelocity<PermissionsSetupEvent> {
             if (it.subject is Player){
-                databaseScope.launch { SickPlayers.reloadPlayer((it.subject as Player).uniqueId) }
+                databaseScope.launch { SickPlayers.instance.reloadEntity((it.subject as Player).uniqueId) }
             }
             it.provider = this
         }
@@ -29,7 +29,7 @@ class VelocityPermissionProvider : PermissionProvider{
 
     private class SickPermissionFunction(val player: Player): PermissionFunction{
 
-        private var sickPlayer = SickPlayers.getCachedSickPlayer(player.uniqueId)
+        private var sickPlayer = SickPlayers.instance.getCachedEntity(player.uniqueId)!!
 
         init {
             identifyPlayer()
@@ -50,7 +50,7 @@ class VelocityPermissionProvider : PermissionProvider{
 
         private fun identifyPlayer(){
             databaseScope.launch {
-                sickPlayer = SickPlayers.getSickPlayer(player.uniqueId) ?: error("Failed to load sickPlayer ${player.uniqueId}")
+                sickPlayer = SickPlayers.instance.getCachedEntity(player.uniqueId) ?: error("Failed to load sickPlayer ${player.uniqueId}")
             }
         }
 

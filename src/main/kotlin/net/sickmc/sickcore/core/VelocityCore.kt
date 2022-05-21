@@ -13,7 +13,7 @@ import net.sickmc.sickcore.utils.redis.kreds
 import net.sickmc.sickcore.utils.velocity.RankUpdateEventCaller
 import org.bson.Document
 
-class VelocityCore(val base: VelocityBootstrap) : Core() {
+class VelocityCore(val base: VelocityBootstrap) {
 
     companion object{
         var instance: VelocityCore? = null
@@ -43,6 +43,7 @@ object VelocityCoreHandler {
     val core = VelocityCore.instance!!
 
     suspend fun initiateStartUp(){
+        SickPlayers()
         handleSickPlayers()
         handleCustomEvents()
     }
@@ -53,8 +54,8 @@ object VelocityCoreHandler {
     private fun handleSickPlayers(){
         listenVelocity<LoginEvent> {
             databaseScope.launch {
-                if (players.retrieveOne("uuid", it.player.uniqueId.toString()) == null) SickPlayers.createPlayer(it.player.uniqueId)
-                else SickPlayers.reloadPlayer(it.player.uniqueId)
+                if (players.retrieveOne("uuid", it.player.uniqueId.toString()) == null) SickPlayers.instance.createEntity(it.player.uniqueId)
+                else SickPlayers.instance.reloadEntity(it.player.uniqueId)
 
                 kreds.set(it.player.uniqueId.toString(),"{\n" +
                         "  \"joinedAt\": ${System.currentTimeMillis()},\n" +
@@ -68,7 +69,7 @@ object VelocityCoreHandler {
                 val playerData = kreds.get("${it.player.uniqueId}")!!
 
                 val doc = Document.parse(playerData)
-                val player = SickPlayers.getSickPlayer(it.player.uniqueId)!!
+                val player = SickPlayers.instance.reloadEntity(it.player.uniqueId)
                 player.document["playtime"] = player.document.getLong("playtime") + (System.currentTimeMillis() - doc.getLong("joinedAt"))
                 players.replace("uuid", player.uniqueID.toString(), player.document)
                 kreds.del(it.player.uniqueId.toString())

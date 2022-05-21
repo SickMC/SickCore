@@ -35,7 +35,7 @@ class ItemBuilder(private val material: Material, val player: SickPlayer): ItemS
         fun register(){
             listen<PlayerInteractEvent> {
                 if (!it.hasItem())return@listen
-                val player = SickPlayers.getCachedSickPlayer(it.player.uniqueId)
+                val player = SickPlayers.instance.getCachedEntity(it.player.uniqueId)
                 if (!interactions.containsKey(player))return@listen
                 if (!interactions[player]!!.contains(it.item))return@listen
                 interactions[player]?.forEach { item ->

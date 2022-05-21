@@ -7,5 +7,5 @@ api-version: 1.18
 
 libraries:
   - "net.axay:kspigot:1.18.2"
-  - "org.litote.kmongo:kmongo-coroutine-serialization:4.5.1"
+  - "org.litote.kmongo:kmongo-coroutine-serialization:4.6.0"
   - "io.github.crackthecodeabhi:kreds:0.7"

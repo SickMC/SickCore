@@ -19,7 +19,7 @@ class PlaytimeCommand {
             .executes(){
                 databaseScope.launch {
                     val veloPlayer = it.source as Player
-                    val sickPlayer = SickPlayers.getSickPlayer(veloPlayer.uniqueId)
+                    val sickPlayer = SickPlayers.instance.getEntity(veloPlayer.uniqueId)
                     val text = MiniMessage.miniMessage().deserialize("<gradient:#FFFD0B:#80A720>Your playtime is </gradient><gradient:#FF6F13#FFC034>${sickPlayer!!.playtime.milliseconds}</gradient><#80A720>!")
                     sendMessage(veloPlayer.uniqueId, text)
                 }

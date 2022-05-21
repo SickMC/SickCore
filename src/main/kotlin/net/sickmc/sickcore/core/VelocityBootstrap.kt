@@ -22,7 +22,7 @@ val bootstrapScope = CoroutineScope(Dispatchers.Default)
     url = "discord.sickmc.net",
     authors = ["btwonion"]
 )
-class VelocityBootstrap @Inject constructor(val server: ProxyServer,val logger: Logger) {
+class VelocityBootstrap @Inject constructor(val server: ProxyServer, val logger: Logger) {
 
     private var core: VelocityCore? = null
 
