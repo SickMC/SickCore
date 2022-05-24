@@ -3,12 +3,12 @@ package net.sickmc.sickcore.core.modules.appereance
 import kotlinx.coroutines.launch
 import net.sickmc.sickcore.core.commonPlayer.SickPlayers
 import net.sickmc.sickcore.utils.mongo.databaseScope
-import net.sickmc.sickcore.utils.paper.RankUpdateEvent
+import net.sickmc.sickcore.utils.fabric.RankUpdateEvent
 import net.axay.kspigot.event.listen
 import net.kyori.adventure.text.format.NamedTextColor
 import net.kyori.adventure.text.format.TextColor
 import net.kyori.adventure.text.minimessage.MiniMessage
-import net.sickmc.sickcore.utils.paper.mm
+import net.sickmc.sickcore.utils.fabric.mm
 import org.bukkit.Bukkit
 import org.bukkit.event.player.PlayerJoinEvent
 import org.bukkit.event.player.PlayerQuitEvent

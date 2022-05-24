@@ -1,5 +1,6 @@
 package net.sickmc.sickcore.core.games.survival
 
+import net.minecraft.world.entity.Entity
 import net.sickmc.sickcore.core.commonPlayer.IGamePlayer
 import net.sickmc.sickcore.core.commonPlayer.SickPlayer
 import net.sickmc.sickcore.core.commonPlayer.SickPlayers
@@ -7,10 +8,9 @@ import net.sickmc.sickcore.utils.Cache
 import net.sickmc.sickcore.utils.mongo.replace
 import net.sickmc.sickcore.utils.mongo.retrieveOne
 import net.sickmc.sickcore.utils.mongo.survivalColl
-import net.sickmc.sickcore.utils.paper.EntityHead
-import net.sickmc.sickcore.utils.paper.getHead
+import net.sickmc.sickcore.utils.fabric.getHead
+import net.sickmc.sickcore.utils.fabric.textures
 import org.bson.Document
-import org.bukkit.entity.Entity
 import java.util.*
 import kotlin.collections.HashMap
 
@@ -19,8 +19,8 @@ class SurvivalPlayer(override val sickPlayer: SickPlayer, override val gameDocum
     suspend fun addHead(entity: Entity){
         val heads = gameDocument.get("heads", Document::class.java)
         val head = entity.getHead()
-        if (heads.getBoolean(head.entityHead.name))return
-        heads.replace(head.entityHead.name, "true")
+        if (heads.getBoolean(head.key.name()))return
+        heads.replace(head.key.name(), "true")
         gameDocument.replace("heads", heads)
         survivalColl.replace("uuid", sickPlayer.uniqueID.toString(), gameDocument)
     }
@@ -52,10 +52,14 @@ class SurvivalPlayers : Cache<UUID, SurvivalPlayer>, HashMap<UUID, SurvivalPlaye
     }
 
     override suspend fun createEntity(entity: UUID): SurvivalPlayer {
-        val headList = EntityHead.values().map { it.name }
+        val headList = textures.map { it.key.name() }
+        val map = hashMapOf<String, Boolean>()
+        headList.forEach {
+            map[it] = false
+        }
         val playerDoc = Document("uuid", entity.toString())
             .append("deaths", 0)
-            .append("heads", headList)
+            .append("heads", map)
         survivalColl.replace("uuid", entity.toString(), playerDoc)
         return SurvivalPlayer(SickPlayers.instance.getEntity(entity), playerDoc)
     }

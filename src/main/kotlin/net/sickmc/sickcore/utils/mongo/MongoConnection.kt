@@ -2,14 +2,10 @@ package net.sickmc.sickcore.utils.mongo
 
 import com.mongodb.ConnectionString
 import com.mongodb.MongoClientSettings
-import com.mongodb.MongoCredential
-import com.mongodb.ServerAddress
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.SupervisorJob
-import net.sickmc.sickcore.utils.FileUtils
 import org.bson.Document
-import org.litote.kmongo.coroutine.CoroutineClient
 import org.litote.kmongo.coroutine.coroutine
 import org.litote.kmongo.reactivestreams.KMongo
 

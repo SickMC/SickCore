@@ -16,7 +16,7 @@ class RankGroup(val name: String, val document: Document){
     val privatePrefix = document.getString("privatePrefix")
     val permissions = document.getList("permissions", String::class.java)
     val priority = document.getInteger("priority")
-    val color = document.getString("color")
+    val color = document.getInteger("color")
     val coloredPrefix = document.getString("coloredPrefix")
     val discordRoleID = document.getString("discordRoleID")
     val ranks = getChilds()

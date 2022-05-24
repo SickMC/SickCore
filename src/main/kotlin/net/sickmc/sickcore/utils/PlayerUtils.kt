@@ -34,9 +34,7 @@ class PlayerUtils {
 }
 
 suspend fun sendMessage(uuid: UUID, component: Component){
-    print("message - start")
     val string = "$uuid/$component"
     publish("message", string)
-    print("sollte gesendet sein")
 }
 

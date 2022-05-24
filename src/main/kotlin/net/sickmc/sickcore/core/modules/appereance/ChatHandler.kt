@@ -13,13 +13,6 @@ import org.bukkit.event.player.PlayerQuitEvent
 class ChatHandler {
 
     fun handleChat(){
-        listen<PlayerJoinEvent> {
-            it.joinMessage(null)
-        }
-
-        listen<PlayerQuitEvent> {
-            it.quitMessage(null)
-        }
 
         listen<AsyncChatEvent> {
             it.isCancelled = true
@@ -29,6 +22,7 @@ class ChatHandler {
         listen<UnknownCommandEvent> {
             it.message(Component.text("The command /${it.commandLine} cannot be found!").color(KColors.DARKRED))
         }
+
     }
 
 }

@@ -1,5 +1,7 @@
 package net.sickmc.sickcore.core.commonPlayer
 
+import net.axay.fabrik.core.text.literalText
+import net.minecraft.network.chat.Component
 import net.sickmc.sickcore.core.modules.rank.Ranks
 import net.sickmc.sickcore.core.modules.staff.StaffModule
 import net.sickmc.sickcore.core.modules.rank.Privileges
@@ -7,9 +9,7 @@ import net.sickmc.sickcore.utils.Cache
 import net.sickmc.sickcore.utils.PlayerUtils
 import net.sickmc.sickcore.utils.mongo.players
 import net.sickmc.sickcore.utils.mongo.retrieveOne
-import net.sickmc.sickcore.utils.paper.mm
 import org.bson.Document
-import org.checkerframework.checker.units.qual.K
 import java.util.UUID
 
 class SickPlayer(override val uniqueID: UUID, override val document: Document) : ISickPlayer {
@@ -26,7 +26,14 @@ class SickPlayer(override val uniqueID: UUID, override val document: Document) :
     val rank = Ranks.getCachedRank(document.getString("rank"))
     val permanentRank = Ranks.getCachedRank(document.getString("permanentRank"))
     val permissions = getPerms()
-    val displayName = mm.deserialize("${rank.parent.coloredPrefix}<#5e5e5e> × ${rank.parent.color} $name")
+    val displayName: Component = literalText(rank.parent.coloredPrefix.uppercase()) {
+        bold = true
+        color = rank.parent.color
+        text(" $name") {
+            color = rank.parent.color
+            bold = false
+        }
+    }
 
     fun isGreater(name: String): Boolean{
         return Ranks.getCachedRank(name).parent.priority > rank.parent.priority
@@ -74,7 +81,7 @@ class SickPlayers : Cache<UUID, SickPlayer>, HashMap<UUID, SickPlayer>() {
             .append("permanentRank", "Player")
             .append("mates", Document())
             .append("bubble", Document())
-            .append("achievments", Document())
+            .append("achievements", Document())
             .append("firstJoin", System.currentTimeMillis())
             .append("playtime", 0L)
             .append("privileges", ArrayList<String>())

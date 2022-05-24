@@ -21,7 +21,7 @@ class AppereanceModule : net.sickmc.sickcore.core.modules.Module() {
                 lobbyCommands.registerAddition()
                 PlaytimeCommand().register()
             }
-            Environment.PAPER -> {
+            Environment.FABRIC -> {
                 TablistProvider().handleTablist()
                 CommandSuggestionHandler().handlePaperCommands()
                 ChatHandler().handleChat()

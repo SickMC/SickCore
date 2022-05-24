@@ -15,7 +15,7 @@ import net.sickmc.sickcore.utils.mongo.databaseScope
 import net.sickmc.sickcore.utils.sendMessage
 import net.axay.kspigot.chat.KColors
 import net.kyori.adventure.text.Component
-import net.sickmc.sickcore.utils.paper.mm
+import net.sickmc.sickcore.utils.fabric.mm
 import net.sickmc.sickcore.utils.redis.kreds
 
 class MsgCommand  {
