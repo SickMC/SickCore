@@ -37,7 +37,6 @@ dependencies{
     implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.3.2")
     shadow("org.jetbrains.kotlinx:kotlinx-serialization-json:1.3.2")
     shadow("io.github.crackthecodeabhi:kreds:0.7")
-    shadow("com.velocitypowered:velocity-api:3.0.1")
     compileOnly("com.velocitypowered:velocity-api:3.0.1")
 }
 

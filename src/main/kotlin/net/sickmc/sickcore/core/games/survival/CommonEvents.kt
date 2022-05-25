@@ -8,6 +8,7 @@ import net.axay.fabrik.core.text.literalText
 import net.fabricmc.fabric.api.event.player.AttackEntityCallback
 import net.fabricmc.fabric.api.networking.v1.ServerPlayConnectionEvents
 import net.minecraft.network.protocol.game.ClientGamePacketListener
+import net.minecraft.network.protocol.game.ServerGamePacketListener
 import net.minecraft.network.protocol.game.ServerboundChatPacket
 import net.minecraft.server.network.ServerGamePacketListenerImpl
 import net.minecraft.world.InteractionResult
@@ -74,7 +75,7 @@ object CommonEvents {
     }
 
     fun chat(){
-        
+
     }
 
 }
