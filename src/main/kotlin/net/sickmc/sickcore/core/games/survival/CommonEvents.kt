@@ -7,12 +7,18 @@ import net.axay.fabrik.core.item.itemStack
 import net.axay.fabrik.core.text.literalText
 import net.fabricmc.fabric.api.event.player.AttackEntityCallback
 import net.fabricmc.fabric.api.networking.v1.ServerPlayConnectionEvents
+import net.minecraft.network.chat.ChatType
+import net.minecraft.network.chat.Style
 import net.minecraft.network.protocol.game.ClientGamePacketListener
 import net.minecraft.network.protocol.game.ServerGamePacketListener
 import net.minecraft.network.protocol.game.ServerboundChatPacket
+import net.minecraft.server.MinecraftServer
+import net.minecraft.server.level.ServerPlayer
 import net.minecraft.server.network.ServerGamePacketListenerImpl
+import net.minecraft.server.network.TextFilter
 import net.minecraft.world.InteractionResult
 import net.minecraft.world.item.Items
+import net.sickmc.sickcore.core.commonPlayer.SickPlayers
 import net.sickmc.sickcore.utils.mongo.databaseScope
 import net.sickmc.sickcore.utils.fabric.getHead
 import net.sickmc.sickcore.utils.mod_id
@@ -74,8 +80,12 @@ object CommonEvents {
         }
     }
 
-    fun chat(){
-
+    fun chat(message: TextFilter.FilteredText, player: ServerPlayer, server: MinecraftServer){
+        val sickPlayer = SickPlayers.instance.getCachedEntity(player.uuid)!!
+        val newMessage = sickPlayer.displayName.full.append(literalText(message.filtered) { color = 0x8C969A })
+        server.playerList.players.forEach{
+            it.sendMessage(newMessage, ChatType.CHAT, UUID.randomUUID())
+        }
     }
 
 }
