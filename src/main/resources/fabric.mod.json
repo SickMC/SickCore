@@ -7,7 +7,7 @@
   "authors": ["onion"],
   "environment": "*",
   "entrypoints": {
-    "main": ["net.sickmc.core.FabricManager"]
+    "main": ["net.sickmc.sickcore.FabricManager"]
   },
   "mixins": ["sickcore.mixins.json"],
   "depends": {

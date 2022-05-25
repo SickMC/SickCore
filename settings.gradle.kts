@@ -8,5 +8,3 @@ pluginManagement{
         maven("https://server.bbkr.space/artifactory/libs-release/")
     }
 }
-include("src:main:java")
-findProject(":src:main:java")?.name = "java"
