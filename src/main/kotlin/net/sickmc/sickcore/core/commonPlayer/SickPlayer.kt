@@ -1,11 +1,14 @@
 package net.sickmc.sickcore.core.commonPlayer
 
 import net.axay.fabrik.core.text.literalText
+import net.kyori.adventure.text.format.TextColor
+import net.kyori.adventure.text.format.TextDecoration
 import net.minecraft.network.chat.Component
 import net.sickmc.sickcore.core.modules.rank.Ranks
 import net.sickmc.sickcore.core.modules.staff.StaffModule
 import net.sickmc.sickcore.core.modules.rank.Privileges
 import net.sickmc.sickcore.utils.Cache
+import net.sickmc.sickcore.utils.DisplayName
 import net.sickmc.sickcore.utils.PlayerUtils
 import net.sickmc.sickcore.utils.mongo.players
 import net.sickmc.sickcore.utils.mongo.retrieveOne
@@ -22,43 +25,55 @@ class SickPlayer(override val uniqueID: UUID, override val document: Document) :
     val exp = document.getInteger("exp")
     val playtime = document.getLong("playtime")
     val rankExpire = document.getString("rankExpire")
-    val privileges: List<Privileges> = document.getList("priveleges", String::class.java).map { s -> Privileges.valueOf(s) }
+    val privileges: List<Privileges> =
+        document.getList("priveleges", String::class.java).map { s -> Privileges.valueOf(s) }
     val rank = Ranks.getCachedRank(document.getString("rank"))
     val permanentRank = Ranks.getCachedRank(document.getString("permanentRank"))
     val permissions = getPerms()
-    val displayName: Component = literalText(rank.parent.coloredPrefix.uppercase()) {
-        bold = true
-        color = rank.parent.color
-        text(" $name") {
+    val displayName = DisplayName(
+        literalText(rank.parent.coloredPrefix.uppercase()) {
+            bold = true
             color = rank.parent.color
-            bold = false
-        }
-    }
+            text(" $name") {
+                color = rank.parent.color
+                bold = false
+            }
+        },
+        net.kyori.adventure.text.Component.text(rank.parent.coloredPrefix.uppercase()).decorate(TextDecoration.BOLD)
+            .color(TextColor.color(rank.parent.color)).append(net.kyori.adventure.text.Component.text(" $name"))
+            .color(TextColor.color(rank.parent.color)),
+        rank.parent.prefix,
+        name,
+        rank.parent.color
+    )
 
-    fun isGreater(name: String): Boolean{
+    fun isGreater(name: String): Boolean {
         return Ranks.getCachedRank(name).parent.priority > rank.parent.priority
     }
 
-    private fun getPerms() : List<String>{
+    private fun getPerms(): List<String> {
         val cache = arrayListOf<String>()
         cache.addAll(extraPermissions)
         cache.addAll(rank.getAllPermissions())
         return cache
     }
-    fun isStaff(): Boolean{
+
+    fun isStaff(): Boolean {
         return StaffModule.instance.staff.overview.getList("members", String::class.java).contains(uniqueID.toString())
     }
 
 }
+
 class SickPlayers : Cache<UUID, SickPlayer>, HashMap<UUID, SickPlayer>() {
 
-    companion object{
+    companion object {
         lateinit var instance: SickPlayers
     }
 
     init {
         instance = this
     }
+
     override fun getCachedEntity(entity: UUID): SickPlayer? {
         return this[entity]
     }
