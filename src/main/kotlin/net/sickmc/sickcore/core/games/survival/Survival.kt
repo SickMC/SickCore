@@ -9,6 +9,7 @@ class Survival : Game() {
 
     override suspend fun enable() {
         CommonEvents.register()
+        SurvivalCommands.register()
     }
 
     override suspend fun disable() {
