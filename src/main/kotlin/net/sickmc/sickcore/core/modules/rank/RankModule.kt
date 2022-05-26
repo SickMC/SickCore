@@ -18,7 +18,7 @@ class RankModule: Module() {
         Ranks.ranks
         RankGroups.groups
         when(environment){
-            Environment.PAPER -> PermissibleListener()
+            Environment.FABRIC -> {}
             Environment.VELOCITY -> VelocityPermissionProvider()
             else -> {}
         }

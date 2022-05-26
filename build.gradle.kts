@@ -13,6 +13,9 @@ version = "1.0.0"
 repositories{
     mavenCentral()
     maven ("https://nexus.velocitypowered.com/repository/maven-public/")
+    maven(url = "https://s01.oss.sonatype.org/content/repositories/snapshots/") {
+        name = "sonatype-oss-snapshots1"
+    }
 }
 
 dependencies{
@@ -32,12 +35,14 @@ dependencies{
     modImplementation("net.axay:fabrikmc-persistence:$fabrikVersion")
     modImplementation("net.axay:fabrikmc-nbt:$fabrikVersion")
 
+    implementation("net.kyori:adventure-text-minimessage:4.10.1")
+    compileOnly("com.velocitypowered:velocity-api:3.0.1")
+
     implementation("org.litote.kmongo:kmongo-coroutine-serialization:4.6.0")
     implementation("io.github.crackthecodeabhi:kreds:0.7")
-    implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.3.2")
-    shadow("org.jetbrains.kotlinx:kotlinx-serialization-json:1.3.2")
+    implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.3.3")
+    shadow("org.jetbrains.kotlinx:kotlinx-serialization-json:1.3.3")
     shadow("io.github.crackthecodeabhi:kreds:0.7")
-    compileOnly("com.velocitypowered:velocity-api:3.0.1")
 }
 
 kotlin.sourceSets.all{

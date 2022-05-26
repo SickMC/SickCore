@@ -5,12 +5,12 @@ import com.velocitypowered.api.event.connection.LoginEvent
 import kotlinx.coroutines.launch
 import net.sickmc.sickcore.core.commonPlayer.SickPlayers
 import net.sickmc.sickcore.core.modules.ModuleHandler
+import net.sickmc.sickcore.utils.EventManager
 import net.sickmc.sickcore.utils.mongo.databaseScope
 import net.sickmc.sickcore.utils.mongo.players
 import net.sickmc.sickcore.utils.mongo.replace
 import net.sickmc.sickcore.utils.mongo.retrieveOne
 import net.sickmc.sickcore.utils.redis.kreds
-import net.sickmc.sickcore.utils.velocity.RankUpdateEventCaller
 import org.bson.Document
 
 class VelocityCore(val base: VelocityBootstrap) {
@@ -29,6 +29,7 @@ class VelocityCore(val base: VelocityBootstrap) {
     suspend fun start(){
         coreHandler.initiateStartUp()
         moduleHandler.start()
+        EventManager.register()
     }
 
     suspend fun shutdown(){
@@ -45,7 +46,6 @@ object VelocityCoreHandler {
     suspend fun initiateStartUp(){
         SickPlayers()
         handleSickPlayers()
-        handleCustomEvents()
     }
 
     suspend fun initiateShutdown(){
@@ -75,10 +75,6 @@ object VelocityCoreHandler {
                 kreds.del(it.player.uniqueId.toString())
             }
         }
-    }
-
-    suspend fun handleCustomEvents(){
-        RankUpdateEventCaller().handleRankUpdate()
     }
 
 }

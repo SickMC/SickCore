@@ -23,8 +23,6 @@ class AppereanceModule : net.sickmc.sickcore.core.modules.Module() {
             }
             Environment.FABRIC -> {
                 TablistProvider().handleTablist()
-                CommandSuggestionHandler().handlePaperCommands()
-                ChatHandler().handleChat()
             }
             else -> {}
         }

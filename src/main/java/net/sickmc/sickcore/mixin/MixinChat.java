@@ -19,7 +19,7 @@ public class MixinChat {
 
     @Shadow @Final private MinecraftServer server;
 
-    @Inject(method = "handleChat",
+    @Inject(method = "handleChat*",
             at = @At(value = "RETURN"))
     private void handleChat(TextFilter.FilteredText message) {
         if (Game.current.getName().equals("Survival")) CommonEvents.INSTANCE.chat(message, player, server);
