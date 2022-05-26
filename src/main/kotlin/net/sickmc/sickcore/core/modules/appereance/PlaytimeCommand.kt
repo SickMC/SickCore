@@ -12,8 +12,11 @@ import net.sickmc.sickcore.utils.sendMessage
 import net.kyori.adventure.text.minimessage.MiniMessage
 import net.sickmc.sickcore.utils.mm
 import kotlin.time.Duration.Companion.milliseconds
+import kotlin.time.ExperimentalTime
+
 class PlaytimeCommand {
 
+    @OptIn(ExperimentalTime::class)
     fun register(){
         val literalNode = LiteralArgumentBuilder
             .literal<CommandSource>("playtime")

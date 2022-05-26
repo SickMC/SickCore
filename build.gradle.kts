@@ -1,15 +1,16 @@
 plugins {
-    kotlin("jvm") version "1.6.21"
+    kotlin("jvm") version "1.5.31"
     id("com.github.johnrengelman.shadow") version "7.1.2"
     id("io.github.juuxel.loom-quiltflower") version "1.7.1"
     id("org.quiltmc.quilt-mappings-on-loom") version "4.2.0"
-    kotlin("plugin.serialization") version "1.6.21"
+    kotlin("plugin.serialization") version "1.5.31"
     id("fabric-loom") version "0.12-SNAPSHOT"
     `maven-publish`
 }
 
 group = "net.sickmc"
 version = "1.0.0"
+description = "Network Core for the SickNetwork"
 
 repositories{
     mavenCentral()
@@ -74,7 +75,7 @@ tasks{
         options.release.set(17)
     }
     compileKotlin{
-        kotlinOptions.jvmTarget = "17"
+        kotlinOptions.jvmTarget = "11"
     }
     processResources {
         val props = mapOf(
