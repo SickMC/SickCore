@@ -5,6 +5,7 @@ plugins {
     id("org.quiltmc.quilt-mappings-on-loom") version "4.2.0"
     kotlin("plugin.serialization") version "1.5.31"
     id("fabric-loom") version "0.12-SNAPSHOT"
+    `maven-publish`
 }
 
 group = "net.sickmc"
@@ -14,6 +15,27 @@ description = "Network Core for the SickNetwork"
 repositories{
     mavenCentral()
     maven ("https://nexus.velocitypowered.com/repository/maven-public/")
+    maven(url = "https://s01.oss.sonatype.org/content/repositories/snapshots/") {
+        name = "sonatype-oss-snapshots1"
+    }
+}
+
+publishing {
+    repositories {
+        maven {
+            name = "GitHubPackages"
+            url = uri("https://maven.pkg.github.com/SickMC/SickCore")
+            credentials {
+                username = project.findProperty("gpr.user") as String? ?: System.getenv("USERNAME")
+                password = project.findProperty("gpr.key") as String? ?: System.getenv("TOKEN")
+            }
+        }
+    }
+    publications {
+        register<MavenPublication>("gpr") {
+            from(components["java"])
+        }
+    }
 }
 
 dependencies{
