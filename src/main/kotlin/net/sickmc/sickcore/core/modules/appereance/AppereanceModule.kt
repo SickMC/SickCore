@@ -22,7 +22,7 @@ class AppereanceModule : net.sickmc.sickcore.core.modules.Module() {
                 PlaytimeCommand().register()
             }
             Environment.FABRIC -> {
-                TablistProvider().handleTablist()
+
             }
             else -> {}
         }
