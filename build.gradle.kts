@@ -23,7 +23,7 @@ repositories{
 publishing {
     repositories {
         maven {
-            name = "SickCore"
+            name = "GitHubPackages"
             url = uri("https://maven.pkg.github.com/SickMC/SickCore")
             credentials {
                 username = project.findProperty("gpr.user") as String? ?: System.getenv("USERNAME")
