@@ -19,7 +19,7 @@ class BuildServerCommand {
             .executes(){
                 databaseScope.launch {
                     val veloPlayer = it.source as Player
-                    val player = SickPlayers.instance.getEntity(veloPlayer.uniqueId)!!
+                    val player = SickPlayers.instance.getEntity(veloPlayer.uniqueId)
                     if (!player.isStaff()){
                         val text = MiniMessage.miniMessage().deserialize("<gradient:#890000:#7E0000>This is a staff command!</gradient>")
                         sendMessage(player.uniqueID, text)
