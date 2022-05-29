@@ -90,18 +90,9 @@ tasks{
             expand(props)
         }
     }
-    val pushToPaperTesting by registering(Exec::class){
+    val pushToStorage by registering(Exec::class){
         dependsOn(build)
         group = "push"
-        commandLine("wsl", "rsync", "/mnt/c/Users/anton/Desktop/Ordner/Development/SickNetwork/SickCore/build/libs/SickCore-1.0.0-dev-all.jar", "node1:/home/sickmc/network/Testing/fabric/plugins/SickCore.jar")
-    }
-    val pushToVelocityTesting by registering(Exec::class){
-        dependsOn(build)
-        group = "push"
-        commandLine("wsl", "rsync", "/mnt/c/Users/anton/Desktop/Ordner/Development/SickNetwork/SickCore/build/libs/SickCore-1.0.0-dev-all.jar", "node1:/home/sickmc/network/Testing/velocity/plugins/SickCore.jar")
-    }
-    val pushToTesting by registering{
-        dependsOn(pushToPaperTesting, pushToVelocityTesting)
-        group = "push"
+        commandLine("wsl", "rsync", "/mnt/c/Users/anton/Documents/Development/Forks/SickCore/build/libs/SickCore-1.0.0-all.jar", "node1:/home/sickmc/network/Testing/storage/SickCore.jar")
     }
 }

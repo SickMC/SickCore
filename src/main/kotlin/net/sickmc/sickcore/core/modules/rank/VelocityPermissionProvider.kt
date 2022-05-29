@@ -45,7 +45,7 @@ class VelocityPermissionProvider : PermissionProvider{
         }
 
         fun identifyAdmin(): Boolean{
-            return sickPlayer.rank.parent.name == "Administration"
+            return sickPlayer.rank.getParent().name == "Administration"
         }
 
         private fun identifyPlayer(){

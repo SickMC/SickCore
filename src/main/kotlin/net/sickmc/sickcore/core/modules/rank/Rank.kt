@@ -1,7 +1,5 @@
 package net.sickmc.sickcore.core.modules.rank
 
-import kotlinx.coroutines.launch
-import net.sickmc.sickcore.utils.mongo.databaseScope
 import net.sickmc.sickcore.utils.mongo.rankColl
 import net.sickmc.sickcore.utils.mongo.replace
 import net.sickmc.sickcore.utils.mongo.retrieveOne
@@ -9,18 +7,21 @@ import net.sickmc.sickcore.utils.redis.publish
 import org.bson.Document
 import java.util.*
 import kotlin.collections.ArrayList
+import kotlin.collections.HashMap
 
 class Rank(val name: String, val document: Document) {
 
     val privateDiscordID = document.getString("discordID")
     val extraPermissions = document.getList("extraPermissions", String::class.java)
-    val parent = RankGroups.getCachedGroup(document.getString("parent"))
-    val permissions = getAllPermissions()
-    fun getAllPermissions(): List<String>{
+    fun getPermissions(): ArrayList<String>{
         val permissions = ArrayList<String>()
-        permissions.addAll(parent.permissions)
+        permissions.addAll(getParent().permissions)
         permissions.addAll(extraPermissions)
         return permissions
+    }
+
+    fun getParent(): RankGroup{
+        return RankGroups.getCachedGroup(document.getString("parent"))
     }
 
     suspend fun reload(){
@@ -48,13 +49,12 @@ class Rank(val name: String, val document: Document) {
 class Ranks {
 
     companion object{
-        val ranks = HashMap<String, Rank>()
+        var ranks = HashMap<String, Rank>()
 
-        init {
-            databaseScope.launch {
-                rankColl.find().toList().forEach{
-                    ranks[it.getString("rank")] = Rank(it.getString("rank"), it)
-                }
+        suspend fun load(){
+            ranks = HashMap()
+            rankColl.find().toFlow().collect{
+                ranks[it.getString("rank")] = Rank(it.getString("rank"), it)
             }
         }
         fun getCachedRank(name: String): Rank{

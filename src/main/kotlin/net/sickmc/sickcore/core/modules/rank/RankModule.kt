@@ -15,8 +15,8 @@ class RankModule: Module() {
 
     override suspend fun start() {
         instance = this
-        Ranks.ranks
-        RankGroups.groups
+        RankGroups.load()
+        Ranks.load()
         when(environment){
             Environment.FABRIC -> {}
             Environment.VELOCITY -> VelocityPermissionProvider()

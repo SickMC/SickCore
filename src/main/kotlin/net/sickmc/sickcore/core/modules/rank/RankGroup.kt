@@ -1,14 +1,13 @@
 package net.sickmc.sickcore.core.modules.rank
 
-import kotlinx.coroutines.launch
-import net.sickmc.sickcore.utils.mongo.databaseScope
 import net.sickmc.sickcore.utils.mongo.rankGroupColl
 import net.sickmc.sickcore.utils.mongo.replace
 import net.sickmc.sickcore.utils.mongo.retrieveOne
 import net.sickmc.sickcore.utils.redis.publish
 import org.bson.Document
-import org.litote.kmongo.coroutine.toList
 import java.util.*
+import kotlin.collections.ArrayList
+import kotlin.collections.HashMap
 
 class RankGroup(val name: String, val document: Document){
 
@@ -17,17 +16,15 @@ class RankGroup(val name: String, val document: Document){
     val permissions = document.getList("permissions", String::class.java)
     val priority = document.getInteger("priority")
     val color = document.getInteger("color")
-    val coloredPrefix = document.getString("coloredPrefix")
     val discordRoleID = document.getString("discordRoleID")
-    val ranks = getChilds()
 
-    fun getChilds(): List<Rank>{
+    fun getChilds(): ArrayList<Rank>{
         val rankNames = document.getList("ranks", String::class.java)
         val ranksCache = arrayListOf<Rank>()
         rankNames.forEach {
             ranksCache.add(Ranks.getCachedRank(it))
         }
-        return ranksCache.toList()
+        return ranksCache
     }
 
     suspend fun addPermission(permission: String){
@@ -59,12 +56,12 @@ class RankGroup(val name: String, val document: Document){
 class RankGroups {
 
     companion object{
-        val groups = HashMap<String, RankGroup>()
-        init {
-            databaseScope.launch {
-                rankGroupColl.collection.find().toList().forEach{
-                    groups[it.getString("rankgroup")] = RankGroup(it.getString("rankgroup"), it)
-                }
+        var groups = HashMap<String, RankGroup>()
+
+        suspend fun load(){
+            groups = HashMap()
+            rankGroupColl.find().toFlow().collect{
+                groups[it.getString("rankgroup")] = RankGroup(it.getString("rankgroup"), it)
             }
         }
         fun getCachedGroup(name: String): RankGroup{

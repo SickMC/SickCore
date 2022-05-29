@@ -31,30 +31,30 @@ class SickPlayer(override val uniqueID: UUID, override val document: Document) :
     val permanentRank = Ranks.getCachedRank(document.getString("permanentRank"))
     val permissions = getPerms()
     val displayName = DisplayName(
-        literalText(rank.parent.coloredPrefix.uppercase()) {
+        literalText(rank.getParent().name.uppercase()) {
             bold = true
-            color = rank.parent.color
+            color = rank.getParent().color
             text(" $name") {
-                color = rank.parent.color
+                color = rank.getParent().color
                 bold = false
             }
         },
-        net.kyori.adventure.text.Component.text(rank.parent.coloredPrefix.uppercase()).decorate(TextDecoration.BOLD)
-            .color(TextColor.color(rank.parent.color)).append(net.kyori.adventure.text.Component.text(" $name"))
-            .color(TextColor.color(rank.parent.color)),
-        rank.parent.prefix,
+        net.kyori.adventure.text.Component.text(rank.getParent().name.uppercase()).decorate(TextDecoration.BOLD)
+            .color(TextColor.color(rank.getParent().color)).append(net.kyori.adventure.text.Component.text(" $name"))
+            .color(TextColor.color(rank.getParent().color)),
+        rank.getParent().prefix,
         name,
-        rank.parent.color
+        rank.getParent().color
     )
 
     fun isGreater(name: String): Boolean {
-        return Ranks.getCachedRank(name).parent.priority > rank.parent.priority
+        return Ranks.getCachedRank(name).getParent().priority > rank.getParent().priority
     }
 
     private fun getPerms(): List<String> {
         val cache = arrayListOf<String>()
         cache.addAll(extraPermissions)
-        cache.addAll(rank.getAllPermissions())
+        cache.addAll(rank.getPermissions())
         return cache
     }
 
