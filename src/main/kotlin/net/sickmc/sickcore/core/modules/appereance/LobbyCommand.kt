@@ -37,7 +37,7 @@ class LobbyCommand {
         VelocityCore.instance?.base?.server?.commandManager?.register(commandMeta, command)
     }
 
-    suspend fun registerAddition(){
+    fun registerAddition(){
         val aliases = arrayOf("leave","lobby", "l", "hub").toList()
         listenVelocity<PlayerChatEvent> {
             databaseScope.launch {

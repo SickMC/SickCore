@@ -2,14 +2,13 @@ package net.sickmc.sickcore.core.modules.appereance
 
 import com.velocitypowered.api.event.proxy.ProxyPingEvent
 import com.velocitypowered.api.proxy.server.ServerPing.SamplePlayer
-import net.sickmc.sickcore.core.VelocityCore
 import net.sickmc.sickcore.core.listenVelocity
 import net.kyori.adventure.text.minimessage.MiniMessage
 import net.sickmc.sickcore.utils.mongo.configColl
 import net.sickmc.sickcore.utils.mongo.retrieveOne
 import java.util.*
 
-class MOTDHandler {
+object MOTDHandler {
 
     suspend fun handleMOTD(){
         val document = configColl.retrieveOne("type", "motd")!!

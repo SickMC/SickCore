@@ -7,6 +7,7 @@ import com.velocitypowered.api.permission.PermissionSubject
 import com.velocitypowered.api.permission.Tristate
 import com.velocitypowered.api.proxy.Player
 import kotlinx.coroutines.launch
+import net.sickmc.sickcore.core.VelocityBootstrap
 import net.sickmc.sickcore.core.listenVelocity
 import net.sickmc.sickcore.core.commonPlayer.SickPlayers
 import net.sickmc.sickcore.utils.mongo.databaseScope
@@ -15,9 +16,6 @@ class VelocityPermissionProvider : PermissionProvider{
 
     init {
         listenVelocity<PermissionsSetupEvent> {
-            if (it.subject is Player){
-                databaseScope.launch { SickPlayers.instance.reloadEntity((it.subject as Player).uniqueId) }
-            }
             it.provider = this
         }
     }
@@ -29,29 +27,18 @@ class VelocityPermissionProvider : PermissionProvider{
 
     private class SickPermissionFunction(val player: Player): PermissionFunction{
 
-        private var sickPlayer = SickPlayers.instance.getCachedEntity(player.uniqueId)!!
-
-        init {
-            identifyPlayer()
-        }
-
-        private var permissions = sickPlayer.permissions
-        private val admin = identifyAdmin()
-
         override fun getPermissionValue(permission: String?): Tristate {
-            if (permission == null)return Tristate.UNDEFINED
-            if (admin) return Tristate.TRUE
-            return Tristate.fromBoolean(permissions.contains(permission))
+            if (SickPlayers.instance.getCachedEntity(player.uniqueId)!!.isAdmin())return Tristate.TRUE
+            if (permission == null)return Tristate.FALSE
+            return Tristate.fromBoolean(getPermissions().contains(permission))
         }
 
-        fun identifyAdmin(): Boolean{
-            return sickPlayer.rank.getParent().name == "Administration"
-        }
-
-        private fun identifyPlayer(){
+        fun getPermissions(): List<String>{
+            val list = ArrayList<String>()
             databaseScope.launch {
-                sickPlayer = SickPlayers.instance.getCachedEntity(player.uniqueId) ?: error("Failed to load sickPlayer ${player.uniqueId}")
+                list.addAll(SickPlayers.instance.getCachedEntity(player.uniqueId)!!.permissions)
             }
+            return list.toList()
         }
 
     }

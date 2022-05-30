@@ -14,7 +14,7 @@ import org.slf4j.Logger
 
 val bootstrapScope = CoroutineScope(Dispatchers.Default)
 
-    @Plugin(
+@Plugin(
     id = "sickcore",
     name = "SickCore",
     version = "1.1",
@@ -24,11 +24,19 @@ val bootstrapScope = CoroutineScope(Dispatchers.Default)
 )
 class VelocityBootstrap @Inject constructor(val server: ProxyServer, val logger: Logger) {
 
+    companion object{
+        lateinit var instance: VelocityBootstrap
+    }
+
     private var core: VelocityCore? = null
 
     @Subscribe
-    fun onProxyInitialize(event: ProxyInitializeEvent){
-        System.setProperty("org.litote.mongo.mapping.service", SerializationClassMappingTypeService::class.qualifiedName!!)
+    fun onProxyInitialize(event: ProxyInitializeEvent) {
+        instance = this
+        System.setProperty(
+            "org.litote.mongo.mapping.service",
+            SerializationClassMappingTypeService::class.qualifiedName!!
+        )
         core = VelocityCore(this)
         bootstrapScope.launch {
             core!!.start()
@@ -36,7 +44,7 @@ class VelocityBootstrap @Inject constructor(val server: ProxyServer, val logger:
     }
 
     @Subscribe
-    fun onProxyShutdown(event: ProxyShutdownEvent){
+    fun onProxyShutdown(event: ProxyShutdownEvent) {
         bootstrapScope.launch {
             core!!.shutdown()
         }

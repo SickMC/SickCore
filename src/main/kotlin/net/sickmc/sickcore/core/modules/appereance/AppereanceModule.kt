@@ -15,7 +15,7 @@ class AppereanceModule : net.sickmc.sickcore.core.modules.Module() {
         instance = this
         when(environment){
             Environment.VELOCITY ->{
-                MOTDHandler().handleMOTD()
+                MOTDHandler.handleMOTD()
                 val lobbyCommands = LobbyCommand()
                 lobbyCommands.register()
                 lobbyCommands.registerAddition()
