@@ -63,6 +63,7 @@ dependencies{
     implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.3.3")
     shadow("org.jetbrains.kotlinx:kotlinx-serialization-json:1.3.3")
     shadow("io.github.crackthecodeabhi:kreds:0.7")
+    shadow(kotlin("stdlib"))
 }
 
 kotlin.sourceSets.all{

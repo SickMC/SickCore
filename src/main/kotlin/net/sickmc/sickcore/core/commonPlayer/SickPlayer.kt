@@ -51,6 +51,10 @@ class SickPlayer(override val uniqueID: UUID, override val document: Document) :
         return Ranks.getCachedRank(name).getParent().priority > rank.getParent().priority
     }
 
+    fun isAdmin(): Boolean{
+        return rank.getParent().name == "Administrator"
+    }
+
     private fun getPerms(): List<String> {
         val cache = arrayListOf<String>()
         cache.addAll(extraPermissions)
@@ -79,7 +83,7 @@ class SickPlayers : Cache<UUID, SickPlayer>, HashMap<UUID, SickPlayer>() {
     }
 
     override suspend fun reloadEntity(entity: UUID): SickPlayer {
-        this[entity] = SickPlayer(entity, players.retrieveOne("uuid", entity.toString())!!)
+        this[entity] = getEntity(entity)
         return this[entity]!!
     }
 

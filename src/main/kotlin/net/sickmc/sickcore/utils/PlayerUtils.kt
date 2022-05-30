@@ -27,7 +27,7 @@ class PlayerUtils {
             val raw = connection.inputStream.bufferedReader().readText()
             connection.disconnect()
             val jsonObject = JsonObject(raw)
-            return UUID.fromString(jsonObject.toBsonDocument().getString("name").value)
+            return jsonObject.toBsonDocument().getString("id").value.transformToUUID()
         }
     }
 
