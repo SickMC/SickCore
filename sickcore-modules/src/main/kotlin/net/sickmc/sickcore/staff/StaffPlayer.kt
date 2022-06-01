@@ -2,8 +2,8 @@ package net.sickmc.sickcore.staff
 
 import kotlinx.coroutines.launch
 import net.sickmc.sickcore.commonPlayer.ISickPlayer
-import net.sickmc.sickcore.core.commonPlayer.SickPlayer
-import net.sickmc.sickcore.core.commonPlayer.SickPlayers
+import net.sickmc.sickcore.commonPlayer.SickPlayer
+import net.sickmc.sickcore.commonPlayer.SickPlayers
 import net.sickmc.sickcore.utils.mongo.databaseScope
 import net.sickmc.sickcore.utils.mongo.retrieveOne
 import net.sickmc.sickcore.utils.mongo.staffColl

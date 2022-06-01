@@ -5,10 +5,10 @@ import com.velocitypowered.api.command.BrigadierCommand
 import com.velocitypowered.api.command.CommandSource
 import com.velocitypowered.api.proxy.Player
 import kotlinx.coroutines.launch
-import net.sickmc.sickcore.core.commonPlayer.SickPlayers
 import net.sickmc.sickcore.utils.mongo.databaseScope
 import net.sickmc.sickcore.utils.sendMessage
 import net.kyori.adventure.text.minimessage.MiniMessage
+import net.sickmc.sickcore.commonPlayer.SickPlayers
 import net.sickmc.sickcore.proxyServer
 
 class BuildServerCommand {

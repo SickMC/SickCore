@@ -6,11 +6,11 @@ import com.velocitypowered.api.command.CommandSource
 import com.velocitypowered.api.event.player.PlayerChatEvent
 import com.velocitypowered.api.proxy.Player
 import kotlinx.coroutines.launch
+import net.sickmc.sickcore.listenVelocity
 import net.sickmc.sickcore.proxyServer
 import net.sickmc.sickcore.utils.mm
 import net.sickmc.sickcore.utils.mongo.databaseScope
 import net.sickmc.sickcore.utils.sendMessage
-import net.sickmc.sickcore.utils.velocity.listenVelocity
 
 class LobbyCommand {
 

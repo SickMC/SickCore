@@ -1,7 +1,7 @@
 package net.sickmc.sickcore.games
 
-import net.sickmc.sickcore.core.games.lobby.Lobby
-import net.sickmc.sickcore.core.games.survival.Survival
+import net.sickmc.sickcore.games.lobby.Lobby
+import net.sickmc.sickcore.games.survival.Survival
 
 abstract class Game{
 

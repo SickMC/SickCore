@@ -21,6 +21,8 @@ class VelocityCore(val base: VelocityBootstrap) {
 
     init {
         instance = this
+        proxyPlugin = base
+        proxyServer = base.pserver
     }
 
     val moduleHandler = ModuleHandler(Environment.VELOCITY)

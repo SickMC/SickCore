@@ -11,12 +11,11 @@ import net.sickmc.sickcore.utils.Environment
 var environment: Environment = Environment.STANDALONE
 var minecraftServer: MinecraftServer? = null
 var proxyServer: ProxyServer? = null
-class ModuleHandler(env: Environment, val server: ProxyServer? = null, val mcServer: MinecraftServer? = null) {
+var proxyPlugin: Any? = null
+class ModuleHandler(env: Environment) {
 
     init {
         environment = env
-        proxyServer = server
-        minecraftServer = this.mcServer
     }
 
     val modules = listOf(RankModule(), AppereanceModule(), StaffModule(), SocialModule())
@@ -33,4 +32,10 @@ class ModuleHandler(env: Environment, val server: ProxyServer? = null, val mcSer
         }
     }
 
+}
+
+inline fun <reified T> listenVelocity(crossinline callback: (T) -> Unit) {
+    proxyServer?.eventManager?.register(proxyPlugin, T::class.java) {
+        callback(it)
+    }
 }

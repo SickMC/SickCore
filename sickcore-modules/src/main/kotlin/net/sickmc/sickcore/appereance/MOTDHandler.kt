@@ -3,14 +3,14 @@ package net.sickmc.sickcore.appereance
 import com.velocitypowered.api.event.proxy.ProxyPingEvent
 import com.velocitypowered.api.proxy.server.ServerPing.SamplePlayer
 import net.kyori.adventure.text.minimessage.MiniMessage
+import net.sickmc.sickcore.listenVelocity
 import net.sickmc.sickcore.utils.mongo.configColl
 import net.sickmc.sickcore.utils.mongo.retrieveOne
-import net.sickmc.sickcore.utils.velocity.listenVelocity
 import java.util.*
 
 object MOTDHandler {
 
-    fun handleMOTD(){
+    suspend fun handleMOTD(){
         val document = configColl.retrieveOne("type", "motd")!!
 
         listenVelocity<ProxyPingEvent> {

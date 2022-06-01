@@ -1,6 +1,6 @@
 package net.sickmc.sickcore.games.lobby
 
-import net.sickmc.sickcore.core.games.Game
+import net.sickmc.sickcore.games.Game
 
 class Lobby : Game() {
 

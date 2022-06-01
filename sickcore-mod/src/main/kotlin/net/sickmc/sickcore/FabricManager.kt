@@ -1,4 +1,4 @@
-package net.sickmc.sickcore.core
+package net.sickmc.sickcore
 
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -9,11 +9,10 @@ import net.fabricmc.api.ModInitializer
 import net.fabricmc.fabric.api.event.lifecycle.v1.ServerLifecycleEvents
 import net.fabricmc.fabric.api.networking.v1.ServerPlayConnectionEvents
 import net.minecraft.network.chat.Component
-import net.minecraft.network.chat.PlayerChatMessage
-import net.sickmc.sickcore.core.commonPlayer.SickPlayers
-import net.sickmc.sickcore.core.games.survival.SurvivalPlayers
-import net.sickmc.sickcore.core.modules.ModuleHandler
+import net.sickmc.sickcore.commonPlayer.SickPlayers
+import net.sickmc.sickcore.games.survival.SurvivalPlayers
 import net.sickmc.sickcore.utils.EventManager
+import net.sickmc.sickcore.utils.fabric.sendMessage
 import net.sickmc.sickcore.utils.mongo.databaseScope
 import net.sickmc.sickcore.utils.redis.subscribeRedis
 import org.litote.kmongo.serialization.SerializationClassMappingTypeService
@@ -29,10 +28,10 @@ class FabricManager : ModInitializer {
 
     override fun onInitialize() {
         instance = this
-        environment = Environment.FABRIC
         System.setProperty("org.litote.mongo.mapping.service", SerializationClassMappingTypeService::class.qualifiedName!!)
 
-        val moduleHandler = ModuleHandler
+        val moduleHandler = ModuleHandler(environment)
+        minecraftServer = Fabrik.currentServer
         ServerLifecycleEvents.SERVER_STARTED.register{
             fabricScope.launch {
                 registerCommands()
@@ -69,7 +68,7 @@ class FabricManager : ModInitializer {
         subscribeRedis("message"){
             val uuid = UUID.fromString(it.split('/')[0])
             val component = Component.Serializer.fromJson(it.split('-')[1])
-            Fabrik.currentServer?.playerList?.getPlayer(uuid)?.sendChatMessage(PlayerChatMessage.unsigned(), UUID.randomUUID())
+            Fabrik.currentServer?.playerList?.getPlayer(uuid)?.sendMessage(component!!)
         }
     }
 
