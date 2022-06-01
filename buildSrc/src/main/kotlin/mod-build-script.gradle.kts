@@ -37,13 +37,6 @@ dependencies {
 }
 
 tasks{
-    compileJava{
-        options.encoding = "UTF-8"
-        options.release.set(17)
-    }
-    compileKotlin{
-        kotlinOptions.jvmTarget = "17"
-    }
     processResources {
         val props = mapOf(
             "version" to project.version,
@@ -59,7 +52,7 @@ tasks{
     }
     withType<JavaCompile>{
         options.apply{
-            release.set(11)
+            release.set(17)
             encoding = "UTF-8"
         }
     }

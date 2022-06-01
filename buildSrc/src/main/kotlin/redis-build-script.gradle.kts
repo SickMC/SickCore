@@ -19,6 +19,6 @@ tasks{
         options.release.set(17)
     }
     compileKotlin{
-        kotlinOptions.jvmTarget = "17"
+        kotlinOptions.jvmTarget = "11"
     }
 }
