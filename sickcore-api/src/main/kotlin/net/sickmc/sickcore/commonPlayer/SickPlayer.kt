@@ -1,5 +1,6 @@
 package net.sickmc.sickcore.commonPlayer
 
+import kotlinx.coroutines.launch
 import net.axay.fabrik.core.text.literalText
 import net.kyori.adventure.text.format.TextColor
 import net.kyori.adventure.text.format.TextDecoration
@@ -8,8 +9,7 @@ import net.sickmc.sickcore.commonRanks.Ranks
 import net.sickmc.sickcore.utils.Cache
 import net.sickmc.sickcore.utils.DisplayName
 import net.sickmc.sickcore.utils.PlayerUtils
-import net.sickmc.sickcore.utils.mongo.players
-import net.sickmc.sickcore.utils.mongo.retrieveOne
+import net.sickmc.sickcore.utils.mongo.*
 import org.bson.Document
 import java.util.UUID
 
@@ -44,6 +44,15 @@ class SickPlayer(override val uniqueID: UUID, override val document: Document) :
         name,
         rank.getParent().color
     )
+    private val overview = validateOverview()
+
+    private fun validateOverview(): Document{
+        var document: Document? = null
+        databaseScope.launch {
+            document = staffColl.retrieveOne("type", "overview")
+        }
+        return document ?: error("Staff Overview cannot be loaded")
+    }
 
     fun isGreater(name: String): Boolean {
         return Ranks.getCachedRank(name).getParent().priority > rank.getParent().priority
@@ -53,6 +62,9 @@ class SickPlayer(override val uniqueID: UUID, override val document: Document) :
         return rank.getParent().name == "Administrator"
     }
 
+    fun isStaff(): Boolean{
+        return overview.getList("member", String::class.java).contains(name)
+    }
     private fun getPerms(): List<String> {
         val cache = arrayListOf<String>()
         cache.addAll(extraPermissions)
