@@ -1,10 +1,20 @@
-rootProject.name = "SickCore"
+val projectName = "sickcore"
+rootProject.name = projectName
 
 pluginManagement{
     repositories{
         gradlePluginPortal()
-        maven("https://maven.fabricmc.net/")
-        maven("https://maven.quiltmc.org/repository/release/")
-        maven("https://server.bbkr.space/artifactory/libs-release/")
+    }
+
+    val kotlinVersion = "1.5.31"
+    plugins {
+        kotlin("jvm") version kotlinVersion
+        kotlin("plugin.serialization") version kotlinVersion
     }
 }
+
+include("$projectName-proxy")
+include("$projectName-api")
+include("$projectName-modules")
+include("$projectName-mod")
+
