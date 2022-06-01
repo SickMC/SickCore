@@ -7,6 +7,9 @@ plugins{
 }
 
 dependencies {
-    implementation(modProject(":${rootProject.name}-api"))
-    implementation(modProject(":${rootProject.name}-modules"))
+    include(implementation(modProject(":${rootProject.name}-api"))!!)
+    include(implementation(modProject(":${rootProject.name}-modules"))!!)
+
+    include(implementation("org.litote.kmongo:kmongo-coroutine-serialization:4.6.0")!!)
+    include(implementation("io.github.crackthecodeabhi:kreds:0.7")!!)
 }
