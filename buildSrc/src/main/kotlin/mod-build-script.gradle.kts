@@ -41,7 +41,7 @@ tasks{
         val props = mapOf(
             "version" to project.version,
             "description" to project.description,
-            "mc_version" to "1.18"
+            "mc_version" to "1.19"
         )
 
         inputs.properties(props)
