@@ -20,8 +20,8 @@ dependencies{
 
     compileOnly(kotlin("gradle-plugin", embeddedKotlinVersion))
     runtimeOnly(kotlin("gradle-plugin", kotlinVersion))
-    compileOnly(pluginDep("org.jetbrains.kotlin.plugin.serialization", kotlinVersion))
-    runtimeOnly(pluginDep("org.jetbrains.kotlin.plugin.serialization", embeddedKotlinVersion))
+    compileOnly(pluginDep("org.jetbrains.kotlin.plugin.serialization", embeddedKotlinVersion))
+    runtimeOnly(pluginDep("org.jetbrains.kotlin.plugin.serialization", kotlinVersion))
     implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.3.3")
 
 
