@@ -13,3 +13,7 @@ dependencies {
     include(implementation("org.litote.kmongo:kmongo-coroutine-serialization:4.6.0")!!)
     include(implementation("io.github.crackthecodeabhi:kreds:0.7")!!)
 }
+
+configurations.include.configure {
+    isTransitive = true
+}
