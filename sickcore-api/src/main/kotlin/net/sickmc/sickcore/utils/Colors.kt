@@ -6,5 +6,6 @@ object Colors {
     val LIGHT_GRAY = 0x828573
     val ORANGE = 0xCE8E31
     val GOLD = 0xCE9316
+    val LIGHT_RED = 0xD36D51
 
 }
