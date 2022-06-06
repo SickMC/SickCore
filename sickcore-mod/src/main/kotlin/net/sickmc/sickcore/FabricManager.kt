@@ -10,10 +10,12 @@ import net.fabricmc.fabric.api.event.lifecycle.v1.ServerLifecycleEvents
 import net.fabricmc.fabric.api.networking.v1.ServerPlayConnectionEvents
 import net.minecraft.network.chat.Component
 import net.sickmc.sickcore.commonPlayer.SickPlayers
+import net.sickmc.sickcore.games.Game
 import net.sickmc.sickcore.games.survival.SurvivalPlayers
 import net.sickmc.sickcore.utils.EventManager
 import net.sickmc.sickcore.utils.fabric.sendMessage
 import net.sickmc.sickcore.utils.mongo.databaseScope
+import net.sickmc.sickcore.utils.redis.kreds
 import net.sickmc.sickcore.utils.redis.subscribeRedis
 import org.litote.kmongo.serialization.SerializationClassMappingTypeService
 import java.util.*
@@ -31,15 +33,15 @@ class FabricManager : ModInitializer {
         System.setProperty("org.litote.mongo.mapping.service", SerializationClassMappingTypeService::class.qualifiedName!!)
 
         val moduleHandler = ModuleHandler(environment)
-        minecraftServer = Fabrik.currentServer
-        ServerLifecycleEvents.SERVER_STARTED.register{
-            fabricScope.launch {
-                registerCommands()
-                registerCaches()
-                EventManager.register()
-                moduleHandler.start()
-                handleSickPlayers()
-            }
+        databaseScope.launch {
+            //kreds.auth(System.getenv("REDIS_PASSWORD"))
+            kreds.auth(System.getProperty("REDIS_PASSWORD"))
+            registerCommands()
+            registerCaches()
+            EventManager.register()
+            moduleHandler.start()
+            handleSickPlayers()
+            Game.enable()
         }
 
         ServerLifecycleEvents.SERVER_STOPPING.register{
