@@ -24,35 +24,15 @@ class SickPlayer(override val uniqueID: UUID, override val document: Document) :
     val playtime = document.getLong("playtime")
     val rankExpire = document.getString("rankExpire")
     val privileges: List<Privileges> =
-        document.getList("priveleges", String::class.java).map { s -> Privileges.valueOf(s) }
+        document.getList("privileges", String::class.java).map { s -> Privileges.valueOf(s) }
     val rank = Ranks.getCachedRank(document.getString("rank"))
     val permanentRank = Ranks.getCachedRank(document.getString("permanentRank"))
     val permissions = getPerms()
     val displayName = DisplayName(
-        literalText(rank.getParent().name.uppercase()) {
-            bold = true
-            color = rank.getParent().color
-            text(" $name") {
-                color = rank.getParent().color
-                bold = false
-            }
-        },
-        net.kyori.adventure.text.Component.text(rank.getParent().name.uppercase()).decorate(TextDecoration.BOLD)
-            .color(TextColor.color(rank.getParent().color)).append(net.kyori.adventure.text.Component.text(" $name"))
-            .color(TextColor.color(rank.getParent().color)),
-        rank.getParent().prefix,
+        rank.getParent(),
         name,
         rank.getParent().color
     )
-    private val overview = validateOverview()
-
-    private fun validateOverview(): Document{
-        var document: Document? = null
-        databaseScope.launch {
-            document = staffColl.retrieveOne("type", "overview")
-        }
-        return document ?: error("Staff Overview cannot be loaded")
-    }
 
     fun isGreater(name: String): Boolean {
         return Ranks.getCachedRank(name).getParent().priority > rank.getParent().priority
@@ -63,7 +43,7 @@ class SickPlayer(override val uniqueID: UUID, override val document: Document) :
     }
 
     fun isStaff(): Boolean{
-        return overview.getList("member", String::class.java).contains(name)
+        return SickPlayers.staffOverview.getList("member", String::class.java).contains(name)
     }
     private fun getPerms(): List<String> {
         val cache = arrayListOf<String>()
@@ -78,10 +58,15 @@ class SickPlayers : Cache<UUID, SickPlayer>, HashMap<UUID, SickPlayer>() {
 
     companion object {
         lateinit var instance: SickPlayers
+
+        lateinit var staffOverview: Document
     }
 
     init {
         instance = this
+        databaseScope.launch {
+            staffOverview = staffColl.retrieveOne("type", "overview")!!
+        }
     }
 
     override fun getCachedEntity(entity: UUID): SickPlayer? {
