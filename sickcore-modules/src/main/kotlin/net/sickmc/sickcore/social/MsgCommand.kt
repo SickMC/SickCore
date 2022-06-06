@@ -37,7 +37,7 @@ class MsgCommand  {
                                 return@launch
                             }
                             val message = StringArgumentType.getString(it, "msg")
-                            val senderText = SickPlayers.instance.getCachedEntity(sender.uniqueId)!!.displayName.kyoriFull.append(mm.deserialize("<#5b6667>» ")).append(SickPlayers.instance.getCachedEntity(targetUUID)!!.displayName.kyoriFull).append(mm.deserialize("<#858585>: $message"))
+                            val senderText = SickPlayers.instance.getCachedEntity(sender.uniqueId)!!.displayName.getKyoriName().append(mm.deserialize("<#5b6667>» ")).append(SickPlayers.instance.getCachedEntity(targetUUID)!!.displayName.getKyoriName()).append(mm.deserialize("<#858585>: $message"))
                             sendMessage(targetUUID, senderText)
                         }
                         1

@@ -28,6 +28,8 @@ class VelocityCore(val base: VelocityBootstrap) {
     val moduleHandler = ModuleHandler(Environment.VELOCITY)
     val coreHandler = VelocityCoreHandler
     suspend fun start() {
+        //kreds.auth(System.getenv("REDIS_PASSWORD"))
+        kreds.auth(System.getProperty("REDIS_PASSWORD"))
         VelocityCoreHandler.initiateStartUp()
         moduleHandler.start()
         EventManager.register()
@@ -42,7 +44,7 @@ class VelocityCore(val base: VelocityBootstrap) {
 
 object VelocityCoreHandler {
 
-    val core = VelocityCore.instance!!
+    val core = VelocityCore.instance
 
     suspend fun initiateStartUp() {
         SickPlayers()

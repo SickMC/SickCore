@@ -19,9 +19,14 @@ class SurvivalPlayer(override val sickPlayer: SickPlayer, override val gameDocum
     suspend fun addHead(entity: Entity){
         val heads = gameDocument.get("heads", Document::class.java)
         val head = entity.getHead()
-        if (heads.getBoolean(head.key.name()))return
-        heads.replace(head.key.name(), "true")
+        if (heads.getBoolean(head.attributes.name.replace(" ", "_")))return
+        heads.replace(head.attributes.name.replace(" ", "_"), true)
         gameDocument.replace("heads", heads)
+        survivalColl.replace("uuid", sickPlayer.uniqueID.toString(), gameDocument)
+    }
+
+    suspend fun addDeath(){
+        gameDocument.replace("deaths", gameDocument.getInteger("deaths").plus(1))
         survivalColl.replace("uuid", sickPlayer.uniqueID.toString(), gameDocument)
     }
 
@@ -52,7 +57,7 @@ class SurvivalPlayers : Cache<UUID, SurvivalPlayer>, HashMap<UUID, SurvivalPlaye
     }
 
     override suspend fun createEntity(entity: UUID): SurvivalPlayer {
-        val headList = textures.map { it.key.name() }
+        val headList = textures.map { it.value.name.replace(" ", "_") }
         val map = hashMapOf<String, Boolean>()
         headList.forEach {
             map[it] = false
@@ -60,7 +65,7 @@ class SurvivalPlayers : Cache<UUID, SurvivalPlayer>, HashMap<UUID, SurvivalPlaye
         val playerDoc = Document("uuid", entity.toString())
             .append("deaths", 0)
             .append("heads", map)
-        survivalColl.replace("uuid", entity.toString(), playerDoc)
+        survivalColl.insertOne(playerDoc)
         return SurvivalPlayer(SickPlayers.instance.getEntity(entity), playerDoc)
     }
 

@@ -17,6 +17,7 @@ class StaffModule : Module(){
 
     override suspend fun start() {
         instance = this
+        staff.validateOverview()
         when(environment){
             Environment.VELOCITY ->{
                 BuildServerCommand().register()

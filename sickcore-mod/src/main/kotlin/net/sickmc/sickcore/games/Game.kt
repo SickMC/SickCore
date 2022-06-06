@@ -11,11 +11,17 @@ abstract class Game{
         lateinit var current: Game
 
         suspend fun enable(){
-            games.forEach {
+            games[0].enable()
+            current = games[0]
+            println("started")
+            /*games.forEach {
                 if (!it.startEnvironment.contains(System.getenv("GAME_START_ENVIRONMENT")))return@forEach
                 it.enable()
+                println("Game ${it.name} started!")
                 current = it
             }
+
+             */
         }
     }
 
