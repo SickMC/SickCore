@@ -1531,17 +1531,17 @@ val textures = mapOf(
     )
 )
 
-private val availableInSurvival = listOf(
-    EntityType.WITHER_SKELETON,
-    EntityType.SKELETON,
-    EntityType.ZOMBIE,
-    EntityType.CREEPER
+val availableInSurvival = listOf(
+    EntityKey(EntityType.WITHER_SKELETON),
+    EntityKey(EntityType.SKELETON),
+    EntityKey(EntityType.ZOMBIE),
+    EntityKey(EntityType.CREEPER)
 )
 
-private val onlyAvailableWithCheats = listOf(
-    EntityType.ILLUSIONER,
-    EntityType.ZOMBIE_HORSE,
-    EntityType.GIANT
+val onlyAvailableWithCheats = listOf(
+    EntityKey(EntityType.ILLUSIONER),
+    EntityKey(EntityType.ZOMBIE_HORSE),
+    EntityKey(EntityType.GIANT)
 )
 
 fun Entity.getHead(): MobHead {
@@ -1620,8 +1620,8 @@ fun Entity.getHead(): MobHead {
             ?: "eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvMWFiNzM5ZjRjYjAyOGVmMmFjZjM0YTZkYzNiNGZmODVlYWM1Y2E5ODdiNTgzMmJmZGQwZjNjMzM1MWFhNDQzIn19fQ=="
     )
     return MobHead(
-        onlyAvailableWithCheats.contains(this.type),
-        availableInSurvival.contains(this.type),
+        onlyAvailableWithCheats.contains(key),
+        availableInSurvival.contains(key),
         head,
         key,
         textures[key]!!
