@@ -7,21 +7,20 @@ import net.axay.fabrik.core.text.literal
 import net.axay.fabrik.core.text.literalText
 import net.axay.fabrik.igui.*
 import net.axay.fabrik.igui.observable.toGuiList
+import net.axay.fabrik.igui.observable.toMutableGuiList
 import net.minecraft.world.item.Items
 import net.sickmc.sickcore.utils.Colors
-import net.sickmc.sickcore.utils.fabric.CommonHeads
-import net.sickmc.sickcore.utils.fabric.createHead
-import net.sickmc.sickcore.utils.fabric.textures
+import net.sickmc.sickcore.utils.fabric.*
 import org.bson.Document
 import kotlin.time.ExperimentalTime
 
 fun openHeadGUI(player: SurvivalPlayer){
 
-    val allHeads = textures.map { it.value }
+    val allHeads = textures.filter { !onlyAvailableWithCheats.contains(it.key) && !availableInSurvival.contains(it.key) }.map { it.value }.toMutableList()
+    allHeads.addAll(extraHeads)
     val headDocument = player.gameDocument.get("heads", Document::class.java)
 
     val gui = igui(GuiType.NINE_BY_SIX, literalText("Mob Heads"){color = Colors.GOLD}, 1){
-        println("page create")
         page(1) {
             effectFrom = GuiPage.ChangeEffect.SLIDE_VERTICALLY
 

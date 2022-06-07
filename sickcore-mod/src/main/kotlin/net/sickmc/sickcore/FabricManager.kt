@@ -34,8 +34,8 @@ class FabricManager : ModInitializer {
 
         val moduleHandler = ModuleHandler(environment)
         databaseScope.launch {
-            //kreds.auth(System.getenv("REDIS_PASSWORD"))
-            kreds.auth(System.getProperty("REDIS_PASSWORD"))
+            kreds.auth(System.getenv("REDIS_PASSWORD"))
+            //kreds.auth(System.getProperty("REDIS_PASSWORD"))
             registerCommands()
             registerCaches()
             EventManager.register()
@@ -61,7 +61,7 @@ class FabricManager : ModInitializer {
     }
 
     private suspend fun handleSickPlayers(){
-        ServerPlayConnectionEvents.JOIN.register{handler, _, server ->
+        ServerPlayConnectionEvents.INIT.register{ handler, _->
             if (handler.player == null)return@register
             databaseScope.launch {
                 SickPlayers.instance.reloadEntity(handler.player!!.uuid)

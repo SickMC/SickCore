@@ -6,13 +6,11 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.SupervisorJob
 import org.bson.Document
-import org.litote.kmongo.coroutine.CoroutineCollection
-import org.litote.kmongo.coroutine.CoroutineDatabase
 import org.litote.kmongo.coroutine.coroutine
 import org.litote.kmongo.reactivestreams.KMongo
 
 val databaseScope = CoroutineScope(Dispatchers.Default + SupervisorJob())
-/*val mongoClient = KMongo.createClient (MongoClientSettings.builder()
+val mongoClient = KMongo.createClient (MongoClientSettings.builder()
     .applyConnectionString(
         ConnectionString(
             "mongodb://${System.getenv("MONGO_USERNAME")}:${System.getenv("MONGO_PASSWORD")}@${
@@ -23,9 +21,7 @@ val databaseScope = CoroutineScope(Dispatchers.Default + SupervisorJob())
         )
     )
     .build()).coroutine
-
- */
-val mongoClient = KMongo.createClient(
+/*val mongoClient = KMongo.createClient(
     MongoClientSettings.builder()
         .applyConnectionString(
             ConnectionString(
@@ -42,6 +38,8 @@ val mongoClient = KMongo.createClient(
         )
         .build()
 ).coroutine
+
+ */
 val db = mongoClient.getDatabase(System.getProperty("MONGO_DATABASE"))
 
 

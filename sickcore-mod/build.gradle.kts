@@ -18,3 +18,7 @@ dependencies {
         include(it.moduleVersion.id.toString())
     }
 }
+
+kotlin.sourceSets.all {
+    languageSettings.optIn("kotlin.RequiresOptIn")
+}

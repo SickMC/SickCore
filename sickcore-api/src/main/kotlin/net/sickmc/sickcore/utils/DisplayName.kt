@@ -7,19 +7,19 @@ import net.kyori.adventure.text.format.TextDecoration
 import net.minecraft.network.chat.MutableComponent
 import net.sickmc.sickcore.commonRanks.RankGroup
 
-data class DisplayName(val parent: RankGroup, val name: String, val color: Int){
+data class DisplayName(val parent: RankGroup, val rawName: String, val color: Int){
 
     fun getKyoriName(): Component{
-        return Component.text(parent.name.uppercase()).decorate(TextDecoration.BOLD)
-            .color(TextColor.color(parent.color)).append(Component.text(" $name"))
+        return Component.text(parent.prefix.uppercase()).decorate(TextDecoration.BOLD)
+            .color(TextColor.color(parent.color)).append(Component.text(" $rawName"))
             .color(TextColor.color(parent.color))
     }
 
     fun getName(): MutableComponent{
-        return literalText(parent.name.uppercase()) {
+        return literalText(parent.prefix.uppercase()) {
             bold = true
             color = parent.color
-            text(" $name") {
+            text(" $rawName") {
                 color = parent.color
                 bold = false
             }
