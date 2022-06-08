@@ -1624,7 +1624,7 @@ fun Entity.getHead(): MobHead {
         availableInSurvival.contains(key),
         head,
         key,
-        textures[key]!!
+        textures[key] ?: EntityAttributes("Unknown", "eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvMWFiNzM5ZjRjYjAyOGVmMmFjZjM0YTZkYzNiNGZmODVlYWM1Y2E5ODdiNTgzMmJmZGQwZjNjMzM1MWFhNDQzIn19fQ==")
     )
 }
 

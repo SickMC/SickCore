@@ -40,7 +40,9 @@ val mongoClient = KMongo.createClient (MongoClientSettings.builder()
 ).coroutine
 
  */
-val db = mongoClient.getDatabase(System.getProperty("MONGO_DATABASE"))
+//val db = mongoClient.getDatabase(System.getProperty("MONGO_DATABASE"))
+val db = mongoClient.getDatabase(System.getenv("MONGO_DATABASE"))
+
 
 
 val players = db.getCollection<Document>("sickPlayers")

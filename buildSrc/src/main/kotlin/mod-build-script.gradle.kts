@@ -12,8 +12,8 @@ repositories{
 }
 
 dependencies {
-    val minecraftVersion = "1.19-rc2"
-    val quiltMappingsVersion = "1.19-rc2+build.1:v2"
+    val minecraftVersion = "1.19"
+    val quiltMappingsVersion = "1.19+build.1:v2"
     val fabricAPIVersion = "0.55.0+1.19"
     val fabricLoaderVersion = "0.14.6"
     val fabricLanguageKotlinVersion = "1.7.4+kotlin.1.6.21"
