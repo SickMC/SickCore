@@ -30,7 +30,6 @@ class FabricManager : ModInitializer {
 
     override fun onInitialize() {
         instance = this
-        System.setProperty("org.litote.mongo.mapping.service", SerializationClassMappingTypeService::class.qualifiedName!!)
 
         val moduleHandler = ModuleHandler(environment)
         databaseScope.launch {

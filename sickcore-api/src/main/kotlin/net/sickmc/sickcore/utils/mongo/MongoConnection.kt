@@ -21,6 +21,8 @@ val mongoClient = KMongo.createClient (MongoClientSettings.builder()
         )
     )
     .build()).coroutine
+
+
 /*val mongoClient = KMongo.createClient(
     MongoClientSettings.builder()
         .applyConnectionString(
@@ -40,6 +42,8 @@ val mongoClient = KMongo.createClient (MongoClientSettings.builder()
 ).coroutine
 
  */
+
+
 //val db = mongoClient.getDatabase(System.getProperty("MONGO_DATABASE"))
 val db = mongoClient.getDatabase(System.getenv("MONGO_DATABASE"))
 

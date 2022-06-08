@@ -22,14 +22,17 @@ suspend inline fun subscribeRedis(channelName: String, crossinline callback: (St
             it.subscribe(channelName)
         }
 
-/*newSubscriberClient(
-    Endpoint.from("${System.getProperty("REDIS_ADDRESS")}:${System.getProperty("REDIS_PORT")}"),
-    subscriptionHandler
-).use {
-    it.subscribe(channelName)
-}
 
- */
+
+        /*newSubscriberClient(
+            Endpoint.from("${System.getProperty("REDIS_ADDRESS")}:${System.getProperty("REDIS_PORT")}"),
+            subscriptionHandler
+        ).use {
+            it.subscribe(channelName)
+        }
+
+         */
+
     }
 
 }
