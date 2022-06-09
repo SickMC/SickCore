@@ -7,7 +7,7 @@ import net.kyori.adventure.text.format.TextDecoration
 import net.minecraft.network.chat.MutableComponent
 import net.sickmc.sickcore.commonRanks.RankGroup
 
-data class DisplayName(val parent: RankGroup, val rawName: String, val color: Int){
+data class DisplayName(val parent: RankGroup, val rawName: String){
 
     fun getKyoriName(): Component{
         return Component.text(parent.prefix.uppercase()).decorate(TextDecoration.BOLD)

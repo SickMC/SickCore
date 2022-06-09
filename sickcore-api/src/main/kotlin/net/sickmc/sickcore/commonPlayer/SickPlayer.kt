@@ -30,21 +30,21 @@ class SickPlayer(override val uniqueID: UUID, override val document: Document) :
     val permissions = getPerms()
     val displayName = DisplayName(
         rank.getParent(),
-        name,
-        rank.getParent().color
+        name
     )
 
     fun isGreater(name: String): Boolean {
         return Ranks.getCachedRank(name).getParent().priority > rank.getParent().priority
     }
 
-    fun isAdmin(): Boolean{
+    fun isAdmin(): Boolean {
         return rank.getParent().name == "Administrator"
     }
 
-    fun isStaff(): Boolean{
+    fun isStaff(): Boolean {
         return SickPlayers.staffOverview.getList("member", String::class.java).contains(name)
     }
+
     private fun getPerms(): List<String> {
         val cache = arrayListOf<String>()
         cache.addAll(extraPermissions)

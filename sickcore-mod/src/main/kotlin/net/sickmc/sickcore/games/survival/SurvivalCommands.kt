@@ -4,7 +4,9 @@ import net.axay.fabrik.commands.command
 import net.axay.fabrik.core.text.broadcastText
 import net.axay.fabrik.core.text.literalText
 import net.minecraft.network.chat.ChatType
+import net.minecraft.network.chat.Component
 import net.sickmc.sickcore.utils.Colors
+import net.sickmc.sickcore.utils.fabric.sickPlayer
 import net.sickmc.sickcore.utils.fabric.toPrettyString
 
 object SurvivalCommands {
@@ -17,12 +19,13 @@ object SurvivalCommands {
         runs {
             val player = source.playerOrException
 
-            this.source.server.playerList.broadcastSystemMessage(player.displayName.copy().append(literalText("'s location: ") {
-                color = Colors.LIGHT_GRAY
-                text(player.position().toPrettyString()) {
-                    color = Colors.GOLD
-                }
-            }), ChatType.CHAT)
+            player.sickPlayer?.displayName?.getName()?.copy()
+                ?.append(literalText("'s location: ") {
+                    color = Colors.LIGHT_GRAY
+                    text(player.position().toPrettyString()) {
+                        color = Colors.GOLD
+                    }
+                } ?: Component.empty())?.let { this.source.server.playerList.broadcastSystemMessage(it, ChatType.CHAT) }
         }
     }
 

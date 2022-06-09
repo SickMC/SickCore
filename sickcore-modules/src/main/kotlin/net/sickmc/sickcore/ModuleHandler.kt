@@ -7,6 +7,7 @@ import net.sickmc.sickcore.rank.RankModule
 import net.sickmc.sickcore.social.SocialModule
 import net.sickmc.sickcore.staff.StaffModule
 import net.sickmc.sickcore.utils.Environment
+import net.sickmc.sickcore.utils.test
 import net.sickmc.sickcore.utils.redis.kreds
 
 var environment: Environment = Environment.STANDALONE
@@ -22,8 +23,7 @@ class ModuleHandler(env: Environment) {
     val modules = listOf(RankModule(), AppereanceModule(), StaffModule(), SocialModule())
 
     suspend fun start(){
-        kreds.auth(System.getenv("REDIS_PASSWORD"))
-        //kreds.auth(System.getProperty("REDIS_PASSWORD"))
+        if (!test) kreds.auth(System.getenv("REDIS_PASSWORD")) else kreds.auth(System.getProperty("REDIS_PASSWORD"))
         modules.forEach {
             it.start()
         }
