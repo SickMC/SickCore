@@ -14,9 +14,9 @@ repositories{
 dependencies {
     val minecraftVersion = "1.19"
     val quiltMappingsVersion = "1.19+build.1:v2"
-    val fabricAPIVersion = "0.55.2+1.19"
+    val fabricAPIVersion = "0.55.3+1.19"
     val fabricLoaderVersion = "0.14.7"
-    val fabricLanguageKotlinVersion = "1.7.4+kotlin.1.6.21"
+    val fabricLanguageKotlinVersion = "1.8.0+kotlin.1.7.0"
 
     minecraft("com.mojang:minecraft:$minecraftVersion")
     mappings(loom.layered {

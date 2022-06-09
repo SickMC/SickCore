@@ -1,7 +1,7 @@
 plugins {
     `kotlin-dsl`
     kotlin("plugin.serialization") version embeddedKotlinVersion
-    kotlin("jvm") version "1.5.31"
+    kotlin("jvm") version "1.7.0"
 }
 
 repositories {
@@ -16,7 +16,7 @@ repositories {
 dependencies{
     fun pluginDep(id: String, version: String) = "${id}:${id}.gradle.plugin:${version}"
 
-    val kotlinVersion = "1.5.31"
+    val kotlinVersion = "1.7.0"
 
     compileOnly(kotlin("gradle-plugin", embeddedKotlinVersion))
     runtimeOnly(kotlin("gradle-plugin", kotlinVersion))
