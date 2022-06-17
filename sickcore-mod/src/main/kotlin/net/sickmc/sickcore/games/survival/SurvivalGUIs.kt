@@ -1,18 +1,15 @@
-@file:OptIn(ExperimentalTime::class)
-
 package net.sickmc.sickcore.games.survival
 
 import net.axay.fabrik.core.Fabrik
-import net.axay.fabrik.core.text.literal
+import net.axay.fabrik.core.item.itemStack
+import net.axay.fabrik.core.item.setSkullTexture
 import net.axay.fabrik.core.text.literalText
 import net.axay.fabrik.igui.*
 import net.axay.fabrik.igui.observable.toGuiList
-import net.axay.fabrik.igui.observable.toMutableGuiList
 import net.minecraft.world.item.Items
 import net.sickmc.sickcore.utils.Colors
 import net.sickmc.sickcore.utils.fabric.*
 import org.bson.Document
-import kotlin.time.ExperimentalTime
 
 fun openHeadGUI(player: SurvivalPlayer){
 
@@ -30,8 +27,12 @@ fun openHeadGUI(player: SurvivalPlayer){
                 (2 sl 2) rectTo (6 sl 8),
                 allHeads.toGuiList(),
                 iconGenerator = {
-                    if (!headDocument.getBoolean(it.name.replace(" ", "_"))) createHead("eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvMWFiNzM5ZjRjYjAyOGVmMmFjZjM0YTZkYzNiNGZmODVlYWM1Y2E5ODdiNTgzMmJmZGQwZjNjMzM1MWFhNDQzIn19fQ==").setHoverName(it.getDisplayName())
-                    else createHead(it.texture).setHoverName(it.getDisplayName())
+                    if (!headDocument.getBoolean(it.name.replace(" ", "_"))) itemStack(Items.PLAYER_HEAD) {
+                        setSkullTexture("eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvMWFiNzM5ZjRjYjAyOGVmMmFjZjM0YTZkYzNiNGZmODVlYWM1Y2E5ODdiNTgzMmJmZGQwZjNjMzM1MWFhNDQzIn19fQ==")
+                    }.setHoverName(it.getDisplayName())
+                    else itemStack(Items.PLAYER_HEAD){
+                        setSkullTexture(it.texture)
+                    }.setHoverName(it.getDisplayName())
                 }
             )
 

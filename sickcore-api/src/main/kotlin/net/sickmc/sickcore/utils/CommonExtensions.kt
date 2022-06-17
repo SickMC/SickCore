@@ -2,7 +2,7 @@ package net.sickmc.sickcore.utils
 
 import java.util.UUID
 
-const val test = true
+const val test = false
 fun String.toUUID(): UUID = UUID.fromString(this)
 
 fun String.transformToUUID(): UUID{

@@ -3,6 +3,7 @@ package net.sickmc.sickcore.games.survival
 import kotlinx.coroutines.launch
 import net.axay.fabrik.core.item.itemStack
 import net.axay.fabrik.core.item.setCustomName
+import net.axay.fabrik.core.item.setSkullTexture
 import net.axay.fabrik.core.text.broadcastText
 import net.axay.fabrik.core.text.literalText
 import net.fabricmc.fabric.api.entity.event.v1.ServerPlayerEvents
@@ -82,7 +83,9 @@ object CommonEvents {
                         player, MobHead(
                             isOnlyCreative = true,
                             isNaturalAvailable = false,
-                            createHead(special.texture),
+                            itemStack(Items.PLAYER_HEAD) {
+                                setSkullTexture(special.texture)
+                            },
                             EntityKey(EntityType.ARROW),
                             special
                         ), SoundEvents.ENDER_DRAGON_GROWL
@@ -94,7 +97,9 @@ object CommonEvents {
                         player, MobHead(
                             isOnlyCreative = true,
                             isNaturalAvailable = false,
-                            createHead(mythic.texture),
+                            itemStack(Items.PLAYER_HEAD) {
+                                setSkullTexture(mythic.texture)
+                            },
                             EntityKey(EntityType.ARROW),
                             mythic
                         ), SoundEvents.ENDER_DRAGON_GROWL
@@ -108,7 +113,9 @@ object CommonEvents {
                     val firework = FireworkRocketEntity(level, itemStack(Items.FIREWORK_ROCKET) {}, player)
                     player.connection.send(ClientboundAddEntityPacket(firework))
                     level.broadcastEntityEvent(firework, EntityEvent.FIREWORKS_EXPLODE)
-                    player.addItem(createHead(mythic.texture).setCustomName(mythic.name) {
+                    player.addItem(itemStack(Items.PLAYER_HEAD) {
+                        setSkullTexture(mythic.texture)
+                    }.setCustomName(mythic.name) {
                         color = mythic.rarity.color
                     })
                 }

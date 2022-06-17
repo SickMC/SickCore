@@ -65,11 +65,13 @@ class FabricManager : ModInitializer {
                 SickPlayers.instance.reloadEntity(handler.player!!.uuid)
             }
         }
-        subscribeRedis("message"){
+        /*subscribeRedis("message"){
             val uuid = UUID.fromString(it.split('/')[0])
             val component = Component.Serializer.fromJson(it.split('-')[1])
             Fabrik.currentServer?.playerList?.getPlayer(uuid)?.sendMessage(component!!)
         }
+
+         */
     }
 
 }

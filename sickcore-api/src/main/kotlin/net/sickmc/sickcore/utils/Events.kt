@@ -7,9 +7,11 @@ class RankUpdateEvent(val rankGroup: String) : Event() {
     companion object{
 
         suspend fun registerCaller(){
-            subscribeRedis("rankupdate"){
+            /*subscribeRedis("rankupdate"){
                  EventManager.callEvent(RankUpdateEvent(it.split("-")[1]))
             }
+
+             */
         }
 
         fun run(e: RankUpdateEvent){
