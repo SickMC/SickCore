@@ -14,7 +14,6 @@ import kotlin.time.ExperimentalTime
 
 class PlaytimeCommand {
 
-    @OptIn(ExperimentalTime::class)
     fun register(){
         val literalNode = LiteralArgumentBuilder
             .literal<CommandSource>("playtime")
@@ -22,7 +21,7 @@ class PlaytimeCommand {
                 databaseScope.launch {
                     val veloPlayer = it.source as Player
                     val sickPlayer = SickPlayers.instance.getEntity(veloPlayer.uniqueId)
-                    val text = mm.deserialize("<gradient:#FFFD0B:#80A720>Your playtime is </gradient><gradient:#FF6F13#FFC034>${sickPlayer.playtime.milliseconds}</gradient><#80A720>!")
+                    val text = mm.deserialize("<gradient:#FFFD0B:#80A720>Your playtime is </gradient><gradient:#FF6F13:#FFC034>${sickPlayer.playtime.milliseconds}</gradient><#80A720>!")
                     veloPlayer.sendMessage(text)
                 }
                 1

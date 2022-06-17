@@ -11,6 +11,7 @@ import net.sickmc.sickcore.utils.mongo.databaseScope
 import net.sickmc.sickcore.utils.mongo.players
 import net.sickmc.sickcore.utils.mongo.replace
 import net.sickmc.sickcore.utils.redis.kreds
+import net.sickmc.sickcore.utils.test
 import org.bson.Document
 
 class VelocityCore(val base: VelocityBootstrap) {
@@ -28,16 +29,15 @@ class VelocityCore(val base: VelocityBootstrap) {
     val moduleHandler = ModuleHandler(Environment.VELOCITY)
     val coreHandler = VelocityCoreHandler
     suspend fun start() {
-        //kreds.auth(System.getenv("REDIS_PASSWORD"))
-        kreds.auth(System.getProperty("REDIS_PASSWORD"))
-        VelocityCoreHandler.initiateStartUp()
+        if (!test) kreds.auth(System.getenv("REDIS_PASSWORD")) else kreds.auth(System.getProperty("REDIS_PASSWORD"))
+        coreHandler.initiateStartUp()
         moduleHandler.start()
         EventManager.register()
     }
 
     suspend fun shutdown() {
         moduleHandler.shutdown()
-        VelocityCoreHandler.initiateShutdown()
+        coreHandler.initiateShutdown()
     }
 
 }

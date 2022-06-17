@@ -14,13 +14,13 @@ object MOTDHandler {
         val document = configColl.retrieveOne("type", "motd")!!
 
         listenVelocity<ProxyPingEvent> {
-            val ping = it.ping.asBuilder()
+            val newPing = it.ping.asBuilder()
             val firstLine = MiniMessage.miniMessage().deserialize(document.getString("firstLine") + "<newline>")
             val secondLine = MiniMessage.miniMessage().deserialize(document.getString("secondLine"))
             val description = firstLine.append(secondLine)
-            ping.description(description)
-            ping.maximumPlayers(document.getInteger("maxPlayers"))
-            val first = SamplePlayer(document.getString("firstPlayer"), UUID.randomUUID())
+            newPing.description(description)
+            newPing.maximumPlayers(document.getInteger("maxPlayers"))
+            /*val first = SamplePlayer(document.getString("firstPlayer"), UUID.randomUUID())
             val second = SamplePlayer(document.getString("secondPlayer"), UUID.randomUUID())
             val third = SamplePlayer(document.getString("thirdPlayer"), UUID.randomUUID())
             val fourth = SamplePlayer(document.getString("fourthPlayer"), UUID.randomUUID())
@@ -36,8 +36,10 @@ object MOTDHandler {
             }
 
             ping.samplePlayers.addAll(samplePlayers)
+            *
+             */
 
-            it.ping = ping.build()
+            it.ping = newPing.build()
         }
     }
 

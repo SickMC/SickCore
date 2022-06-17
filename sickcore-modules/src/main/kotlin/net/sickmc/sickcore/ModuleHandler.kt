@@ -15,7 +15,6 @@ var minecraftServer: MinecraftServer? = null
 var proxyServer: ProxyServer? = null
 var proxyPlugin: Any? = null
 class ModuleHandler(env: Environment) {
-
     init {
         environment = env
     }
