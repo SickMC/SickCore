@@ -11,18 +11,17 @@ plugins{
 dependencies {
     implementation(modProject(":${rootProject.name}-api"))
     implementation(modProject(":${rootProject.name}-modules"))
-    shadow(kotlin("stdlib"))
+    implementation(kotlin("stdlib"))
+    shadow("org.jetbrains.kotlin:kotlin-stdlib:1.7.0")
     shadow("org.litote.kmongo:kmongo-coroutine-serialization:4.6.0")
     shadow("io.github.crackthecodeabhi:kreds:0.7")
+    shadow(modProject(":${rootProject.name}-api"))
+    shadow(modProject(":${rootProject.name}-modules"))
 }
 repositories {
     mavenCentral()
 }
 val compileKotlin: KotlinCompile by tasks
 compileKotlin.kotlinOptions {
-    jvmTarget = "1.8"
-}
-val compileTestKotlin: KotlinCompile by tasks
-compileTestKotlin.kotlinOptions {
     jvmTarget = "1.8"
 }
