@@ -10,6 +10,6 @@ fun Vec3.toPrettyString(): String {
 
 fun ServerPlayer.toPrettyLocationStringWithWorld(): String {
     return "(${this.x.roundToInt()}, ${this.y.roundToInt()}, ${this.z.roundToInt()}, ${
-        this.level.dimension().location().namespace
+        this.level.dimension().location().path
     })"
 }
