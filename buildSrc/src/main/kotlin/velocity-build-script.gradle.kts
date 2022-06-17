@@ -11,7 +11,7 @@ repositories {
 
 dependencies{
     compileOnly("com.velocitypowered:velocity-api:3.0.1")
-    implementation("net.kyori:adventure-text-minimessage:4.10.1")
+    implementation("net.kyori:adventure-text-minimessage:4.11.0")
 }
 
 tasks{
