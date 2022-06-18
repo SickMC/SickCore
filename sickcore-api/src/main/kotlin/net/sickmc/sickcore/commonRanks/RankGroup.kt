@@ -3,7 +3,6 @@ package net.sickmc.sickcore.commonRanks
 import net.sickmc.sickcore.utils.mongo.rankGroupColl
 import net.sickmc.sickcore.utils.mongo.replace
 import net.sickmc.sickcore.utils.mongo.retrieveOne
-import net.sickmc.sickcore.utils.redis.publish
 import org.bson.Document
 import java.util.*
 import kotlin.collections.ArrayList
@@ -32,7 +31,6 @@ class RankGroup(val name: String, val document: Document){
         if (!permissions.contains(permission))permissions.add(permission)
         document.replace("permissions", permissions)
         rankGroupColl.replace("rankgroup", name, document)
-        publish("rankupdate", UUID.randomUUID().toString())
     }
 
     suspend fun removePermission(permission: String){
@@ -40,7 +38,6 @@ class RankGroup(val name: String, val document: Document){
         if (permissions.contains(permission)) permissions.remove(permission)
         document.replace("permissions", permissions)
         rankGroupColl.replace("rankgroup", name, document)
-        publish("rankupdate", UUID.randomUUID().toString())
     }
 
     suspend fun addRank(rank: Rank){
@@ -48,7 +45,6 @@ class RankGroup(val name: String, val document: Document){
         rankNames.add(rank.name)
         document.replace("ranks", rankNames)
         rankGroupColl.replace("rankgroup", name, document)
-        publish("rankupdate", UUID.randomUUID().toString())
     }
 
 }

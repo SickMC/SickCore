@@ -9,7 +9,6 @@ import kotlinx.coroutines.launch
 import net.sickmc.sickcore.listenVelocity
 import net.sickmc.sickcore.proxyServer
 import net.sickmc.sickcore.utils.mongo.databaseScope
-import net.sickmc.sickcore.utils.sendMessage
 import net.sickmc.sickcore.utils.mm
 
 class LobbyCommand {
@@ -22,12 +21,10 @@ class LobbyCommand {
                     val veloPlayer = it.source as Player
                     if (veloPlayer.currentServer.get().serverInfo.name.startsWith("Lobby")){
                         val text = mm.deserialize("<gradient:#890000:#7E0000>You are already connected to the lobby!</gradient>")
-                        sendMessage(veloPlayer.uniqueId, text)
                         return@launch
                     }
                     veloPlayer.createConnectionRequest(proxyServer?.getServer("Lobby-1")?.get())
                     val text = mm.deserialize("<gradient:#5B8906:#05561E>You were teleported to the lobby!</gradient>")
-                    sendMessage(veloPlayer.uniqueId, text)
                 }
                 1
             }
@@ -45,12 +42,10 @@ class LobbyCommand {
                     val veloPlayer = it.player
                     if (veloPlayer.currentServer.get().serverInfo.name.startsWith("Lobby")) {
                         val text = mm.deserialize("<gradient:#890000:#7E0000>You are already connected to the lobby!</gradient>")
-                        sendMessage(veloPlayer.uniqueId, text)
                         return@launch
                     }
                     veloPlayer.createConnectionRequest(proxyServer?.getServer("Lobby-1")?.get())
                     val text = mm.deserialize("<gradient:#5B8906:#05561E>You were teleported to the lobby!</gradient>")
-                    sendMessage(veloPlayer.uniqueId, text)
                 }
             }
         }

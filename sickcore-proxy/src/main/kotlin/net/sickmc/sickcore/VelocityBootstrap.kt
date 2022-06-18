@@ -9,7 +9,6 @@ import com.velocitypowered.api.proxy.ProxyServer
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
-import net.sickmc.sickcore.utils.redis.kreds
 import org.litote.kmongo.serialization.SerializationClassMappingTypeService
 import org.slf4j.Logger
 
@@ -41,7 +40,6 @@ class VelocityBootstrap @Inject constructor(val pserver: ProxyServer, val logger
         )
         core = VelocityCore(this)
         bootstrapScope.launch {
-            kreds
             core!!.start()
         }
     }
