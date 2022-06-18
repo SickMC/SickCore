@@ -11,12 +11,10 @@ import kotlinx.coroutines.launch
 import net.sickmc.sickcore.commonPlayer.SickPlayers
 import net.sickmc.sickcore.utils.PlayerUtils
 import net.sickmc.sickcore.utils.mongo.databaseScope
-import net.sickmc.sickcore.utils.sendMessage
 import net.kyori.adventure.text.Component
 import net.kyori.adventure.text.format.TextColor
 import net.sickmc.sickcore.proxyServer
 import net.sickmc.sickcore.utils.mm
-import net.sickmc.sickcore.utils.redis.kreds
 
 class MsgCommand  {
 
@@ -32,13 +30,8 @@ class MsgCommand  {
                             val targetUUID = PlayerUtils.fetchUUID(target)
 
                             val noPlayer = Component.text("This player is not online!").color(TextColor.color(0x9A100D))
-                            if (kreds.get(it.toString()) == null) {
-                                sendMessage(sender.uniqueId, noPlayer)
-                                return@launch
-                            }
                             val message = StringArgumentType.getString(it, "msg")
                             val senderText = SickPlayers.instance.getCachedEntity(sender.uniqueId)!!.displayName.getKyoriName().append(mm.deserialize("<#5b6667>» ")).append(SickPlayers.instance.getCachedEntity(targetUUID)!!.displayName.getKyoriName()).append(mm.deserialize("<#858585>: $message"))
-                            sendMessage(targetUUID, senderText)
                         }
                         1
                     }))

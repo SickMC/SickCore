@@ -1,6 +1,5 @@
 package net.sickmc.sickcore.utils
 
-import net.sickmc.sickcore.utils.redis.publish
 import net.kyori.adventure.text.Component
 import org.bson.json.JsonObject
 import java.net.HttpURLConnection
@@ -31,10 +30,5 @@ class PlayerUtils {
         }
     }
 
-}
-
-suspend fun sendMessage(uuid: UUID, component: Component){
-    val string = "$uuid/$component"
-    publish("message", string)
 }
 
