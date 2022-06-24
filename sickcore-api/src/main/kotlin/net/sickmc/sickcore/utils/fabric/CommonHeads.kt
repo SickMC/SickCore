@@ -1,8 +1,8 @@
 package net.sickmc.sickcore.utils.fabric
 
-import net.axay.fabrik.core.item.itemStack
-import net.axay.fabrik.core.item.setSkullTexture
 import net.minecraft.world.item.Items
+import net.silkmc.silk.core.item.itemStack
+import net.silkmc.silk.core.item.setSkullTexture
 
 object CommonHeads {
     val ARROW_BACKWARDS = itemStack(Items.PLAYER_HEAD) {

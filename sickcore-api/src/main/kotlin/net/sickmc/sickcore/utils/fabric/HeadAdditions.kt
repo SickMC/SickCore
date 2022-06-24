@@ -1,11 +1,5 @@
 package net.sickmc.sickcore.utils.fabric
 
-import net.axay.fabrik.core.item.itemStack
-import net.axay.fabrik.core.item.setSkullTexture
-import net.axay.fabrik.core.text.literalText
-import net.axay.fabrik.nbt.dsl.nbtCompound
-import net.axay.fabrik.nbt.dsl.nbtList
-import net.axay.fabrik.nbt.toNbt
 import net.minecraft.network.chat.MutableComponent
 import net.minecraft.world.entity.Entity
 import net.minecraft.world.entity.EntityType
@@ -19,6 +13,9 @@ import net.minecraft.world.entity.monster.ZombieVillager
 import net.minecraft.world.entity.npc.Villager
 import net.minecraft.world.item.ItemStack
 import net.minecraft.world.item.Items
+import net.silkmc.silk.core.item.itemStack
+import net.silkmc.silk.core.item.setSkullTexture
+import net.silkmc.silk.core.text.literalText
 import java.util.*
 
 data class MobHead(

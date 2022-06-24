@@ -1,11 +1,11 @@
 package net.sickmc.sickcore.utils
 
-import net.axay.fabrik.core.text.literalText
 import net.kyori.adventure.text.Component
 import net.kyori.adventure.text.format.TextColor
 import net.kyori.adventure.text.format.TextDecoration
 import net.minecraft.network.chat.MutableComponent
 import net.sickmc.sickcore.commonRanks.RankGroup
+import net.silkmc.silk.core.text.literalText
 
 data class DisplayName(val parent: RankGroup, val rawName: String){
 

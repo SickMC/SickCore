@@ -1,6 +1,5 @@
 package net.sickmc.sickcore.mixin;
 
-import net.minecraft.ChatFormatting;
 import net.minecraft.network.chat.*;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.server.MinecraftServer;

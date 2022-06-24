@@ -1,32 +1,23 @@
 package net.sickmc.sickcore.games.survival
 
 import com.mojang.brigadier.context.CommandContext
-import net.axay.fabrik.commands.LiteralCommandBuilder
-import net.axay.fabrik.commands.command
-import net.axay.fabrik.core.text.broadcastText
-import net.axay.fabrik.core.text.literalText
 import net.minecraft.commands.CommandSourceStack
-import net.minecraft.commands.arguments.GameProfileArgument
 import net.minecraft.network.chat.ChatType
-import net.minecraft.network.chat.Component
 import net.sickmc.sickcore.utils.Colors
 import net.sickmc.sickcore.utils.fabric.sendMessage
 import net.sickmc.sickcore.utils.fabric.sickPlayer
 import net.sickmc.sickcore.utils.fabric.toPrettyLocationStringWithWorld
-import net.sickmc.sickcore.utils.fabric.toPrettyString
+import net.silkmc.silk.commands.command
+import net.silkmc.silk.core.text.literalText
 
 object SurvivalCommands {
     fun register() {
-        val sharePosAliases = arrayListOf("sp", "sharepos")
-        sharePosAliases.forEach {
-            command(it){
-                sharePos()
-            }
-        }
+        sharePos
         heads
     }
 
-    private fun LiteralCommandBuilder<CommandSourceStack>.sharePos(){
+    private val sharePos = command("sharepos"){
+        alias("sp")
         argument("targetName"){ targetName ->
             runs {
                 sharePos(targetName())

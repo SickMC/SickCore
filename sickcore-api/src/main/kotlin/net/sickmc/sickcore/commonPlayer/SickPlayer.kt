@@ -1,9 +1,6 @@
 package net.sickmc.sickcore.commonPlayer
 
 import kotlinx.coroutines.launch
-import net.axay.fabrik.core.text.literalText
-import net.kyori.adventure.text.format.TextColor
-import net.kyori.adventure.text.format.TextDecoration
 import net.sickmc.sickcore.commonRanks.Privileges
 import net.sickmc.sickcore.commonRanks.Ranks
 import net.sickmc.sickcore.utils.Cache

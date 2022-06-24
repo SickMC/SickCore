@@ -1,14 +1,15 @@
 package net.sickmc.sickcore.games.survival
 
-import net.axay.fabrik.core.Fabrik
-import net.axay.fabrik.core.item.itemStack
-import net.axay.fabrik.core.item.setSkullTexture
-import net.axay.fabrik.core.text.literalText
-import net.axay.fabrik.igui.*
-import net.axay.fabrik.igui.observable.toGuiList
+import net.minecraft.world.item.ItemStack
 import net.minecraft.world.item.Items
+import net.sickmc.sickcore.server
 import net.sickmc.sickcore.utils.Colors
 import net.sickmc.sickcore.utils.fabric.*
+import net.silkmc.silk.core.item.itemStack
+import net.silkmc.silk.core.item.setSkullTexture
+import net.silkmc.silk.core.text.literalText
+import net.silkmc.silk.igui.*
+import net.silkmc.silk.igui.observable.toGuiList
 import org.bson.Document
 
 fun openHeadGUI(player: SurvivalPlayer){
@@ -32,6 +33,7 @@ fun openHeadGUI(player: SurvivalPlayer){
                     }.setHoverName(it.getDisplayName())
                     else itemStack(Items.PLAYER_HEAD){
                         setSkullTexture(it.texture)
+                        hideTooltipPart(ItemStack.TooltipPart.ENCHANTMENTS)
                     }.setHoverName(it.getDisplayName())
                 }
             )
@@ -40,5 +42,5 @@ fun openHeadGUI(player: SurvivalPlayer){
             compoundScrollBackwards(1 sl 1, CommonHeads.ARROW_BACKWARDS.setHoverName(literalText("Backwards"){color = Colors.LIGHT_GRAY}).guiIcon , compound)
         }
     }
-    Fabrik.currentServer?.playerList?.getPlayer(player.sickPlayer.uniqueID)?.openGui(gui, 1)
+    server.playerList.getPlayer(player.sickPlayer.uniqueID)?.openGui(gui, 1)
 }

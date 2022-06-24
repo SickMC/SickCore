@@ -1,16 +1,10 @@
 package net.sickmc.sickcore.games.survival
 
 import kotlinx.coroutines.launch
-import net.axay.fabrik.core.item.itemStack
-import net.axay.fabrik.core.item.setCustomName
-import net.axay.fabrik.core.item.setSkullTexture
-import net.axay.fabrik.core.text.broadcastText
-import net.axay.fabrik.core.text.literalText
 import net.fabricmc.fabric.api.entity.event.v1.ServerPlayerEvents
 import net.fabricmc.fabric.api.event.player.AttackEntityCallback
 import net.fabricmc.fabric.api.networking.v1.ServerPlayConnectionEvents
 import net.minecraft.network.chat.ChatType
-import net.minecraft.network.chat.Style
 import net.minecraft.network.protocol.game.ClientboundAddEntityPacket
 import net.minecraft.network.protocol.game.ClientboundSetSubtitleTextPacket
 import net.minecraft.network.protocol.game.ClientboundSetTitleTextPacket
@@ -22,13 +16,17 @@ import net.minecraft.world.entity.EntityEvent
 import net.minecraft.world.entity.EntityType
 import net.minecraft.world.entity.projectile.FireworkRocketEntity
 import net.minecraft.world.item.Items
-import net.sickmc.sickcore.commonPlayer.SickPlayer
-import net.sickmc.sickcore.commonPlayer.SickPlayers
 import net.sickmc.sickcore.utils.Colors
 import net.sickmc.sickcore.utils.fabric.*
 import net.sickmc.sickcore.utils.mongo.databaseScope
+import net.silkmc.silk.core.item.itemStack
+import net.silkmc.silk.core.item.setCustomName
+import net.silkmc.silk.core.item.setSkullTexture
+import net.silkmc.silk.core.text.literalText
 import kotlin.random.Random
 import kotlin.random.nextInt
+
+var preGen = false
 
 object CommonEvents {
 
@@ -37,8 +35,24 @@ object CommonEvents {
         mobDrops()
         death()
         quit()
+        preGenHandler()
     }
 
+    private fun preGenHandler() {
+        ServerPlayConnectionEvents.JOIN.register { _, _, server ->
+            if (preGen) {
+                server.commands.performCommand(server.createCommandSourceStack(), "chunky pause")
+                preGen = false
+            }
+        }
+
+        ServerPlayConnectionEvents.DISCONNECT.register { _, server ->
+            if (!preGen && server.playerCount == 0) {
+                server.commands.performCommand(server.createCommandSourceStack(), "chunky continue")
+                preGen = true
+            }
+        }
+    }
 
     private fun join() {
         ServerPlayConnectionEvents.JOIN.register { handler, _, server ->
@@ -50,7 +64,7 @@ object CommonEvents {
                     sickPlayer.displayName.getName().copy().append(literalText(" joined the server!") {
                         color = Colors.LIGHT_GRAY
                         bold = false
-                    }), ChatType.CHAT
+                    }), ChatType.SYSTEM
                 )
             }
 
@@ -69,7 +83,7 @@ object CommonEvents {
                     .append(literalText(" quit the server!") {
                         color = Colors.LIGHT_GRAY
                         bold = false
-                    }), ChatType.CHAT
+                    }), ChatType.SYSTEM
             )
         }
     }
@@ -108,7 +122,7 @@ object CommonEvents {
                         player.displayName.copy().append(literalText(" found a mythic head:") {
                             color = Colors.LIGHT_RED
                             text(mythic.getDisplayName(), inheritStyle = false) { }
-                        }), ChatType.CHAT
+                        }), ChatType.SYSTEM
                     )
                     val firework = FireworkRocketEntity(level, itemStack(Items.FIREWORK_ROCKET) {}, player)
                     player.connection.send(ClientboundAddEntityPacket(firework))
