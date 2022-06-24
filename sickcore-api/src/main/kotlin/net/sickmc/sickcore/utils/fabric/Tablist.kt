@@ -7,21 +7,21 @@ import net.minecraft.network.protocol.game.ClientboundSetPlayerTeamPacket
 import net.minecraft.network.protocol.game.ClientboundTabListPacket
 import net.minecraft.server.MinecraftServer
 import net.minecraft.server.level.ServerPlayer
-import net.minecraft.world.entity.player.Player
 import net.minecraft.world.scores.Team
 
-class Tablist(private val server: MinecraftServer, private val builder: TablistBuilder){
+class Tablist(private val generate: ServerPlayer.() -> PlayerTablistBuilder) {
 
     val players = hashMapOf<ServerPlayer, PlayerTablistBuilder>()
+    lateinit var server: MinecraftServer
 
     inline fun modify(player: ServerPlayer, crossinline modifier: PlayerTablistBuilder.() -> Unit) {
-        if (players[player] == null)players[player] = PlayerTablistBuilder(player).apply(modifier)
+        if (players[player] == null) players[player] = PlayerTablistBuilder(player).apply(modifier)
         else players[player]!!.apply(modifier)
         reload(player)
     }
 
     fun reload(player: ServerPlayer) {
-        if (players[player] == null)players[player] = builder.generate.invoke(player)
+        if (players[player] == null) players[player] = generate.invoke(player)
         val playerBuilder = players[player]!!
         val sickPlayer = player.sickPlayer!!
 
@@ -37,14 +37,24 @@ class Tablist(private val server: MinecraftServer, private val builder: TablistB
         team.collisionRule = playerBuilder.collisionRule
         team.deathMessageVisibility = playerBuilder.deathMessageVisibility
 
-        player.connection.send(ClientboundSetPlayerTeamPacket.createPlayerPacket(team, sickPlayer.name, ClientboundSetPlayerTeamPacket.Action.ADD))
+        player.connection.send(
+            ClientboundSetPlayerTeamPacket.createPlayerPacket(
+                team,
+                sickPlayer.name,
+                ClientboundSetPlayerTeamPacket.Action.ADD
+            )
+        )
     }
 
-    fun reloadAll(){
+    fun reloadAll() {
         server.playerList.players.forEach(this::reload)
     }
 
 }
+inline fun playerTabListBuilder(
+    player: ServerPlayer,
+    crossinline builder: PlayerTablistBuilder.() -> Unit
+): PlayerTablistBuilder = PlayerTablistBuilder(player).apply(builder)
 
 class PlayerTablistBuilder(
     val player: ServerPlayer
@@ -60,5 +70,3 @@ class PlayerTablistBuilder(
     var deathMessageVisibility: Team.Visibility = Team.Visibility.ALWAYS
 
 }
-
-class TablistBuilder(val generate: Player.() -> PlayerTablistBuilder)
