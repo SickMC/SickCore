@@ -4,8 +4,6 @@
 *.iml
 *.ipr
 *.iws
-sickcore-mod/src/main/resources/json/mongo.json
-sickcore-mod/src/main/resources/json/redis.json
 
 # IntelliJ
 out/
