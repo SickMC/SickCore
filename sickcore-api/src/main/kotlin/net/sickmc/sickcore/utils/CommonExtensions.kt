@@ -2,7 +2,7 @@ package net.sickmc.sickcore.utils
 
 import java.util.UUID
 
-const val test = false
+val test = System.getProperty("test") != null
 fun String.toUUID(): UUID = UUID.fromString(this)
 
 fun String.transformToUUID(): UUID{
