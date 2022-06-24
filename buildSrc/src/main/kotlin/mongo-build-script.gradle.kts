@@ -3,7 +3,7 @@ plugins{
 }
 
 dependencies{
-    implementation("org.litote.kmongo:kmongo-coroutine-serialization:4.6.0")
+    implementation("org.litote.kmongo:kmongo-coroutine-serialization:4.6.1")
 }
 
 kotlin.sourceSets.all{

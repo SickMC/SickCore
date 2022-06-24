@@ -14,7 +14,7 @@ repositories{
 dependencies {
     val minecraftVersion = "1.19"
     val quiltMappingsVersion = "1.19+build.1:v2"
-    val fabricAPIVersion = "0.56.0+1.19"
+    val fabricAPIVersion = "0.56.3+1.19"
     val fabricLoaderVersion = "0.14.8"
     val fabricLanguageKotlinVersion = "1.8.0+kotlin.1.7.0"
 
@@ -28,12 +28,13 @@ dependencies {
     modImplementation("net.fabricmc:fabric-loader:$fabricLoaderVersion")
     modImplementation("net.fabricmc:fabric-language-kotlin:$fabricLanguageKotlinVersion")
 
-    val fabrikVersion = "1.8.1"
-    modImplementation("net.axay:fabrikmc-core:$fabrikVersion")
-    modImplementation("net.axay:fabrikmc-commands:$fabrikVersion")
-    modImplementation("net.axay:fabrikmc-igui:$fabrikVersion")
-    modImplementation("net.axay:fabrikmc-persistence:$fabrikVersion")
-    modImplementation("net.axay:fabrikmc-nbt:$fabrikVersion")
+    val silkVersion = "1.9.0"
+    modImplementation("net.silkmc:silk-core:$silkVersion")
+    modImplementation("net.silkmc:silk-commands:$silkVersion")
+    modImplementation("net.silkmc:silk-igui:$silkVersion")
+    modImplementation("net.silkmc:silk-persistence:$silkVersion")
+    modImplementation("net.silkmc:silk-nbt:$silkVersion")
+    modImplementation("net.silkmc:silk-network:$silkVersion")
 }
 
 tasks{

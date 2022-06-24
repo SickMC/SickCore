@@ -26,12 +26,11 @@ dependencies{
 
 
     implementation(pluginDep("fabric-loom", "0.12-SNAPSHOT"))
-    implementation(pluginDep("io.github.juuxel.loom-quiltflower", "1.7.2"))
+    implementation(pluginDep("io.github.juuxel.loom-quiltflower", "1.7.3"))
     implementation(pluginDep("org.quiltmc.quilt-mappings-on-loom", "4.2.0"))
 
     compileOnly("com.velocitypowered:velocity-api:3.0.1")
     implementation("net.kyori:adventure-text-minimessage:4.10.1")
 
-    implementation("io.github.crackthecodeabhi:kreds:0.7")
-    implementation("org.litote.kmongo:kmongo:4.6.0")
+    implementation("org.litote.kmongo:kmongo:4.6.1")
 }
