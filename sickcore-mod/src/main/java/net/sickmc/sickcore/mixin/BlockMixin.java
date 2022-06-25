@@ -38,36 +38,15 @@ public abstract class BlockMixin {
                 break;
             }
         }
-        if (!telekinesis)return;
-        ArrayList<ItemStack> itemsToAdd = new ArrayList<>();
+        if (!telekinesis) return;
+
+        ArrayList<ItemStack> itemsToDrop = new ArrayList<>();
         for (ItemStack itemStack : cir.getReturnValue())
-            if (canAddItem(itemStack, player.getInventory())) {
-                itemsToAdd.add(itemStack);
-            }
-
-        try {
-            for (ItemStack itemStack : itemsToAdd)
-                player.getInventory().add(itemStack);
-        }catch (ConcurrentModificationException e){
-            System.out.println("wie gay");
-            e.printStackTrace();
-        }
-
-        ArrayList<ItemStack> itemsToDrop = new ArrayList<>(cir.getReturnValue());
-        itemsToDrop.removeAll(itemsToAdd);
+            if (!player.getInventory().add(itemStack)) itemsToDrop.add(itemStack);
 
         cir.setReturnValue(itemsToDrop);
     }
 
-    private static boolean canAddItem(ItemStack stack, Container container) {
-        if (container.isEmpty()) return true;
-        for (int i = 0; i <= container.getContainerSize(); i++) {
-            if (container.getItem(i).isEmpty()) return true;
-            if (container.getItem(i).isStackable() && container.getItem(i).getItem() == stack.getItem() && container.getItem(i).getCount() + stack.getCount() < container.getItem(i).getMaxStackSize())
-                return true;
-        }
-        return false;
-    }
 }
 
 
