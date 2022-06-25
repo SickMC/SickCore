@@ -19,18 +19,25 @@ import org.spongepowered.asm.mixin.injection.Redirect;
 @Mixin(ServerGamePacketListenerImpl.class)
 public class ServerGamePacketListenerMixin {
 
-    @Shadow @Final private MinecraftServer server;
+    @Shadow
+    @Final
+    private MinecraftServer server;
 
-    @Redirect(method = "onDisconnect",
-    at = @At(value = "INVOKE", target = "Lnet/minecraft/server/players/PlayerList;broadcastSystemMessage(Lnet/minecraft/network/chat/Component;Lnet/minecraft/resources/ResourceKey;)V"))
-    public void onQuit(PlayerList instance, Component message, ResourceKey<ChatType> messageType){ }
+    @Shadow
+    public ServerPlayer player;
+
+    @Redirect(method = "onDisconnect", at = @At(value = "INVOKE", target = "Lnet/minecraft/server/players/PlayerList;broadcastSystemMessage(Lnet/minecraft/network/chat/Component;Lnet/minecraft/resources/ResourceKey;)V"))
+    public void onQuit(PlayerList instance, Component message, ResourceKey<ChatType> messageType) {
+        SickPlayer sickPlayer = SickPlayers.instance.getCachedEntity(player.getUUID());
+        server.getPlayerList().broadcastSystemMessage(sickPlayer.getDisplayName().getName().copy().append(Component.literal(" quit the server").withStyle(Style.EMPTY.withColor(Colors.INSTANCE.getWHITE()).withBold(false))), ChatType.SYSTEM);
+    }
 
     @Redirect(method = "broadcastChatMessage", at = @At(value = "INVOKE", target = "Lnet/minecraft/server/players/PlayerList;broadcastChatMessage(Lnet/minecraft/server/network/FilteredText;Lnet/minecraft/server/level/ServerPlayer;Lnet/minecraft/resources/ResourceKey;)V"))
-    public void onChat(PlayerList instance, FilteredText<PlayerChatMessage> filteredText, ServerPlayer serverPlayer, ResourceKey<ChatType> resourceKey){
+    public void onChat(PlayerList instance, FilteredText<PlayerChatMessage> filteredText, ServerPlayer serverPlayer, ResourceKey<ChatType> resourceKey) {
         SickPlayer sickPlayer = SickPlayers.instance.getCachedEntity(serverPlayer.getUUID());
         MutableComponent newMessage = sickPlayer.getDisplayName().getName().copy();
         newMessage.append(Component.literal(" " + filteredText.raw().serverContent().getString()).withStyle(Style.EMPTY.withColor(Colors.INSTANCE.getLIGHT_GRAY()).withBold(false)));
-        server.getPlayerList().broadcastSystemMessage(newMessage, resourceKey);
+        server.getPlayerList().broadcastSystemMessage(newMessage, ChatType.SYSTEM);
     }
 
 }

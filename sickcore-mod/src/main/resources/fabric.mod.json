@@ -15,10 +15,10 @@
     "fabricloader": ">=0.13.3",
     "fabric": "*",
     "fabric-language-kotlin": "*",
-    "fabrikmc-core": "*",
-    "fabrikmc-commands": "*",
-    "fabrikmc-igui": "*",
-    "fabrikmc-persistence": "*",
-    "fabrikmc-nbt": "*"
+    "silk-core": "*",
+    "silk-commands": "*",
+    "silk-igui": "*",
+    "silk-persistence": "*",
+    "silk-nbt": "*"
   }
 }

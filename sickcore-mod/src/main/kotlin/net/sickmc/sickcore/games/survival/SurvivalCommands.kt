@@ -39,7 +39,7 @@ object SurvivalCommands {
 
             })
         if (targetName == null){
-            source.server.playerList.broadcastSystemMessage(message!!, ChatType.CHAT)
+            source.server.playerList.broadcastSystemMessage(message!!, ChatType.SYSTEM)
             return
         }
         val target = source.server.playerList.getPlayerByName(targetName)

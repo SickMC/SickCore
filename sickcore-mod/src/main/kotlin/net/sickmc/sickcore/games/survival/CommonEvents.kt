@@ -34,7 +34,6 @@ object CommonEvents {
         join()
         mobDrops()
         death()
-        quit()
         preGenHandler()
     }
 
@@ -62,7 +61,7 @@ object CommonEvents {
 
                 server.playerList.broadcastSystemMessage(
                     sickPlayer.displayName.getName().copy().append(literalText(" joined the server!") {
-                        color = Colors.LIGHT_GRAY
+                        color = Colors.WHITE
                         bold = false
                     }), ChatType.SYSTEM
                 )
@@ -72,19 +71,6 @@ object CommonEvents {
                 handler.player.addTag("$mod_id.firstjoin.$mod_id")
                 handler.player.inventory.add(itemStack(Items.COOKED_BEEF, 64) {})
             }
-        }
-    }
-
-    private fun quit() {
-        ServerPlayConnectionEvents.DISCONNECT.register { handler, server ->
-            val sickPlayer = handler.player.sickPlayer
-            server.playerList.broadcastSystemMessage(
-                sickPlayer!!.displayName.getName().copy()
-                    .append(literalText(" quit the server!") {
-                        color = Colors.LIGHT_GRAY
-                        bold = false
-                    }), ChatType.SYSTEM
-            )
         }
     }
 
