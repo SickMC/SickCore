@@ -17,4 +17,4 @@ include("$projectName-proxy")
 include("$projectName-api")
 include("$projectName-modules")
 include("$projectName-mod")
-
+include("$projectName-server")
