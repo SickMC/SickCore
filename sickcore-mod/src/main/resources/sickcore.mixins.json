@@ -7,10 +7,10 @@
   "package": "net.sickmc.sickcore.mixin",
   "mixins": [
     "BlockMixin",
+    "CombatEntryMixin",
     "LivingEntityMixin",
     "PlayerAdvancementMixin",
     "PlayerListMixin",
-    "ServerGamePacketListenerMixin",
-    "CombatEntryMixin"
+    "ServerGamePacketListenerMixin"
   ]
 }
