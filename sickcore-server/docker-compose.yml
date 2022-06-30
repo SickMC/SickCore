@@ -1,0 +1,11 @@
+version: "3"
+
+services:
+  sickcore-server:
+    image: sadasdsad/asdasd
+    ports:
+      - "8084:8084"
+    env_file:
+      - /home/sickmc/network/storage/websockets.env
+    restart: unless-stopped
+    container_name: websockets

@@ -4,5 +4,5 @@ plugins{
     `velocity-build-script`
     `mongo-build-script`
     `mod-build-script`
-    `websocket-build-script`
+    `websocket-server-script`
 }

@@ -1,7 +1,7 @@
 plugins{
     kotlin("jvm")
     kotlin("plugin.serialization")
-    `websocket-build-script`
+    `websocket-server-script`
     application
 }
 
