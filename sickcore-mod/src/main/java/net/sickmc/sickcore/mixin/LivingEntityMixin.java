@@ -31,12 +31,11 @@ public abstract class LivingEntityMixin {
         LootContext.Builder builder = createLootContext(causedByPlayer, source);
         lootTable.getRandomItems(builder.create(LootContextParamSets.ENTITY), item -> {
             if (item.isEmpty()) return;
-            if (!causedByPlayer || !Game.current.getName().equals("Survival")) {
+            if (!causedByPlayer || !Game.current.getName().equals("Survival") || !(source.getEntity() instanceof Player player)) {
                 entity.spawnAtLocation(item);
                 ci.cancel();
                 return;
             }
-            Player player = (Player) source.getEntity();
             Survival survival = (Survival) Game.current;
             boolean telekinesis = EnchantmentHelper.getEnchantments(player.getMainHandItem()).containsKey(survival.telekinesis);
             if (!telekinesis) {
