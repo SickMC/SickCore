@@ -4,7 +4,6 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraft.world.item.enchantment.EnchantmentHelper;
 import net.minecraft.world.level.storage.loot.LootContext;
 import net.minecraft.world.level.storage.loot.LootTable;
@@ -39,13 +38,7 @@ public abstract class LivingEntityMixin {
             }
             Player player = (Player) source.getEntity();
             Survival survival = (Survival) Game.current;
-            boolean telekinesis = false;
-            for (Enchantment enchantment : survival.getTelekinesis())
-                if (EnchantmentHelper.getEnchantments(player.getMainHandItem()).containsKey(enchantment)) {
-                    telekinesis = true;
-                    break;
-                }
-
+            boolean telekinesis = EnchantmentHelper.getEnchantments(item).containsKey(survival.telekinesis);
             if (!telekinesis) {
                 entity.spawnAtLocation(item);
                 ci.cancel();

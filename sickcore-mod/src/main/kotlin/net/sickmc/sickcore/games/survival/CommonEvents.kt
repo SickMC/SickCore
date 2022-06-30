@@ -55,7 +55,6 @@ object CommonEvents {
 
     private fun join() {
         ServerPlayConnectionEvents.JOIN.register { handler, _, server ->
-
             databaseScope.launch {
                 val sickPlayer = SurvivalPlayers.instance.reloadEntity(handler.player.uuid).sickPlayer
 

@@ -6,7 +6,7 @@ import net.minecraft.world.item.enchantment.Enchantment
 import net.minecraft.world.item.enchantment.EnchantmentCategory
 import net.silkmc.silk.core.text.literalText
 
-class Telekinesis(category: EnchantmentCategory) : Enchantment(Rarity.RARE, category, arrayOf(EquipmentSlot.MAINHAND)) {
+class Telekinesis : Enchantment(Rarity.RARE, EnchantmentCategory.VANISHABLE, arrayOf(EquipmentSlot.MAINHAND)) {
 
     override fun getMinLevel(): Int {
         return 1

@@ -31,13 +31,7 @@ public abstract class BlockMixin {
         if (!(entity instanceof Player player)) return;
         if (!Game.current.getName().equals("Survival")) return;
         Survival survival = (Survival) Game.current;
-        boolean telekinesis = false;
-        for (Enchantment enchantment : survival.getTelekinesis()) {
-            if (EnchantmentHelper.getEnchantments(stack).containsKey(enchantment)) {
-                telekinesis = true;
-                break;
-            }
-        }
+        boolean telekinesis = EnchantmentHelper.getEnchantments(stack).containsKey(survival.telekinesis);
         if (!telekinesis) return;
 
         ArrayList<ItemStack> itemsToDrop = new ArrayList<>();
