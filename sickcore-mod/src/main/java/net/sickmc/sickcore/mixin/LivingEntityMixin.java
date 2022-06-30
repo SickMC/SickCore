@@ -38,7 +38,7 @@ public abstract class LivingEntityMixin {
             }
             Player player = (Player) source.getEntity();
             Survival survival = (Survival) Game.current;
-            boolean telekinesis = EnchantmentHelper.getEnchantments(item).containsKey(survival.telekinesis);
+            boolean telekinesis = EnchantmentHelper.getEnchantments(player.getMainHandItem()).containsKey(survival.telekinesis);
             if (!telekinesis) {
                 entity.spawnAtLocation(item);
                 ci.cancel();

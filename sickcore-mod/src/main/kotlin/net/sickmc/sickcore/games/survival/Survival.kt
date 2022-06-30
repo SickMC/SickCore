@@ -2,6 +2,7 @@ package net.sickmc.sickcore.games.survival
 
 import net.minecraft.core.Registry
 import net.minecraft.resources.ResourceLocation
+import net.minecraft.world.item.enchantment.Enchantment
 import net.sickmc.sickcore.games.Game
 import net.sickmc.sickcore.server
 import net.sickmc.sickcore.utils.Colors
@@ -33,7 +34,7 @@ class Survival : Game() {
     override val name: String = "Survival"
     override val startEnvironment: Array<String> = arrayOf("public_survival_latest")
 
-    lateinit var telekinesis: Telekinesis
+    lateinit var telekinesis: Enchantment
     override fun preEnable() {
         telekinesis = Registry.register(
             Registry.ENCHANTMENT, ResourceLocation("sickcore", "telekinesis"), Telekinesis()
