@@ -13,6 +13,6 @@ FROM openjdk:17-slim
 ARG BUILD_DIR
 
 WORKDIR /app/
-COPY --from=builder $BUILD_DIR/build/install/sickcore-server/ .
+COPY --from=builder $BUILD_DIR/sickcore-server/build/install/sickcore-server/ .
 
 CMD ["./bin/sickcore-server"]
