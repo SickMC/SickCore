@@ -1,8 +1,8 @@
 files:
   - source: /sickcore-api/src/main/resources/lang/de_DE.json
     translation: /sickcore-api/src/main/resources/lang/%locale_with_underscore%.json
-commit_message: "[ci skip]"
+commit_message: '[ci skip]'
 pull_request_labels:
-  - "t: translation"
-  - "s: accepted"
-pull_request_title: "chore: pull latest crowdin translation changes"
+  - 't: translation'
+  - 's: accepted'
+pull_request_title: 'chore: pull latest crowdin translation changes'
