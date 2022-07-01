@@ -5,8 +5,8 @@ FROM gradle:7.4.2-jdk AS builder
 ARG BUILD_DIR
 
 WORKDIR $BUILD_DIR
-COPY . .
-RUN ../gradlew installDist --no-daemon --stacktrace
+COPY .. .
+RUN ./gradlew installDist --no-daemon --stacktrace
 
 FROM openjdk:17-slim
 
