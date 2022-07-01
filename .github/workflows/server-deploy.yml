@@ -40,8 +40,8 @@ jobs:
       - name: Build and Push
         uses: docker/build-push-action@v3.0.0
         with:
-          file: sickcore/Dockerfile
           context: .
+          file: sickcore-server/Dockerfile
           push: true
           tags: ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}
