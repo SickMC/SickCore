@@ -1,13 +1,14 @@
-ARG BUILD_DIR="/usr/src/"
+ARG BUILD_DIR="/usr/src/sickcore-server"
 
 FROM gradle:7.4.2-jdk AS builder
 
 ARG BUILD_DIR
 
 WORKDIR $BUILD_DIR
-COPY /sickcore-server/ sickcore-server
-COPY gradlew sickcore-server
-WORKDIR $BUILD_DIR/sickcore-server
+COPY /sickcore-server/ .
+RUN cd ..
+COPY gradlew sickcore-server/
+RUN cd sickcore-server/
 RUN ./gradlew installDist --no-daemon --stacktrace
 
 FROM openjdk:17-slim
