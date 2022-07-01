@@ -6,7 +6,7 @@ ARG BUILD_DIR
 
 WORKDIR $BUILD_DIR
 COPY . .
-COPY ../gradlew .
+COPY gradlew .
 RUN ./gradlew installDist --no-daemon --stacktrace
 
 FROM openjdk:17-slim
