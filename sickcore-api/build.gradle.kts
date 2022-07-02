@@ -1,4 +1,4 @@
-plugins{
+plugins {
     kotlin("jvm")
     kotlin("plugin.serialization")
     `velocity-build-script`
@@ -6,3 +6,4 @@ plugins{
     `mod-build-script`
     `websocket-server-script`
 }
+
