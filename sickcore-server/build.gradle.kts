@@ -6,5 +6,5 @@ plugins {
 }
 
 application {
-    mainClass.set("net.sickmc.sickcore.WebSocketApplication")
+    mainClass.set("net.sickmc.sickcore.WebSocketApplicationKt")
 }
