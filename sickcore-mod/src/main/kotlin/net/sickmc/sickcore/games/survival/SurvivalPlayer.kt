@@ -46,7 +46,7 @@ class SurvivalPlayers : Cache<UUID, SurvivalPlayer>, HashMap<UUID, SurvivalPlaye
 
     override suspend fun getEntity(entity: UUID): SurvivalPlayer {
         val doc = survivalColl.retrieveOne("uuid", entity.toString()) ?: return createEntity(entity)
-        return SurvivalPlayer(SickPlayers.instance.getEntity(entity), doc)
+        return SurvivalPlayer(SickPlayers.instance.getEntity(entity)!!, doc)
     }
 
     override suspend fun reloadEntity(entity: UUID): SurvivalPlayer {
@@ -65,7 +65,7 @@ class SurvivalPlayers : Cache<UUID, SurvivalPlayer>, HashMap<UUID, SurvivalPlaye
             .append("deaths", 0)
             .append("heads", map)
         survivalColl.insertOne(playerDoc)
-        return SurvivalPlayer(SickPlayers.instance.getEntity(entity), playerDoc)
+        return SurvivalPlayer(SickPlayers.instance.getEntity(entity)!!, playerDoc)
     }
 
 

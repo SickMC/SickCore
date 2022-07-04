@@ -5,9 +5,7 @@ import kotlinx.coroutines.launch
 import net.sickmc.sickcore.commonPlayer.SickPlayers
 import net.sickmc.sickcore.utils.listenVelocity
 import net.sickmc.sickcore.utils.Environment
-import net.sickmc.sickcore.utils.EventManager
 import net.sickmc.sickcore.utils.mongo.databaseScope
-import net.sickmc.sickcore.utils.test
 
 class VelocityCore(val base: VelocityBootstrap) {
 
@@ -26,7 +24,6 @@ class VelocityCore(val base: VelocityBootstrap) {
     suspend fun start() {
         coreHandler.initiateStartUp()
         moduleHandler.start()
-        EventManager.register()
     }
 
     suspend fun shutdown() {
@@ -52,7 +49,7 @@ object VelocityCoreHandler {
     private fun handleSickPlayers() {
         listenVelocity<PostLoginEvent> {
             databaseScope.launch {
-                SickPlayers.instance.reloadEntity(it.player.uniqueId)
+                if (SickPlayers.instance.getEntity(it.player.uniqueId) == null)SickPlayers.instance.createEntity(it.player.uniqueId)
             }
         }
     }

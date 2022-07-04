@@ -38,7 +38,6 @@ val mongoClient = KMongo.createClient(
 
 val db = mongoClient.getDatabase(if (!test) System.getenv("MONGO_DATABASE") else System.getProperty("MONGO_DATABASE"))
 
-
 val players = db.getCollection<Document>("sickPlayers")
 val staffColl = db.getCollection<Document>("staff")
 val rankColl = db.getCollection<Document>("ranks")
