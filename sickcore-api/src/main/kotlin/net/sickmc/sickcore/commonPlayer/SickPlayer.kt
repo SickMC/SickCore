@@ -70,9 +70,9 @@ class SickPlayers : Cache<UUID, SickPlayer>, HashMap<UUID, SickPlayer>() {
         return this[entity]
     }
 
-    override suspend fun reloadEntity(entity: UUID): SickPlayer {
-        this[entity] = getEntity(entity)
-        return this[entity]!!
+    override suspend fun reloadEntity(entity: UUID): SickPlayer? {
+        this[entity] = getEntity(entity) ?: return null
+        return this[entity]
     }
 
     override suspend fun createEntity(entity: UUID): SickPlayer {
@@ -97,8 +97,8 @@ class SickPlayers : Cache<UUID, SickPlayer>, HashMap<UUID, SickPlayer>() {
         return this[entity]!!
     }
 
-    override suspend fun getEntity(entity: UUID): SickPlayer {
-        if (players.retrieveOne("uuid", entity.toString()) == null) this[entity] = createEntity(entity)
+    override suspend fun getEntity(entity: UUID): SickPlayer? {
+        if (players.retrieveOne("uuid", entity.toString()) == null)return null
         else this[entity] = SickPlayer(entity, players.retrieveOne("uuid", entity.toString())!!)
         return this[entity]!!
     }

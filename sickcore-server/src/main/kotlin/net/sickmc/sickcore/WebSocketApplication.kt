@@ -6,7 +6,6 @@ import io.ktor.server.netty.*
 import io.ktor.server.routing.*
 import io.ktor.server.websocket.*
 import io.ktor.util.collections.*
-import io.ktor.websocket.*
 import java.time.Duration
 import java.util.*
 
@@ -20,41 +19,21 @@ fun main() {
         }
 
         routing {
-            val connections = Collections.synchronizedSet<Connection?>(ConcurrentSet())
+            val eventConnections = Collections.synchronizedSet<DefaultWebSocketServerSession>(ConcurrentSet())
+            val verifyConnections = Collections.synchronizedSet<DefaultWebSocketServerSession>(ConcurrentSet())
+
             webSocket("/event") {
-                for (frame in incoming) {
-                    connections.forEach {
-                        it.session.send(frame)
-                    }
+                eventConnections.add(this)
+                for (frame in incoming){
+                    eventConnections.forEach { it.send(frame) }
                 }
             }
-
             webSocket("/verify") {
-                for (frame in incoming) {
-                    connections.filter { it.type == ClientType.DISCORD || it.type == ClientType.VELOCITY }.forEach {
-                        it.session.send(frame)
-                    }
-                }
-            }
-
-            webSocket("/register") {
-                for (frame in incoming) {
-                    when (frame) {
-                        is Frame.Text -> {
-                            val components = frame.components()
-                            connections += Connection(ClientType.valueOf(components[1]), components[2], this@webSocket)
-                        }
-                        else -> {}
-                    }
+                verifyConnections.add(this)
+                for (frame in incoming){
+                    verifyConnections.forEach { it.send(frame) }
                 }
             }
         }
     }.start(wait = true)
-}
-
-data class Connection(val type: ClientType, val name: String, val session: DefaultWebSocketServerSession) {}
-
-fun Frame.components(): List<String> {
-    val textFrame = this as? Frame.Text ?: return listOf()
-    return textFrame.readText().split("/")
 }

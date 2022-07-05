@@ -8,6 +8,7 @@ import net.fabricmc.api.ModInitializer
 import net.fabricmc.fabric.api.event.lifecycle.v1.ServerLifecycleEvents
 import net.fabricmc.fabric.api.networking.v1.ServerPlayConnectionEvents
 import net.minecraft.server.MinecraftServer
+import net.minecraft.server.level.ServerPlayer
 import net.sickmc.sickcore.commonPlayer.SickPlayers
 import net.sickmc.sickcore.games.Game
 import net.sickmc.sickcore.games.survival.SurvivalPlayers
@@ -19,7 +20,7 @@ lateinit var server: MinecraftServer
 
 class FabricManager : ModInitializer {
 
-    companion object{
+    companion object {
         lateinit var instance: FabricManager
     }
 
@@ -31,7 +32,6 @@ class FabricManager : ModInitializer {
         registerCaches()
 
         fabricScope.launch {
-            handleSickPlayers()
             moduleHandler.start()
         }
 
@@ -39,7 +39,7 @@ class FabricManager : ModInitializer {
         registerCaches()
         Game.preEnable()
 
-        ServerLifecycleEvents.SERVER_STARTED.register{
+        ServerLifecycleEvents.SERVER_STARTED.register {
             server = it
             fabricScope.launch {
                 Game.enable()
@@ -49,39 +49,38 @@ class FabricManager : ModInitializer {
             preGen = true
         }
 
-        ServerLifecycleEvents.SERVER_STOPPING.register{
+        ServerLifecycleEvents.SERVER_STOPPING.register {
             fabricScope.launch {
                 moduleHandler.shutdown()
             }
         }
     }
 
-    private fun registerCommands(){
+    private fun registerCommands() {
 
     }
 
-    private fun registerCaches(){
+    private fun registerCaches() {
         SurvivalPlayers()
         SickPlayers()
     }
 
-    private fun handleSickPlayers(){
-        ServerPlayConnectionEvents.INIT.register{ handler, _->
-            if (handler.player == null)return@register
-            databaseScope.launch {
-                SickPlayers.instance.reloadEntity(handler.player!!.uuid)
-            }
-        }
-    }
-
-    private fun handleTablist(){
-        ServerPlayConnectionEvents.JOIN.register{ _, _, _ ->
+    private fun handleTablist() {
+        ServerPlayConnectionEvents.JOIN.register { _, _, _ ->
             Game.current.tablist.reloadAll()
         }
 
-        ServerPlayConnectionEvents.DISCONNECT.register{ _, _ ->
+        ServerPlayConnectionEvents.DISCONNECT.register { _, _ ->
             Game.current.tablist.reloadAll()
         }
     }
 
+}
+
+object SickHandler {
+    fun reloadPlayer(player: ServerPlayer) {
+        databaseScope.launch {
+            SickPlayers.instance.reloadEntity(player.uuid)
+        }
+    }
 }
