@@ -29,7 +29,6 @@ fun main() {
                 for (frame in incoming) {
                     if ((frame as Frame.Text).readText() == "jo") eventConnections.add(this)
                     eventConnections.forEach { it.send(frame) }
-                }
             }
             webSocket("/verify") {
                 for (frame in incoming) {
