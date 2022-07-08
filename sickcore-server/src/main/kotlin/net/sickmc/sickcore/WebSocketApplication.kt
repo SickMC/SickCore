@@ -10,7 +10,9 @@ import java.time.Duration
 import java.util.*
 
 fun main() {
-    embeddedServer(Netty, port = System.getenv("WEBSOCKET_PORT").toInt(), host = System.getenv("WEBSOCKET_SERVER_ADDRESS")) {
+    embeddedServer(
+        Netty, port = System.getenv("WEBSOCKET_PORT").toInt(), host = System.getenv("WEBSOCKET_SERVER_ADDRESS")
+    ) {
         install(WebSockets) {
             pingPeriod = Duration.ofSeconds(15)
             timeout = Duration.ofSeconds(15)
@@ -24,13 +26,13 @@ fun main() {
 
             webSocket("/event") {
                 eventConnections.add(this)
-                for (frame in incoming){
+                for (frame in incoming) {
                     eventConnections.forEach { it.send(frame) }
                 }
             }
             webSocket("/verify") {
                 verifyConnections.add(this)
-                for (frame in incoming){
+                for (frame in incoming) {
                     verifyConnections.forEach { it.send(frame) }
                 }
             }
