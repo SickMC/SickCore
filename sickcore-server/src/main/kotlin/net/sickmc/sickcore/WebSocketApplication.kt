@@ -6,6 +6,7 @@ import io.ktor.server.netty.*
 import io.ktor.server.routing.*
 import io.ktor.server.websocket.*
 import io.ktor.util.collections.*
+import io.ktor.websocket.*
 import java.time.Duration
 import java.util.*
 
@@ -25,14 +26,14 @@ fun main() {
             val verifyConnections = Collections.synchronizedSet<DefaultWebSocketServerSession>(ConcurrentSet())
 
             webSocket("/event") {
-                eventConnections.add(this)
                 for (frame in incoming) {
+                    if ((frame as Frame.Text).readText() == "jo") eventConnections.add(this)
                     eventConnections.forEach { it.send(frame) }
                 }
             }
             webSocket("/verify") {
-                verifyConnections.add(this)
                 for (frame in incoming) {
+                    if ((frame as Frame.Text).readText() == "jo") verifyConnections.add(this)
                     verifyConnections.forEach { it.send(frame) }
                 }
             }
