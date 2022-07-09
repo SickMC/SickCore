@@ -12,7 +12,7 @@ import net.sickmc.sickcore.commonPlayer.SickPlayers
 import java.util.UUID
 
 fun ServerPlayer.sendMessage(message: MutableComponent){
-    this.sendChatMessage(PlayerChatMessage.unsigned(message), ChatSender(UUID.randomUUID(), Component.empty()), ChatType.CHAT)
+    this.sendChatMessage(PlayerChatMessage.unsigned(message), ChatSender(UUID.randomUUID(), Component.empty()), ChatType.SYSTEM)
 }
 
 val ServerPlayer.sickPlayer: SickPlayer?

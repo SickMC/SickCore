@@ -3,6 +3,7 @@ package net.sickmc.sickcore.games.survival
 import com.mojang.brigadier.context.CommandContext
 import net.minecraft.commands.CommandSourceStack
 import net.minecraft.network.chat.ChatType
+import net.minecraft.server.level.ServerPlayer
 import net.sickmc.sickcore.utils.Colors
 import net.sickmc.sickcore.utils.fabric.sendMessage
 import net.sickmc.sickcore.utils.fabric.sickPlayer
@@ -36,7 +37,6 @@ object SurvivalCommands {
                     color = Colors.GOLD
                     bold = false
                 }
-
             })
         if (targetName == null){
             source.server.playerList.broadcastSystemMessage(message!!, ChatType.SYSTEM)
@@ -50,6 +50,7 @@ object SurvivalCommands {
             return
         }
 
+        source.player?.sendMessage(message!!)
         target.sendMessage(message!!)
     }
 

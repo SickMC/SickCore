@@ -2,7 +2,7 @@ package net.sickmc.sickcore
 
 import com.velocitypowered.api.proxy.ProxyServer
 import net.minecraft.server.MinecraftServer
-import net.sickmc.sickcore.appereance.AppereanceModule
+import net.sickmc.sickcore.appereance.AppearanceModule
 import net.sickmc.sickcore.rank.RankModule
 import net.sickmc.sickcore.social.SocialModule
 import net.sickmc.sickcore.staff.StaffModule
@@ -17,7 +17,7 @@ class ModuleHandler(env: Environment) {
         environment = env
     }
 
-    val modules = listOf(RankModule(), AppereanceModule(), StaffModule(), SocialModule())
+    val modules = listOf(RankModule(), AppearanceModule(), StaffModule(), SocialModule())
 
     suspend fun start(){
         modules.forEach {

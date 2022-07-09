@@ -24,7 +24,6 @@ dependencies{
     runtimeOnly(pluginDep("org.jetbrains.kotlin.plugin.serialization", kotlinVersion))
     implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.3.3")
 
-
     implementation(pluginDep("fabric-loom", "0.12-SNAPSHOT"))
     implementation(pluginDep("io.github.juuxel.loom-quiltflower", "1.7.3"))
     implementation(pluginDep("org.quiltmc.quilt-mappings-on-loom", "4.2.0"))

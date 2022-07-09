@@ -38,21 +38,23 @@ class LobbyCommand {
 
     fun registerAddition() {
         val aliases = arrayOf("leave", "lobby", "l", "hub").toList()
-        listenVelocity<PlayerChatEvent> {
-            databaseScope.launch {
-                if (aliases.contains(it.message.split("7")[1])) {
-                    val veloPlayer = it.player
-                    if (veloPlayer.currentServer.get().serverInfo.name.startsWith("Lobby")) {
-                        val text =
-                            mm.deserialize("<gradient:#890000:#7E0000>You are already connected to the lobby!</gradient>")
-                        veloPlayer.sendMessage(text)
-                        return@launch
-                    }
-                    veloPlayer.createConnectionRequest(proxyServer?.getServer("Lobby-1")?.get())
-                    val text = mm.deserialize("<gradient:#5B8906:#05561E>You were teleported to the lobby!</gradient>")
-                    veloPlayer.sendMessage(text)
-                }
+        listenVelocity<PlayerChatEvent> { event ->
+            if (!event.message.startsWith("7")) return@listenVelocity
+            if (!aliases.contains(event.message.split("7")[1])) return@listenVelocity
+            val veloPlayer = event.player
+            if (veloPlayer.currentServer.get().serverInfo.name.startsWith("Lobby")) {
+                val text = mm.deserialize("<gradient:#890000:#7E0000>You are already connected to the lobby!</gradient>")
+                veloPlayer.sendMessage(text)
+                return@listenVelocity
             }
+            if (proxyServer!!.allServers.toList().none { it.serverInfo.name.startsWith("Lobby-") }){
+                val text = mm.deserialize("<gradient:#890000:#7E0000>No lobby server is available!</gradient>")
+                veloPlayer.sendMessage(text)
+                return@listenVelocity
+            }
+            veloPlayer.createConnectionRequest(proxyServer?.getServer("Lobby-1")?.get())
+            val text = mm.deserialize("<gradient:#5B8906:#05561E>You were teleported to the lobby!</gradient>")
+            veloPlayer.sendMessage(text)
         }
     }
 

@@ -32,6 +32,7 @@ class MsgCommand  {
                             val noPlayer = Component.text("This player is not online!").color(TextColor.color(0x9A100D))
                             val message = StringArgumentType.getString(it, "msg")
                             val senderText = SickPlayers.instance.getCachedEntity(sender.uniqueId)!!.displayName.getKyoriName().append(mm.deserialize("<#5b6667>» ")).append(SickPlayers.instance.getCachedEntity(targetUUID)!!.displayName.getKyoriName()).append(mm.deserialize("<#858585>: $message"))
+
                         }
                         1
                     }))

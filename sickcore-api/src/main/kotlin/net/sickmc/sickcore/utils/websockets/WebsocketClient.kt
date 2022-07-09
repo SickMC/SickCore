@@ -16,10 +16,12 @@ suspend inline fun listenChannel(
     webClient.webSocket(
         method = HttpMethod.Get,
         host = System.getenv("WEBSOCKET_CLIENT_ADDRESS"),
-        port = System.getenv("WEBSOCKET_CLIENT_PORT").toInt(),
+        port = System.getenv("WEBSOCKET_PORT").toInt(),
         path = "/$channel"
     ) {
+        send("jo")
         session.invoke(this)
+        println("Websocket connected!")
     }
 }
 
@@ -27,9 +29,10 @@ suspend fun sendChannelMessage(channel: String, message: Frame) {
     webClient.webSocket(
         method = HttpMethod.Get,
         host = System.getenv("WEBSOCKET_CLIENT_ADDRESS"),
-        port = System.getenv("WEBSOCKET_CLIENT_PORT").toInt(),
+        port = System.getenv("WEBSOCKET_PORT").toInt(),
         path = "/$channel"
     ) {
         send(message)
+        println("Message sent: $message")
     }
 }

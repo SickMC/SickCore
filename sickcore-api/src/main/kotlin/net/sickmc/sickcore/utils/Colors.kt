@@ -9,5 +9,6 @@ object Colors {
     val LIGHT_RED = 0xD36D51
     val BLACK = 0x000000
     val WHITE = 0xFFFFFF
+    val LIGHT_GREEN = 0x1BBF19
 
 }
