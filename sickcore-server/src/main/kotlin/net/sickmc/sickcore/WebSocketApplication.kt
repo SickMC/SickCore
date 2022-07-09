@@ -6,8 +6,6 @@ import io.ktor.server.netty.*
 import io.ktor.server.routing.*
 import io.ktor.server.websocket.*
 import io.ktor.util.collections.*
-import io.ktor.websocket.*
-import java.time.Duration
 import java.util.*
 
 fun main() {
@@ -15,10 +13,7 @@ fun main() {
         Netty, port = System.getenv("WEBSOCKET_PORT").toInt(), host = System.getenv("WEBSOCKET_SERVER_ADDRESS")
     ) {
         install(WebSockets) {
-            pingPeriod = Duration.ofSeconds(15)
-            timeout = Duration.ofSeconds(15)
-            maxFrameSize = Long.MAX_VALUE
-            masking = false
+            timeoutMillis = Long.MAX_VALUE
         }
 
         routing {
@@ -26,19 +21,19 @@ fun main() {
             val verifyConnections = Collections.synchronizedSet<DefaultWebSocketServerSession>(ConcurrentSet())
 
             webSocket("/event") {
+                eventConnections.add(this)
                 for (frame in incoming) {
-                    println(frame)
-                    eventConnections.add(this)
                     eventConnections.forEach { it.send(frame) }
-                    println("Sent!!")
                 }
             }
             webSocket("/verify") {
+                verifyConnections.add(this)
                 for (frame in incoming) {
                     println(frame)
-                    verifyConnections.add(this)
-                    verifyConnections.forEach { it.send(frame) }
-                    println("Sent!!")
+                    for (connection in verifyConnections) {
+                        connection.send(frame)
+                        println("Sent!!")
+                    }
                 }
             }
         }
