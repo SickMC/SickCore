@@ -28,15 +28,17 @@ fun main() {
             webSocket("/event") {
                 for (frame in incoming) {
                     println(frame)
-                    if ((frame as Frame.Text).readText() == "jo") eventConnections.add(this)
+                    eventConnections.add(this)
                     eventConnections.forEach { it.send(frame) }
+                    println("Sent!!")
                 }
             }
             webSocket("/verify") {
                 for (frame in incoming) {
                     println(frame)
-                    if ((frame as Frame.Text).readText() == "jo") verifyConnections.add(this)
+                    verifyConnections.add(this)
                     verifyConnections.forEach { it.send(frame) }
+                    println("Sent!!")
                 }
             }
         }
