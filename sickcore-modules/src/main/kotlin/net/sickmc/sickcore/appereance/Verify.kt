@@ -73,6 +73,10 @@ object Verify {
                             ClickEvent.copyToClipboard(verifyCache[veloPlayer.uniqueId].toString())
                         )
                 )
+                databaseScope.launch {
+                    sendChannelMessage("verify", Frame.Text("request/${veloPlayer.uniqueId}/${verifyCache[veloPlayer.uniqueId]!!}"))
+                    println("Should be sent!")
+                }
                 return@executes 1
             }
             var code = (100000..999999).random()
