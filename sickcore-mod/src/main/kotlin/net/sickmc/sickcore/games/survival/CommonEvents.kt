@@ -14,6 +14,8 @@ import net.minecraft.sounds.SoundEvents
 import net.minecraft.world.InteractionResult
 import net.minecraft.world.entity.EntityEvent
 import net.minecraft.world.entity.EntityType
+import net.minecraft.world.entity.item.ItemEntity
+import net.minecraft.world.entity.player.Player
 import net.minecraft.world.entity.projectile.FireworkRocketEntity
 import net.minecraft.world.item.Items
 import net.sickmc.sickcore.utils.Colors
@@ -21,6 +23,7 @@ import net.sickmc.sickcore.utils.fabric.*
 import net.sickmc.sickcore.utils.mongo.databaseScope
 import net.silkmc.silk.core.item.itemStack
 import net.silkmc.silk.core.item.setCustomName
+import net.silkmc.silk.core.item.setSkullPlayer
 import net.silkmc.silk.core.item.setSkullTexture
 import net.silkmc.silk.core.text.literalText
 import kotlin.random.Random
@@ -76,6 +79,16 @@ object CommonEvents {
     private fun mobDrops() {
         AttackEntityCallback.EVENT.register { player, level, _, entity, _ ->
             if (!entity.isAlive && player is ServerPlayer) {
+                if (entity is Player){
+                    val targetPlayer = entity as ServerPlayer
+                    val head = itemStack(Items.PLAYER_HEAD){
+                        setSkullPlayer(entity)
+                        hoverName = targetPlayer.name
+                    }
+                    val itemEntity = ItemEntity(level, entity.x, entity.y, entity.z, head)
+                    level.addFreshEntity(itemEntity)
+                    InteractionResult.PASS
+                }
                 if (Random.nextInt(1..1000000) == 51) {
                     val special = extraHeads.filter { it.rarity == MobHeadRarity.SPECIAL }.random()
                     addPlayerHead(

@@ -25,7 +25,7 @@ class AppearanceModule : Module() {
                 Verify.register()
             }
             Environment.FABRIC -> {
-
+                DiscordRewards.listener()
             }
             else -> {}
         }

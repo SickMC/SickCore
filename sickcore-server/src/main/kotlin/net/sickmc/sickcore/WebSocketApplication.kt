@@ -29,10 +29,8 @@ fun main() {
             webSocket("/verify") {
                 verifyConnections.add(this)
                 for (frame in incoming) {
-                    println(frame)
                     for (connection in verifyConnections) {
                         connection.send(frame)
-                        println("Sent!!")
                     }
                 }
             }

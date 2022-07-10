@@ -6,9 +6,12 @@ import net.sickmc.sickcore.commonRanks.Ranks
 import net.sickmc.sickcore.utils.Cache
 import net.sickmc.sickcore.utils.DisplayName
 import net.sickmc.sickcore.utils.PlayerUtils
-import net.sickmc.sickcore.utils.mongo.*
+import net.sickmc.sickcore.utils.mongo.databaseScope
+import net.sickmc.sickcore.utils.mongo.players
+import net.sickmc.sickcore.utils.mongo.retrieveOne
+import net.sickmc.sickcore.utils.mongo.staffColl
 import org.bson.Document
-import java.util.UUID
+import java.util.*
 
 class SickPlayer(override val uniqueID: UUID, override val document: Document) : ISickPlayer {
 
@@ -17,7 +20,7 @@ class SickPlayer(override val uniqueID: UUID, override val document: Document) :
     val name = document.getString("name")
     val extraPermissions = document.getList("extraPermissions", String::class.java)
     val addiction = document.getInteger("addiction")
-    val exp = document.getInteger("exp")
+    val smucks = document.getInteger("smucks")
     val playtime = document.getLong("playtime")
     val rankExpire = document.getString("rankExpire")
     val privileges: List<Privileges> =
@@ -81,7 +84,7 @@ class SickPlayers : Cache<UUID, SickPlayer>, HashMap<UUID, SickPlayer>() {
             .append("discordID", "0")
             .append("name", PlayerUtils.fetchName(entity))
             .append("addiction", 0)
-            .append("exp", 0)
+            .append("smucks", 0)
             .append("extraPermissions", ArrayList<String>())
             .append("rank", "Player")
             .append("rankExpire", "none")
@@ -98,7 +101,7 @@ class SickPlayers : Cache<UUID, SickPlayer>, HashMap<UUID, SickPlayer>() {
     }
 
     override suspend fun getEntity(entity: UUID): SickPlayer? {
-        if (players.retrieveOne("uuid", entity.toString()) == null)return null
+        if (players.retrieveOne("uuid", entity.toString()) == null) return null
         else this[entity] = SickPlayer(entity, players.retrieveOne("uuid", entity.toString())!!)
         return this[entity]!!
     }
