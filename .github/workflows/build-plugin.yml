@@ -1,4 +1,4 @@
-name: Gradle CI
+name: Proxy Plugin Build
 
 on:
   push:
