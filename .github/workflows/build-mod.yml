@@ -7,20 +7,12 @@ on:
     paths:
       - 'sickcore-mod/**'
       - 'buildSrc/**'
-    paths-ignore:
-      - 'README.md'
-      - 'LICENSE'
-      - '.gitignore'
   pull_request:
     branches:
       - 'master'
     paths:
       - 'sickcore-mod/**'
       - 'buildSrc/**'
-    paths-ignore:
-      - 'README.md'
-      - 'LICENSE'
-      - '.gitignore'
   workflow_dispatch:
 jobs:
   build:
