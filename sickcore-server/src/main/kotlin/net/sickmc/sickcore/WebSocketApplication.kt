@@ -19,7 +19,7 @@ fun main() {
         routing {
             val connections = Collections.synchronizedMap(HashMap(ConcurrentMap<String, DefaultWebSocketServerSession>()))
 
-            val webSockets = listOf("event", "verify", "reward", "message")
+            val webSockets = listOf("event", "verify", "rewards", "message")
             webSockets.forEach {
                 webSocket("/$it"){
                     connections[it] = this
