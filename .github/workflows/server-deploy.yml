@@ -4,14 +4,15 @@ on:
   push: 
     paths:
       - "sickcore-server/**"
+      - "buildSrc/**"
     branches:
       - master
   pull_request:
     paths:
       - "sickcore-server/**"
+      - "buildSrc/**"
     branches:
       - master
-
 
 env:
   REGISTRY: ghcr.io
