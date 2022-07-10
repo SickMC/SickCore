@@ -5,25 +5,24 @@ import net.sickmc.sickcore.commonPlayer.SickPlayer
 import net.sickmc.sickcore.commonPlayer.SickPlayers
 import net.sickmc.sickcore.utils.Cache
 import net.sickmc.sickcore.utils.fabric.MobHead
+import net.sickmc.sickcore.utils.fabric.textures
 import net.sickmc.sickcore.utils.mongo.replace
 import net.sickmc.sickcore.utils.mongo.retrieveOne
 import net.sickmc.sickcore.utils.mongo.survivalColl
-import net.sickmc.sickcore.utils.fabric.textures
 import org.bson.Document
 import java.util.*
-import kotlin.collections.HashMap
 
 class SurvivalPlayer(override val sickPlayer: SickPlayer, override val gameDocument: Document) : IGamePlayer {
 
-    suspend fun addHead(head: MobHead){
+    suspend fun addHead(head: MobHead) {
         val heads = gameDocument.get("heads", Document::class.java)
-        if (heads.getBoolean(head.attributes.name.replace(" ", "_")))return
+        if (heads.getBoolean(head.attributes.name.replace(" ", "_"))) return
         heads.replace(head.attributes.name.replace(" ", "_"), true)
         gameDocument.replace("heads", heads)
         survivalColl.replace("uuid", sickPlayer.uniqueID.toString(), gameDocument)
     }
 
-    suspend fun addDeath(){
+    suspend fun addDeath() {
         gameDocument.replace("deaths", gameDocument.getInteger("deaths").plus(1))
         survivalColl.replace("uuid", sickPlayer.uniqueID.toString(), gameDocument)
     }
@@ -32,7 +31,7 @@ class SurvivalPlayer(override val sickPlayer: SickPlayer, override val gameDocum
 
 class SurvivalPlayers : Cache<UUID, SurvivalPlayer>, HashMap<UUID, SurvivalPlayer>() {
 
-    companion object{
+    companion object {
         lateinit var instance: SurvivalPlayers
     }
 

@@ -51,6 +51,7 @@ class Tablist(private val generate: ServerPlayer.() -> PlayerTablistBuilder) {
     }
 
 }
+
 inline fun playerTabListBuilder(
     player: ServerPlayer,
     crossinline builder: PlayerTablistBuilder.() -> Unit

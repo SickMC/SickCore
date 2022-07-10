@@ -16,7 +16,6 @@ import net.minecraft.world.item.Items
 import net.silkmc.silk.core.item.itemStack
 import net.silkmc.silk.core.item.setSkullTexture
 import net.silkmc.silk.core.text.literalText
-import java.util.*
 
 data class MobHead(
     val isOnlyCreative: Boolean,
@@ -1614,8 +1613,11 @@ fun Entity.getHead(): MobHead {
         }
     }
 
-    val head = itemStack(Items.PLAYER_HEAD){
-        setSkullTexture(textures[key]?.texture ?: "eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvMWFiNzM5ZjRjYjAyOGVmMmFjZjM0YTZkYzNiNGZmODVlYWM1Y2E5ODdiNTgzMmJmZGQwZjNjMzM1MWFhNDQzIn19fQ==")
+    val head = itemStack(Items.PLAYER_HEAD) {
+        setSkullTexture(
+            textures[key]?.texture
+                ?: "eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvMWFiNzM5ZjRjYjAyOGVmMmFjZjM0YTZkYzNiNGZmODVlYWM1Y2E5ODdiNTgzMmJmZGQwZjNjMzM1MWFhNDQzIn19fQ=="
+        )
     }
 
     return MobHead(
@@ -1623,7 +1625,10 @@ fun Entity.getHead(): MobHead {
         availableInSurvival.contains(key),
         head,
         key,
-        textures[key] ?: EntityAttributes("Unknown", "eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvMWFiNzM5ZjRjYjAyOGVmMmFjZjM0YTZkYzNiNGZmODVlYWM1Y2E5ODdiNTgzMmJmZGQwZjNjMzM1MWFhNDQzIn19fQ==")
+        textures[key] ?: EntityAttributes(
+            "Unknown",
+            "eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvMWFiNzM5ZjRjYjAyOGVmMmFjZjM0YTZkYzNiNGZmODVlYWM1Y2E5ODdiNTgzMmJmZGQwZjNjMzM1MWFhNDQzIn19fQ=="
+        )
     )
 }
 

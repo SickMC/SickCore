@@ -3,7 +3,6 @@ package net.sickmc.sickcore.games.survival
 import com.mojang.brigadier.context.CommandContext
 import net.minecraft.commands.CommandSourceStack
 import net.minecraft.network.chat.ChatType
-import net.minecraft.server.level.ServerPlayer
 import net.sickmc.sickcore.utils.Colors
 import net.sickmc.sickcore.utils.fabric.sendMessage
 import net.sickmc.sickcore.utils.fabric.sickPlayer
@@ -17,9 +16,9 @@ object SurvivalCommands {
         heads
     }
 
-    private val sharePos = command("sharepos"){
+    private val sharePos = command("sharepos") {
         alias("sp")
-        argument("targetName"){ targetName ->
+        argument("targetName") { targetName ->
             runs {
                 sharePos(targetName())
             }
@@ -27,7 +26,7 @@ object SurvivalCommands {
         runs { sharePos() }
     }
 
-    private fun CommandContext<CommandSourceStack>.sharePos(targetName: String? = null){
+    private fun CommandContext<CommandSourceStack>.sharePos(targetName: String? = null) {
         val player = source.playerOrException
         val message = player.sickPlayer?.displayName?.getName()?.copy()
             ?.append(literalText("'s location: ") {
@@ -38,12 +37,12 @@ object SurvivalCommands {
                     bold = false
                 }
             })
-        if (targetName == null){
+        if (targetName == null) {
             source.server.playerList.broadcastSystemMessage(message!!, ChatType.SYSTEM)
             return
         }
         val target = source.server.playerList.getPlayerByName(targetName)
-        if (target == null){
+        if (target == null) {
             this.source.sendSuccess(literalText("This player cannot be found!") {
                 color = Colors.DARK_RED
             }, false)

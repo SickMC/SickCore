@@ -25,7 +25,7 @@ class Telekinesis : Enchantment(Rarity.RARE, EnchantmentCategory.VANISHABLE, arr
     }
 
     override fun getFullname(level: Int): Component {
-        return literalText("Telekinesis"){
+        return literalText("Telekinesis") {
             color = 0x876212
         }
     }

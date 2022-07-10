@@ -4,12 +4,18 @@
   "schemaVersion": 1,
   "name": "SickCore",
   "description": "${description}",
-  "authors": ["onion"],
+  "authors": [
+    "onion"
+  ],
   "environment": "server",
   "entrypoints": {
-    "main": ["net.sickmc.sickcore.FabricManager"]
+    "main": [
+      "net.sickmc.sickcore.FabricManager"
+    ]
   },
-  "mixins": ["sickcore.mixins.json"],
+  "mixins": [
+    "sickcore.mixins.json"
+  ],
   "depends": {
     "minecraft": "${mc_version}.x",
     "fabricloader": ">=0.13.3",

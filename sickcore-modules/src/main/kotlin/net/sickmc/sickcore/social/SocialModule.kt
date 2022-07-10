@@ -11,7 +11,7 @@ class SocialModule : Module() {
 
 
     override suspend fun start() {
-        when(environment){
+        when (environment) {
             Environment.VELOCITY -> {
                 MsgCommand().register()
             }

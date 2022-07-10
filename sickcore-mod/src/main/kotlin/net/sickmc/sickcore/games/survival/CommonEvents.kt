@@ -79,9 +79,9 @@ object CommonEvents {
     private fun mobDrops() {
         AttackEntityCallback.EVENT.register { player, level, _, entity, _ ->
             if (!entity.isAlive && player is ServerPlayer) {
-                if (entity is Player){
+                if (entity is Player) {
                     val targetPlayer = entity as ServerPlayer
-                    val head = itemStack(Items.PLAYER_HEAD){
+                    val head = itemStack(Items.PLAYER_HEAD) {
                         setSkullPlayer(entity)
                         hoverName = targetPlayer.name
                     }

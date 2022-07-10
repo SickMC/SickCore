@@ -1,15 +1,14 @@
 package net.sickmc.sickcore.utils
 
-import net.kyori.adventure.text.Component
 import org.bson.json.JsonObject
 import java.net.HttpURLConnection
 import java.net.URL
-import java.util.UUID
+import java.util.*
 
 class PlayerUtils {
 
-    companion object{
-        fun fetchName(uuid: UUID): String{
+    companion object {
+        fun fetchName(uuid: UUID): String {
             val url = URL("https://api.minetools.eu/uuid/$uuid")
             val connection = url.openConnection() as HttpURLConnection
 
@@ -19,7 +18,7 @@ class PlayerUtils {
             return jsonObject.toBsonDocument().getString("name").value
         }
 
-        fun fetchUUID(name: String): UUID{
+        fun fetchUUID(name: String): UUID {
             val url = URL("https://api.minetools.eu/uuid/$name")
             val connection = url.openConnection() as HttpURLConnection
 

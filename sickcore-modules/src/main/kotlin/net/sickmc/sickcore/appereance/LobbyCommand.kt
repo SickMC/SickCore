@@ -43,11 +43,12 @@ class LobbyCommand {
             if (!aliases.contains(event.message.split("7")[1])) return@listenVelocity
             val veloPlayer = event.player
             if (veloPlayer.currentServer.get().serverInfo.name.startsWith("Lobby")) {
-                val text = mm.deserialize("<gradient:#890000:#7E0000>You are already connected to the lobby!</gradient>")
+                val text =
+                    mm.deserialize("<gradient:#890000:#7E0000>You are already connected to the lobby!</gradient>")
                 veloPlayer.sendMessage(text)
                 return@listenVelocity
             }
-            if (proxyServer!!.allServers.toList().none { it.serverInfo.name.startsWith("Lobby-") }){
+            if (proxyServer!!.allServers.toList().none { it.serverInfo.name.startsWith("Lobby-") }) {
                 val text = mm.deserialize("<gradient:#890000:#7E0000>No lobby server is available!</gradient>")
                 veloPlayer.sendMessage(text)
                 return@listenVelocity

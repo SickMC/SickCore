@@ -3,22 +3,23 @@ package net.sickmc.sickcore.games
 import net.sickmc.sickcore.games.survival.Survival
 import net.sickmc.sickcore.utils.fabric.Tablist
 
-abstract class Game{
+abstract class Game {
 
-    companion object{
+    companion object {
         private val games: ArrayList<Game> = arrayListOf(Survival())
 
         lateinit var current: Game
 
-        fun preEnable(){
+        fun preEnable() {
             games.forEach {
-                if (!it.startEnvironment.contains(System.getenv("GAME_START_ENVIRONMENT")))return@forEach
+                if (!it.startEnvironment.contains(System.getenv("GAME_START_ENVIRONMENT"))) return@forEach
                 it.preEnable()
                 println("Commands of ${it.name} registered!")
                 current = it
             }
         }
-        suspend fun enable(){
+
+        suspend fun enable() {
             current.enable()
         }
     }
