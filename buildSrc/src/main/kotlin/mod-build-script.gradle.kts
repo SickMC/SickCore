@@ -1,13 +1,13 @@
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
-plugins{
+plugins {
     kotlin("jvm")
     id("fabric-loom")
     id("io.github.juuxel.loom-quiltflower")
     id("org.quiltmc.quilt-mappings-on-loom")
 }
 
-repositories{
+repositories {
     mavenCentral()
 }
 
@@ -37,7 +37,7 @@ dependencies {
     modImplementation("net.silkmc:silk-network:$silkVersion")
 }
 
-tasks{
+tasks {
     processResources {
         val props = mapOf(
             "version" to project.version,
@@ -51,8 +51,8 @@ tasks{
             expand(props)
         }
     }
-    withType<JavaCompile>{
-        options.apply{
+    withType<JavaCompile> {
+        options.apply {
             release.set(17)
             encoding = "UTF-8"
         }

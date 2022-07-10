@@ -1,4 +1,4 @@
-plugins{
+plugins {
     kotlin("jvm")
     kotlin("plugin.serialization")
     `velocity-build-script`
@@ -7,6 +7,6 @@ plugins{
     `websocket-client-script`
 }
 
-dependencies{
+dependencies {
     implementation(modProject(":${rootProject.name}-api"))
 }

@@ -74,7 +74,10 @@ object Verify {
                         )
                 )
                 databaseScope.launch {
-                    sendChannelMessage("verify", Frame.Text("request/${veloPlayer.uniqueId}/${verifyCache[veloPlayer.uniqueId]!!}"))
+                    sendChannelMessage(
+                        "verify",
+                        Frame.Text("request/${veloPlayer.uniqueId}/${verifyCache[veloPlayer.uniqueId]!!}")
+                    )
                     println("Should be sent!")
                 }
                 return@executes 1

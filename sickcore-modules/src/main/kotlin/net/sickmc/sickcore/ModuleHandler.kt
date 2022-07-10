@@ -12,6 +12,7 @@ var environment: Environment = Environment.STANDALONE
 var minecraftServer: MinecraftServer? = null
 var proxyServer: ProxyServer? = null
 var proxyPlugin: Any? = null
+
 class ModuleHandler(env: Environment) {
     init {
         environment = env
@@ -19,13 +20,13 @@ class ModuleHandler(env: Environment) {
 
     val modules = listOf(RankModule(), AppearanceModule(), StaffModule(), SocialModule())
 
-    suspend fun start(){
+    suspend fun start() {
         modules.forEach {
             it.start()
         }
     }
 
-    suspend fun shutdown(){
+    suspend fun shutdown() {
         modules.forEach {
             it.shutdown()
         }

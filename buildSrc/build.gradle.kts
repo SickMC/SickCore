@@ -10,10 +10,10 @@ repositories {
     maven("https://maven.fabricmc.net/")
     maven("https://maven.quiltmc.org/repository/release")
     maven("https://server.bbkr.space/artifactory/libs-release/")
-    maven ("https://repo.papermc.io/repository/maven-public/")
+    maven("https://repo.papermc.io/repository/maven-public/")
 }
 
-dependencies{
+dependencies {
     fun pluginDep(id: String, version: String) = "${id}:${id}.gradle.plugin:${version}"
 
     val kotlinVersion = "1.7.0"

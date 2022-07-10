@@ -1,8 +1,8 @@
 val projectName = "sickcore"
 rootProject.name = projectName
 
-pluginManagement{
-    repositories{
+pluginManagement {
+    repositories {
         gradlePluginPortal()
     }
 

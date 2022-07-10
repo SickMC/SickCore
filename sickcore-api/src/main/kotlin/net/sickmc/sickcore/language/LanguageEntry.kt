@@ -12,11 +12,11 @@ class LanguageEntry(val raw: String) {
         styler = LanguageEntryStyler(this).apply(style)
     }
 
-    fun replace(vararg replacement: Pair<String, String>){
+    fun replace(vararg replacement: Pair<String, String>) {
         replacements += replacement
     }
 
-    fun buildReplaced(): String{
+    fun buildReplaced(): String {
         val replaced = raw
         replacements.forEach {
             replaced.replace(it.first, it.second)

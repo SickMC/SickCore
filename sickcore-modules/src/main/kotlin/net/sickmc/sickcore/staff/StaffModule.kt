@@ -4,9 +4,9 @@ import net.sickmc.sickcore.Module
 import net.sickmc.sickcore.environment
 import net.sickmc.sickcore.utils.Environment
 
-class StaffModule : Module(){
+class StaffModule : Module() {
 
-    companion object{
+    companion object {
         lateinit var instance: StaffModule
     }
 
@@ -18,8 +18,8 @@ class StaffModule : Module(){
     override suspend fun start() {
         instance = this
         staff.validateOverview()
-        when(environment){
-            Environment.VELOCITY ->{
+        when (environment) {
+            Environment.VELOCITY -> {
                 BuildServerCommand().register()
             }
             else -> {}

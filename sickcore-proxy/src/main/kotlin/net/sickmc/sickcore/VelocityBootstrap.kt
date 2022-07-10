@@ -14,6 +14,7 @@ import org.slf4j.Logger
 
 val bootstrapScope = CoroutineScope(Dispatchers.Default)
 lateinit var server: ProxyServer
+
 @Plugin(
     id = "sickcore",
     name = "SickCore",
@@ -24,7 +25,7 @@ lateinit var server: ProxyServer
 )
 class VelocityBootstrap @Inject constructor(val pserver: ProxyServer, val logger: Logger) {
 
-    companion object{
+    companion object {
         lateinit var instance: VelocityBootstrap
     }
 

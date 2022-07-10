@@ -11,7 +11,7 @@ import net.sickmc.sickcore.commonPlayer.SickPlayers
 import net.sickmc.sickcore.listenVelocity
 import net.sickmc.sickcore.utils.mongo.databaseScope
 
-class VelocityPermissionProvider : PermissionProvider{
+class VelocityPermissionProvider : PermissionProvider {
 
     init {
         listenVelocity<PermissionsSetupEvent> {
@@ -20,19 +20,19 @@ class VelocityPermissionProvider : PermissionProvider{
     }
 
     override fun createFunction(subject: PermissionSubject?): PermissionFunction {
-        if (subject !is Player)return PermissionFunction.ALWAYS_TRUE
+        if (subject !is Player) return PermissionFunction.ALWAYS_TRUE
         return SickPermissionFunction(subject)
     }
 
-    private class SickPermissionFunction(val player: Player): PermissionFunction{
+    private class SickPermissionFunction(val player: Player) : PermissionFunction {
 
         override fun getPermissionValue(permission: String?): Tristate {
-            if (SickPlayers.instance.getCachedEntity(player.uniqueId)!!.isAdmin())return Tristate.TRUE
-            if (permission == null)return Tristate.FALSE
+            if (SickPlayers.instance.getCachedEntity(player.uniqueId)!!.isAdmin()) return Tristate.TRUE
+            if (permission == null) return Tristate.FALSE
             return Tristate.fromBoolean(getPermissions().contains(permission))
         }
 
-        fun getPermissions(): List<String>{
+        fun getPermissions(): List<String> {
             val list = ArrayList<String>()
             databaseScope.launch {
                 list.addAll(SickPlayers.instance.getCachedEntity(player.uniqueId)!!.permissions)

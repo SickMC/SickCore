@@ -4,11 +4,11 @@ import net.sickmc.sickcore.commonPlayer.SickPlayer
 import net.sickmc.sickcore.utils.mongo.retrieveOne
 import net.sickmc.sickcore.utils.mongo.staffColl
 import org.bson.Document
-import java.util.UUID
+import java.util.*
 
 class Staff {
 
-    companion object{
+    companion object {
         lateinit var instance: Staff
     }
 
@@ -18,7 +18,7 @@ class Staff {
 
     var overview: Document? = null
 
-    fun getStaffPlayers(): List<StaffPlayer>{
+    fun getStaffPlayers(): List<StaffPlayer> {
         val players = ArrayList<StaffPlayer>()
         val playerNames = overview!!.getList("members", String::class.java)
         playerNames.forEach {
@@ -27,11 +27,11 @@ class Staff {
         return players.toList()
     }
 
-    suspend fun validateOverview(){
+    suspend fun validateOverview() {
         overview = staffColl.retrieveOne("type", "overview")
     }
 
-    suspend fun addMember(player: SickPlayer){
+    suspend fun addMember(player: SickPlayer) {
         StaffPlayers.createPlayer(player.uniqueID)
     }
 
