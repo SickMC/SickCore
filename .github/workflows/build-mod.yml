@@ -13,7 +13,6 @@ on:
     paths:
       - 'sickcore-mod/**'
       - 'buildSrc/**'
-  workflow_dispatch:
 jobs:
   build:
     runs-on: ubuntu-latest
