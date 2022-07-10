@@ -17,21 +17,14 @@ fun main() {
         }
 
         routing {
-            val eventConnections = Collections.synchronizedSet<DefaultWebSocketServerSession>(ConcurrentSet())
-            val verifyConnections = Collections.synchronizedSet<DefaultWebSocketServerSession>(ConcurrentSet())
+            val connections = Collections.synchronizedMap(HashMap(ConcurrentMap<String, DefaultWebSocketServerSession>()))
 
-            webSocket("/event") {
-                eventConnections.add(this)
-                for (frame in incoming) {
-                    eventConnections.forEach { it.send(frame) }
-                }
-            }
-            webSocket("/verify") {
-                verifyConnections.add(this)
-                for (frame in incoming) {
-                    for (connection in verifyConnections) {
-                        connection.send(frame)
-                    }
+            val webSockets = listOf("event", "verify", "reward", "message")
+            webSockets.forEach {
+                webSocket("/$it"){
+                    connections[it] = this
+                    for (frame in incoming)
+                        connections[it]?.send(frame)
                 }
             }
         }
