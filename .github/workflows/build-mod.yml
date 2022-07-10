@@ -44,4 +44,4 @@ jobs:
       - uses: actions/upload-artifact@v3
         with:
           name: sickcore-mod-artifacts
-          path: build/libs/*.jar
+          path: sickcore-mod/build/libs/*.jar

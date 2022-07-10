@@ -44,4 +44,4 @@ jobs:
       - uses: actions/upload-artifact@v3
         with:
           name: sickcore-proxy-artifacts
-          path: build/libs/*-all.jar
+          path: sickcore-proxy/build/libs/*-all.jar
