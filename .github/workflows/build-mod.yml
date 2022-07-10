@@ -45,3 +45,4 @@ jobs:
         with:
           name: sickcore-mod-artifacts
           path: sickcore-mod/build/libs/*.jar
+          arguments: publish
