@@ -47,7 +47,6 @@ class Survival : Game() {
 
     override suspend fun enable() {
         CommonEvents.register()
-        tablist.server = server
     }
 
     override val tablist: Tablist = defaultTablist
