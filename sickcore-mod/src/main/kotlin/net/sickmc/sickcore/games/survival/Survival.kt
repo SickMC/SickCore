@@ -3,11 +3,14 @@ package net.sickmc.sickcore.games.survival
 import net.minecraft.core.Registry
 import net.minecraft.resources.ResourceLocation
 import net.minecraft.world.item.enchantment.Enchantment
+import net.sickmc.sickcore.common.chat.ChatController
+import net.sickmc.sickcore.common.chat.ChatPresets
+import net.sickmc.sickcore.common.defaultTablist
 import net.sickmc.sickcore.games.Game
 import net.sickmc.sickcore.server
-import net.sickmc.sickcore.utils.Colors
-import net.sickmc.sickcore.utils.fabric.*
-import net.silkmc.silk.core.text.literalText
+import net.sickmc.sickcore.utils.fabric.EntityAttributes
+import net.sickmc.sickcore.utils.fabric.MobHeadRarity
+import net.sickmc.sickcore.utils.fabric.Tablist
 
 val extraHeads = arrayListOf(
     EntityAttributes(
@@ -47,18 +50,12 @@ class Survival : Game() {
         tablist.server = server
     }
 
-    override val tablist: Tablist = Tablist() {
-        playerTabListBuilder(this) {
-            val sickPlayer = player.sickPlayer!!
-            prefix = literalText(sickPlayer.rank.getParent().prefix)
-            color = sickPlayer.rank.getParent().color
-            header = literalText("headdderrrr") { color = Colors.BLACK }
-            footer = literalText("fooooterrr") { color = Colors.WHITE }
-        }
-    }
+    override val tablist: Tablist = defaultTablist
 
     override suspend fun disable() {
 
     }
+
+    override val chat: ChatController = ChatPresets.styledNames
 
 }

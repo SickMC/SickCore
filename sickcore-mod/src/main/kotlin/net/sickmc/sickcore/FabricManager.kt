@@ -17,7 +17,6 @@ import net.sickmc.sickcore.utils.mongo.databaseScope
 
 val fabricScope = CoroutineScope(Dispatchers.Default + SupervisorJob())
 lateinit var server: MinecraftServer
-
 class FabricManager : ModInitializer {
 
     companion object {

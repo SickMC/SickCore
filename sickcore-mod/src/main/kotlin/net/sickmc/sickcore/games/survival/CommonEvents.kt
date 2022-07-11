@@ -57,16 +57,9 @@ object CommonEvents {
     }
 
     private fun join() {
-        ServerPlayConnectionEvents.JOIN.register { handler, _, server ->
+        ServerPlayConnectionEvents.JOIN.register { handler, _, _ ->
             databaseScope.launch {
-                val sickPlayer = SurvivalPlayers.instance.reloadEntity(handler.player.uuid).sickPlayer
-
-                server.playerList.broadcastSystemMessage(
-                    sickPlayer.displayName.getName().copy().append(literalText(" joined the server!") {
-                        color = Colors.WHITE
-                        bold = false
-                    }), ChatType.SYSTEM
-                )
+                SurvivalPlayers.instance.reloadEntity(handler.player.uuid)
             }
 
             if (!handler.player.tags.contains("$mod_id.firstjoin.$mod_id")) {

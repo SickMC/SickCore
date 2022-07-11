@@ -8,6 +8,8 @@
   "mixins": [
     "BlockMixin",
     "CombatEntryMixin",
+    "CombatTrackerMixin",
+    "CommandsMixin",
     "LivingEntityMixin",
     "PlayerAdvancementMixin",
     "PlayerListMixin",

@@ -7,9 +7,9 @@ import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.server.network.FilteredText;
 import net.minecraft.server.network.ServerGamePacketListenerImpl;
 import net.minecraft.server.players.PlayerList;
-import net.sickmc.sickcore.commonPlayer.SickPlayer;
-import net.sickmc.sickcore.commonPlayer.SickPlayers;
-import net.sickmc.sickcore.utils.Colors;
+import net.sickmc.sickcore.common.chat.ChatEvent;
+import net.sickmc.sickcore.common.chat.QuitEvent;
+import net.sickmc.sickcore.games.Game;
 import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
@@ -28,16 +28,28 @@ public class ServerGamePacketListenerMixin {
 
     @Redirect(method = "onDisconnect", at = @At(value = "INVOKE", target = "Lnet/minecraft/server/players/PlayerList;broadcastSystemMessage(Lnet/minecraft/network/chat/Component;Lnet/minecraft/resources/ResourceKey;)V"))
     public void onQuit(PlayerList instance, Component message, ResourceKey<ChatType> messageType) {
-        SickPlayer sickPlayer = SickPlayers.instance.getCachedEntity(player.getUUID());
-        server.getPlayerList().broadcastSystemMessage(sickPlayer.getDisplayName().getName().copy().append(Component.literal(" quit the server").withStyle(Style.EMPTY.withColor(Colors.INSTANCE.getWHITE()).withBold(false))), ChatType.SYSTEM);
+        var event = Game.current.getChat().getQuitMessage();
+        if (event == null) {
+            instance.broadcastSystemMessage(message, messageType);
+            return;
+        }
+        if (event.isEmpty()) {
+            return;
+        }
+        instance.broadcastSystemMessage(event.get().invoke(new QuitEvent(player, player.level)), ChatType.SYSTEM);
     }
 
     @Redirect(method = "broadcastChatMessage", at = @At(value = "INVOKE", target = "Lnet/minecraft/server/players/PlayerList;broadcastChatMessage(Lnet/minecraft/server/network/FilteredText;Lnet/minecraft/server/level/ServerPlayer;Lnet/minecraft/resources/ResourceKey;)V"))
     public void onChat(PlayerList instance, FilteredText<PlayerChatMessage> filteredText, ServerPlayer serverPlayer, ResourceKey<ChatType> resourceKey) {
-        SickPlayer sickPlayer = SickPlayers.instance.getCachedEntity(serverPlayer.getUUID());
-        MutableComponent newMessage = sickPlayer.getDisplayName().getName().copy();
-        newMessage.append(Component.literal(" " + filteredText.raw().serverContent().getString()).withStyle(Style.EMPTY.withColor(Colors.INSTANCE.getLIGHT_GRAY()).withBold(false)));
-        server.getPlayerList().broadcastSystemMessage(newMessage, ChatType.SYSTEM);
+        var event = Game.current.getChat().getChatEvent();
+        if (event == null) {
+            instance.broadcastChatMessage(filteredText, player, ChatType.CHAT);
+            return;
+        }
+        if (event.isEmpty()) {
+            return;
+        }
+        instance.broadcastSystemMessage(event.get().invoke(new ChatEvent(player, filteredText.raw().serverContent().getString(), player.level)), ChatType.SYSTEM);
     }
 
 }
