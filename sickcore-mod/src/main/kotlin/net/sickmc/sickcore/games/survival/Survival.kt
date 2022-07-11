@@ -5,12 +5,12 @@ import net.minecraft.resources.ResourceLocation
 import net.minecraft.world.item.enchantment.Enchantment
 import net.sickmc.sickcore.common.chat.ChatController
 import net.sickmc.sickcore.common.chat.ChatPresets
-import net.sickmc.sickcore.common.defaultTablist
+import net.sickmc.sickcore.common.tablist.defaultTablist
 import net.sickmc.sickcore.games.Game
 import net.sickmc.sickcore.server
 import net.sickmc.sickcore.utils.fabric.EntityAttributes
 import net.sickmc.sickcore.utils.fabric.MobHeadRarity
-import net.sickmc.sickcore.utils.fabric.Tablist
+import net.sickmc.sickcore.common.tablist.Tablist
 
 val extraHeads = arrayListOf(
     EntityAttributes(

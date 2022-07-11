@@ -2,9 +2,9 @@ package net.sickmc.sickcore.games.lobby
 
 import net.sickmc.sickcore.common.chat.ChatController
 import net.sickmc.sickcore.common.chat.ChatPresets
-import net.sickmc.sickcore.common.defaultTablist
+import net.sickmc.sickcore.common.tablist.defaultTablist
 import net.sickmc.sickcore.games.Game
-import net.sickmc.sickcore.utils.fabric.Tablist
+import net.sickmc.sickcore.common.tablist.Tablist
 
 class Lobby : Game() {
 

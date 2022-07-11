@@ -1,18 +1,18 @@
-package net.sickmc.sickcore.utils.fabric
+package net.sickmc.sickcore.common.tablist
 
 import net.minecraft.ChatFormatting
 import net.minecraft.network.chat.Component
 import net.minecraft.network.chat.MutableComponent
 import net.minecraft.network.protocol.game.ClientboundSetPlayerTeamPacket
 import net.minecraft.network.protocol.game.ClientboundTabListPacket
-import net.minecraft.server.MinecraftServer
 import net.minecraft.server.level.ServerPlayer
 import net.minecraft.world.scores.Team
+import net.sickmc.sickcore.server
+import net.sickmc.sickcore.utils.fabric.sickPlayer
 
 class Tablist(private val generate: ServerPlayer.() -> PlayerTablistBuilder) {
 
     val players = hashMapOf<ServerPlayer, PlayerTablistBuilder>()
-    lateinit var server: MinecraftServer
 
     inline fun modify(player: ServerPlayer, crossinline modifier: PlayerTablistBuilder.() -> Unit) {
         if (players[player] == null) players[player] = PlayerTablistBuilder(player).apply(modifier)

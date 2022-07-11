@@ -1,8 +1,8 @@
-package net.sickmc.sickcore.common
+package net.sickmc.sickcore.common.tablist
 
 import net.sickmc.sickcore.utils.Colors
-import net.sickmc.sickcore.utils.fabric.Tablist
-import net.sickmc.sickcore.utils.fabric.playerTabListBuilder
+import net.sickmc.sickcore.common.tablist.Tablist
+import net.sickmc.sickcore.common.tablist.playerTabListBuilder
 import net.sickmc.sickcore.utils.fabric.sickPlayer
 import net.silkmc.silk.core.text.literalText
 

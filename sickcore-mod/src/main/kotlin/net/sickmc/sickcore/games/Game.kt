@@ -3,7 +3,7 @@ package net.sickmc.sickcore.games
 import net.sickmc.sickcore.common.chat.ChatController
 import net.sickmc.sickcore.games.lobby.Lobby
 import net.sickmc.sickcore.games.survival.Survival
-import net.sickmc.sickcore.utils.fabric.Tablist
+import net.sickmc.sickcore.common.tablist.Tablist
 
 abstract class Game {
 
