@@ -20,8 +20,8 @@ import net.sickmc.sickcore.utils.Colors
 import net.sickmc.sickcore.utils.mm
 import net.sickmc.sickcore.utils.mongo.databaseScope
 import net.sickmc.sickcore.utils.toUUID
-import net.sickmc.sickcore.utils.websockets.listenChannel
-import net.sickmc.sickcore.utils.websockets.sendChannelMessage
+import net.sickmc.sickcore.utils.websockets.listen
+import net.sickmc.sickcore.utils.websockets.sendMessage
 import java.util.*
 import kotlin.jvm.optionals.getOrNull
 
@@ -35,18 +35,18 @@ object Verify {
         registerVerifyListener()
     }
 
-    //Verify Pattern {status}/{uuid}/{id/code}
+    //Verify Pattern verify/{status}/{uuid}/{id/code}
 
     private suspend fun registerVerifyListener() {
-        listenChannel("verify") {
+        listen() {
             send("jo")
             println("init")
             for (frame in incoming) {
                 if (frame !is Frame.Text) continue
                 val components = frame.readText().split("/")
-                if (components[0] != "success") continue
-                val uuid = components[1].toUUID()
-                val discordTag = components[2]
+                if (components[1] != "success" || components[0] != "verify") continue
+                val uuid = components[2].toUUID()
+                val discordTag = components[3]
                 val player = proxyServer!!.getPlayer(uuid).getOrNull() ?: continue
                 player.sendMessage(
                     Component.text("Your account is now linked with ").color(TextColor.color(Colors.LIGHT_GREEN))
@@ -74,10 +74,7 @@ object Verify {
                         )
                 )
                 databaseScope.launch {
-                    sendChannelMessage(
-                        "verify",
-                        Frame.Text("request/${veloPlayer.uniqueId}/${verifyCache[veloPlayer.uniqueId]!!}")
-                    )
+                    sendMessage("verify/request/${veloPlayer.uniqueId}/${verifyCache[veloPlayer.uniqueId]!!}")
                     println("Should be sent!")
                 }
                 return@executes 1
@@ -88,7 +85,7 @@ object Verify {
             }
             verifyCache[veloPlayer.uniqueId] = code
             databaseScope.launch {
-                sendChannelMessage("verify", Frame.Text("request/${veloPlayer.uniqueId}/$code"))
+                sendMessage("verify/request/${veloPlayer.uniqueId}/$code")
                 println("Should be sent!")
             }
             veloPlayer.sendMessage(
