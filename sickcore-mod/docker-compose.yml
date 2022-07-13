@@ -1,0 +1,20 @@
+version: "3"
+
+services:
+  build:
+    image: itzg/minecraft-server
+    ports:
+      - "25545:25545"
+    environment:
+      EULA: "TRUE"
+      TYPE: "PAPER"
+      MEMORY: "3G"
+      GAME_START_ENVIRONMENT: "build-server"
+    env_file:
+      - /home/sickmc/network/storage/databases.env
+    tty: true
+    stdin_open: true
+    restart: unless-stopped
+    volumes:
+      - /home/sickmc/network/public/build:/data
+    container_name: build
