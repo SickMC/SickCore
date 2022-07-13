@@ -19,13 +19,13 @@ suspend inline fun listenChannel(
         port = System.getenv("WEBSOCKET_PORT").toInt(),
         path = "/$channel"
     ) {
-        send("jo")
+        send(Frame.Text("jo"))
         session.invoke(this)
         println("Websocket connected!")
     }
 }
 
-suspend fun sendChannelMessage(channel: String, message: Frame) {
+suspend fun sendChannel(channel: String, message: Frame) {
     webClient.webSocket(
         method = HttpMethod.Get,
         host = System.getenv("WEBSOCKET_CLIENT_ADDRESS"),
@@ -33,6 +33,9 @@ suspend fun sendChannelMessage(channel: String, message: Frame) {
         path = "/$channel"
     ) {
         send(message)
-        println("Message sent: $message")
     }
 }
+
+suspend fun sendMessage(message: String) = sendChannel("sickmc", Frame.Text(message))
+
+suspend inline fun listen(crossinline session: suspend DefaultClientWebSocketSession.() -> Unit) = listenChannel("sickmc", session)

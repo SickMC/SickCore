@@ -6,6 +6,9 @@ import io.ktor.server.netty.*
 import io.ktor.server.routing.*
 import io.ktor.server.websocket.*
 import io.ktor.util.collections.*
+import io.ktor.websocket.*
+import kotlinx.coroutines.flow.MutableSharedFlow
+import kotlinx.coroutines.launch
 import java.util.*
 
 fun main() {
@@ -17,16 +20,20 @@ fun main() {
         }
 
         routing {
-            val connections = Collections.synchronizedMap(HashMap(ConcurrentMap<String, DefaultWebSocketServerSession>()))
+            val eventFlow = MutableSharedFlow<String>()
 
-            val webSockets = listOf("event", "verify", "rewards", "message")
-            webSockets.forEach {
-                webSocket("/$it"){
-                    connections[it] = this
-                    for (frame in incoming)
-                        connections[it]?.send(frame)
+            webSocket("/sickmc") {
+                launch {
+                    eventFlow.collect(::send)
+                }
+                for (frame in incoming) {
+                    if (frame !is Frame.Text) continue
+                    launch {
+                        eventFlow.emit(frame.readText())
+                    }
                 }
             }
+            
         }
     }.start(wait = true)
 }
