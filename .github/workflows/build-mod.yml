@@ -1,20 +1,6 @@
 name: Mod Build
 
 on:
-  push:
-    branches:
-      - 'master'
-    paths:
-      - 'sickcore-mod/**'
-      - 'buildSrc/**'
-      - 'sickcore-api/**'
-  pull_request:
-    branches:
-      - 'master'
-    paths:
-      - 'sickcore-mod/**'
-      - 'buildSrc/**'
-      - 'sickcore-api/**'
   workflow_dispatch:
 jobs:
   build:

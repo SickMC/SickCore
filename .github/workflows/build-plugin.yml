@@ -1,20 +1,6 @@
 name: Proxy Plugin Build
 
 on:
-  push:
-    branches:
-      - 'master'
-    paths:
-      - 'sickcore-proxy/**'
-      - 'buildSrc/**'
-      - 'sickcore-api/**'
-  pull_request:
-    branches:
-      - 'master'
-    paths:
-      - 'sickcore-proxy/**'
-      - 'buildSrc/**'
-      - 'sickcore-api/**'
   workflow_dispatch:
 jobs:
   build:
