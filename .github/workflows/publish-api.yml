@@ -40,4 +40,4 @@ jobs:
         run: chmod +x gradlew
       - name: Build Mod with Gradle
         run: ./gradlew :sickcore-api:build --no-daemon \
-        ./gradlew :sickcore-api:publish
+         ./gradlew :sickcore-api:publish
