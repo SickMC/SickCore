@@ -1,18 +1,6 @@
 name: Publish API
 
 on:
-  push:
-    branches:
-      - 'master'
-    paths:
-      - 'buildSrc/**'
-      - 'sickcore-api/**'
-  pull_request:
-    branches:
-      - 'master'
-    paths:
-      - 'buildSrc/**'
-      - 'sickcore-api/**'
   workflow_dispatch:
 
 jobs:

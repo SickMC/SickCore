@@ -12,16 +12,17 @@ plugins {
 
 publishing {
 
-    repositories{
-        maven {
-            name = "SickCore-API"
-            url = URI("https://maven.pkg.github.com/sickmc/sickcore")
-            credentials {
-                username = System.getenv("GITHUB_ACTOR")
-                password = System.getenv("GITHUB_TOKEN")
-            }
+    publications {
+        create<MavenPublication>("maven") {
+            groupId = "net.sickmc.sickcore"
+            artifactId = "sickcore-api"
+            version = "2.0.0"
+
+            from(components["java"])
         }
     }
 
 }
+
+
 
