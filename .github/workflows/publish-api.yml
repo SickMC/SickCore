@@ -41,5 +41,5 @@ jobs:
       - name: Build Mod with Gradle
         run: >
           gradle \
-            :devops-github-packages-library:build \
-            :devops-github-packages-library:publish
+            :sickcore-api:build \
+            :sickcore-api:publish
