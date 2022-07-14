@@ -39,5 +39,7 @@ jobs:
       - name: Grant execute permission for gradlew
         run: chmod +x gradlew
       - name: Build Mod with Gradle
-        run: ./gradlew :sickcore-api:build --no-daemon \
-         ./gradlew :sickcore-api:publish
+        run: >
+          gradle \
+            :devops-github-packages-library:build \
+            :devops-github-packages-library:publish
