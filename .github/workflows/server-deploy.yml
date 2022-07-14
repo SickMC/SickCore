@@ -1,20 +1,6 @@
 name: Server Deploy
 
 on:
-  push: 
-    paths:
-      - "sickcore-server/**"
-      - "buildSrc/**"
-      - 'sickcore-api/**'
-    branches:
-      - master
-  pull_request:
-    paths:
-      - "sickcore-server/**"
-      - "buildSrc/**"
-      - 'sickcore-api/**'
-    branches:
-      - master
   workflow_dispatch:
 
 env:
