@@ -6,7 +6,7 @@ object BuildConstants {
     const val githubRepo = "SickMC/SickCore"
     val isSnapshot = false
 
-    const val sickAPIVersion = "1.0.1"
+    const val sickAPIVersion = "1.0.4"
 
     // Kotlin
     const val kotlinVersion = "1.7.10"

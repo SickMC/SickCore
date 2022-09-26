@@ -1,6 +1,7 @@
 import kotlinx.serialization.Serializable
 import kotlinx.serialization.encodeToString
 import kotlinx.serialization.json.Json
+import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 plugins {
     kotlin("jvm")
@@ -65,8 +66,6 @@ val modID: String by extra(project.name)
 val modEntrypoints: LinkedHashMap<String, List<String>>? by extra(null)
 val modMixinFiles: List<String>? by extra(null)
 val modDepends: LinkedHashMap<String, String>? by extra(null)
-val isModParent by extra(false)
-val icon: String? by extra(null)
 
 tasks {
     val modDotJsonTask = register("modDotJson") {
@@ -94,8 +93,7 @@ tasks {
                 "https://github.com/${BuildConstants.githubRepo}",
                 "https://discord.gg/emTX78nhnz"
             ),
-            "GPL-3.0",
-            icon,
+            "GPL-3.0"
         )
 
         val modDotJson = buildDir.resolve("resources/main/fabric.mod.json")
@@ -117,5 +115,12 @@ tasks {
 
     processResources {
         dependsOn(modDotJsonTask)
+    }
+
+    withType<KotlinCompile> {
+        kotlinOptions {
+            jvmTarget = "17"
+            freeCompilerArgs += "-Xskip-prerelease-check"
+        }
     }
 }
