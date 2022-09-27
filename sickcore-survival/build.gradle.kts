@@ -5,7 +5,7 @@ plugins {
 }
 
 dependencies {
-    api(modProject(":${rootProject.name}-api"))
+    api(modProject(":${rootProject.name}-api:fabric"))
 }
 
 val modName by extra("Survival")
