@@ -28,6 +28,8 @@ dependencies {
     modImplementation("net.fabricmc:fabric-language-kotlin:${BuildConstants.fabricLanguageKotlinVersion}")
 
     modImplementation("net.silkmc:silk-core:${BuildConstants.silkVersion}")
+    modImplementation("net.silkmc:silk-commands:${BuildConstants.silkVersion}")
+    modImplementation("net.silkmc:silk-game:${BuildConstants.silkVersion}")
 }
 
 @Serializable
