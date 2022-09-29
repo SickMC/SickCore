@@ -2,7 +2,6 @@ package net.sickmc.sickcore.api.fabric.mixins;
 
 import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerPlayer;
-import net.minecraft.world.damagesource.CombatTracker;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.LivingEntity;
 import net.sickmc.sickcore.api.fabric.chat.ChatManager;
@@ -23,6 +22,7 @@ public class DamageSourceMixin {
     public Component changeDeathName(LivingEntity instance) {
         var currentChatManager = ChatManager.Companion.getCurrent();
         if (currentChatManager == null || !(instance instanceof ServerPlayer)) return instance.getDisplayName();
-        return currentChatManager.changeDeathName((ServerPlayer) instance, (CombatTracker) (Object) this);
+        var result = currentChatManager.changeDeathName((ServerPlayer) instance, instance.getCombatTracker());
+        return result == null ? instance.getDisplayName() : result;
     }
 }

@@ -23,7 +23,8 @@ public abstract class CombatTrackerMixin {
     public Component changeName(LivingEntity instance) {
         var currentChatManager = ChatManager.Companion.getCurrent();
         if (currentChatManager == null || !(instance instanceof ServerPlayer)) return instance.getDisplayName();
-        return currentChatManager.changeDeathName((ServerPlayer) instance, instance.getCombatTracker());
+        var result = currentChatManager.changeDeathName((ServerPlayer) instance, instance.getCombatTracker());
+        return result == null ? instance.getDisplayName() : result;
     }
 
     @Redirect(
@@ -36,7 +37,8 @@ public abstract class CombatTrackerMixin {
     public Component changeAttackerName(CombatEntry instance) {
         var currentChatManager = ChatManager.Companion.getCurrent();
         if (currentChatManager == null || !(instance.getAttacker() instanceof ServerPlayer))
-            return instance.getAttacker().getDisplayName();
-        return currentChatManager.changeDeathName((ServerPlayer) instance.getAttacker(), ((ServerPlayer) instance.getAttacker()).getCombatTracker());
+            return instance.getAttackerName();
+        var result = currentChatManager.changeDeathName((ServerPlayer) instance.getAttacker(), ((ServerPlayer) instance.getAttacker()).getCombatTracker());
+        return result == null ? instance.getAttackerName() : result;
     }
 }

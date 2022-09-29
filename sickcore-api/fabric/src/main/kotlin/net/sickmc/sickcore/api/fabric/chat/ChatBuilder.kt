@@ -10,42 +10,38 @@ inline fun chat(builder: ChatBuilder.() -> Unit): ChatManager {
     return ChatBuilder().also(builder).build()
 }
 
+inline fun chatBuilder(builder: ChatBuilder.() -> Unit): ChatBuilder = ChatBuilder().also(builder)
+
 class ChatBuilder {
 
-    private var join: suspend ServerPlayer.() -> Component? = { null }
-    private var quit: suspend ServerPlayer.() -> Component? = { null }
-    private var chat: suspend ServerPlayer.(message: ChatMessageContent) -> Component? = { null }
-    private var advancement: suspend ServerPlayer.(advancement: Advancement) -> Component? = { null }
-    private var kill: suspend ServerPlayer.() -> Component? = { null }
-    private var death: suspend ServerPlayer.(tracker: CombatTracker) -> Component? = { null }
+    private var join: suspend (player: ServerPlayer) -> Component? = { null }
+    private var quit: suspend (player: ServerPlayer) -> Component? = { null }
+    private var chat: suspend (player: ServerPlayer, message: ChatMessageContent) -> Component? = { _, _ -> null }
+    private var advancement: suspend (player: ServerPlayer, advancement: Advancement) -> Component? = { _, _ -> null }
+    private var death: suspend (player: ServerPlayer, tracker: CombatTracker) -> Component? = { _, _ -> null }
+    private var deathName: (player: ServerPlayer, tracker: CombatTracker) -> Component? = { _, _ -> null }
 
-    private var deathName: ServerPlayer.(CombatTracker) -> Component = { Component.empty() }
-
-    fun join(block: suspend ServerPlayer.() -> Component?) {
+    fun join(block: suspend (player: ServerPlayer) -> Component?) {
         join = block
     }
 
-    fun quit(block: suspend ServerPlayer.() -> Component?) {
+    fun quit(block: suspend (player: ServerPlayer) -> Component?) {
         quit = block
     }
 
-    fun chat(block: suspend ServerPlayer.(message: ChatMessageContent) -> Component?) {
+    fun chat(block: suspend (player: ServerPlayer, message: ChatMessageContent) -> Component?) {
         chat = block
     }
 
-    fun advancement(block: suspend ServerPlayer.(advancement: Advancement) -> Component?) {
+    fun advancement(block: suspend (player: ServerPlayer, advancement: Advancement) -> Component?) {
         advancement = block
     }
 
-    fun kill(block: suspend ServerPlayer.() -> Component?) {
-        kill = block
-    }
-
-    fun death(block: suspend ServerPlayer.(tracker: CombatTracker) -> Component?) {
+    fun death(block: suspend (player: ServerPlayer, tracker: CombatTracker) -> Component?) {
         death = block
     }
 
-    fun deathName(block: ServerPlayer.(CombatTracker) -> Component) {
+    fun deathName(block: (player: ServerPlayer, tracker: CombatTracker) -> Component) {
         deathName = block
     }
 
