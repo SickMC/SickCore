@@ -19,8 +19,7 @@ class ChatBuilder {
     private var kill: suspend ServerPlayer.() -> Component? = { null }
     private var death: suspend ServerPlayer.(tracker: CombatTracker) -> Component? = { null }
 
-    private var killerName: suspend ServerPlayer.() -> Component? = { null }
-    private var deathName: suspend ServerPlayer.() -> Component? = { null }
+    private var deathName: ServerPlayer.(CombatTracker) -> Component = { Component.empty() }
 
     fun join(block: suspend ServerPlayer.() -> Component?) {
         join = block
@@ -46,13 +45,9 @@ class ChatBuilder {
         death = block
     }
 
-    fun killerName(block: suspend ServerPlayer.() -> Component?) {
-        killerName = block
-    }
-
-    fun deathName(block: suspend ServerPlayer.() -> Component?) {
+    fun deathName(block: ServerPlayer.(CombatTracker) -> Component) {
         deathName = block
     }
 
-    fun build(): ChatManager = ChatManager(join, quit, chat, advancement, kill, death, killerName, deathName)
+    fun build(): ChatManager = ChatManager(join, quit, chat, advancement, death, deathName)
 }

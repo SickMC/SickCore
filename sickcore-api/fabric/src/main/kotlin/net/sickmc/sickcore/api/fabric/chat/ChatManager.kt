@@ -18,7 +18,7 @@ class ChatManager(
     var chat: suspend ServerPlayer.(message: ChatMessageContent) -> Component?,
     var advancement: suspend ServerPlayer.(advancement: Advancement) -> Component?,
     var death: suspend ServerPlayer.(tracker: CombatTracker) -> Component?,
-    var deathProperties: ServerPlayer.(tracker: CombatTracker) -> Pair<Component?, Int?>
+    var deathName: ServerPlayer.(tracker: CombatTracker) -> Component
 ) {
     companion object {
         var current: ChatManager? = null
@@ -103,10 +103,9 @@ class ChatManager(
         }
     }
 
-    fun changeDeathProperties(player: ServerPlayer, tracker: CombatTracker): Pair<Component?, Int?> = this.deathProperties.invoke(player, tracker)
+    fun changeDeathName(player: ServerPlayer, tracker: CombatTracker): Component = this.deathName.invoke(player, tracker)
 
     init {
         current = this
     }
-
 }

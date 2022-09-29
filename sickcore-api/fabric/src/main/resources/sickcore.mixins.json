@@ -6,6 +6,7 @@
   "mixins": [
     "AdvancementsMixin",
     "CombatTrackerMixin",
+    "DamageSourceMixin",
     "PlayerListMixin",
     "ServerGamePacketListenerMixin",
     "ServerPlayerMixin"
