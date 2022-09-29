@@ -4,6 +4,7 @@ import net.minecraft.network.chat.Component
 import net.sickmc.sickapi.playerCache
 import net.sickmc.sickapi.rank.parent
 import net.sickmc.sickapi.util.Colors
+import net.sickmc.sickcore.api.fabric.chat.ChatPresets
 import net.sickmc.sickcore.api.fabric.extensions.displayName
 import net.sickmc.sickcore.api.fabric.tablist.Tablist
 import net.sickmc.sickcore.api.fabric.tablist.tablist
@@ -39,5 +40,5 @@ fun init() {
             )
         )
     }
-
+    ChatPresets.onlyNames
 }
