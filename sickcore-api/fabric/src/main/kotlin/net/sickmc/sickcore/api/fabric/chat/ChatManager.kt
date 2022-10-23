@@ -24,22 +24,20 @@ class ChatManager(
         var current: ChatManager? = null
     }
 
-    fun handleJoin(player: ServerPlayer, list: PlayerList) {
-        modScope.launch {
-            val result = join(player)
-            if (result == Component.empty()) return@launch
-            if (result == null) {
-                list.broadcastSystemMessage(
-                    Component.translatable(
-                        "multiplayer.player.joined", player.displayName
-                    ).withStyle(
-                        ChatFormatting.YELLOW
-                    ), false
-                )
-                return@launch
-            }
-            list.broadcastSystemMessage(result, false)
+    suspend fun handleJoin(player: ServerPlayer, list: PlayerList) {
+        val result = join(player)
+        if (result == Component.empty()) return
+        if (result == null) {
+            list.broadcastSystemMessage(
+                Component.translatable(
+                    "multiplayer.player.joined", player.displayName
+                ).withStyle(
+                    ChatFormatting.YELLOW
+                ), false
+            )
+            return
         }
+        list.broadcastSystemMessage(result, false)
     }
 
     fun handleQuit(player: ServerPlayer, list: PlayerList) {
@@ -103,7 +101,8 @@ class ChatManager(
         }
     }
 
-    fun changeDeathName(player: ServerPlayer, tracker: CombatTracker): Component? = this.deathName.invoke(player, tracker)
+    fun changeDeathName(player: ServerPlayer, tracker: CombatTracker): Component? =
+        this.deathName.invoke(player, tracker)
 
     init {
         current = this

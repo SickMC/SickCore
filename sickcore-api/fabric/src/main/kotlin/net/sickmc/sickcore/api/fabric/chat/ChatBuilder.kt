@@ -10,8 +10,6 @@ inline fun chat(builder: ChatBuilder.() -> Unit): ChatManager {
     return ChatBuilder().also(builder).build()
 }
 
-inline fun chatBuilder(builder: ChatBuilder.() -> Unit): ChatBuilder = ChatBuilder().also(builder)
-
 class ChatBuilder {
 
     private var join: suspend (player: ServerPlayer) -> Component? = { null }

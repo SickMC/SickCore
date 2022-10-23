@@ -1,5 +1,8 @@
 package net.sickmc.sickcore.api.fabric.tablist
 
+import kotlinx.coroutines.cancelAndJoin
+import kotlinx.coroutines.flow.MutableSharedFlow
+import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.last
 import kotlinx.coroutines.launch
 import net.minecraft.network.chat.Component
@@ -8,6 +11,7 @@ import net.minecraft.network.protocol.game.ClientboundTabListPacket
 import net.minecraft.server.MinecraftServer
 import net.minecraft.server.level.ServerPlayer
 import net.silkmc.silk.core.Silk
+import net.silkmc.silk.core.annotations.DelicateSilkApi
 import net.silkmc.silk.core.annotations.InternalSilkApi
 import net.silkmc.silk.core.packet.sendPacket
 import net.silkmc.silk.core.task.initWithServerAsync
@@ -23,7 +27,7 @@ import java.util.*
  *
  * **Note:** You probably want to build this class using the tablist builder API. See [tablist]!
  */
-@InternalSilkApi
+
 class Tablist(
     private val nameGenerator: (suspend ServerPlayer.() -> Pair<Component, String>)?,
     private val headers: List<SideboardLine>,
@@ -36,9 +40,9 @@ class Tablist(
     }
 
     val currentHeaders: MutableList<Component> = mutableListOf()
-
     val currentFooters: MutableList<Component> = mutableListOf()
 
+    @OptIn(InternalSilkApi::class, DelicateSilkApi::class)
     val headerFooterDeferred = initWithServerAsync {
         silkCoroutineScope.launch {
             currentFooters.preFill(footers)
@@ -72,6 +76,7 @@ class Tablist(
     /**
      * Regenerates all player names and priorities
      */
+    @OptIn(DelicateSilkApi::class)
     fun updateNames() {
         if (nameGenerator == null) return
         val server = Silk.currentServer
@@ -104,6 +109,7 @@ class Tablist(
      *
      * @param player the player whose attributes should be updated
      */
+    @OptIn(DelicateSilkApi::class)
     fun updateName(player: ServerPlayer) {
         if (nameGenerator == null) return
         if (Silk.currentServer?.isRunning == false) return
@@ -128,12 +134,13 @@ class Tablist(
      *
      * @param player the player whose name should be added
      */
+    @OptIn(DelicateSilkApi::class)
     fun addPlayer(player: ServerPlayer) {
         if (nameGenerator == null) return
         silkCoroutineScope.launch {
             val nameGen = nameGenerator.invoke(player)
             playerNames[player.uuid] = nameGen
-            headerFooterDeferred.await()
+            player.server.sendTablistUpdate(currentHeaders, currentFooters)
             val team = player.scoreboard.getPlayerTeam(nameGen.second) ?: player.scoreboard.addPlayerTeam(
                 nameGen.second
             )

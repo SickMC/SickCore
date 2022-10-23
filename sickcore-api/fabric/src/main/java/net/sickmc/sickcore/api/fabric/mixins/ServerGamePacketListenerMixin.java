@@ -29,19 +29,16 @@ public abstract class ServerGamePacketListenerMixin {
     @Redirect(method = "onDisconnect", at = @At(value = "INVOKE", target = "Lnet/minecraft/server/players/PlayerList;broadcastSystemMessage(Lnet/minecraft/network/chat/Component;Z)V"))
     public void manipulateQuitMessage(PlayerList instance, Component component, boolean bl) {
         var currentChatManager = ChatManager.Companion.getCurrent();
-        if (currentChatManager == null) {
+        if (currentChatManager == null){
             instance.broadcastSystemMessage(Component.translatable("multiplayer.player.left", this.player.getDisplayName()).withStyle(ChatFormatting.YELLOW), false);
             return;
         }
-        currentChatManager.handleQuit(player, instance);
+        ChatManager.Companion.getCurrent().handleQuit(player, instance);
     }
 
     @Inject(method = "onDisconnect", at = @At("TAIL"))
     public void onQuit(Component reason, CallbackInfo ci) {
-        FabricEntrypoint.INSTANCE.quit(player.getUUID());
-        Tablist tablist = Tablist.getCurrentTablist();
-        if (tablist == null) return;
-        tablist.removePlayer(player);
+        FabricEntrypoint.INSTANCE.quit(player);
     }
 
     @Redirect(method = "broadcastChatMessage", at = @At(value = "INVOKE", target = "Lnet/minecraft/server/players/PlayerList;broadcastChatMessage(Lnet/minecraft/network/chat/PlayerChatMessage;Lnet/minecraft/server/level/ServerPlayer;Lnet/minecraft/network/chat/ChatType$Bound;)V"))
