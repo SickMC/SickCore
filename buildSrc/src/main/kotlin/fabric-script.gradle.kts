@@ -20,7 +20,7 @@ repositories {
 dependencies {
     minecraft("com.mojang:minecraft:${BuildConstants.minecraftVersion}")
     mappings(loom.layered {
-        addLayer(quiltMappings.mappings("org.quiltmc:quilt-mappings:${BuildConstants.quiltMappingsVersion}"))
+        //addLayer(quiltMappings.mappings("org.quiltmc:quilt-mappings:${BuildConstants.quiltMappingsVersion}"))
         officialMojangMappings()
     })
     modImplementation("net.fabricmc:fabric-loader:${BuildConstants.fabricLoaderVersion}")
@@ -74,7 +74,7 @@ tasks {
         val modConfig = FabricModConfiguration(
             1,
             modID,
-            project.version.toString(),
+            rootProject.version.toString(),
             modName,
             project.description.toString(),
             BuildConstants.authors,

@@ -14,9 +14,9 @@ repositories {
 dependencies {
     fun pluginDep(id: String, version: String) = "${id}:${id}.gradle.plugin:${version}"
 
-    val kotlinVersion = "1.7.10"
+    val kotlinVersion = "1.7.20"
     val loomVersion = "1.0-SNAPSHOT"
-    val quiltFlowerVersion = "1.7.3"
+    val quiltFlowerVersion = "1.7.4"
     val quiltMappingsPluginVersion = "4.2.1"
 
     //Kotlin
@@ -30,5 +30,5 @@ dependencies {
     implementation(pluginDep("io.github.juuxel.loom-quiltflower", quiltFlowerVersion))
     implementation(pluginDep("org.quiltmc.quilt-mappings-on-loom", quiltMappingsPluginVersion))
 
-    implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.4.0")
+    implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.4.1")
 }
