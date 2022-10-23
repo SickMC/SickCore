@@ -9,5 +9,5 @@ dependencies {
 }
 
 val modName by extra("Survival")
-val modEntrypoints by extra(linkedMapOf("main" to listOf("net.sickmc.sickcore.survival.MainKt")))
-val modMixinFiles by extra(listOf("sickcore.mixins.json"))
+val modEntrypoints by extra(linkedMapOf("main" to listOf("net.sickmc.sickcore.survival.MainKt::init")))
+val modMixinFiles by extra(listOf("sickcore-survival.mixins.json"))

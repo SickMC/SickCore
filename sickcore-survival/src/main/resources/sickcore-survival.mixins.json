@@ -4,9 +4,10 @@
   "package": "net.sickmc.sickcore.survival.mixins",
   "compatibilityLevel": "JAVA_17",
   "mixins": [
-    "PlayerAdvancementsMixin",
+    "MinecraftServerMixin",
     "PlayerListMixin",
-    "ServerGamePacketListenerMixin"
+    "ServerGamePacketListenerImplMixin",
+    "ServerPlayerMixin"
   ],
   "injectors": {
     "defaultRequire": 1
