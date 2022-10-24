@@ -45,6 +45,7 @@ fun init() {
     }
     ChatPresets.onlyNames
     SurvivalEntrypoint.init()
+    sharePos
 }
 
 object SurvivalEntrypoint {
