@@ -125,4 +125,8 @@ tasks {
             freeCompilerArgs += "-Xskip-prerelease-check"
         }
     }
+
+    withType<JavaCompile> {
+        options.release.set(17)
+    }
 }
