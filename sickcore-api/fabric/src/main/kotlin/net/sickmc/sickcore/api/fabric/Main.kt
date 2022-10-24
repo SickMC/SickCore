@@ -24,7 +24,7 @@ import net.silkmc.silk.core.event.Server
 import org.litote.kmongo.eq
 import java.util.*
 
-lateinit var modScope: CoroutineScope
+var modScope: CoroutineScope = CoroutineScope(Dispatchers.Default + SupervisorJob())
 lateinit var server: MinecraftServer
 
 fun main() {
@@ -43,7 +43,6 @@ fun main() {
 
 @Suppress("unused")
 fun init() {
-    modScope = CoroutineScope(Dispatchers.Default + SupervisorJob())
     databaseScope.launch {
         initMongo()
         loadRanks()
