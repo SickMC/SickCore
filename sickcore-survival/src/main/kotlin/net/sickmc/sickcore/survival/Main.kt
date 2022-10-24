@@ -1,5 +1,6 @@
 package net.sickmc.sickcore.survival
 
+import kotlinx.coroutines.*
 import net.minecraft.network.chat.Component
 import net.minecraft.server.level.ServerPlayer
 import net.sickmc.sickapi.playerCache
@@ -7,8 +8,12 @@ import net.sickmc.sickapi.rank.parent
 import net.sickmc.sickapi.util.Colors
 import net.sickmc.sickcore.api.fabric.chat.ChatPresets
 import net.sickmc.sickcore.api.fabric.extensions.displayName
+import net.sickmc.sickcore.api.fabric.extensions.sickPlayer
+import net.sickmc.sickcore.api.fabric.modScope
 import net.sickmc.sickcore.api.fabric.tablist.Tablist
 import net.sickmc.sickcore.api.fabric.tablist.tablist
+import net.silkmc.silk.core.event.Events
+import net.silkmc.silk.core.event.Player
 import net.silkmc.silk.core.text.literalText
 import net.silkmc.silk.game.sideboard.SideboardLine
 
@@ -19,7 +24,7 @@ fun init() {
     tablist = tablist {
         generateName {
             val sickPlayer = playerCache.get(this.uuid) ?: return@generateName this.displayName to "100"
-            sickPlayer.displayName to "${sickPlayer.currentRank.parent.priority}"
+            (sickPlayer.displayName ?: this.displayName) to "${sickPlayer.currentRank.parent.priority}"
         }
 
         header(
@@ -39,9 +44,20 @@ fun init() {
         )
     }
     ChatPresets.onlyNames
+    SurvivalEntrypoint.init()
 }
 
 object SurvivalEntrypoint {
+    fun init() {
+        modScope.launch {
+            join()
+        }
+    }
+
+    private suspend fun join(): Nothing = Events.Player.postLogin.collect { event ->
+        event.player.customName = event.player.sickPlayer()?.displayName
+    }
+
     fun tick() {
         CombatLock.updateTimer()
     }

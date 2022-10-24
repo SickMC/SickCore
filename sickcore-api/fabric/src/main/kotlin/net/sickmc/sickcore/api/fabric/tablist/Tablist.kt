@@ -5,11 +5,15 @@ import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.last
 import kotlinx.coroutines.launch
+import net.minecraft.ChatFormatting
 import net.minecraft.network.chat.Component
 import net.minecraft.network.protocol.game.ClientboundPlayerInfoPacket
 import net.minecraft.network.protocol.game.ClientboundTabListPacket
 import net.minecraft.server.MinecraftServer
 import net.minecraft.server.level.ServerPlayer
+import net.sickmc.sickapi.rank.parent
+import net.sickmc.sickcore.api.fabric.extensions.displayName
+import net.sickmc.sickcore.api.fabric.extensions.sickPlayer
 import net.silkmc.silk.core.Silk
 import net.silkmc.silk.core.annotations.DelicateSilkApi
 import net.silkmc.silk.core.annotations.InternalSilkApi
@@ -17,6 +21,7 @@ import net.silkmc.silk.core.packet.sendPacket
 import net.silkmc.silk.core.task.initWithServerAsync
 import net.silkmc.silk.core.task.silkCoroutineScope
 import net.silkmc.silk.core.text.literal
+import net.silkmc.silk.core.text.literalText
 import net.silkmc.silk.game.sideboard.SideboardLine
 import java.util.*
 
@@ -144,6 +149,20 @@ class Tablist(
             val team = player.scoreboard.getPlayerTeam(nameGen.second) ?: player.scoreboard.addPlayerTeam(
                 nameGen.second
             )
+            val playerRank = player.sickPlayer()?.currentRank
+            team.color = when(playerRank?.name) {
+                "Admin" -> ChatFormatting.RED
+                "Moderator" -> ChatFormatting.DARK_GREEN
+                "Dev" -> ChatFormatting.AQUA
+                "Builder" -> ChatFormatting.DARK_BLUE
+                "Brain" -> ChatFormatting.DARK_PURPLE
+                "Famous" -> ChatFormatting.YELLOW
+                "Famous+" -> ChatFormatting.YELLOW
+                "Warden" -> ChatFormatting.BLUE
+                "Dragon" -> ChatFormatting.LIGHT_PURPLE
+                "Wither" -> ChatFormatting.DARK_GRAY
+                else -> ChatFormatting.WHITE
+            }
             player.scoreboard.addPlayerToTeam(player.scoreboardName, team)
             player.server.playerList.players.sendPacket(
                 ClientboundPlayerInfoPacket(
