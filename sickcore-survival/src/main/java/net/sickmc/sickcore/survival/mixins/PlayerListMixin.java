@@ -28,6 +28,5 @@ public class PlayerListMixin {
             return;
         }
         cir.setReturnValue(CombatLock.INSTANCE.playerJoin(gameProfile.getId()));
-        cir.cancel();
     }
 }

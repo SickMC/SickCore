@@ -23,7 +23,6 @@ public class ServerPlayerMixin {
         var generatedName = tablist.getPlayerNames().get(player.getUUID());
         if (generatedName == null) return;
         cir.setReturnValue(generatedName.component1());
-        cir.cancel();
     }
 
     @Redirect(method = "die", at = @At(value = "INVOKE", target = "Lnet/minecraft/server/players/PlayerList;broadcastSystemMessage(Lnet/minecraft/network/chat/Component;Z)V"))
