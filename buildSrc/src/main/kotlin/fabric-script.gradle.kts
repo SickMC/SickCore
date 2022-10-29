@@ -30,6 +30,24 @@ dependencies {
     modImplementation("net.silkmc:silk-core:${BuildConstants.silkVersion}")
     modImplementation("net.silkmc:silk-commands:${BuildConstants.silkVersion}")
     modImplementation("net.silkmc:silk-game:${BuildConstants.silkVersion}")
+
+    include("net.sickmc:sickapi:${BuildConstants.sickAPIVersion}")
+    include("org.litote.kmongo:kmongo-coroutine-serialization:${BuildConstants.kmongoVersion}")
+    include("org.litote.kmongo:kmongo-shared:${BuildConstants.kmongoVersion}")
+    include("org.litote.kmongo:kmongo-data:${BuildConstants.kmongoVersion}")
+    include("org.litote.kmongo:kmongo-id:${BuildConstants.kmongoVersion}")
+    include("org.litote.kmongo:kmongo-property:${BuildConstants.kmongoVersion}")
+    include("org.litote.kmongo:kmongo-serialization-mapping:${BuildConstants.kmongoVersion}")
+    include("org.litote.kmongo:kmongo-coroutine-core:${BuildConstants.kmongoVersion}")
+    include("org.litote.kmongo:kmongo-async-shared:${BuildConstants.kmongoVersion}")
+    include("org.mongodb:bson:4.7.1")
+    include("org.mongodb:bson-record-codec:4.7.1")
+    include("org.mongodb:mongodb-driver-core:4.7.1")
+    include("org.mongodb:mongodb-driver-reactivestreams:4.7.1")
+    include("com.github.jershell:kbson:0.4.5")
+    include("io.projectreactor:reactor-core:3.2.22.RELEASE")
+    include("org.reactivestreams:reactive-streams:1.0.3")
+    include("org.litote:kreflect:1.0.0")
 }
 
 @Serializable
