@@ -40,6 +40,7 @@ dependencies {
     include("org.litote.kmongo:kmongo-serialization-mapping:${BuildConstants.kmongoVersion}")
     include("org.litote.kmongo:kmongo-coroutine-core:${BuildConstants.kmongoVersion}")
     include("org.litote.kmongo:kmongo-async-shared:${BuildConstants.kmongoVersion}")
+    include("org.jetbrains.kotlinx:kotlinx-coroutines-reactive:${BuildConstants.coroutinesVersion}")
     include("org.mongodb:bson:4.7.1")
     include("org.mongodb:bson-record-codec:4.7.1")
     include("org.mongodb:mongodb-driver-core:4.7.1")
