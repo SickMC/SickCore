@@ -33,9 +33,9 @@ fun main() {
     println(
         Json.encodeToString(
             RankGroup(
-                defaultUUID, defaultUUID.toString(), "Admin", StaticColor(Colors.darkRed), mutableListOf(
-                    Rank(defaulRankID, defaulRankID.toString(), "Admin", mutableListOf())
-                ), mutableListOf(), "Admin", priority = 1
+                defaultUUID, defaultUUID.toString(), "Warden", StaticColor(0x097d9e), mutableListOf(
+                    Rank(defaulRankID, defaulRankID.toString(), "Warden", mutableListOf())
+                ), mutableListOf(), "Warden", priority = 1
             )
         )
     )
