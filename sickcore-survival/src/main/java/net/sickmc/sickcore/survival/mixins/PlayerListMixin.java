@@ -23,7 +23,7 @@ public class PlayerListMixin {
     )
     public void onPreJoin(SocketAddress socketAddress, GameProfile gameProfile, CallbackInfoReturnable<Component> cir) {
         if (!CombatLock.INSTANCE.getBlockedPlayers().containsKey(gameProfile.getId())) return;
-        if (CombatLock.INSTANCE.getBlockedPlayers().get(gameProfile.getId()) < System.currentTimeMillis()) {
+        if (CombatLock.INSTANCE.getBlockedPlayers().get(gameProfile.getId()) <= System.currentTimeMillis()) {
             CombatLock.INSTANCE.getBlockedPlayers().remove(gameProfile.getId());
             return;
         }

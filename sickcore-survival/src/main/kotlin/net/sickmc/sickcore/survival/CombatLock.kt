@@ -28,21 +28,25 @@ object CombatLock {
     fun updateTimer() {
         if (Clock.System.now().toEpochMilliseconds() >= nextSecond) {
             nextSecond = Clock.System.now().toEpochMilliseconds() + 1.seconds.inWholeMilliseconds
-            lockedPlayers.forEach { (uuid, cooldown) ->
+            (lockedPlayers.clone() as HashMap<UUID, Pair<Int, Long>>).forEach { (uuid, cooldown) ->
                 val newCooldown = cooldown.second - 1.seconds.inWholeMilliseconds
-                if (newCooldown <= 0L) lockedPlayers.remove(uuid) else lockedPlayers[uuid] =
-                    cooldown.copy(second = newCooldown)
+                if (newCooldown <= 0L) lockedPlayers.remove(uuid)
+                else lockedPlayers[uuid] = cooldown.copy(second = newCooldown)
             }
         }
 
-        lockedPlayers.forEach { (uuid, cooldown) ->
+        (lockedPlayers.clone() as HashMap<UUID, Pair<Int, Long>>).forEach { (uuid, cooldown) ->
             val player = server.playerList.getPlayer(uuid)
-            if (cooldown.first >= colors.size) lockedPlayers[uuid] = cooldown.copy(first = 0)
+            var cycle = cooldown.first
+            if (cooldown.first >= colors.size) {
+                lockedPlayers[uuid] = cooldown.copy(first = 0)
+                cycle = 0
+            }
             val chars = "${cooldown.second.milliseconds} left".split("")
             val component = literalText("")
 
             chars.forEachIndexed { index, char ->
-                var num = index + cooldown.first
+                var num = index + cycle
                 if (num >= colors.size * 2) num = 0
                 else if (num >= colors.size) num -= colors.size
                 component.append(
@@ -53,7 +57,7 @@ object CombatLock {
                 )
             }
 
-            lockedPlayers[uuid] = cooldown.copy(first = cooldown.first + 1)
+            lockedPlayers[uuid] = cooldown.copy(first = cycle + 1)
 
             player?.sendSystemMessage(component, true)
         }
@@ -71,7 +75,7 @@ object CombatLock {
     }
 
     fun playerJoin(uuid: UUID): Component = literalText {
-        text("You left to early in a fight!") { color = Colors.lightBlue }
+        text("You left too early in a fight!") { color = Colors.lightBlue }
         emptyLine()
         text(
             "You can join again in ${
