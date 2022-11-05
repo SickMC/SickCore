@@ -10,9 +10,11 @@ import net.sickmc.sickcore.api.fabric.chat.ChatPresets
 import net.sickmc.sickcore.api.fabric.extensions.displayName
 import net.sickmc.sickcore.api.fabric.extensions.sickPlayer
 import net.sickmc.sickcore.api.fabric.modScope
+import net.sickmc.sickcore.api.fabric.moderation.ChatModeration
 import net.sickmc.sickcore.api.fabric.tablist.Tablist
 import net.sickmc.sickcore.api.fabric.tablist.tablist
 import net.sickmc.sickcore.survival.commands.deathsCommand
+import net.sickmc.sickcore.survival.commands.sharePos
 import net.silkmc.silk.core.event.Events
 import net.silkmc.silk.core.event.Player
 import net.silkmc.silk.core.text.literalText
@@ -46,6 +48,7 @@ fun init() {
     }
     ChatPresets.onlyNames
     SurvivalEntrypoint.init()
+    ChatModeration.init()
     sharePos
     deathsCommand
 }

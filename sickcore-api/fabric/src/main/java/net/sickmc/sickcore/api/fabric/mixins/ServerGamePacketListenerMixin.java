@@ -9,7 +9,7 @@ import net.minecraft.server.network.ServerGamePacketListenerImpl;
 import net.minecraft.server.players.PlayerList;
 import net.sickmc.sickcore.api.fabric.FabricEntrypoint;
 import net.sickmc.sickcore.api.fabric.chat.ChatManager;
-import net.sickmc.sickcore.api.fabric.tablist.Tablist;
+import net.sickmc.sickcore.api.fabric.moderation.ChatModeration;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
@@ -26,7 +26,13 @@ public abstract class ServerGamePacketListenerMixin {
     @Shadow
     protected abstract void detectRateSpam();
 
-    @Redirect(method = "onDisconnect", at = @At(value = "INVOKE", target = "Lnet/minecraft/server/players/PlayerList;broadcastSystemMessage(Lnet/minecraft/network/chat/Component;Z)V"))
+    @Redirect(
+        method = "onDisconnect",
+        at = @At(
+            value = "INVOKE",
+            target = "Lnet/minecraft/server/players/PlayerList;broadcastSystemMessage(Lnet/minecraft/network/chat/Component;Z)V"
+        )
+    )
     public void manipulateQuitMessage(PlayerList instance, Component component, boolean bl) {
         var currentChatManager = ChatManager.Companion.getCurrent();
         if (currentChatManager == null){
@@ -36,13 +42,25 @@ public abstract class ServerGamePacketListenerMixin {
         ChatManager.Companion.getCurrent().handleQuit(player, instance);
     }
 
-    @Inject(method = "onDisconnect", at = @At("TAIL"))
+    @Inject(
+        method = "onDisconnect",
+        at = @At(
+            value = "TAIL"
+        )
+    )
     public void onQuit(Component reason, CallbackInfo ci) {
         FabricEntrypoint.INSTANCE.quit(player);
     }
 
-    @Redirect(method = "broadcastChatMessage", at = @At(value = "INVOKE", target = "Lnet/minecraft/server/players/PlayerList;broadcastChatMessage(Lnet/minecraft/network/chat/PlayerChatMessage;Lnet/minecraft/server/level/ServerPlayer;Lnet/minecraft/network/chat/ChatType$Bound;)V"))
+    @Redirect(
+        method = "broadcastChatMessage",
+        at = @At(
+            value = "INVOKE",
+            target = "Lnet/minecraft/server/players/PlayerList;broadcastChatMessage(Lnet/minecraft/network/chat/PlayerChatMessage;Lnet/minecraft/server/level/ServerPlayer;Lnet/minecraft/network/chat/ChatType$Bound;)V"
+        )
+    )
     public void manipulateChat(PlayerList instance, PlayerChatMessage playerChatMessage, ServerPlayer serverPlayer, ChatType.Bound bound) {
+        if (ChatModeration.INSTANCE.getMutedPlayers().contains(player.getUUID())) return;
         var currentChatManager = ChatManager.Companion.getCurrent();
         if (currentChatManager == null) {
             instance.broadcastChatMessage(playerChatMessage, this.player, ChatType.bind(ChatType.CHAT, this.player));
