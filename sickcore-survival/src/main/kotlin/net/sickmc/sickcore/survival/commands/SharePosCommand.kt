@@ -1,4 +1,4 @@
-package net.sickmc.sickcore.survival
+package net.sickmc.sickcore.survival.commands
 
 import net.minecraft.commands.arguments.EntityArgument
 import net.minecraft.server.level.ServerPlayer
