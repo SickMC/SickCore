@@ -20,6 +20,7 @@ object ChatModeration {
                 runs {
                     val player = target().findSinglePlayer(source)
                     mutedPlayers += player.uuid
+                    source.playerOrException.sendSystemMessage(literalText("${player.name} has been muted!"))
                     player.sendSystemMessage(literalText("You have been muted for the chat!") { color = 0xFF9C46 })
                 }
             }
@@ -30,6 +31,7 @@ object ChatModeration {
                 runs {
                     val player = target().findSinglePlayer(source)
                     mutedPlayers -= player.uuid
+                    source.playerOrException.sendSystemMessage(literalText("${player.name} has been unmuted!"))
                     player.sendSystemMessage(literalText("You have been unmuted from the chat!") { color = 0xFF9C46 })
                 }
             }
