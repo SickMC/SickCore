@@ -17,6 +17,7 @@ import net.sickmc.sickapi.rank.RankGroup
 import net.sickmc.sickapi.rank.loadRanks
 import net.sickmc.sickapi.util.*
 import net.sickmc.sickcore.api.fabric.chat.ChatManager
+import net.sickmc.sickcore.api.fabric.commands.playtimeCommand
 import net.sickmc.sickcore.api.fabric.tablist.Tablist.Companion.currentTablist
 import net.silkmc.silk.core.event.Events
 import net.silkmc.silk.core.event.Player
@@ -48,6 +49,7 @@ fun init() {
         loadRanks()
     }
     FabricEntrypoint.init()
+    playtimeCommand
 }
 
 object FabricEntrypoint {
