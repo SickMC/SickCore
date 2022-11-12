@@ -25,8 +25,11 @@ object AutoRestart {
             delay(1.minutes)
             sendRestartMessage(1.minutes)
             delay(30.seconds)
-            repeat(30) {
-                sendRestartMessage((30 - it).seconds)
+            sendRestartMessage(30.seconds)
+            delay(15.seconds)
+            repeat(15) {
+                sendRestartMessage((15 - it).seconds)
+                delay(1.seconds)
             }
             server.halt(false)
         }
