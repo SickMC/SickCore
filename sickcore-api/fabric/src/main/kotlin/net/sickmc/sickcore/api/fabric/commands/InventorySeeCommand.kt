@@ -39,11 +39,11 @@ private fun LiteralCommandBuilder<CommandSourceStack>.invCommand(ec: Boolean) {
 
             player.openMenu(SimpleMenuProvider({ i: Int, playerInventory, _ ->
                 ChestMenu(
-                    MenuType.GENERIC_9x4,
+                    if (ec) MenuType.GENERIC_9x3 else MenuType.GENERIC_9x4,
                     i,
                     playerInventory,
-                    if (ec) player.enderChestInventory else player.inventory,
-                    4
+                    if (ec) target.enderChestInventory else target.inventory,
+                    if (ec) 3 else 4
                 ).apply {
                     addSlotListener(object : ContainerListener {
                         override fun slotChanged(
