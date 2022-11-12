@@ -17,6 +17,8 @@ import net.sickmc.sickapi.rank.RankGroup
 import net.sickmc.sickapi.rank.loadRanks
 import net.sickmc.sickapi.util.*
 import net.sickmc.sickcore.api.fabric.chat.ChatManager
+import net.sickmc.sickcore.api.fabric.commands.enderChestSeeCommand
+import net.sickmc.sickcore.api.fabric.commands.invSeeCommand
 import net.sickmc.sickcore.api.fabric.commands.playtimeCommand
 import net.sickmc.sickcore.api.fabric.tablist.Tablist.Companion.currentTablist
 import net.silkmc.silk.core.event.Events
@@ -30,12 +32,12 @@ lateinit var server: MinecraftServer
 
 fun main() {
     val defaultUUID = UUID.randomUUID()
-    val defaulRankID = UUID.randomUUID()
+    val defaultRankID = UUID.randomUUID()
     println(
         Json.encodeToString(
             RankGroup(
                 defaultUUID, defaultUUID.toString(), "Warden", StaticColor(0x097d9e), mutableListOf(
-                    Rank(defaulRankID, defaulRankID.toString(), "Warden", mutableListOf())
+                    Rank(defaultRankID, defaultRankID.toString(), "Warden", mutableListOf())
                 ), mutableListOf(), "Warden", priority = 1
             )
         )
@@ -50,6 +52,8 @@ fun init() {
     }
     FabricEntrypoint.init()
     playtimeCommand
+    invSeeCommand
+    enderChestSeeCommand
 }
 
 object FabricEntrypoint {
