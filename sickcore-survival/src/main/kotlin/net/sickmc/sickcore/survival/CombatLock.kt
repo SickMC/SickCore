@@ -1,3 +1,4 @@
+@file:Suppress("UNCHECKED_CAST")
 package net.sickmc.sickcore.survival
 
 import kotlinx.datetime.Clock
