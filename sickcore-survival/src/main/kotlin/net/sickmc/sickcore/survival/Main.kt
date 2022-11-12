@@ -49,6 +49,7 @@ fun init() {
     ChatPresets.onlyNames
     SurvivalEntrypoint.init()
     ChatModeration.init()
+    AutoRestart.init()
     sharePos
     deathsCommand
 }
