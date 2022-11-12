@@ -30,6 +30,7 @@ dependencies {
     modImplementation("net.silkmc:silk-core:${BuildConstants.silkVersion}")
     modImplementation("net.silkmc:silk-commands:${BuildConstants.silkVersion}")
     modImplementation("net.silkmc:silk-game:${BuildConstants.silkVersion}")
+    modImplementation("net.silkmc:silk-igui:${BuildConstants.silkVersion}")
 
     include("net.sickmc:sickapi:${BuildConstants.sickAPIVersion}")
     include("org.litote.kmongo:kmongo-coroutine-serialization:${BuildConstants.kmongoVersion}")
