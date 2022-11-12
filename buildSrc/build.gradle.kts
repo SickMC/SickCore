@@ -14,7 +14,7 @@ repositories {
 dependencies {
     fun pluginDep(id: String, version: String) = "${id}:${id}.gradle.plugin:${version}"
 
-    val kotlinVersion = "1.7.20"
+    val kotlinVersion = "1.7.21"
     val loomVersion = "1.0-SNAPSHOT"
     val quiltFlowerVersion = "1.7.4"
     val quiltMappingsPluginVersion = "4.2.1"
