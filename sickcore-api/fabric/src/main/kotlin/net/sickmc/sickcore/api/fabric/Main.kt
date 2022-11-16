@@ -57,8 +57,8 @@ fun init() {
 }
 
 object FabricEntrypoint {
-    private val playerPlayTimes = hashMapOf<UUID, Long>()
-    private val playTimeMutex = Mutex()
+    val playerPlayTimes = hashMapOf<UUID, Long>()
+    val playTimeMutex = Mutex()
 
     fun init() {
         serverStartListener
